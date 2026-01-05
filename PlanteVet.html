@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--- Def jeu caracteres -->
+	<meta charset="UTF-8" />
+	<!--- Windows-1252 / UTF-8 / iso-8859-1 -->
+	<!-- Page CSS -->
+	<style>
+		body {
+			text-align: left;
+			
+			margin-top: 35px;
+			margin-left: 35px;
+			margin-bottom: 35px;
+			margin-right: 35px;
+		}
+		.MatchResultClass:hover {
+			color: red;
+		}
+		.PlanteView:hover {
+			color: red;
+		}
+		
+		.Recherche {
+			position: relative;
+			display: inline-block;
+		}
+			.Recherche .PopUpRecherches {
+				visibility: hidden;
+                height: 150px;
+				width: 540px;
+                background-color: #E0D553;
+                color: black;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                right: 105%;
+				top: 50%;
+                margin-top: -78px;
+			}
+			.Recherche .PopUpRecherches::after {
+				  content: " ";
+				  position: absolute;
+				  top: 50%;
+				  left: 100%; /* To the right of the tooltip */
+				  margin-top: -5px;
+				  border-width: 5px;
+				  border-style: solid;
+				  border-color: transparent transparent transparent #E0D553;
+			}
+			.Recherche:hover .PopUpRecherches {  
+                visibility: visible;  
+            }
+			
+		.Clinique {
+			position: relative;
+			display: inline-block;
+		}
+			.Clinique .PopUpClinique {
+				visibility: hidden;
+                height: 150px;
+				width: 590px;
+                background-color: #E0D553;
+                color: black;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                right: 105%;
+				top: 50%;
+                margin-top: -78px;
+			}
+			.Clinique .PopUpClinique::after {
+				  content: " ";
+				  position: absolute;
+				  top: 50%;
+				  left: 100%; /* To the right of the tooltip */
+				  margin-top: -5px;
+				  border-width: 5px;
+				  border-style: solid;
+				  border-color: transparent transparent transparent #E0D553;
+			}
+			.Clinique:hover .PopUpClinique {  
+                visibility: visible;  
+            }
+		
+		ul {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+		
+		li {
+		}
+		.fct {
+			margin-left: 15px;
+		}
+		.plante {
+			margin-left: -24px;
+		}
+		.autre {
+			margin-left: -5px;
+		}
+		
+		p {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+		
+		table {
+		}
+		.full {
+			width: 100%;
+		}
+		.casedroite {
+			position: right;
+		}
+		.high {
+			vertical-align: top
+		}
+	</style>
+	
+	<!-- Database interface script -->
+	<!-- <script src="jswasm/sqlite3.js"></script>  -->
+	<script src="jswasm/sqlite3_wasm.js"></script>
+	<script>
+		// Database schema for validation of imported database (cf. 'DemoDB_Reset.sql' file)
+		globalThis.RefDatabaseSchema_Cte = ["CREATE TABLE LABO(Id integer primary key, Name text)",
+												"CREATE TABLE GALENIQUE(Id integer primary key, Name text)",
+												"CREATE TABLE CATEGORIE(Id integer primary key, Name text)",
+												"CREATE TABLE PLANTE(Id integer primary key, Name text, Photo blob, Latin text, Famille text, Botanique blob, Molecules blob, PDyn blob, P1 text, P2 text, P3 text, PCin blob, Gestation blob, Surdosage blob, Sources blob, Interac blob, MAJ blob, Rchr int, Clin int, Reg int, RegEQ int, Dop int, Poso blob)",
+												"CREATE TABLE USEPART(Id integer primary key, Name text)",
+												"CREATE TABLE FCTS(Id integer primary key, Name text)",
+												"CREATE TABLE USECASE(Id integer primary key, Name text, Fct integer not null, foreign key(Fct) references FCTS(Id))",
+												"CREATE TABLE EFFET2(Id integer primary key, Name text)",
+												"CREATE TABLE TOXICITE(Id integer primary key, Name text)",
+												"CREATE TABLE CTRINDIC(Id integer primary key, Name text)",
+												"CREATE TABLE PRODUCT(Id integer primary key, Name text, Photo blob, Galenique integer not null, Categorie integer not null, DMV bool, Labo integer not null, Proprietes blob, Precautions blob, MAJ blob, foreign key(Labo) references LABO(Id), foreign key(Galenique) references GALENIQUE(Id), foreign key(Categorie) references CATEGORIE(Id))",
+												"CREATE TABLE PRODUCT_PLANTE(Product integer not null, Plante integer not null, UsePart integer not null, foreign key(Product) references PRODUCT(Id), foreign key(Plante) references PLANTE(Id),  foreign key(UsePart) references USEPART(Id))",
+												"CREATE TABLE PRODUCT_FCTS(Id integer primary key, Product integer not null, Fct integer not null, foreign key(Product) references PRODUCT(Id), foreign key(Fct) references FCTS(Id))",
+												"CREATE TABLE PRODUCT_FCTS2(Id integer primary key, Product integer not null, Fct integer not null, foreign key(Product) references PRODUCT(Id), foreign key(Fct) references FCTS(Id))",
+												"CREATE TABLE PRODUCT_USECASE(Id integer primary key, Product integer not null, Usecase integer not null, foreign key(Product) references PRODUCT(Id), foreign key(Usecase) references USECASE(Id))",
+												"CREATE TABLE PRODUCT_USECASE_PLANTE(Product_Usecase integer not null, Plante integer not null, foreign key(Product_Usecase) references PRODUCT_USECASE(Id), foreign key(Plante) references PLANTE(Id))",
+												"CREATE TABLE PRODUCT_EFFET2(Product integer not null, Effet2 integer not null, foreign key(Product) references PRODUCT(Id), foreign key(Effet2) references EFFET2(Id))",
+												"CREATE TABLE PRODUCT_TOXICITE(Product integer not null, Toxicite integer not null, foreign key(Product) references PRODUCT(Id), foreign key(Toxicite) references TOXICITE(Id))",
+												"CREATE TABLE PRODUCT_CTRINDIC(Product integer not null, CtrIndic integer not null, foreign key(Product) references PRODUCT(Id), foreign key(CtrIndic) references CTRINDIC(Id))",
+												"CREATE TABLE PRODUCT_POSO(Product integer not null, Espece text, Posologie blob, TA blob, foreign key(Product) references PRODUCT(Id))",
+												"CREATE TABLE PLANTE_EFFET2(Plante integer not null, Effet2 integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Effet2) references EFFET2(Id))",
+												"CREATE TABLE PLANTE_CTRINDIC(Plante integer not null, CtrIndic integer not null, foreign key(Plante) references PLANTE(Id), foreign key(CtrIndic) references CTRINDIC(Id))",
+												"CREATE TABLE PLANTE_USEPART(Plante integer not null, UsePart integer not null, foreign key(Plante) references PLANTE(Id), foreign key(UsePart) references USEPART(Id))",
+												"CREATE TABLE PLANTE_FCTS(Id integer primary key, Plante integer not null, Fct integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Fct) references FCTS(Id))",
+												"CREATE TABLE PLANTE_USECASE(Id integer primary key, Plante integer not null, Usecase integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Usecase) references USECASE(Id))"];
+
+		// Reset sqlite3 and database info
+		globalThis.WorkingDB = null;
+		globalThis.sqlite3 = null;
+		
+		// Initialize sqlite3 interface
+		function DoInitSqlite3Module()
+		{
+			document.getElementById("LoadingWasmInfo").innerHTML = "Loading SQLITE3 WASM module ...<br/>";
+			globalThis.sqlite3InitModule().then((OpsResult) => {
+				globalThis.sqlite3 = OpsResult;
+				console.log("Success laoding SQLITE3 module");
+				document.getElementById("LoadingWasmInfo").style.display = 'none';
+				document.getElementById("DatabasePathForm").style.visibility = 'visible';			
+			}).catch((OpsError) => {
+				globalThis.sqlite3 = null;
+				document.getElementById("LoadingWasmInfo").innerHTML = "Failled to load SQLITE3 module<br/>";
+				alert("Failled to load SQLITE3 module");
+			});
+			return;
+		}
+		
+		// Read file
+		function DoReadFileAsync(FileObj,ProgressBarObj)
+		{
+			let FileReaderObj = new FileReader();
+			
+			return new Promise((resolve,reject) => {
+				// setup callbacks
+				FileReaderObj.onprogress = (EventObj) => {
+					ProgressBarObj.value = parseInt((100*EventObj.loaded)/EventObj.total);
+					console.log("Progrees " + ProgressBarObj.value + "%");
+				};
+				FileReaderObj.onload = (EventObj) => {
+					ProgressBarObj.value = 100;
+					console.log("Success loading");
+					resolve(EventObj.target.result);
+				};
+				FileReaderObj.onerror = () => {
+					console.log("Some Error occured during load");
+					reject(null);
+				};
+				// fire read ops
+				FileReaderObj.readAsArrayBuffer(FileObj);			
+			});
+		}
+	
+		// cast a buffer to an image URL data
+		function CastBufferToImgURLData(ImageData)
+		{
+			// NOTA : fromCharCode() is limited in size so use an alternate method
+			//let TmpByteStr = String.fromCharCode(...ImageData);
+			let TmpByteStr = Array.from(ImageData, (byte) =>
+				String.fromCodePoint(byte),
+			).join("");
+			let TmpDataURL = "data:image/*;base64," + btoa(TmpByteStr);
+			return TmpDataURL;
+		}
+	
+		// cast a buffer to rich text
+		function CastBufferToRichText(RichTextData)
+		{
+			// NOTA : fromCharCode() is limited in size so use an alternate method
+			//let TmpByteStr = String.fromCharCode(...RichTextData);
+			let TmpByteStr = Array.from(RichTextData, (byte) =>
+				String.fromCodePoint(byte),
+			).join("");
+			return TmpByteStr;
+		}
+
+		// validate Database schema
+		function IsDatabaseSchemaValid(SchemaInfoObj)
+		{
+			let NbSchemaTable = SchemaInfoObj.length;
+		
+			// nb table in database
+			if(NbSchemaTable != globalThis.RefDatabaseSchema_Cte.length) return false;
+			// check tables format
+			for(let i = 0; i < NbSchemaTable; i++)
+			{
+				let TmpSchemaRow = SchemaInfoObj[i];
+				let TmpTblFormat = TmpSchemaRow[4];
+				if(TmpTblFormat != globalThis.RefDatabaseSchema_Cte[i]) return false;
+			}
+			return true;
+		}
+
+		// build Labo combo
+		function BuildLaboInputCombo(DfltLaboId)
+		{
+			let LaboInputComboTxt = "Laboratoire : ";
+		
+			// pre build combo
+			LaboInputComboTxt += "<select id=\"LaboInputCombo\" style=\"width: 200px;\">";
+			// fetch list labo
+			console.log("Doing combo list labo SQL request ...");
+			let LaboSQLRequestResultObj = [];
+			try {
+				LaboSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from LABO order by Name ASC",
+					rowMode: 'array',
+				});
+				console.log("End of combo list labo SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec combo list labo SQL request");
+			};			
+			let NbResultRow = LaboSQLRequestResultObj.length;
+			console.log("Combo list labo : " + NbResultRow + " elts");
+			if(NbResultRow == 0)
+			{
+				LaboInputComboTxt += "<option value=\"0\">*** NO LABO ***</option>";
+			}
+			else
+			{	
+				LaboInputComboTxt += "<option value=\"-1\">Tous</option>";
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					// fetch info
+					let TmpResultRow = LaboSQLRequestResultObj[i];
+					let LaboId = TmpResultRow[0];
+					let LaboNameTxt = TmpResultRow[1];
+					if(LaboNameTxt == null) LaboNameTxt = "UNKNOWN LABO ID " + LaboId;
+					LaboNameTxt = DoSanitizeNameTxt(LaboNameTxt);
+					// add to combo
+					LaboInputComboTxt += "<option value=\"" + LaboId + "\"";
+					if(LaboId == DfltLaboId) LaboInputComboTxt += " selected ";
+					LaboInputComboTxt += ">" + LaboNameTxt + "</option>";
+				}
+			}
+			// finalize
+			LaboInputComboTxt += "</select>";
+			document.getElementById("LaboCombo").innerHTML = LaboInputComboTxt;
+			return;
+		}
+		
+		// build Fct combo
+		function BuildFctInputCombo(DfltFctId)
+		{
+			let FctInputComboTxt = "Grande fonction concernée : ";
+		
+			// pre build combo
+			FctInputComboTxt += "<select id=\"FctInputCombo\" style=\"width: 200px;\">";
+			// fetch list fct
+			console.log("Doing combo list fct SQL request ...");
+			let FctSQLRequestResultObj = [];
+			try {
+				FctSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from FCTS order by Name ASC",
+					rowMode: 'array',
+				});
+				console.log("End of combo list fct SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec combo list fct SQL request");
+			};			
+			let NbResultRow = FctSQLRequestResultObj.length;
+			console.log("Combo list fct : " + NbResultRow + " elts");
+			if(NbResultRow == 0)
+			{
+				FctInputComboTxt += "<option value=\"0\">*** NO FCT ***</option>";
+			}
+			else
+			{	
+				FctInputComboTxt += "<option value=\"-1\">Tous</option>";
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					// fetch info
+					let TmpResultRow = FctSQLRequestResultObj[i];
+					let FctId = TmpResultRow[0];
+					let FctNameTxt = TmpResultRow[1];
+					if(FctNameTxt == null) FctNameTxt = "UNKNOWN FCT ID " + FctId;
+					FctNameTxt = DoSanitizeNameTxt(FctNameTxt);
+					// add to combo
+					FctInputComboTxt += "<option value=\"" + FctId + "\"";
+					if(FctId == DfltFctId) FctInputComboTxt += " selected ";
+					FctInputComboTxt += ">" + FctNameTxt + "</option>";
+				}
+			}
+			// finalize
+			FctInputComboTxt += "</select>";
+			document.getElementById("FctCombo").innerHTML = FctInputComboTxt;
+			return;
+		}
+		
+		// build Espece combo
+		function BuildEspeceInputCombo()
+		{
+			let EspeceInputComboTxt = "Espèce concernée : ";
+		
+			//build combo
+			EspeceInputComboTxt += "<select id=\"EspeceInputCombo\" style=\"width: 200px;\">";
+			EspeceInputComboTxt += "<option value=\"-1\">Tous</option>";
+			EspeceInputComboTxt += "<option value=\"Chien\">Chien</option>";
+			EspeceInputComboTxt += "<option value=\"Chat\">Chat</option>";
+			EspeceInputComboTxt += "<option value=\"Bovin\">Bovin</option>";
+			EspeceInputComboTxt += "<option value=\"Cheval\">Cheval</option>";
+			// finalize
+			EspeceInputComboTxt += "</select>";
+			document.getElementById("EspeceCombo").innerHTML = EspeceInputComboTxt;
+			return;
+		}
+		
+		//launch search by product
+		function DoSearchProduct()
+		{
+			let ResultListObj = document.getElementById("ProductSearchForm");
+			
+			ResultListObj.style.display = 'inline';
+			document.getElementById("ProductView").style.visibility = 'hidden';
+			document.getElementById("ProductView").style.display = 'none';
+			document.getElementById("ListePlanteForm").style.display = 'none';
+			document.getElementById("MatchingProductList").style.display = 'none';
+			
+			// exec SQL request on Working DB
+			console.log("Doing search products SQL request ...");
+			let SQLRequestResultObj = [];
+			try {
+				SQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from PRODUCT order by Name ASC",
+					rowMode: 'array',
+				});
+				console.log("End of search products SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec search products SQL request");
+			};
+			
+			// Pre build result
+			let ResultListTxt = document.getElementById("ProductList");
+			let ResultList = "";
+
+			// append sql result
+			let NbResultRow = SQLRequestResultObj.length;
+			if(NbResultRow == 0)
+			{
+				ResultList += "NO EXISTING PRODUCT";
+			}
+			else
+			{			
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = SQLRequestResultObj[i];
+					
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + "</span><br/>";
+				}
+			}
+			
+			// show result
+			ResultListTxt.innerHTML = ResultList;
+			ResultListObj.style.visibility = 'visible';
+			return;
+		}
+		
+		//build list plantes
+		function DoListPlantes()
+		{
+			let ResultListObj = document.getElementById("ListePlanteForm");
+			
+			ResultListObj.style.display = 'inline';
+			document.getElementById("ProductView").style.visibility = 'hidden';
+			document.getElementById("ProductView").style.display = 'none';
+			document.getElementById("ProductSearchForm").style.display = 'none';
+			document.getElementById("MatchingProductList").style.display = 'none';
+			
+			// exec SQL request on Working DB
+			console.log("Doing search plantes SQL request ...");
+			let SQLRequestResultObj = [];
+			try {
+				SQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from PLANTE order by Name ASC",
+					rowMode: 'array',
+				});
+				console.log("End of search plantes SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec search plantes SQL request");
+			};
+			
+			// Pre build result
+			let ResultListTxt = document.getElementById("PlanteList");
+			let ResultList = "";
+
+			// append sql result
+			let NbResultRow = SQLRequestResultObj.length;
+			if(NbResultRow == 0)
+			{
+				ResultList += "NO EXISTING PLANTE";
+			}
+			else
+			{			
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = SQLRequestResultObj[i];
+					
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + "</span><br/>";
+				}
+			}
+			
+			// show result
+			ResultListTxt.innerHTML = ResultList;
+			ResultListObj.style.visibility = 'visible';
+			return;
+		}
+		
+		// Import database
+		// NOTA : this function does a fake upload
+		function DoImportDatabase()
+		{
+			let ProgressBarObj = document.getElementById("DatabaseImportProgressBar");
+			let ListFilePathObj = document.getElementById("DatabasePathBtn").files;
+			let NbFile = ListFilePathObj.length;
+
+			// check if a file was selected
+			if(NbFile != 1)
+			{
+				alert("Select a database");
+				return;
+			}
+			let FileObj = ListFilePathObj[0];
+			
+			// Load database
+			document.getElementById("DatabasePathBtn").disabled = true;
+			document.getElementById("DatabaseImportBtn").disabled = true;
+			ProgressBarObj.value = 0;
+			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Loading ...';
+			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
+			DoReadFileAsync(FileObj,ProgressBarObj).then((OpsResult) => {
+				// get result
+				let FileData = OpsResult;
+				// feed sqlite3 with just loaded database
+				document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Parsing ...';
+				try {
+					let TmpData = globalThis.sqlite3.wasm.allocFromTypedArray(FileData);			
+					globalThis.WorkingDB = new globalThis.sqlite3.oo1.DB();
+					let RetCode = globalThis.sqlite3.capi.sqlite3_deserialize(globalThis.WorkingDB,
+																			'main',
+																			TmpData,
+																			FileData.byteLength,
+																			FileData.byteLength,
+																			globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
+					console.log("Deserialize status : " + RetCode);
+					globalThis.WorkingDB.checkRc(RetCode);
+					console.log("Deserialize OK");
+					// try get database schema to validate its format
+					console.log("Getting Database schema ...");
+					let SQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select * from sqlite_schema",
+						rowMode: 'array',
+					});
+					console.log("DB schema : " + SQLRequestResultObj);
+					if(!IsDatabaseSchemaValid(SQLRequestResultObj))
+					{
+						console.log("DB schema is invalid");
+						alert("Database schema is invalid");
+						if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
+						globalThis.WorkingDB = null;
+						document.getElementById("DatabasePathBtn").disabled = false;
+						document.getElementById("DatabaseImportBtn").disabled = false;
+						document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+						return;
+					}
+					console.log("DB schema is OK");
+				} catch(ErrorObj) {
+					console.log("Echec importing database");
+					alert("Echec importing database");
+					if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
+					globalThis.WorkingDB = null;
+					document.getElementById("DatabasePathBtn").disabled = false;
+					document.getElementById("DatabaseImportBtn").disabled = false;
+					document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+					return;
+				}
+				
+				// disable import
+				document.getElementById("DatabasePathForm").style.display = 'none';
+				// activate search
+				//document.getElementById("DatabasePath").innerHTML = "Working with database : " + document.URL;
+				document.getElementById("DatabasePath").innerHTML = "Working with database : " + ListFilePathObj[0].name;
+				document.getElementById("DatabasePath").style.display = 'None';
+				document.getElementById("DatabasePath").style.visibility = 'Hidden';
+				document.getElementById("ListePlanteForm").style.visibility = 'visible';
+				DoListPlantes();
+			}).catch((OpsError) => {
+				alert("Echec reading database");
+				document.getElementById("DatabasePathBtn").disabled = false;
+				document.getElementById("DatabaseImportBtn").disabled = false;
+				document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+			});
+			return;
+		}
+	
+		// Query database product by name 		
+		function DoSearchProductByName()
+		{
+			let ResultListObj = document.getElementById("MatchingProductList");
+			let SearchTxt = document.getElementById("ProductNameLike").value;
+		
+			// exec SQL request on Working DB
+			console.log("Doing search product SQL request ...");
+			let SQLRequestResultObj = [];
+			try {
+				SQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from PRODUCT where Name like $a",
+					rowMode: 'array',
+					bind: {$a: SearchTxt},
+				});
+				console.log("End of search product SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec search product SQL request");
+			};
+			// Pre build result
+			let ResultList = "";
+			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch();\" /><br/>";
+			ResultList += "List of matching products for \"" + SearchTxt + "\" :<br/>(Click on a product to view it)<br/>";		
+			// append sql result
+			let NbResultRow = SQLRequestResultObj.length;
+			if(NbResultRow == 0)
+			{
+				ResultList += "NO MATCHING ROW";
+			}
+			else
+			{			
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = SQLRequestResultObj[i];
+					
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +", -1);\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
+				}
+			}
+			// hidding search form
+			document.getElementById("ProductSearchForm").style.display = 'none';
+			// show result
+			ResultListObj.innerHTML = ResultList;			
+			ResultListObj.style.visibility = 'visible';
+			return;
+		}
+		
+		// Query database product by infos 		
+		function DoSearchProductByInfos()
+		{
+			let ResultListObj = document.getElementById("MatchingProductList");
+			let LaboId = document.getElementById("LaboInputCombo").value;
+			let FctId = document.getElementById("FctInputCombo").value;
+			let Espece = document.getElementById("EspeceInputCombo").value;
+			
+			let ResultList = "";
+			let LaboSQLRequestResultObj = [];
+			let FctSQLRequestResultObj = [];
+			let Fct2SQLRequestResultObj = [];
+			let PosoSQLRequestResultObj = [];
+			
+			//selection de tous les labos correspondants
+			if(LaboId != "Choisir" && LaboId != -1)
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search product SQL request ...");
+				try {
+					LaboSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Id,Name from PRODUCT where Labo like $a",
+						rowMode: 'array',
+						bind: {$a: LaboId},
+					});
+					console.log("End of search product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search product SQL request");
+				};
+			}
+			else
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search product SQL request ...");
+				try {
+					LaboSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Id,Name from PRODUCT",
+						rowMode: 'array',
+					});
+					console.log("End of search product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search product SQL request");
+				};
+			}
+			
+			//selection de toutes les grandes fonctions correspondantes
+			if(FctId != "Choisir" && FctId != -1)
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search product fct SQL request ...");
+				try {
+					FctSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Product from PRODUCT_FCTS where Fct like $a",
+						rowMode: 'array',
+						bind: {$a: FctId},
+					});
+					console.log("End of search product fct SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search product fct SQL request");
+				};
+				
+				// exec SQL request on Working DB
+				console.log("Doing search product fct2 SQL request ...");
+				try {
+					Fct2SQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Product from PRODUCT_FCTS2 where Fct like $a",
+						rowMode: 'array',
+						bind: {$a: FctId},
+					});
+					console.log("End of search product fct2 SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search product fct2 SQL request");
+				};
+			}
+			else
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search product fct SQL request ...");
+				try {
+					FctSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Product from PRODUCT_FCTS",
+						rowMode: 'array',
+					});
+					console.log("End of search product fct SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search product fct SQL request");
+				};
+				
+				// exec SQL request on Working DB
+				console.log("Doing search product fct2 SQL request ...");
+				try {
+					Fct2SQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Product from PRODUCT_FCTS2",
+						rowMode: 'array',
+					});
+					console.log("End of search product fct2 SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search product fct2 SQL request");
+				};
+			}
+			let NbFct2 = Fct2SQLRequestResultObj.length;
+			for(let i=0; i < NbFct2; i++)
+			{
+				let TmpRow = Fct2SQLRequestResultObj[i];
+				FctSQLRequestResultObj.push(TmpRow);
+			}
+			
+			//selection de toutes les poso correspondances
+			if(Espece != "Choisir" && Espece != -1)
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search product poso SQL request ...");
+				try {
+					PosoSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Product from PRODUCT_POSO where Espece like $a",
+						rowMode: 'array',
+						bind: {$a: Espece},
+					});
+					console.log("End of search product poso SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search product poso SQL request");
+				};
+			}
+			else
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search product poso SQL request ...");
+				try {
+					PosoSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Product from PRODUCT_POSO",
+						rowMode: 'array',
+					});
+					console.log("End of search product poso SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search product poso SQL request");
+				};
+			}
+			
+			// Pre build result
+			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch();\" /><br/>";
+			ResultList += "List of matching products :<br/>(Click on a product to view it)<br/>";
+			
+			//chercher les correspondances entre les différentes listes
+			let NbLabo = LaboSQLRequestResultObj.length;
+			let NbFct = FctSQLRequestResultObj.length;
+			let NbPoso = PosoSQLRequestResultObj.length;
+			//console.log(NbLabo + ", " + NbFct + ", " + NbPoso);
+			let ResultObj = [];
+			for(let i=0; i < NbLabo; i++)
+			{
+				let Product = LaboSQLRequestResultObj[i];
+				for(let j=0; j < NbFct; j++)
+				{
+					let Product2 = FctSQLRequestResultObj[j];
+					if(Product[0] == Product2[0])
+					{
+						for(let k=0; k < NbPoso; k++)
+						{
+							let Product3 = PosoSQLRequestResultObj[k];
+							if(Product[0] == Product3[0])
+							{
+								ResultObj.push(Product);
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
+			
+			// append sql result
+			let NbResultRow = ResultObj.length;
+			if(NbResultRow == 0)
+			{
+				ResultList += "NO MATCHING PRODUCT";
+			}
+			else
+			{			
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ResultObj[i];	
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +", -1);\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
+				}
+			}
+			// hidding search form
+			document.getElementById("ProductSearchForm").style.display = 'none';
+			document.getElementById("ProductSearchForm").style.visibility = 'Hidden';
+			// show result
+			ResultListObj.innerHTML = ResultList;
+			ResultListObj.style.display = 'inline';
+			ResultListObj.style.visibility = 'visible';
+			return;
+		}
+
+		// Sanitize Name
+		function DoSanitizeNameTxt(EltNameValue)
+		{
+			// filter out special chars
+			EltNameValue = EltNameValue.replace(/[&\\#,+()$~%'":*?<>{}]/g, '');
+			// remove leading and trailing space
+			EltNameValue = EltNameValue.trim();
+			return EltNameValue;
+		}
+		
+		// Sanitize Txt
+		function DoSanitizeTxt(EltNameValue)
+		{
+			// filter out special chars
+			EltNameValue = EltNameValue.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, '');
+			// remove leading and trailing space
+			EltNameValue = EltNameValue.trim();
+			return EltNameValue;
+		}
+
+		//Query database plante info
+		function DoViewPlante(PlanteId, ProductId)
+		{
+			let PlanteViewObj = document.getElementById("ProductView");
+			
+			let PlanteInfoTxt = "";
+			if(ProductId == -1) PlanteInfoTxt += "<input type=\"button\" value=\"Retour à la recherche\" onclick=\"DoListPlantes();\" /><br/>";
+			else
+			{
+				PlanteInfoTxt += "<input type=\"button\" value=\"Retour au produit\" onclick=\"DoViewProduct(" + ProductId + ", -1);\" /><br/>";
+			}
+			
+			//fetch plante info
+			console.log("Doing plante info SQL request ...");
+			let PlanteSQLRequestResultObj = [];
+			try {
+				PlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select * from PLANTE where Id = $a",
+					rowMode: 'array',
+					bind: {$a: PlanteId},
+				});
+				console.log("End of plante info SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec plante info SQL request");
+			};
+			let NbResultRow = PlanteSQLRequestResultObj.length;
+			if(NbResultRow != 1)
+			{
+				ProductInfoTxt += "Nb plante (" + NbResultRow +") missmatch for id " + PlanteId + "<br/>";
+			}
+			else
+			{
+				// fetch direct info
+				let PlanteInfo = PlanteSQLRequestResultObj[0];
+				let PlanteName = PlanteInfo[1];
+				if(PlanteName == null) PlanteName = "UNDEFINED";
+				PlanteName = DoSanitizeNameTxt(PlanteName);
+				let PlantePhoto = PlanteInfo[2];
+				if(PlantePhoto == null) PlantePhoto = new Uint8Array();
+				let PlanteLatin = PlanteInfo[3];
+				if(PlanteLatin == null) PlanteLatin = "UNDEFINED";
+				PlanteLatin = DoSanitizeNameTxt(PlanteLatin);
+				let PlanteFamille = PlanteInfo[4];
+				if(PlanteFamille == null) PlanteFamille = "UNDEFINED";
+				PlanteFamille = DoSanitizeNameTxt(PlanteFamille);
+				let PlanteBotanique = PlanteInfo[5];
+				if(PlanteBotanique == null) PlanteBotanique = "Aucune donnée.";
+				let PlanteMolecules = PlanteInfo[6];
+				if(PlanteMolecules == null) PlanteMolecules = "Aucune donnée.";
+				let PlantePDyn = PlanteInfo[7];
+				if(PlantePDyn == null) PlantePDyn = "Aucune donnée.";
+				
+				let PlanteP1 = PlanteInfo[8];
+				if(PlanteP1 == null) PlanteP1 = "UNDEFINED";
+				PlanteP1 = DoSanitizeNameTxt(PlanteP1);
+				let PlanteP2 = PlanteInfo[9];
+				if(PlanteP2 == null) PlanteP2 = "UNDEFINED";
+				PlanteP2 = DoSanitizeNameTxt(PlanteP2);
+				let PlanteP3 = PlanteInfo[10];
+				if(PlanteP3 == null) PlanteP3 = "UNDEFINED";
+				PlanteP3 = DoSanitizeNameTxt(PlanteP3);
+				let PlanteP = '';
+				if(PlanteP1 != '') PlanteP += PlanteP1;
+				if(PlanteP2 != '' & PlanteP != '') PlanteP += ', ' + PlanteP2;
+				else PlanteP += PlanteP2;
+				if(PlanteP3 != '' & PlanteP != '') PlanteP += ', ' + PlanteP3;
+				else PlanteP += PlanteP3;
+				
+				let PlantePCin = PlanteInfo[11];
+				if(PlantePCin == null) PlantePCin = "Aucune donnée.";
+				let PlanteGestation = PlanteInfo[12];
+				if(PlanteGestation == null) PlanteGestation = "Aucune indication.<br/>&emsp;Par précaution, éviter de donner pendant la gestation et la lactation.";
+				let PlanteSurdosage = PlanteInfo[13];
+				if(PlanteSurdosage == null) PlanteSurdosage = "Aucune donnée.";
+				let PlanteSources = PlanteInfo[14];
+				if(PlanteSources == null) PlanteSources = "Non renseigné.";
+				let PlanteInterac = PlanteInfo[15];
+				if(PlanteInterac == null) PlanteInterac = "Aucune intéraction connue ce jour.";
+				let Today = PlanteInfo[16];
+				if(Today == null) Today = new Uint8Array();
+				let PlanteRchr = PlanteInfo[17];
+				if(Today == null) PlanteRchr = 0;
+				let PlanteClin = PlanteInfo[18];
+				if(Today == null) PlanteClin = 0;
+				let PlanteReg = PlanteInfo[19];
+				if(Today == null) PlanteReg = 0;
+				let PlanteRegEQ = PlanteInfo[20];
+				if(Today == null) PlanteRegEQ = 0;
+				let PlanteDop = PlanteInfo[21];
+				if(Today == null) PlanteDop = 0;
+				let PlantePoso = PlanteInfo[22];
+				if(PlantePoso == null) PlanteInterac = "Aucune posologie renseignée.";
+				
+				// fetch plante Effet2
+				console.log("Doing plante Effet2 SQL request ...");
+				let PlanteEffet2sSQLRequestResultObj = [];
+				try {
+					PlanteEffet2sSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Effet2 from PLANTE_EFFET2 where Plante = $a",
+						rowMode: 'array',
+						bind: {$a: PlanteId},
+					});
+					console.log("End of plante Effet2s SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec plante Effet2s SQL request");
+				};
+				let PlanteEffet2sTxt = "";
+				let NbEffet2 = PlanteEffet2sSQLRequestResultObj.length;
+				if(NbEffet2 == 0) PlanteEffet2sTxt += "<br/>Aucun effet secondaire rapporté<br/>";
+				else
+				{
+					PlanteEffet2sTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					for(let i = 0; i < NbEffet2; i++)
+					{
+						// fetch Effet2 id
+						let TmpResultRow = PlanteEffet2sSQLRequestResultObj[i];
+						let Effet2Id = TmpResultRow[0];
+						// fecth Effet2 name
+						console.log("Doing Effet2 name " + Effet2Id + " SQL request ...");
+						let Effet2SQLRequestResultObj = [];
+						try {
+							Effet2SQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name from EFFET2 where Id = $a",
+								rowMode: 'array',
+								bind: {$a: Effet2Id},
+							});
+							console.log("End of Effet2 name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec Effet2 name SQL request");
+						};
+						let Effet2NameTxt = "";
+						if(Effet2SQLRequestResultObj.length != 1) Effet2NameTxt += "UNKNOWN Effet2 ID " + Effet2Id;
+						else
+						{
+							let TmpResultRow = Effet2SQLRequestResultObj[0];
+							if(TmpResultRow[0] == null) Effet2NameTxt += "UNDEFINED";
+							else Effet2NameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+						}
+						// add Effet2
+						PlanteEffet2sTxt += "<li class=\"autre\">" + Effet2NameTxt + "</li>";
+					}
+					PlanteEffet2sTxt += "</ul>";
+				}
+				
+				// fetch plante CtrIndic
+				console.log("Doing plante CtrIndic SQL request ...");
+				let PlanteCtrIndicsSQLRequestResultObj = [];
+				try {
+					PlanteCtrIndicsSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select CtrIndic from PLANTE_CTRINDIC where Plante = $a",
+						rowMode: 'array',
+						bind: {$a: PlanteId},
+					});
+					console.log("End of plante CtrIndics SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec plante CtrIndics SQL request");
+				};
+				let PlanteCtrIndicsTxt = "";
+				let NbCtrIndic = PlanteCtrIndicsSQLRequestResultObj.length;
+				if(NbCtrIndic == 0) PlanteCtrIndicsTxt += "<br/>Aucune contre-indication rapportée<br/>";
+				else
+				{
+					PlanteCtrIndicsTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					for(let i = 0; i < NbCtrIndic; i++)
+					{
+						// fetch CtrIndic id
+						let TmpResultRow = PlanteCtrIndicsSQLRequestResultObj[i];
+						let CtrIndicId = TmpResultRow[0];
+						// fecth CtrIndic name
+						console.log("Doing CtrIndic name " + CtrIndicId + " SQL request ...");
+						let CtrIndicSQLRequestResultObj = [];
+						try {
+							CtrIndicSQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name from CTRINDIC where Id = $a",
+								rowMode: 'array',
+								bind: {$a: CtrIndicId},
+							});
+							console.log("End of CtrIndic name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec CtrIndic name SQL request");
+						};
+						let CtrIndicNameTxt = "";
+						if(CtrIndicSQLRequestResultObj.length != 1) CtrIndicNameTxt += "UNKNOWN CtrIndic ID " + CtrIndicId;
+						else
+						{
+							let TmpResultRow = CtrIndicSQLRequestResultObj[0];
+							if(TmpResultRow[0] == null) CtrIndicNameTxt += "UNDEFINED";
+							else CtrIndicNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+						}
+						// add CtrIndic
+						PlanteCtrIndicsTxt += "<li class=\"autre\">" + CtrIndicNameTxt + "</li>";
+					}
+					PlanteCtrIndicsTxt += "</ul>";
+				}
+				
+				// fetch plante UsePart
+				console.log("Doing plante UsePart SQL request ...");
+				let PlanteUsePartsSQLRequestResultObj = [];
+				try {
+					PlanteUsePartsSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select UsePart from PLANTE_USEPART where Plante = $a",
+						rowMode: 'array',
+						bind: {$a: PlanteId},
+					});
+					console.log("End of plante UsePart SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec plante UsePart SQL request");
+				};
+				let PlanteUsePartsTxt = "";
+				let NbUsePart = PlanteUsePartsSQLRequestResultObj.length;
+				if(NbUsePart == 0) PlanteUsePartsTxt += "<br/>Aucune donnée<br/>";
+				else
+				{
+					PlanteUsePartsTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					for(let i = 0; i < NbUsePart; i++)
+					{
+						// fetch UsePart id
+						let TmpResultRow = PlanteUsePartsSQLRequestResultObj[i];
+						let UsePartId = TmpResultRow[0];
+						// fecth UsePart name
+						console.log("Doing UsePart name " + UsePartId + " SQL request ...");
+						let UsePartSQLRequestResultObj = [];
+						try {
+							UsePartSQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name from USEPART where Id = $a",
+								rowMode: 'array',
+								bind: {$a: UsePartId},
+							});
+							console.log("End of UsePart name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec UsePart name SQL request");
+						};
+						let UsePartNameTxt = "";
+						if(UsePartSQLRequestResultObj.length != 1) UsePartNameTxt += "UNKNOWN UsePart ID " + UsePartId;
+						else
+						{
+							let TmpResultRow = UsePartSQLRequestResultObj[0];
+							if(TmpResultRow[0] == null) UsePartNameTxt += "UNDEFINED";
+							else UsePartNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+						}
+						// add UsePart
+						PlanteUsePartsTxt += "<li class=\"autre\">" + UsePartNameTxt + "</li>";
+					}
+					PlanteUsePartsTxt += "</ul>";
+				}
+				
+				//fetch all products associated
+				let ProductIdSQLRequestResultObj = [];
+				try {
+					ProductIdSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Product from PRODUCT_PLANTE where Plante = $a",
+						rowMode: 'array',
+						bind: {$a: PlanteId},
+					});
+					console.log("End of product info SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec product info SQL request");
+				};
+				
+				let ListeProduct = "";
+				let NbProduct = ProductIdSQLRequestResultObj.length;
+				let EspeceTxt = "";
+				for(i = 0; i < NbProduct; i++)
+				{
+					ProductId = ProductIdSQLRequestResultObj[i][0];
+					let ProductSQLRequestResultObj = [];
+					try {
+						ProductSQLRequestResultObj = globalThis.WorkingDB.exec({
+							sql: "select Name from PRODUCT where Id = $a",
+							rowMode: 'array',
+							bind: {$a: ProductId},
+						});
+						console.log("End of product info SQL request.");
+					} catch(ErrorObj) {
+						console.log("Echec product info SQL request");
+					};
+					ProductName = ProductSQLRequestResultObj[0][0];
+					ListeProduct += "<span class=\"PlanteView\" onclick=\"DoViewProduct(" + ProductId + ", " + PlanteId + ");\">" + ProductName + "<br/>";
+				
+					//fetch all especes
+					let EspecesSQLRequestResultObj = [];
+					try {
+						EspecesSQLRequestResultObj = globalThis.WorkingDB.exec({
+							sql: "select Espece from PRODUCT_POSO where Product = $a",
+							rowMode: 'array',
+							bind: {$a: ProductId},
+						});
+						console.log("End of espece info SQL request.");
+					} catch(ErrorObj) {
+						console.log("Echec espece info SQL request");
+					};
+					
+					let NbEspecesMax = EspecesSQLRequestResultObj.length;
+					let CN = false;
+					let CT = false;
+					let CV = false;
+					let BV = false;
+					let Espece = "";
+					for(j = 0; j < NbEspecesMax; j++)
+					{
+						Espece = EspecesSQLRequestResultObj[j][0];
+						if(Espece == "Chien" && !CN)
+						{
+							EspeceTxt += Espece + ", ";
+							CN = true;
+						}
+						if(Espece == "Chat" && !CT)
+						{
+							EspeceTxt += Espece + ", ";
+							CT = true;
+						}
+						if(Espece == "Cheval" && !CV)
+						{
+							EspeceTxt += Espece + ", ";
+							CV = true;
+						}
+						if(Espece == "Bovin" && !BV)
+						{
+							EspeceTxt += Espece + ", ";
+							BV = true;
+						}
+					}
+					EspeceTxt = EspeceTxt.slice(0, -2);
+					
+				}
+				
+				//select IMG+txt Rchr
+				let RchrImg = "";
+				let RchrTxt = "";
+				let nb = 0;
+				while (nb < PlanteRchr)
+				{
+					RchrImg += "<img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/>";
+					nb++;
+				}
+				if(PlanteRchr == 0) RchrTxt = "Aucune recherche expérimentale n'a été effectuée.";
+				else if(PlanteRchr == 1) RchrTxt = "Des recherches ont été faites in vitro.";
+				else if(PlanteRchr == 2) RchrTxt = "Quelques recherches ont été faites sur des rongeurs.";
+				else if(PlanteRchr == 3) RchrTxt = "De  nombreuses recherches ont été faites sur des rongeurs.";
+				else if(PlanteRchr == 4) RchrTxt = "Quelques recherches ont été faites sur des espèces cibles.";
+				else RchrTxt = "De nombreuses recherches ont été faites sur des espèces cibles.";
+				
+				//select IMG Clin
+				let ClinImg = "";
+				let ClinTxt = "";
+				let nb2 = 0;
+				while (nb2 < PlanteClin)
+				{
+					ClinImg += "<img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/>";
+					nb2++;
+				}
+				if(PlanteClin == 0) ClinTxt = "Aucune donnée clinique n'est disponible.";
+				else if(PlanteClin == 1) ClinTxt = "Un essai clinique a été réalisé sur l'une des espèces cibles.";
+				else if(PlanteClin == 2) ClinTxt = "Plusieurs essais cliniques ont été réalisés sur l'une des espèces cibles.";
+				else if(PlanteClin == 3) ClinTxt = "Un essai clinique a été réalisé sur au moins 2 espèces cibles.";
+				else if(PlanteClin == 4) ClinTxt = "Plusieurs essais cliniques ont été réalisés sur au moins 2 espèces cibles.";
+				else ClinTxt = "Plusieurs essai clinique ont été réalisé sur toutes les espèces cibles.";
+				
+				//select txt Reg
+				let TxtReg = "";
+				if(PlanteReg == 1) TxtReg = "Inscrite au tableau 1";
+				else if(PlanteReg == 2) TxtReg = "Inscrite au tableau 2";
+				else if(PlanteReg == 3) TxtReg = "Inscrite sur la liste \"Out-of-scope\"";
+				else TxtReg = "Non inscrite";
+				//select txt RegEQ
+				let TxtRegEQ = "";
+				if(PlanteRegEQ == 1) TxtRegEQ = "Inscrite";
+				else TxtRegEQ = "Non inscrite";
+				//select txt Dop
+				let TxtDop = "";
+				if(PlanteDop == 1) TxtDop = "Réaction positive aux contrôles anti-dopages";
+				if(PlanteDop == 2) TxtDop = "Réaction négative aux contrôles anti-dopages";
+				else TxtDop = "Aucune information disponible";
+				
+				//setup view
+				PlanteInfoTxt += "<table class=\"full\"><tr><td>";
+				PlanteInfoTxt += "<h1>" + PlanteName + "</h1>";
+				PlanteInfoTxt += "<h2>Informations générales</h2>";
+				PlanteInfoTxt += "<img style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(PlantePhoto) + " />";
+				PlanteInfoTxt += "</td><td class=\"casedroite\" style=\"width: 30%; border: 5px; border-style: ridge; border-color: #E5CF45; border-radius: 10px; padding: 15px;\">";
+				PlanteInfoTxt += "<b>Date de dernière mise à jour : </b>" + CastBufferToRichText(Today) + "<br/>";
+				PlanteInfoTxt += "<b>Proprietés principales : </b>" + PlanteP + "<br/>";
+				PlanteInfoTxt += "<b>Espèces chez lesquelles l'utilisation est décrite : </b>" + EspeceTxt + "<br/>";
+				PlanteInfoTxt += "<div class=\"Recherche\"><b>Données expérimentales : </b>" + RchrImg;
+				PlanteInfoTxt += "<span class=\"PopUpRecherches\"><table border = 0px margin-left=auto margin-right=auto valign=center><tr><td align=right></td><td align=center>=</td><td align=left>Aucune recherche expérimentale n'a été effectuée.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Des recherches ont été faites in vitro.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Quelques recherches ont été faites sur des rongeurs.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>De  nombreuses recherches ont été faites sur des rongeurs.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Quelques recherches ont été faites sur des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>De nombreuses recherches ont été faites sur des espèces cibles.</td></tr></table></span></div><br/>";
+				PlanteInfoTxt += "<div class=\"Clinique\"><b>Données cliniques : </b>" + ClinImg;
+				PlanteInfoTxt += "<span class=\"PopUpClinique\"><table border = 0px margin-left=auto margin-right=auto valign=center><tr><td align=right></td><td align=center>=</td><td align=left>Aucune donnée clinique n'est disponible.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Un essai clinique a été réalisé sur l'une des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essais cliniques ont été réalisés sur l'une des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Un essai clinique a été réalisé sur au moins 2 espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essais cliniques ont été réalisés sur au moins 2 espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essai clinique ont été réalisé sur toutes les espèces cibles.</td></tr></table></span></div>";
+				PlanteInfoTxt += "</td></tr>";
+				
+				PlanteInfoTxt += "<tr><td>";
+				PlanteInfoTxt += "<b>Nom scientifique : </b><i>" + PlanteLatin + "</i><br/>";
+				PlanteInfoTxt += "<b>Famille : </b>" + PlanteFamille + "<br/><br/>";
+				PlanteInfoTxt += "<h3>Botanique : </h3>" + CastBufferToRichText(PlanteBotanique);
+				PlanteInfoTxt += "<h3>Partie(s) utilisée(s) : </h3>" + PlanteUsePartsTxt + "<br/>";
+				PlanteInfoTxt += "<h2>Informations médicales</h2>";
+				PlanteInfoTxt += "<h3>Molécules constitutives : </h3>" + CastBufferToRichText(PlanteMolecules) + "<br/>";
+				PlanteInfoTxt += "<h3>Pharmacodynamie : </h3>" + CastBufferToRichText(PlantePDyn) + "<br/>";
+				PlanteInfoTxt += "<h3>Pharmacocinétique : </h3>" + CastBufferToRichText(PlantePCin) + "<br/>";
+				PlanteInfoTxt += "<h3>Données expérimentales : </h3>" + RchrTxt + "<br/>";
+				PlanteInfoTxt += "<h3>Données cliniques : </h3>" + ClinTxt + "<br/>";
+				PlanteInfoTxt += "<h3>Contre-indications : </h3>" + PlanteCtrIndicsTxt + "<br/>";
+				PlanteInfoTxt += "<h3>Effets secondaires : </h3>" + PlanteEffet2sTxt + "<br/>";
+				PlanteInfoTxt += "<h3>Posologie : </h3>" + CastBufferToRichText(PlantePoso) + "<br/>";
+				PlanteInfoTxt += "<h3>Toxicité : </h3>" + CastBufferToRichText(PlanteSurdosage) + "<br/>";
+				PlanteInfoTxt += "&emsp;<b>Gestation et Lactation : </b><br/>&emsp;" + CastBufferToRichText(PlanteGestation) + "<br/>";
+				PlanteInfoTxt += "<h3>Intéractions médicamenteuses : </h3>" + CastBufferToRichText(PlanteInterac) + "<br/>";
+				PlanteInfoTxt += "<h3>Point réglementation : </h3>";
+				PlanteInfoTxt += "&emsp;<b>Inscription à l'annexe du réglement des LMR : </b>" + TxtReg + "<br/>";
+				PlanteInfoTxt += "&emsp;<b>Inscription à la liste des \"subtances essentielles\" pour le traitement des équidés : </b>" + TxtRegEQ + "<br/>";
+				PlanteInfoTxt += "&emsp;<b>Informations concernant le dopage : </b>" + TxtDop + "<br/>";
+				PlanteInfoTxt += "<h2>Sources</h2>";
+				PlanteInfoTxt += CastBufferToRichText(PlanteSources) + "<br/>";PlanteInfoTxt += "</td><td class=\"casedroite\" style=\"width: 30%; vertical-align: top; border-left: 1px solid black; padding-left: 15px;\">";
+				PlanteInfoTxt += "<h2>Liste des produits contenant cette plante</h2>";
+				PlanteInfoTxt += ListeProduct + "<br/>";
+				PlanteInfoTxt += "</td></tr></table>";
+			}
+			// hidding result
+			document.getElementById("ListePlanteForm").style.display = 'none';
+			// showing plante info
+			PlanteViewObj.innerHTML = PlanteInfoTxt;
+			PlanteViewObj.style.visibility = 'visible';
+			PlanteViewObj.style.display = 'inline';
+		}
+
+		// Query database product info
+		function DoViewProduct(ProductId, PlanteId)
+		{
+			let ProductViewObj = document.getElementById("ProductView");
+			
+			// Pre build result
+			let ProductInfoTxt = "";
+			if(PlanteId == -1) ProductInfoTxt += "<input type=\"button\" value=\"Retour à la recherche\" onclick=\"GoBackToSearch();\" /><br/>";
+			else
+			{
+				ProductInfoTxt += "<input type=\"button\" value=\"Retour à la plante\" onclick=\"DoViewPlante(" + PlanteId + ", -1);\" /><br/>";
+			}
+			// fetch product info
+			console.log("Doing product info SQL request ...");
+			let ProductSQLRequestResultObj = [];
+			try {
+				ProductSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select * from PRODUCT where Id = $a",
+					rowMode: 'array',
+					bind: {$a: ProductId},
+				});
+				console.log("End of product info SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec product info SQL request");
+			};
+			let NbResultRow = ProductSQLRequestResultObj.length;
+			if(NbResultRow != 1)
+			{
+				ProductInfoTxt += "Nb product (" + NbResultRow +") missmatch for id " + ProductId + "<br/>";
+			}
+			else
+			{
+				// fetch direct info
+				let ProductInfo = ProductSQLRequestResultObj[0];
+				let ProductNameTxt = ProductInfo[1];
+				if(ProductNameTxt == null) ProductNameTxt = "UNDEFINED";
+				ProductNameTxt = DoSanitizeNameTxt(ProductNameTxt);
+				let ProductPhotoBlob = ProductInfo[2];
+				if(ProductPhotoBlob == null) ProductPhotoBlob = new Uint8Array();
+				let GaleniqueId = ProductInfo[3];
+				let CategorieId = ProductInfo[4];
+				let DMVId = ProductInfo[5];
+				let LaboId = ProductInfo[6];
+				let ProductProprietesBlob = ProductInfo[7];
+				if(ProductProprietesBlob == null) ProductProprietesBlob = "Aucune information.";
+				let ProductPrecautionsBlob = ProductInfo[8];
+				if(ProductPrecautionsBlob == null) ProductPrecautionsBlob = "Aucune précaution d'emploi renseignée.";
+				let Today = ProductInfo[9];
+				if(Today == null) Today = new Uint8Array();
+				
+				// fetch Galenique name
+				console.log("Doing Galenique name " + GaleniqueId + " SQL request ...");
+				let GaleniqueSQLRequestResultObj = [];
+				try {
+					GaleniqueSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Name from Galenique where Id = $a",
+						rowMode: 'array',
+						bind: {$a: GaleniqueId},
+					});
+					console.log("End of Galenique name SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec Galenique name SQL request");
+				};
+				let GaleniqueNameTxt = "";
+				if(GaleniqueSQLRequestResultObj.length != 1) GaleniqueNameTxt += "UNKNOWN Galenique ID " + GaleniqueId;
+				else
+				{
+					let TmpResultRow = GaleniqueSQLRequestResultObj[0];
+					if(TmpResultRow[0] == null) GaleniqueNameTxt += "UNDEFINED";
+					else GaleniqueNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+				}
+				
+				// fetch Categorie name
+				console.log("Doing Categorie name " + CategorieId + " SQL request ...");
+				let CategorieSQLRequestResultObj = [];
+				try {
+					CategorieSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Name from Categorie where Id = $a",
+						rowMode: 'array',
+						bind: {$a: CategorieId},
+					});
+					console.log("End of Categorie name SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec Categorie name SQL request");
+				};
+				let CategorieNameTxt = "";
+				if(CategorieSQLRequestResultObj.length != 1) CategorieNameTxt += "UNKNOWN Categorie ID " + CategorieId;
+				else
+				{
+					let TmpResultRow = CategorieSQLRequestResultObj[0];
+					if(TmpResultRow[0] == null) CategorieNameTxt += "UNDEFINED";
+					else CategorieNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+				}
+				
+				// fetch DMV info
+				console.log("Doing DMV info ...");
+				let DMVTxt = '';
+				if(DMVId == true) DMVTxt = 'Oui';
+				else DMVTxt = 'Non';
+				
+				// fetch labo name
+				console.log("Doing labo name " + LaboId + " SQL request ...");
+				let LaboSQLRequestResultObj = [];
+				try {
+					LaboSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Name from LABO where Id = $a",
+						rowMode: 'array',
+						bind: {$a: LaboId},
+					});
+					console.log("End of labo name SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec labo name SQL request");
+				};
+				let LaboNameTxt = "";
+				if(LaboSQLRequestResultObj.length != 1) LaboNameTxt += "UNKNOWN LABO ID " + LaboId;
+				else
+				{
+					let TmpResultRow = LaboSQLRequestResultObj[0];
+					if(TmpResultRow[0] == null) LaboNameTxt += "UNDEFINED";
+					else LaboNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+				}
+				
+				//fetch plantes
+				console.log("Doing product plantes SQL request...");
+				let ProductPlantesSQLRequestResultObj = [];
+				try {
+					ProductPlantesSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Plante, UsePart from PRODUCT_PLANTE where Product = $a",
+						rowMode: 'array',
+						bind: {$a: ProductId},
+					});
+					console.log("End of product plantes SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec product plantes SQL request");
+				};
+				let ProductPlanteTxt = "";
+				let NbPlante = ProductPlantesSQLRequestResultObj.length;
+				if(NbPlante == 0) ProductPlanteTxt += "NON RENSEIGNE<br/>";
+				else{
+					ProductPlanteTxt += "<table border=1 cellspacing=0 cellpadding=5 valign=center> <tr align=center><th>Plante</th><th>Nom scientifique</th><th>Partie utilisée</th></tr>";
+					for(let i = 0; i < NbPlante; i++)
+					{
+						ProductPlanteTxt += "<tr align=center>";
+						// fetch plante id
+						let TmpResultRow = ProductPlantesSQLRequestResultObj[i];
+						let PlanteId = TmpResultRow[0];
+						let UsePartId = TmpResultRow[1];
+						// fecth plante name
+						console.log("Doing plante name " + PlanteId + " SQL request ...");
+						let PlanteSQLRequestResultObj = [];
+						try {
+							PlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name,Latin from PLANTE where Id = $a",
+								rowMode: 'array',
+								bind: {$a: PlanteId},
+							});
+							console.log("End of plante name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec plante name SQL request");
+						};
+						let PlanteNameTxt = "";
+						let LatinNameTxt = "";
+						if(PlanteSQLRequestResultObj.length != 1) PlanteNameTxt += "UNKNOWN Plante ID " + PlanteId;
+						else
+						{
+							let TmpResultRow = PlanteSQLRequestResultObj[0];
+							if(TmpResultRow[0] == null) UsecaseNameTxt += "UNDEFINED";
+							else PlanteNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+							if(TmpResultRow[1] == null) UsecaseNameTxt += "UNDEFINED";
+							else LatinNameTxt += DoSanitizeNameTxt(TmpResultRow[1]);
+						}
+						// add plante
+						ProductPlanteTxt += "<td><span class=\"PlanteView\" onclick=\"DoViewPlante(" + PlanteId + "," + ProductId + ");\">" + PlanteNameTxt + "</span></td>";
+						ProductPlanteTxt += "<td><i>" + LatinNameTxt + "</i></td>";
+						
+						// fecth UsePart name
+						console.log("Doing UsePart name " + UsePartId + " SQL request ...");
+						let UsePartSQLRequestResultObj = [];
+						try {
+							UsePartSQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name from USEPART where Id = $a",
+								rowMode: 'array',
+								bind: {$a: UsePartId},
+							});
+							console.log("End of UsePart name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec UsePart name SQL request");
+						};
+						let UsePartNameTxt = "";
+						if(UsePartSQLRequestResultObj.length != 1) UsePartNameTxt += "UNKNOWN UsePart ID " + UsePartId;
+						else
+						{
+							let TmpResultRow = UsePartSQLRequestResultObj[0];
+							if(TmpResultRow[0] == null) UsePartNameTxt += "UNDEFINED";
+							else UsePartNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+						}
+						// add UsePart
+						ProductPlanteTxt += "<td>" + UsePartNameTxt + "</td>";
+					}
+					ProductPlanteTxt += "</tr></table>";
+				}
+				
+				//fetch grandes fonctions
+				console.log("Doing product fcts SQL request ...");
+				let ProductFctsSQLRequestResultObj = [];
+				try {
+					ProductFctsSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Fct from PRODUCT_FCTS where Product = $a",
+						rowMode: 'array',
+						bind: {$a: ProductId},
+					});
+					console.log("End of product fcts SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec product fcts SQL request");
+				};
+				//fecth usecases of product
+				console.log("Doing product usecases SQL request ...");
+				let ProductUsecasesSQLRequestResultObj = [];
+				try {
+					ProductUsecasesSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Id,Usecase from PRODUCT_USECASE where Product = $a",
+						rowMode: 'array',
+						bind: {$a: ProductId},
+					});
+					console.log("End of product usecases SQL request.");
+					} catch(ErrorObj) {
+					console.log("Echec product usecases SQL request");
+				};
+				let NbUsecases = ProductUsecasesSQLRequestResultObj.length;
+				
+				let ProductFctsTxt = "";
+				let GrdFctsTxt = "";
+				let NbFcts = ProductFctsSQLRequestResultObj.length;
+				if(NbFcts == 0) ProductFctsTxt += "NON RENSEIGNE<br/>";
+				else
+				{
+					ProductFctsTxt += "<ul style=\"list-style-type:'► ';\" >"
+					for(let i = 0; i < NbFcts; i++)
+					{
+						// fetch fct id
+						let TmpResultRow = ProductFctsSQLRequestResultObj[i];
+						let FctId = TmpResultRow[0];
+						// fecth Fct name
+						console.log("Doing Fct name " + FctId + " SQL request ...");
+						let FCTQLRequestResultObj = [];
+						try {
+							FCTQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name from FCTS where Id = $a",
+								rowMode: 'array',
+								bind: {$a: FctId},
+							});
+							console.log("End of Fct name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec Fct name SQL request");
+						};
+						let FctNameTxt = "";
+						if(FCTQLRequestResultObj.length != 1) FctNameTxt += "UNKNOWN Fct ID " + FctId;
+						else
+						{
+							let TmpResultRow = FCTQLRequestResultObj[0];
+							if(TmpResultRow[0] == null) FctNameTxt += "UNDEFINED";
+							else FctNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+						}
+						// add Fct
+						GrdFctsTxt += FctNameTxt + ", ";
+						ProductFctsTxt += "<li class=\"fct\">" + FctNameTxt + "<br/>";
+						
+						//fecth usecases of fct
+						console.log("Doing fct usecases SQL request ...");
+						let FctUsecasesSQLRequestResultObj = [];
+						try {
+							FctUsecasesSQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Id from USECASE where Fct = $a",
+								rowMode: 'array',
+								bind: {$a: FctId},
+							});
+							console.log("End of fct usecases SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec fct usecases SQL request");
+						};
+						
+						let UsecasesTxt = "";
+						let NbFctUsecases = FctUsecasesSQLRequestResultObj.length;
+						for(let j=0; j < NbFctUsecases; j++)
+						{
+							let FctUsecaseId = FctUsecasesSQLRequestResultObj[j][0];
+							for(let k=0; k < NbUsecases; k++)
+							{
+								let UsecaseId = ProductUsecasesSQLRequestResultObj[k][1];
+								if(FctUsecaseId == UsecaseId)
+								{
+									//fetch usecase name
+									console.log("Doing usecase name " + UsecaseId + " SQL request ...");
+									let UsecaseSQLRequestResultObj = [];
+									try {
+										UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
+											sql: "select Name from USECASE where Id = $a",
+											rowMode: 'array',
+											bind: {$a: UsecaseId},
+										});
+										console.log("End of usecase name SQL request.");
+									} catch(ErrorObj) {
+										console.log("Echec usecase name SQL request");
+									};
+									let UsecaseNameTxt = "";
+									if(UsecaseSQLRequestResultObj.length != 1) UsecaseNameTxt += "UNKNOWN USECASE ID " + UsecaseId;
+									else
+									{
+										let TmpResultRow = UsecaseSQLRequestResultObj[0];
+										if(TmpResultRow[0] == null) UsecaseNameTxt += "UNDEFINED";
+										else UsecaseNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+									}
+									
+									UsecasesTxt += "<tr align=center><td>" + UsecaseNameTxt + "</td>";
+									
+									let Product_UsecaseId = ProductUsecasesSQLRequestResultObj[k][0];
+									// fetch product usecase plantes
+									console.log("Doing product usecase plante SQL request ...");
+									let ProductUsecasePlanteSQLRequestResultObj = [];
+									try {
+										ProductUsecasePlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+											sql: "select Plante from PRODUCT_USECASE_PLANTE where Product_Usecase = $a",
+											rowMode: 'array',
+											bind: {$a: Product_UsecaseId},
+										});
+										console.log("End of product usecase plante SQL request.");
+									} catch(ErrorObj) {
+										console.log("Echec product usecase plante SQL request");
+									};
+									
+									let ProductUsecasePlanteTxt = "<td>";
+									let NbPlante = ProductUsecasePlanteSQLRequestResultObj.length;
+									if(NbPlante == 0) ProductUsecasePlanteTxt += "<br/>";
+									else
+									{
+										for(let l = 0; l < NbPlante; l++)
+										{
+											// fetch usecase id
+											let TmpResultRow = ProductUsecasePlanteSQLRequestResultObj[l];
+											let PlanteId = TmpResultRow[0];
+											// fecth plante name
+											console.log("Doing plante name " + PlanteId + " SQL request ...");
+											let PlanteSQLRequestResultObj = [];
+											try {
+												PlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+													sql: "select Name from PLANTE where Id = $a",
+													rowMode: 'array',
+													bind: {$a: PlanteId},
+												});
+												console.log("End of plante name SQL request.");
+											} catch(ErrorObj) {
+												console.log("Echec plante name SQL request");
+											};
+											let PlanteNameTxt = "";
+											if(PlanteSQLRequestResultObj.length != 1) PlanteNameTxt += "UNKNOWN PLANTE ID " + PlanteId;
+											else
+											{
+												let TmpResultRow = PlanteSQLRequestResultObj[0];
+												if(TmpResultRow[0] == null) PlanteNameTxt += "UNDEFINED";
+												else PlanteNameTxt += "<span class=\"PlanteView\" onclick=\"DoViewPlante(" + PlanteId+ "," + ProductId + ");\">" + DoSanitizeNameTxt(TmpResultRow[0]) + "</span>";
+											}
+											// add plante
+											ProductUsecasePlanteTxt += PlanteNameTxt + ", ";
+										}
+										ProductUsecasePlanteTxt = ProductUsecasePlanteTxt.slice(0, -2);
+									}
+									UsecasesTxt += "</td>" + ProductUsecasePlanteTxt +"</tr>";
+								}
+							}
+						}
+						UsecasesTxt = "<table border=1 cellspacing=0 cellpadding=5 valign=center> <tr align=center><th>Utilisation</th><th>En association avec</th></tr>" + UsecasesTxt + "</tr></table>";
+						ProductFctsTxt += UsecasesTxt + "</li><br/>";
+					}
+					ProductFctsTxt += "</ul>";
+					GrdFctsTxt = GrdFctsTxt.slice(0, -2);
+				}
+				
+				//fetch grandes fonctions 2
+				console.log("Doing product fcts2 SQL request ...");
+				let ProductFcts2SQLRequestResultObj = [];
+				try {
+					ProductFcts2SQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Fct from PRODUCT_FCTS2 where Product = $a",
+						rowMode: 'array',
+						bind: {$a: ProductId},
+					});
+					console.log("End of product fcts2 SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec product fcts2 SQL request");
+				};
+				
+				let ProductFcts2Txt = "";
+				let NbFcts2 = ProductFcts2SQLRequestResultObj.length;
+				if(NbFcts2 == 0) ProductFcts2Txt += "NON RENSEIGNE<br/>";
+				else
+				{
+					ProductFcts2Txt += "<ul style=\"list-style-type:'► ';\">"
+					for(let i = 0; i < NbFcts2; i++)
+					{
+						// fetch fct id
+						let TmpResultRow = ProductFcts2SQLRequestResultObj[i];
+						let Fct2Id = TmpResultRow[0];
+						// fecth Fct name
+						console.log("Doing Fct2 name " + Fct2Id + " SQL request ...");
+						let FCT2SQLRequestResultObj = [];
+						try {
+							FCT2SQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name from FCTS where Id = $a",
+								rowMode: 'array',
+								bind: {$a: Fct2Id},
+							});
+							console.log("End of Fct2 name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec Fct2 name SQL request");
+						};
+						let Fct2NameTxt = "";
+						if(FCT2SQLRequestResultObj.length != 1) Fct2NameTxt += "UNKNOWN Fct ID " + FctId;
+						else
+						{
+							let TmpResultRow = FCT2SQLRequestResultObj[0];
+							if(TmpResultRow[0] == null) Fct2NameTxt += "UNDEFINED";
+							else Fct2NameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+						}
+						// add Fct
+						ProductFcts2Txt += "<li class=\"fct\">" + Fct2NameTxt + "<br/>";
+						
+						//fecth usecases of fct
+						console.log("Doing fct2 usecases SQL request ...");
+						let Fct2UsecasesSQLRequestResultObj = [];
+						try {
+							Fct2UsecasesSQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Id from USECASE where Fct = $a",
+								rowMode: 'array',
+								bind: {$a: Fct2Id},
+							});
+							console.log("End of fct2 usecases SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec fct2 usecases SQL request");
+						};
+						
+						let UsecasesTxt = "";
+						let NbFct2Usecases = Fct2UsecasesSQLRequestResultObj.length;
+						for(let j=0; j < NbFct2Usecases; j++)
+						{
+							let Fct2UsecaseId = Fct2UsecasesSQLRequestResultObj[j][0];
+							for(let k=0; k < NbUsecases; k++)
+							{
+								let UsecaseId = ProductUsecasesSQLRequestResultObj[k][1];
+								if(Fct2UsecaseId == UsecaseId)
+								{
+									//fetch usecase name
+									console.log("Doing usecase name " + UsecaseId + " SQL request ...");
+									let UsecaseSQLRequestResultObj = [];
+									try {
+										UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
+											sql: "select Name from USECASE where Id = $a",
+											rowMode: 'array',
+											bind: {$a: UsecaseId},
+										});
+										console.log("End of usecase name SQL request.");
+									} catch(ErrorObj) {
+										console.log("Echec usecase name SQL request");
+									};
+									let UsecaseNameTxt = "";
+									if(UsecaseSQLRequestResultObj.length != 1) UsecaseNameTxt += "UNKNOWN USECASE ID " + UsecaseId;
+									else
+									{
+										let TmpResultRow = UsecaseSQLRequestResultObj[0];
+										if(TmpResultRow[0] == null) UsecaseNameTxt += "UNDEFINED";
+										else UsecaseNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+									}
+									
+									UsecasesTxt += "<tr align=center><td>" + UsecaseNameTxt + "</td>";
+									
+									let Product_UsecaseId = ProductUsecasesSQLRequestResultObj[k][0];
+									// fetch product usecase plantes
+									console.log("Doing product usecase plante SQL request ...");
+									let ProductUsecasePlanteSQLRequestResultObj = [];
+									try {
+										ProductUsecasePlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+											sql: "select Plante from PRODUCT_USECASE_PLANTE where Product_Usecase = $a",
+											rowMode: 'array',
+											bind: {$a: Product_UsecaseId},
+										});
+										console.log("End of product usecase plante SQL request.");
+									} catch(ErrorObj) {
+										console.log("Echec product usecase plante SQL request");
+									};
+									
+									let ProductUsecasePlanteTxt = "<td>";
+									let NbPlante = ProductUsecasePlanteSQLRequestResultObj.length;
+									if(NbPlante == 0) ProductUsecasePlanteTxt += "<br/>";
+									else
+									{
+										for(let l = 0; l < NbPlante; l++)
+										{
+											// fetch usecase id
+											let TmpResultRow = ProductUsecasePlanteSQLRequestResultObj[l];
+											let PlanteId = TmpResultRow[0];
+											// fecth plante name
+											console.log("Doing plante name " + PlanteId + " SQL request ...");
+											let PlanteSQLRequestResultObj = [];
+											try {
+												PlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+													sql: "select Name from PLANTE where Id = $a",
+													rowMode: 'array',
+													bind: {$a: PlanteId},
+												});
+												console.log("End of plante name SQL request.");
+											} catch(ErrorObj) {
+												console.log("Echec plante name SQL request");
+											};
+											let PlanteNameTxt = "";
+											if(PlanteSQLRequestResultObj.length != 1) PlanteNameTxt += "UNKNOWN PLANTE ID " + PlanteId;
+											else
+											{
+												let TmpResultRow = PlanteSQLRequestResultObj[0];
+												if(TmpResultRow[0] == null) PlanteNameTxt += "UNDEFINED";
+												else PlanteNameTxt += "<span class=\"PlanteView\" onclick=\"DoViewPlante(" + PlanteId+ "," + ProductId + ");\">" + DoSanitizeNameTxt(TmpResultRow[0]) + "</span>";
+											}
+											// add plante
+											ProductUsecasePlanteTxt += PlanteNameTxt + ", ";
+										}
+										ProductUsecasePlanteTxt = ProductUsecasePlanteTxt.slice(0, -2);
+									}
+									UsecasesTxt += "</td>" + ProductUsecasePlanteTxt +"</tr>";
+								}
+							}
+						}
+						UsecasesTxt = "<table border=1 cellspacing=0 cellpadding=5 valign=center> <tr align=center><th>Utilisation</th><th>En association avec</th></tr>" + UsecasesTxt + "</tr></table>";
+						ProductFcts2Txt += UsecasesTxt + "</li><br/>";
+					}
+					ProductFcts2Txt += "</ul>";
+				}
+				
+				// fetch product Effet2
+				console.log("Doing product Effet2 SQL request ...");
+				let ProductEffet2sSQLRequestResultObj = [];
+				try {
+					ProductEffet2sSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Effet2 from PRODUCT_EFFET2 where Product = $a",
+						rowMode: 'array',
+						bind: {$a: ProductId},
+					});
+					console.log("End of product Effet2s SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec product Effet2s SQL request");
+				};
+				let ProductEffet2sTxt = "";
+				let NbEffet2 = ProductEffet2sSQLRequestResultObj.length;
+				if(NbEffet2 == 0) ProductEffet2sTxt += "&emsp;Aucun effet secondaire rapporté";
+				else
+				{
+					ProductEffet2sTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					for(let i = 0; i < NbEffet2; i++)
+					{
+						// fetch Effet2 id
+						let TmpResultRow = ProductEffet2sSQLRequestResultObj[i];
+						let Effet2Id = TmpResultRow[0];
+						// fecth Effet2 name
+						console.log("Doing Effet2 name " + Effet2Id + " SQL request ...");
+						let Effet2SQLRequestResultObj = [];
+						try {
+							Effet2SQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name from EFFET2 where Id = $a",
+								rowMode: 'array',
+								bind: {$a: Effet2Id},
+							});
+							console.log("End of Effet2 name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec Effet2 name SQL request");
+						};
+						let Effet2NameTxt = "";
+						if(Effet2SQLRequestResultObj.length != 1) Effet2NameTxt += "UNKNOWN Effet2 ID " + Effet2Id;
+						else
+						{
+							let TmpResultRow = Effet2SQLRequestResultObj[0];
+							if(TmpResultRow[0] == null) Effet2NameTxt += "UNDEFINED";
+							else Effet2NameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+						}
+						// add Effet2
+						ProductEffet2sTxt += "<li class=\"autre\">" + Effet2NameTxt + "</li>";
+					}
+					ProductEffet2sTxt += "</ul>";
+				}
+				
+				// fetch product toxicite
+				console.log("Doing product toxicite SQL request ...");
+				let ProductToxicitesSQLRequestResultObj = [];
+				try {
+					ProductToxicitesSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Toxicite from PRODUCT_TOXICITE where Product = $a",
+						rowMode: 'array',
+						bind: {$a: ProductId},
+					});
+					console.log("End of product Toxicites SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec product Toxicites SQL request");
+				};
+				let ProductToxicitesTxt = "";
+				let NbToxicite = ProductToxicitesSQLRequestResultObj.length;
+				if(NbToxicite == 0) ProductToxicitesTxt += "&emsp;Aucune toxicité rapportée";
+				else
+				{
+					ProductToxicitesTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					for(let i = 0; i < NbToxicite; i++)
+					{
+						// fetch Toxicite id
+						let TmpResultRow = ProductToxicitesSQLRequestResultObj[i];
+						let ToxiciteId = TmpResultRow[0];
+						// fecth Toxicite name
+						console.log("Doing Toxicite name " + ToxiciteId + " SQL request ...");
+						let ToxiciteSQLRequestResultObj = [];
+						try {
+							ToxiciteSQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name from TOXICITE where Id = $a",
+								rowMode: 'array',
+								bind: {$a: ToxiciteId},
+							});
+							console.log("End of Toxicite name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec Toxicite name SQL request");
+						};
+						let ToxiciteNameTxt = "";
+						if(ToxiciteSQLRequestResultObj.length != 1) ToxiciteNameTxt += "UNKNOWN Toxicite ID " + ToxiciteId;
+						else
+						{
+							let TmpResultRow = ToxiciteSQLRequestResultObj[0];
+							if(TmpResultRow[0] == null) ToxiciteNameTxt += "UNDEFINED";
+							else ToxiciteNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+						}
+						// add Toxicite
+						ProductToxicitesTxt += "<li class=\"autre\">" + ToxiciteNameTxt + "</li>";
+					}
+					ProductToxicitesTxt += "</ul>";
+				}
+				
+				// fetch product CtrIndic
+				console.log("Doing product CtrIndic SQL request ...");
+				let ProductCtrIndicsSQLRequestResultObj = [];
+				try {
+					ProductCtrIndicsSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select CtrIndic from PRODUCT_CTRINDIC where Product = $a",
+						rowMode: 'array',
+						bind: {$a: ProductId},
+					});
+					console.log("End of product CtrIndics SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec product CtrIndics SQL request");
+				};
+				let ProductCtrIndicsTxt = "";
+				let NbCtrIndic = ProductCtrIndicsSQLRequestResultObj.length;
+				if(NbCtrIndic == 0) ProductCtrIndicsTxt += "&emsp;Aucune contre-indication rapportée";
+				else
+				{
+					ProductCtrIndicsTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					for(let i = 0; i < NbCtrIndic; i++)
+					{
+						// fetch CtrIndic id
+						let TmpResultRow = ProductCtrIndicsSQLRequestResultObj[i];
+						let CtrIndicId = TmpResultRow[0];
+						// fecth CtrIndic name
+						console.log("Doing CtrIndic name " + CtrIndicId + " SQL request ...");
+						let CtrIndicSQLRequestResultObj = [];
+						try {
+							CtrIndicSQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name from CTRINDIC where Id = $a",
+								rowMode: 'array',
+								bind: {$a: CtrIndicId},
+							});
+							console.log("End of CtrIndic name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec CtrIndic name SQL request");
+						};
+						let CtrIndicNameTxt = "";
+						if(CtrIndicSQLRequestResultObj.length != 1) CtrIndicNameTxt += "UNKNOWN CtrIndic ID " + CtrIndicId;
+						else
+						{
+							let TmpResultRow = CtrIndicSQLRequestResultObj[0];
+							if(TmpResultRow[0] == null) CtrIndicNameTxt += "UNDEFINED";
+							else CtrIndicNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+						}
+						// add CtrIndic
+						ProductCtrIndicsTxt += "<li class=\"autre\">" + CtrIndicNameTxt + "</li>";
+					}
+					ProductCtrIndicsTxt += "</ul>";
+				}
+
+
+				//fetch poso
+				console.log("Doing product poso SQL request ...");
+				let ProductPosoSQLRequestResultObj = [];
+				try {
+					ProductPosoSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Espece,Posologie,TA from PRODUCT_POSO where Product = $a",
+						rowMode: 'array',
+						bind: {$a: ProductId},
+					});
+					console.log("End of product Poso SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec product Poso SQL request");
+				};
+				let ProductPosoTxt = "";
+				let EspecesTxt = "";
+				let ProductTATxt = "";
+				let NbPoso = ProductPosoSQLRequestResultObj.length;
+				if(NbPoso == 0)
+				{
+					ProductPosoTxt += "&emsp;Aucune posologie indiquée<br/>";
+					ProductTATxt += "&emsp;Aucune temps d'attente indiqué<br/>";
+				}
+				else
+				{
+					ProductPosoTxt += "<ul style=\"list-style-type: none;\"><li class=\"plante\"><table border=1 cellspacing=0 cellpadding=5 valign=center><tr align=center><th>Espèce</th><th>Posologie</th></tr><tr valign=center>";
+					ProductTATxt += "<ul style=\"list-style-type: none;\"><li class=\"plante\"><table border=1 cellspacing=0 cellpadding=5 valign=center><tr align=center><th>Espèce</th><th>Temps d'attente</th></tr><tr valign=center>"
+					for(let i = 0; i < NbPoso; i++)
+					{
+						let TmpResultRow = ProductPosoSQLRequestResultObj[i];
+						let Espece = TmpResultRow[0];
+						let Poso = TmpResultRow[1];
+						let TA = TmpResultRow[2];
+						ProductPosoTxt += "<tr align=center><td>" + Espece + "</td>";
+						ProductTATxt += "<tr align=center><td>" + Espece + "</td>";
+						EspecesTxt += Espece + ", ";
+						ProductPosoTxt += "<td>" + CastBufferToRichText(Poso) + "</td></tr>";
+						ProductTATxt += "<td>" + CastBufferToRichText(TA) + "</td></tr>";
+					}
+					ProductPosoTxt += "</table></li></ul>";
+					ProductTATxt += "</table></li></ul>";
+					EspecesTxt = EspecesTxt.slice(0, -2);
+				}
+				
+				// setup view
+				
+				ProductInfoTxt += "<table class=\"full\"><tr><td>";
+				ProductInfoTxt += "<img style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(ProductPhotoBlob) + " /><br/></td><td>";
+				ProductInfoTxt += "<h1>" + ProductNameTxt + "</h1>";
+				ProductInfoTxt += "</td><td class=\"casedroite\" style=\"width: 30%; border: 5px; border-style: ridge; border-color: #E5CF45; border-radius: 10px; padding: 15px;\">";
+				ProductInfoTxt += "<b>Date de dernière mise à jour : </b>" + CastBufferToRichText(Today) +"<br/>";
+				ProductInfoTxt += "<b>Principales fonctions concernées : </b>" + GrdFctsTxt + "<br/>";
+				ProductInfoTxt += "<b>Espèces concernées : </b>" + EspecesTxt + "<br/>";
+				ProductInfoTxt += "</td></tr></table>";
+				
+				ProductInfoTxt += "<h2>Composition</h2>";
+				ProductInfoTxt += "<ul style=\"list-style-type: none;\"><li class=\"plante\">" + ProductPlanteTxt + "</li></ul>";
+				ProductInfoTxt += "<h2>Forme galénique</h2>";
+				ProductInfoTxt += "&emsp;" + GaleniqueNameTxt + "<br/>";
+				
+				ProductInfoTxt += "<h2>Informations cliniques</h2>";
+				ProductInfoTxt += "<h3>Espèces cibles</h3>";
+				ProductInfoTxt += "&emsp;" + EspecesTxt + "<br/>";
+				ProductInfoTxt += "<h3>Utilisations</h3>";
+				ProductInfoTxt += "&emsp;<b>Utilisations principales : </b>" + ProductFctsTxt;
+				ProductInfoTxt += "&emsp;<b>Utilisations secondaires : </b>" + ProductFcts2Txt;
+				ProductInfoTxt += "<h3>Contre-indications</h3>";
+				ProductInfoTxt += ProductCtrIndicsTxt;
+				ProductInfoTxt += "<h3>Effets secondaires</h3>";
+				ProductInfoTxt += ProductEffet2sTxt;
+				ProductInfoTxt += "<h3>Posologie</h3>";
+				ProductInfoTxt += ProductPosoTxt;
+				ProductInfoTxt += "<h3>Toxicité</h3>";
+				ProductInfoTxt += ProductToxicitesTxt;
+				ProductInfoTxt += "<h3>Temps d'attente</h3>";
+				ProductInfoTxt += ProductTATxt;
+				
+				ProductInfoTxt += "<h2>Propriétés pharmacologiques</h2>";
+				ProductInfoTxt += CastBufferToRichText(ProductProprietesBlob) + "<br/>";
+				
+				ProductInfoTxt += "<h2>Informations pharmaceutiques</h2>";
+				ProductInfoTxt += "<h3>Précautions d'emploi</h3>";
+				ProductInfoTxt += CastBufferToRichText(ProductPrecautionsBlob) + "<br/>";
+				ProductInfoTxt += "<h3>Nature du produit</h3>";
+				ProductInfoTxt += "&emsp;" + CategorieNameTxt + "<br/>";
+				
+				ProductInfoTxt += "<h2>Laboratoire</h2>";
+				ProductInfoTxt += "&emsp;" + LaboNameTxt + "<br/>";
+				ProductInfoTxt += "<h2>Présence dans le DMV</h2>";
+				ProductInfoTxt += "&emsp;" + DMVTxt + "<br/>";
+			}
+			// hidding result
+			document.getElementById("ProductSearchForm").style.display = 'none';
+			document.getElementById("ProductSearchForm").style.visibility = 'hidden';
+			document.getElementById("MatchingProductList").style.display = 'none';
+			document.getElementById("MatchingProductList").style.visibility = 'hidden';
+			// showing product info
+			ProductViewObj.innerHTML = ProductInfoTxt;
+			ProductViewObj.style.visibility = 'visible';
+			ProductViewObj.style.display = 'inline';
+			return;
+		}
+		
+		// go back to search page
+		function GoBackToSearch()
+		{
+			// go back to dflt state
+			document.getElementById("MatchingProductList").style.display = 'inline';
+			document.getElementById("MatchingProductList").style.visibility = 'hidden';
+			document.getElementById("ProductView").style.display = 'inline';
+			document.getElementById("ProductView").style.visibility = 'hidden';
+			document.getElementById("ProductSearchForm").style.display = 'inline';
+			document.getElementById("ProductSearchForm").style.visibility = 'visible';
+			return;
+		}
+		
+	</script>
+	
+</head>
+<body onload="DoInitSqlite3Module();" >
+	<!-- BCG -->
+	<svg width= 100% height= 100% style="position: fixed; top: 0; left: 0; z-index: -2;">
+		<rect width="100%" height="100%" fill=#84FAA0 />
+	</svg>
+
+	<img src="Images/TR.png" style="position: fixed; top: 0; right: 0; z-index: -1;">
+	<img src="Images/TL.png" style="position: fixed; top: 0; left: 0; z-index: -1;">
+	<img src="Images/BR.png" style="position: fixed; bottom: 0; right: 0; z-index: -1;">
+	<img src="Images/BL.png" style="position: fixed; bottom: 0; left: 0; z-index: -1;">
+	
+	<!-- SQLITE3 WASM module loading status -->
+	<div id="LoadingWasmInfo" style="visibility: visible;">
+		Loading libraries (SQLITE3) ...<br/>
+	</div>
+	
+	<!-- Select database -->
+	<div id="DatabasePathForm" style="visibility: hidden; text-align: center;">
+		<img height= "100" src="Images/Icone.png"><br/><br/>
+		Sélectionner la base de donnée "PlanteVet.db" :<br/>
+		<input id="DatabasePathBtn" type="file" /><br/>
+		<input id="DatabaseImportBtn" type="button" value="Importer" onclick="DoImportDatabase();" /><br/>
+		<br/>Les informations sont amenées à évoluer avec le temps.
+		<br/><br/>Cette base de données a été créée dans le cadre d'une thèse vétérinaire.
+		<div id="DatabaseImportProgress" style="visibility: hidden;">
+			<progress max="100" value="0" id="DatabaseImportProgressBar"></progress>
+			<span id="DatabaseImportProgressTxt">Progress State ...</span><br/>
+		</div>
+	</div>
+	
+	<!-- Select product by name -->
+	<div id="ProductSearchForm" style="visibility: hidden; display: none;">
+		<span id="DatabasePath">No DB</span>
+		<table class="full">
+			<tr class="high">
+				<td rowspan=2><b>Liste des produits renseignés :</b><br/><i>(Cliquer pour en voir la monographie)</i><br/><div id="ProductList">Empty List</div></td>
+				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
+					<h2>Recherche avancée :</h2>
+					<br/>Notez que la recherche s'effectue en utilisant l'opérateur <b>et</b> entre les différents champs séléctionnés.<br/><br/>
+					<div id="LaboCombo">Laboratoire : <input type="button" id="LaboInputCombo" value="Choisir" onclick="BuildLaboInputCombo(0);"></div>
+					<div id="FctCombo">Grande fonction concernée : <input type="button" id="FctInputCombo" value="Choisir" onclick="BuildFctInputCombo(0);"></div>
+					<div id="EspeceCombo">Espèce concernée : <input type="button" id="EspeceInputCombo" value="Choisir" onclick="BuildEspeceInputCombo();"></div>
+					<br/>
+					<input type="button" value="Rechercher" onclick="DoSearchProductByInfos();" /><br/></td>
+				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par plantes" onclick="DoListPlantes();" /></td>
+			</tr>
+			<tr class="high">
+				<td></td>
+			</tr>
+		</table>
+	</div>
+	
+	<!-- List plante -->
+	<div id="ListePlanteForm" style="visibility: hidden; display: none;">
+		<table class="full">
+			<tr class="high">
+				<td rowspan=2><b>Liste des plantes renseignées :</b><br/><i>(Cliquer pour en voir la monographie)</i><br/><div id="PlanteList">Empty List</div></td>
+				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
+					<h2>Recherche avancée :</h2>
+					<br/>Notez que la recherche s'effectue en utilisant l'opérateur <b>et</b> entre les différents champs séléctionnés.<br/><br/>
+					<div id="FctCombo">Grande fonction concernée : <input type="button" id="FctInputCombo" value="Choisir" onclick="BuildFctInputCombo(0);"></div>
+					<div id="EspeceCombo">Espèce concernée : <input type="button" id="EspeceInputCombo" value="Choisir" onclick="BuildEspeceInputCombo();"></div>
+					<br/>
+					<input type="button" value="Rechercher" onclick="DoSearchProductByInfos();" /><br/></td>
+				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par produits" onclick="DoSearchProduct();" /></td>
+			</tr>
+			<tr class="high">
+				<td></td>
+			</tr>
+		</table>
+	</div>
+	
+	<!-- Result of search -->
+	<div id="MatchingProductList" style="visibility: hidden; display: none;">
+		Empty list
+	</div>
+
+	<!-- Product view -->
+	<div id="ProductView" style="visibility: hidden; display: none;">
+		Empty data
+	</div>	
+</body>
+</html>
