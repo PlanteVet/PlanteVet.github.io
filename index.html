@@ -14,6 +14,12 @@
 			margin-bottom: 35px;
 			margin-right: 35px;
 		}
+		
+		table {
+		}
+		.half {
+			width: 50%;
+		}
 	</style>
 </head>
 <body>
@@ -29,14 +35,28 @@
 	
 	<!-- Select mode -->
 	<div id="DatabaseSelectMode" style="text-align: center;">
-		<img height= "100" src="Images/Icone.png"><br/>
-		Sélectionner le mode de lecture pour la base de donnée "PlanteVet.db" :<br/><br/>
-		<button onclick="location.href='PlanteVet.html'" type="button">Lecteur</button>
-		&nbsp; &nbsp; &nbsp; &nbsp;
-		<button onclick="location.href='PlanteVet_Edition.html'" type="button">Editeur</button>
+		<img height= "100" src="Images/Icone.png">
+		<br/>Sélectionner le mode de lecture pour la base de donnée "PlanteVet.db" :
+		<br/>
+		<br/>
+		<table class="full">
+			<tr align="center">
+				<td width=50%><h2>Visualisation</h2></td>
+				<td width=50%><h2>Edition</h2></td>
+			</tr>
+			<tr>
+				<td>Ce mode vous permettra de visualiser les différentes monographies de plantes et de produits enregistrées dans la base de données.</td>
+				<td>Ce mode vous permettra d'éditer les différentes monographies de plantes et de produits enregistrées dans la base de données. Vous pourrez également en ajouter et en supprimer. La base de données que vous enregistrerez à la fin sera la votre. Seules les personnes autorisées pourront la téléverser de nouveau pour proposer une mise à jour pour tous.</td>
+			</tr>
+			<tr>
+				<td><button onclick="location.href='PlanteVet.html'" type="button">Démarrer</button></td>
+				<td><button onclick="location.href='PlanteVet_Edition.html'" type="button">Démarrer</button></td>
+			</tr>
+		</table>
 		<br/>
 		<br/>Les informations sont amenées à évoluer avec le temps.
 		<br/><br/>Cette base de données a été créée dans le cadre d'une thèse vétérinaire.
 	</div>
 </body>
 </html>
+
