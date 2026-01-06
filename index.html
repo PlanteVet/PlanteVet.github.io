@@ -22,7 +22,24 @@
 			text-align: center;
 			margin-left: auto;
 		    margin-right: auto;
-			border-top: 3px solid black;
+		}
+		tr {
+		}
+		.top {
+			border-radius: 10px;
+			border-left: 3px solid green;
+			border-right: 3px solid green;
+			border-top: 3px solid green;
+		}
+		.center {
+			border-left: 3px solid green;
+			border-right: 3px solid green;
+		}
+		.bottom {
+			border-radius: 10px;
+			border-left: 3px solid green;
+			border-right: 3px solid green;
+			border-bottomt: 3px solid green;
 		}
 	</style>
 </head>
@@ -44,15 +61,15 @@
 		<br/>
 		<br/>
 		<table class="half">
-			<tr>
+			<tr class="top">
 				<td width=50%><h2>Visualisation</h2></td>
 				<td width=50%><h2>Edition</h2></td>
 			</tr>
-			<tr>
+			<tr class="center">
 				<td>Ce mode vous permettra de visualiser les différentes monographies de plantes et de produits enregistrées dans la base de données.</td>
 				<td>Ce mode vous permettra d'éditer les différentes monographies de plantes et de produits enregistrées dans la base de données. Vous pourrez également en ajouter et en supprimer. La base de données que vous enregistrerez à la fin sera la votre. Seules les personnes autorisées pourront la téléverser de nouveau pour proposer une mise à jour pour tous.</td>
 			</tr>
-			<tr>
+			<tr class="bottom">
 				<td><br/><button onclick="location.href='PlanteVet.html'" type="button">Démarrer</button></td>
 				<td><br/><button onclick="location.href='PlanteVet_Edition.html'" type="button">Démarrer</button></td>
 			</tr>
@@ -63,6 +80,7 @@
 	</div>
 </body>
 </html>
+
 
 
 
