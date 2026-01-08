@@ -290,7 +290,7 @@
 			}
 			// finalize
 			LaboInputComboTxt += "</select>";
-			document.getElementById("LaboCombo_" + PlOrPr).innerHTML = LaboInputComboTxt;
+			document.getElementById("LaboCombo_" + PrOrPl).innerHTML = LaboInputComboTxt;
 			return;
 		}
 		
@@ -339,17 +339,17 @@
 			}
 			// finalize
 			FctInputComboTxt += "</select>";
-			document.getElementById("FctCombo_" + PlOrPr).innerHTML = FctInputComboTxt;
+			document.getElementById("FctCombo_" + PrOrPl).innerHTML = FctInputComboTxt;
 			return;
 		}
 		
 		// build Espece combo
-		function BuildEspeceInputCombo(PlOrPr)
+		function BuildEspeceInputCombo(PrOrPl)
 		{
 			let EspeceInputComboTxt = "Espèce concernée : ";
 		
 			//build combo
-			EspeceInputComboTxt += "<select id=\"EspeceInputCombo" + PlOrPr + "\" style=\"width: 200px;\">";
+			EspeceInputComboTxt += "<select id=\"EspeceInputCombo" + PrOrPl + "\" style=\"width: 200px;\">";
 			EspeceInputComboTxt += "<option value=\"-1\">Tous</option>";
 			EspeceInputComboTxt += "<option value=\"Chien\">Chien</option>";
 			EspeceInputComboTxt += "<option value=\"Chat\">Chat</option>";
@@ -357,7 +357,7 @@
 			EspeceInputComboTxt += "<option value=\"Cheval\">Cheval</option>";
 			// finalize
 			EspeceInputComboTxt += "</select>";
-			document.getElementById("EspeceCombo_" + PlOrPr).innerHTML = EspeceInputComboTxt;
+			document.getElementById("EspeceCombo_" + PrOrPl).innerHTML = EspeceInputComboTxt;
 			return;
 		}
 		
@@ -2200,6 +2200,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
