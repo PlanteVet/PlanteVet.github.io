@@ -242,12 +242,12 @@
 		}
 
 		// build Labo combo
-		function BuildLaboInputCombo(DfltLaboId)
+		function BuildLaboInputCombo(PlOrPr, DfltLaboId)
 		{
 			let LaboInputComboTxt = "Laboratoire : ";
 		
 			// pre build combo
-			LaboInputComboTxt += "<select id=\"LaboInputCombo\" style=\"width: 200px;\">";
+			LaboInputComboTxt += "<select id=\"LaboInputCombo" + PlOrPr + "\" style=\"width: 200px;\">";
 			// fetch list labo
 			console.log("Doing combo list labo SQL request ...");
 			let LaboSQLRequestResultObj = [];
@@ -291,12 +291,12 @@
 		}
 		
 		// build Fct combo
-		function BuildFctInputCombo(DfltFctId)
+		function BuildFctInputCombo(PrOrPl,DfltFctId)
 		{
 			let FctInputComboTxt = "Grande fonction concernée : ";
 		
 			// pre build combo
-			FctInputComboTxt += "<select id=\"FctInputCombo\" style=\"width: 200px;\">";
+			FctInputComboTxt += "<select id=\"FctInputCombo" + PrOrPl + "\" style=\"width: 200px;\">";
 			// fetch list fct
 			console.log("Doing combo list fct SQL request ...");
 			let FctSQLRequestResultObj = [];
@@ -340,12 +340,12 @@
 		}
 		
 		// build Espece combo
-		function BuildEspeceInputCombo()
+		function BuildEspeceInputCombo(PlOrPr)
 		{
 			let EspeceInputComboTxt = "Espèce concernée : ";
 		
 			//build combo
-			EspeceInputComboTxt += "<select id=\"EspeceInputCombo\" style=\"width: 200px;\">";
+			EspeceInputComboTxt += "<select id=\"EspeceInputCombo" + PlOrPr + "\" style=\"width: 200px;\">";
 			EspeceInputComboTxt += "<option value=\"-1\">Tous</option>";
 			EspeceInputComboTxt += "<option value=\"Chien\">Chien</option>";
 			EspeceInputComboTxt += "<option value=\"Chat\">Chat</option>";
@@ -541,52 +541,6 @@
 				document.getElementById("DatabaseImportBtn").disabled = false;
 				document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
 			});
-			return;
-		}
-	
-		// Query database product by name 		
-		function DoSearchProductByName()
-		{
-			let ResultListObj = document.getElementById("MatchingProductList");
-			let SearchTxt = document.getElementById("ProductNameLike").value;
-		
-			// exec SQL request on Working DB
-			console.log("Doing search product SQL request ...");
-			let SQLRequestResultObj = [];
-			try {
-				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from PRODUCT where Name like $a",
-					rowMode: 'array',
-					bind: {$a: SearchTxt},
-				});
-				console.log("End of search product SQL request.");
-			} catch(ErrorObj) {
-				console.log("Echec search product SQL request");
-			};
-			// Pre build result
-			let ResultList = "";
-			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch();\" /><br/>";
-			ResultList += "List of matching products for \"" + SearchTxt + "\" :<br/>(Click on a product to view it)<br/>";		
-			// append sql result
-			let NbResultRow = SQLRequestResultObj.length;
-			if(NbResultRow == 0)
-			{
-				ResultList += "NO MATCHING ROW";
-			}
-			else
-			{			
-				for(let i = 0; i < NbResultRow; i++)
-				{
-					let TmpResultRow = SQLRequestResultObj[i];
-					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +", -1);\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
-				}
-			}
-			// hidding search form
-			document.getElementById("ProductSearchForm").style.display = 'none';
-			// show result
-			ResultListObj.innerHTML = ResultList;			
-			ResultListObj.style.visibility = 'visible';
 			return;
 		}
 		
@@ -2078,9 +2032,9 @@
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche avancée :</h2>
 					<br/>Notez que la recherche s'effectue en utilisant l'opérateur <b>et</b> entre les différents champs séléctionnés.<br/><br/>
-					<div id="LaboCombo">Laboratoire : <input type="button" id="LaboInputCombo" value="Choisir" onclick="BuildLaboInputCombo(0);"></div>
-					<div id="FctCombo">Grande fonction concernée : <input type="button" id="FctInputCombo" value="Choisir" onclick="BuildFctInputCombo(0);"></div>
-					<div id="EspeceCombo">Espèce concernée : <input type="button" id="EspeceInputCombo" value="Choisir" onclick="BuildEspeceInputCombo();"></div>
+					<div id="LaboCombo">Laboratoire : <input type="button" id="LaboInputCombo" value="Choisir" onclick="BuildLaboInputCombo('Pr', 0);"></div>
+					<div id="FctCombo">Grande fonction concernée : <input type="button" id="FctInputCombo" value="Choisir" onclick="BuildFctInputCombo('Pr', 0);"></div>
+					<div id="EspeceCombo">Espèce concernée : <input type="button" id="EspeceInputCombo" value="Choisir" onclick="BuildEspeceInputCombo('Pr');"></div>
 					<br/>
 					<input type="button" value="Rechercher" onclick="DoSearchProductByInfos();" /><br/></td>
 				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par plantes" onclick="DoListPlantes();" /></td>
@@ -2099,8 +2053,8 @@
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche avancée :</h2>
 					<br/>Notez que la recherche s'effectue en utilisant l'opérateur <b>et</b> entre les différents champs séléctionnés.<br/><br/>
-					<div id="FctCombo">Grande fonction concernée : <input type="button" id="FctInputCombo" value="Choisir" onclick="BuildFctInputCombo(0);"></div>
-					<div id="EspeceCombo">Espèce concernée : <input type="button" id="EspeceInputCombo" value="Choisir" onclick="BuildEspeceInputCombo();"></div>
+					<div id="FctCombo">Grande fonction concernée : <input type="button" id="FctInputCombo" value="Choisir" onclick="BuildFctInputCombo('Pl', 0);"></div>
+					<div id="EspeceCombo">Espèce concernée : <input type="button" id="EspeceInputCombo" value="Choisir" onclick="BuildEspeceInputCombo('Pl');"></div>
 					<br/>
 					<input type="button" value="Rechercher" onclick="DoSearchProductByInfos();" /><br/></td>
 				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par produits" onclick="DoSearchProduct();" /></td>
@@ -2122,4 +2076,5 @@
 	</div>	
 </body>
 </html>
+
 
