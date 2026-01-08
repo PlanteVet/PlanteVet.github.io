@@ -286,7 +286,7 @@
 			}
 			// finalize
 			LaboInputComboTxt += "</select>";
-			document.getElementById("LaboCombo").innerHTML = LaboInputComboTxt;
+			document.getElementById("LaboCombo_" + PlOrPr).innerHTML = LaboInputComboTxt;
 			return;
 		}
 		
@@ -335,7 +335,7 @@
 			}
 			// finalize
 			FctInputComboTxt += "</select>";
-			document.getElementById("FctCombo").innerHTML = FctInputComboTxt;
+			document.getElementById("FctCombo_" + PlOrPr).innerHTML = FctInputComboTxt;
 			return;
 		}
 		
@@ -353,7 +353,7 @@
 			EspeceInputComboTxt += "<option value=\"Cheval\">Cheval</option>";
 			// finalize
 			EspeceInputComboTxt += "</select>";
-			document.getElementById("EspeceCombo").innerHTML = EspeceInputComboTxt;
+			document.getElementById("EspeceCombo_" + PlOrPr).innerHTML = EspeceInputComboTxt;
 			return;
 		}
 		
@@ -548,9 +548,9 @@
 		function DoSearchProductByInfos()
 		{
 			let ResultListObj = document.getElementById("MatchingProductList");
-			let LaboId = document.getElementById("LaboInputCombo").value;
-			let FctId = document.getElementById("FctInputCombo").value;
-			let Espece = document.getElementById("EspeceInputCombo").value;
+			let LaboId = document.getElementById("LaboInputCombo_Pr").value;
+			let FctId = document.getElementById("FctInputCombo_Pr").value;
+			let Espece = document.getElementById("EspeceInputCombo_Pr").value;
 			
 			let ResultList = "";
 			let LaboSQLRequestResultObj = [];
@@ -731,6 +731,126 @@
 			// hidding search form
 			document.getElementById("ProductSearchForm").style.display = 'none';
 			document.getElementById("ProductSearchForm").style.visibility = 'Hidden';
+			// show result
+			ResultListObj.innerHTML = ResultList;
+			ResultListObj.style.display = 'inline';
+			ResultListObj.style.visibility = 'visible';
+			return;
+		}
+		
+		// Query database product by infos 		
+		function DoSearchPlanteByInfos()
+		{
+			let ResultListObj = document.getElementById("MatchingProductList");
+			let FctId = document.getElementById("FctInputCombo_Pl").value;
+			let Espece = document.getElementById("EspeceInputCombo_Pl").value;
+			
+			let ResultList = "";
+			let FctSQLRequestResultObj = [];
+			let PosoSQLRequestResultObj = [];
+			
+			//selection de toutes les grandes fonctions correspondantes
+			if(FctId != "Choisir" && FctId != -1)
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search plante fct SQL request ...");
+				try {
+					FctSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Plante from PLANTE_FCTS where Fct like $a",
+						rowMode: 'array',
+						bind: {$a: FctId},
+					});
+					console.log("End of search plante fct SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search plante fct SQL request");
+				};
+			}
+			else
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search plante fct SQL request ...");
+				try {
+					FctSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Plante from PLANTE_FCTS",
+						rowMode: 'array',
+					});
+					console.log("End of search plante fct SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search plante fct SQL request");
+				};
+			}
+			
+			//selection de toutes les poso correspondances
+			if(Espece != "Choisir" && Espece != -1)
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search plante poso SQL request ...");
+				try {
+					PosoSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Product from PRODUCT_POSO where Espece like $a",
+						rowMode: 'array',
+						bind: {$a: Espece},
+					});
+					console.log("End of search product poso SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search product poso SQL request");
+				};
+			}
+			else
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search product poso SQL request ...");
+				try {
+					PosoSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Product from PRODUCT_POSO",
+						rowMode: 'array',
+					});
+					console.log("End of search product poso SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search product poso SQL request");
+				};
+			}
+			
+			// Pre build result
+			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch();\" /><br/>";
+			ResultList += "List of matching products :<br/>(Click on a plant to view it)<br/>";
+			
+			//chercher les correspondances entre les différentes listes
+			let NbFct = FctSQLRequestResultObj.length;
+			let NbPoso = PosoSQLRequestResultObj.length;
+			//console.log(NbFct + ", " + NbPoso);
+			let ResultObj = [];
+			for(let i=0; i < NbFct; i++)
+			{
+				let Plante = FctSQLRequestResultObj[i];
+				for(let j=0; j < NbPoso; j++)
+				{
+					let Plante2 = PosoSQLRequestResultObj[j];
+					if(Plante[0] == Plante2[0])
+					{
+						ResultObj.push(Product);
+						break;
+					}
+				}
+			}
+			
+			// append sql result
+			let NbResultRow = ResultObj.length;
+			if(NbResultRow == 0)
+			{
+				ResultList += "NO MATCHING PLANTE";
+			}
+			else
+			{			
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ResultObj[i];	
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
+				}
+			}
+			// hidding search form
+			document.getElementById("ListePlanteForm").style.display = 'none';
+			document.getElementById("ListePlanteForm").style.visibility = 'Hidden';
 			// show result
 			ResultListObj.innerHTML = ResultList;
 			ResultListObj.style.display = 'inline';
@@ -2032,9 +2152,9 @@
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche avancée :</h2>
 					<br/>Notez que la recherche s'effectue en utilisant l'opérateur <b>et</b> entre les différents champs séléctionnés.<br/><br/>
-					<div id="LaboCombo">Laboratoire : <input type="button" id="LaboInputCombo" value="Choisir" onclick="BuildLaboInputCombo('Pr', 0);"></div>
-					<div id="FctCombo">Grande fonction concernée : <input type="button" id="FctInputCombo" value="Choisir" onclick="BuildFctInputCombo('Pr', 0);"></div>
-					<div id="EspeceCombo">Espèce concernée : <input type="button" id="EspeceInputCombo" value="Choisir" onclick="BuildEspeceInputCombo('Pr');"></div>
+					<div id="LaboCombo_Pr">Laboratoire : <input type="button" id="LaboInputCombo_Pr" value="Choisir" onclick="BuildLaboInputCombo('Pr', 0);"></div>
+					<div id="FctCombo_Pr">Grande fonction concernée : <input type="button" id="FctInputCombo_Pr" value="Choisir" onclick="BuildFctInputCombo('Pr', 0);"></div>
+					<div id="EspeceCombo_Pr">Espèce concernée : <input type="button" id="EspeceInputCombo_Pr" value="Choisir" onclick="BuildEspeceInputCombo('Pr');"></div>
 					<br/>
 					<input type="button" value="Rechercher" onclick="DoSearchProductByInfos();" /><br/></td>
 				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par plantes" onclick="DoListPlantes();" /></td>
@@ -2053,8 +2173,8 @@
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche avancée :</h2>
 					<br/>Notez que la recherche s'effectue en utilisant l'opérateur <b>et</b> entre les différents champs séléctionnés.<br/><br/>
-					<div id="FctCombo">Grande fonction concernée : <input type="button" id="FctInputCombo" value="Choisir" onclick="BuildFctInputCombo('Pl', 0);"></div>
-					<div id="EspeceCombo">Espèce concernée : <input type="button" id="EspeceInputCombo" value="Choisir" onclick="BuildEspeceInputCombo('Pl');"></div>
+					<div id="FctCombo_Pl">Grande fonction concernée : <input type="button" id="FctInputCombo_Pl" value="Choisir" onclick="BuildFctInputCombo('Pl', 0);"></div>
+					<div id="EspeceCombo_Pl">Espèce concernée : <input type="button" id="EspeceInputCombo_Pl" value="Choisir" onclick="BuildEspeceInputCombo('Pl');"></div>
 					<br/>
 					<input type="button" value="Rechercher" onclick="DoSearchProductByInfos();" /><br/></td>
 				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par produits" onclick="DoSearchProduct();" /></td>
@@ -2076,5 +2196,6 @@
 	</div>	
 </body>
 </html>
+
 
 
