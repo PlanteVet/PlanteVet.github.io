@@ -157,7 +157,8 @@
 												"CREATE TABLE PLANTE_CTRINDIC(Plante integer not null, CtrIndic integer not null, foreign key(Plante) references PLANTE(Id), foreign key(CtrIndic) references CTRINDIC(Id))",
 												"CREATE TABLE PLANTE_USEPART(Plante integer not null, UsePart integer not null, foreign key(Plante) references PLANTE(Id), foreign key(UsePart) references USEPART(Id))",
 												"CREATE TABLE PLANTE_FCTS(Id integer primary key, Plante integer not null, Fct integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Fct) references FCTS(Id))",
-												"CREATE TABLE PLANTE_USECASE(Id integer primary key, Plante integer not null, Usecase integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Usecase) references USECASE(Id))"];
+												"CREATE TABLE PLANTE_USECASE(Id integer primary key, Plante integer not null, Usecase integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Usecase) references USECASE(Id))",
+												"CREATE TABLE PLANTE_ESPECE(Id integer primary key, Plante integer not null, EspeceId int, EspeceTxt text, foreign key(Plante) references PLANTE(Id))"];
 
 		// Reset sqlite3 and database info
 		globalThis.WorkingDB = null;
@@ -300,7 +301,7 @@
 			let FctInputComboTxt = "Grande fonction concernée : ";
 		
 			// pre build combo
-			FctInputComboTxt += "<select id=\"FctInputCombo" + PrOrPl + "\" style=\"width: 200px;\">";
+			FctInputComboTxt += "<select id=\"FctInputCombo_" + PrOrPl + "\" style=\"width: 200px;\">";
 			// fetch list fct
 			console.log("Doing combo list fct SQL request ...");
 			let FctSQLRequestResultObj = [];
@@ -349,7 +350,7 @@
 			let EspeceInputComboTxt = "Espèce concernée : ";
 		
 			//build combo
-			EspeceInputComboTxt += "<select id=\"EspeceInputCombo" + PrOrPl + "\" style=\"width: 200px;\">";
+			EspeceInputComboTxt += "<select id=\"EspeceInputCombo_" + PrOrPl + "\" style=\"width: 200px;\">";
 			EspeceInputComboTxt += "<option value=\"-1\">Tous</option>";
 			EspeceInputComboTxt += "<option value=\"Chien\">Chien</option>";
 			EspeceInputComboTxt += "<option value=\"Chat\">Chat</option>";
@@ -358,6 +359,104 @@
 			// finalize
 			EspeceInputComboTxt += "</select>";
 			document.getElementById("EspeceCombo_" + PrOrPl).innerHTML = EspeceInputComboTxt;
+			return;
+		}
+		
+		// build CtrIndic combo
+		function BuildCtrIndicInputCombo(PrOrPl,DfltCtrIndicId)
+		{
+			let CtrIndicInputComboTxt = "Contre-indication : ";
+		
+			// pre build combo
+			CtrIndicInputComboTxt += "<select id=\"CtrIndicInputCombo_" + PrOrPl + "\" style=\"width: 200px;\">";
+			// fetch list fct
+			console.log("Doing combo list ctrindic SQL request ...");
+			let CtrIndicSQLRequestResultObj = [];
+			try {
+				CtrIndicSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from CTRINDIC order by Name ASC",
+					rowMode: 'array',
+				});
+				console.log("End of combo list ctrindic SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec combo list ctrindic SQL request");
+			};			
+			let NbResultRow = CtrIndicSQLRequestResultObj.length;
+			console.log("Combo list ctrindic : " + NbResultRow + " elts");
+			if(NbResultRow == 0)
+			{
+				CtrIndicInputComboTxt += "<option value=\"0\">*** NO CTRINDIC ***</option>";
+			}
+			else
+			{	
+				CtrIndicInputComboTxt += "<option value=\"-1\">Aucun</option>";
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					// fetch info
+					let TmpResultRow = CtrIndicSQLRequestResultObj[i];
+					let CtrIndicId = TmpResultRow[0];
+					let CtrIndicNameTxt = TmpResultRow[1];
+					if(CtrIndicNameTxt == null) CtrIndicNameTxt = "UNKNOWN FCT ID " + CtrIndicId;
+					CtrIndicNameTxt = DoSanitizeNameTxt(CtrIndicNameTxt);
+					// add to combo
+					CtrIndicInputComboTxt += "<option value=\"" + CtrIndicId + "\"";
+					if(CtrIndicId == DfltCtrIndicId) CtrIndicInputComboTxt += " selected ";
+					CtrIndicInputComboTxt += ">" + CtrIndicNameTxt + "</option>";
+				}
+			}
+			// finalize
+			CtrIndicInputComboTxt += "</select>";
+			document.getElementById("CtrIndicCombo_" + PrOrPl).innerHTML = CtrIndicInputComboTxt;
+			return;
+		}
+		
+		// build Effet2 combo
+		function BuildEffet2InputCombo(PrOrPl,DfltEffet2Id)
+		{
+			let Effet2InputComboTxt = "Effet secondaire : ";
+		
+			// pre build combo
+			Effet2InputComboTxt += "<select id=\"Effet2InputCombo_" + PrOrPl + "\" style=\"width: 200px;\">";
+			// fetch list fct
+			console.log("Doing combo list Effet2 SQL request ...");
+			let Effet2SQLRequestResultObj = [];
+			try {
+				Effet2SQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from EFFET2 order by Name ASC",
+					rowMode: 'array',
+				});
+				console.log("End of combo list Effet2 SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec combo list Effet2 SQL request");
+			};			
+			let NbResultRow = Effet2SQLRequestResultObj.length;
+			console.log("Combo list Effet2 : " + NbResultRow + " elts");
+			if(NbResultRow == 0)
+			{
+				Effet2InputComboTxt += "<option value=\"0\">*** NO EFFET2 ***</option>";
+			}
+			else
+			{	
+				Effet2InputComboTxt += "<option value=\"-1\">Aucun</option>";
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					// fetch info
+					let TmpResultRow = Effet2SQLRequestResultObj[i];
+					let Effet2Id = TmpResultRow[0];
+					let Effet2NameTxt = TmpResultRow[1];
+					if(Effet2NameTxt == null) Effet2NameTxt = "UNKNOWN FCT ID " + Effet2Id;
+					Effet2NameTxt = DoSanitizeNameTxt(Effet2NameTxt);
+					// add to combo
+					Effet2InputComboTxt += "<option value=\"" + Effet2Id + "\"";
+					if(Effet2Id == DfltEffet2Id) Effet2InputComboTxt += " selected ";
+					Effet2InputComboTxt += ">" + Effet2NameTxt + "</option>";
+				}
+			}
+			// finalize
+			Effet2InputComboTxt += "</select>";
+			document.getElementById("Effet2Combo_" + PrOrPl).innerHTML = Effet2InputComboTxt;
 			return;
 		}
 		
@@ -687,8 +786,8 @@
 			}
 			
 			// Pre build result
-			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch();\" /><br/>";
-			ResultList += "List of matching products :<br/>(Click on a product to view it)<br/>";
+			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pr');\" /><br/>";
+			ResultList += "Liste des produits correspondants :<br/>(Cliquer sur un produit pour en voir les détails)<br/>";
 			
 			//chercher les correspondances entre les différentes listes
 			let NbLabo = LaboSQLRequestResultObj.length;
@@ -748,10 +847,14 @@
 			let ResultListObj = document.getElementById("MatchingProductList");
 			let FctId = document.getElementById("FctInputCombo_Pl").value;
 			let Espece = document.getElementById("EspeceInputCombo_Pl").value;
+			let CtrIndic = document.getElementById("CtrIndicInputCombo_Pl").value;
+			let Effet2 = document.getElementById("Effet2InputCombo_Pl").value;
 			
 			let ResultList = "";
 			let FctSQLRequestResultObj = [];
 			let PosoSQLRequestResultObj = [];
+			let CtrIndicSQLRequestResultObj = [];
+			let Effet2SQLRequestResultObj = [];
 			
 			//selection de toutes les grandes fonctions correspondantes
 			if(FctId != "Choisir" && FctId != -1)
@@ -791,38 +894,74 @@
 				console.log("Doing search plante poso SQL request ...");
 				try {
 					PosoSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Product from PRODUCT_POSO where Espece like $a",
+						sql: "select Plante from PLANTE_ESPECE where EspeceId like $a",
 						rowMode: 'array',
 						bind: {$a: Espece},
 					});
-					console.log("End of search product poso SQL request.");
+					console.log("End of search plante poso SQL request.");
 				} catch(ErrorObj) {
-					console.log("Echec search product poso SQL request");
+					console.log("Echec search plante poso SQL request");
 				};
 			}
 			else
 			{
 				// exec SQL request on Working DB
-				console.log("Doing search product poso SQL request ...");
+				console.log("Doing all search plante poso SQL request ...");
 				try {
 					PosoSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Product from PRODUCT_POSO",
+						sql: "select Plante from PLANTE_ESPECE",
 						rowMode: 'array',
 					});
-					console.log("End of search product poso SQL request.");
+					console.log("End of search plante poso SQL request.");
 				} catch(ErrorObj) {
-					console.log("Echec search product poso SQL request");
+					console.log("Echec search plante poso SQL request");
 				};
 			}
 			
+			//exclusion de toutes les ctrindic correspondances
+			if(CtrIndic != "Choisir" && CtrIndic != -1)
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search plante CtrIndic SQL request ...");
+				try {
+					CtrIndicSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Plante from PLANTE_CTRINDIC where CtrIndic not like $a",
+						rowMode: 'array',
+						bind: {$a: CtrIndic},
+					});
+					console.log("End of search plante CtrIndic SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search plante CtrIndic SQL request");
+				};
+			}
+			
+			//exclusion de toutes les effet2 correspondances
+			if(Effet2 != "Choisir" && Effet2 != -1)
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search plante Effet2 SQL request ...");
+				try {
+					Effet2SQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Plante from PLANTE_EFFET2 where Effet2 not like $a",
+						rowMode: 'array',
+						bind: {$a: Effet2},
+					});
+					console.log("End of search plante Effet2 SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search plante Effet2 SQL request");
+				};
+			}
+			
+			
 			// Pre build result
-			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch();\" /><br/>";
-			ResultList += "List of matching products :<br/>(Click on a plant to view it)<br/>";
+			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pl');\" /><br/>";
+			ResultList += "Liste des plantes correspondantes :<br/>(Cliquer sur une plante pour en voir la monographie)<br/>";
 			
 			//chercher les correspondances entre les différentes listes
 			let NbFct = FctSQLRequestResultObj.length;
 			let NbPoso = PosoSQLRequestResultObj.length;
-			//console.log(NbFct + ", " + NbPoso);
+			let NbCtrIndic = CtrIndicSQLRequestResultObj.length;
+			let NbEffet2 = Effet2SQLRequestResultObj.length;
 			let ResultObj = [];
 			for(let i=0; i < NbFct; i++)
 			{
@@ -832,14 +971,51 @@
 					let Plante2 = PosoSQLRequestResultObj[j];
 					if(Plante[0] == Plante2[0])
 					{
-						ResultObj.push(Product);
+						ResultObj.push(Plante);
 						break;
 					}
 				}
 			}
+			let ResultObjFinal = [];
+			let NbPlante = ResultObj.length;
+			for(let i=0; i < NbPlante; i++)
+			{
+				let Found = 0;
+				if(NbCtrIndic != 0)
+				{
+					//exclusion ctrindic
+					let j = 0;
+					let Plante = CtrIndicSQLRequestResultObj[j];
+					let Found = 0;
+					while((Plante[0] != ResultObj[i]) && (j < NbCtrIndic))
+					{
+						j++;
+						let Plante = CtrIndicSQLRequestResultObj[j];
+						if(Plante[0] == ResultObj[i]) Found = 1;
+					}
+				}
+				
+				if((Found != 1) && (NbEffet2 != 0))
+				{
+					//exclusion si effet2
+					let k = 0;
+					let Plante2 = Effet2SQLRequestResultObj[k];
+					while((Plante2[0] != ResultObj[i]) && (k < NbEffet2))
+					{
+						j++;
+						let Plante2 = Effet2SQLRequestResultObj[j];
+						if(Plante2[0] == ResultObj[i]) Found = 1;
+					}
+				}
+				
+				if(Found != 1)
+				{
+					ResultObjFinal.push(ResultObj[i]);
+				}
+			}
 			
 			// append sql result
-			let NbResultRow = ResultObj.length;
+			let NbResultRow = ResultObjFinal.length;
 			if(NbResultRow == 0)
 			{
 				ResultList += "NO MATCHING PLANTE";
@@ -848,8 +1024,22 @@
 			{			
 				for(let i = 0; i < NbResultRow; i++)
 				{
-					let TmpResultRow = ResultObj[i];	
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
+					let PlanteId = ResultObjFinal[i][0];
+					// exec SQL request on Working DB
+					console.log("Doing search plante name SQL request ...");
+					try {
+						PlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+							sql: "select Name from PLANTE where Id like $a",
+							rowMode: 'array',
+							bind: {$a: PlanteId},
+						});
+						console.log("End of search plante name SQL request.");
+					} catch(ErrorObj) {
+						console.log("Echec search plante name SQL request");
+					};
+					
+					let TmpResultRow = PlanteSQLRequestResultObj[i];
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">Elt " + PlanteId + " : " + TmpResultRow[0] + "</span><br/>";
 				}
 			}
 			// hidding search form
@@ -1300,6 +1490,7 @@
 			}
 			// hidding result
 			document.getElementById("ListePlanteForm").style.display = 'none';
+			document.getElementById("MatchingProductList").style.display = 'none';
 			// showing plante info
 			PlanteViewObj.innerHTML = PlanteInfoTxt;
 			PlanteViewObj.style.visibility = 'visible';
@@ -2098,15 +2289,23 @@
 		}
 		
 		// go back to search page
-		function GoBackToSearch()
+		function GoBackToSearch(PlorPr)
 		{
 			// go back to dflt state
 			document.getElementById("MatchingProductList").style.display = 'inline';
 			document.getElementById("MatchingProductList").style.visibility = 'hidden';
 			document.getElementById("ProductView").style.display = 'inline';
 			document.getElementById("ProductView").style.visibility = 'hidden';
-			document.getElementById("ProductSearchForm").style.display = 'inline';
-			document.getElementById("ProductSearchForm").style.visibility = 'visible';
+			if(PlorPr == 'Pr')
+			{
+				document.getElementById("ProductSearchForm").style.display = 'inline';
+				document.getElementById("ProductSearchForm").style.visibility = 'visible';
+			}
+			else
+			{
+				document.getElementById("ListePlanteForm").style.display = 'inline';
+				document.getElementById("ListePlanteForm").style.visibility = 'visible';
+			}
 			return;
 		}
 		
@@ -2152,7 +2351,7 @@
 		<span id="DatabasePath">No DB</span>
 		<table class="full">
 			<tr class="high">
-				<td rowspan=2><b>Liste des produits renseignés :</b><br/><i>(Cliquer pour en voir la monographie)</i><br/><div id="ProductList">Empty List</div></td>
+				<td rowspan=2><b>Liste des produits renseignés :</b><br/><i>(Cliquer pour en voir les détails)</i><br/><div id="ProductList">Empty List</div></td>
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche avancée :</h2>
 					<br/>Notez que la recherche s'effectue en utilisant l'opérateur <b>et</b> entre les différents champs séléctionnés.<br/><br/>
@@ -2177,8 +2376,14 @@
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche avancée :</h2>
 					<br/>Notez que la recherche s'effectue en utilisant l'opérateur <b>et</b> entre les différents champs séléctionnés.<br/><br/>
+					<br/>
+					<br/>Inclure : 
 					<div id="FctCombo_Pl">Grande fonction concernée : <input type="button" id="FctInputCombo_Pl" value="Choisir" onclick="BuildFctInputCombo('Pl', 0);"></div>
 					<div id="EspeceCombo_Pl">Espèce concernée : <input type="button" id="EspeceInputCombo_Pl" value="Choisir" onclick="BuildEspeceInputCombo('Pl');"></div>
+					<br/>
+					<br/>Exclure :
+					<div id="CtrIndicCombo_Pl">Contre-indication : <input type="button" id="CtrIndicInputCombo_Pl" value="Choisir" onclick="BuildCtrIndicInputCombo('Pl', 0);"></div>
+					<div id="Effet2Combo_Pl">Effet secondaire : <input type="button" id="Effet2InputCombo_Pl" value="Choisir" onclick="BuildEffet2InputCombo('Pl', 0);"></div>
 					<br/>
 					<input type="button" value="Rechercher" onclick="DoSearchPlanteByInfos();" /><br/></td>
 				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par produits" onclick="DoSearchProduct();" /></td>
@@ -2200,9 +2405,3 @@
 	</div>	
 </body>
 </html>
-
-
-
-
-
-
