@@ -63,7 +63,8 @@
 												"CREATE TABLE PLANTE_CTRINDIC(Plante integer not null, CtrIndic integer not null, foreign key(Plante) references PLANTE(Id), foreign key(CtrIndic) references CTRINDIC(Id))",
 												"CREATE TABLE PLANTE_USEPART(Plante integer not null, UsePart integer not null, foreign key(Plante) references PLANTE(Id), foreign key(UsePart) references USEPART(Id))",
 												"CREATE TABLE PLANTE_FCTS(Id integer primary key, Plante integer not null, Fct integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Fct) references FCTS(Id))",
-												"CREATE TABLE PLANTE_USECASE(Id integer primary key, Plante integer not null, Usecase integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Usecase) references USECASE(Id))"];
+												"CREATE TABLE PLANTE_USECASE(Id integer primary key, Plante integer not null, Usecase integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Usecase) references USECASE(Id))",
+												"CREATE TABLE PLANTE_ESPECE(Id integer primary key, Plante integer not null, EspeceId int, EspeceTxt text, foreign key(Plante) references PLANTE(Id))"];
 
 		// Reset sqlite3 and database info
 		globalThis.WorkingDB = null;
@@ -98,6 +99,8 @@
 		globalThis.PrivatePlanteFctStateListObj = [];
 		// NOTA : PlanteUsecaseStateListObj array row is : UsecaseId, UsecaseName, FlgCurrentlyUsedByPlante, FlgInCheckList
 		globalThis.PrivatePlanteUsecaseStateListObj = [];
+		// NOTA : PlanteEspeceStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByPlante
+		globalThis.PrivatePlanteEspeceStateListObj = [];
 		globalThis.PrivateWorkingEltId = 0;
 		
 		// associate Rich text to the specified textarea
@@ -6386,7 +6389,7 @@
 							return;
 						};
 						// update state
-						PlanteFctStateObj.FlgCurrentlyUsedByProduct = false;
+						PlanteFctStateObj.FlgCurrentlyUsedByPlante = false;
 						
 						//NOW: retirer usecase et associées
 						// fetch all usecase linked to fct
@@ -6466,6 +6469,60 @@
 						// update state
 						PlanteFctStateObj.FlgCurrentlyUsedByPlante = true;
 					}
+				}
+			}
+			
+			//update plante Espece
+			// NOTA : PlanteEspeceStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByPlante
+			let NbEsp = globalThis.PrivatePlanteEspeceStateListObj.length;
+			for(let i = 0; i < NbEsp; i++)
+			{
+				let PlanteEspStateObj = globalThis.PrivatePlanteEspeceStateListObj[i];
+				
+				// get check state
+				let EspId = PlanteEspStateObj.EspeceId;
+				let EspName = PlanteEspStateObj.EspeceName;
+				let FlgEspChecked = document.getElementById("Esp_" + EspId + globalThis.PrivateWorkingEltId).checked;
+				
+				// check if this espece is to be removed from list of plante or added to
+				if(PlanteEspStateObj.FlgCurrentlyUsedByPlante && (!FlgEspChecked))
+				{
+					// HERE : this Espece is to be removed form list of plante espece
+					console.log("Doing delete plante espece SQL request ...");
+					try {
+						globalThis.WorkingDB.exec({
+							sql: "delete from PLANTE_ESPECE where Plante = $a and EspeceId = $b",
+							rowMode: 'array',
+							bind: {$a: globalThis.PrivateWorkingEltId, $b: EspId},
+						});
+						console.log("End of delete espece plante SQL request.");
+					} catch(ErrorObj) {
+						console.log("Echec delete espece plante SQL request");
+						alert("Delete plante Fct failed");
+						return;
+					};
+					// update state
+					PlanteEspStateObj.FlgCurrentlyUsedByPlante = false;
+				}
+				else if((!PlanteEspStateObj.FlgCurrentlyUsedByPlante) && FlgEspChecked)
+				{
+					// HERE : this Esp is to be added to list of plante Fct
+					console.log("Doing insert plante Espece SQL request ...");
+					let SQLRequestResultObj = [];
+					try {
+						SQLRequestResultObj = globalThis.WorkingDB.exec({
+							sql: "insert into PLANTE_ESPECE values(null, $a, $b, $c)",
+							rowMode: 'array',
+							bind: {$a: globalThis.PrivateWorkingEltId, $b: EspId, $c: EspName},
+						});
+						console.log("End of insert plante espece SQL request.");
+					} catch(ErrorObj) {
+						console.log("Echec insert plante espece SQL request");
+						alert("Insert plante espece failed");
+						return;
+					};
+					// update state
+					PlanteEspStateObj.FlgCurrentlyUsedByPlante = true;
 				}
 			}
 			
@@ -6832,6 +6889,52 @@
 			return;
 		}
 
+		//fill list plante espece
+		function FillPlanteEspeceList(PlanteId)
+		{
+			//fetch plante espece
+			console.log("Doing plante espece SQL request ...");
+			let PlanteEspeceSQLRequestResultObj = [];
+			try {
+				PlanteEspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select EspeceId from PLANTE_ESPECE where Plante = $a",
+					rowMode: 'array',
+					bind: {$a: PlanteId},
+				});
+				console.log("End of plante Espece SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec plante Espece SQL request");
+			};
+			
+			// NOTA : PlanteEspeceStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByPlante
+			let PlanteEspeceStateListObj = [];
+			let CtStateListObj = {EspeceId: 0, EspeceName: 'Chat', FlgCurrentlyUsedByPlante: false};
+			PlanteEspeceStateListObj.push(CtStateListObj);
+			let CnStateListObj = {EspeceId: 1, EspeceName: 'Chien', FlgCurrentlyUsedByPlante: false};
+			PlanteEspeceStateListObj.push(CnStateListObj);
+			let CvStateListObj = {EspeceId: 2, EspeceName: 'Cheval', FlgCurrentlyUsedByPlante: false};
+			PlanteEspeceStateListObj.push(CvStateListObj);
+			let BvStateListObj = {EspeceId: 3, EspeceName: 'Bovin', FlgCurrentlyUsedByPlante: false};
+			PlanteEspeceStateListObj.push(BvStateListObj);
+			
+			//pour tous les especes cochees
+			let NbResultRow = PlanteEspeceSQLRequestResultObj.length;
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				// fetch espece id
+				let TmpResultRow = PlanteEspeceSQLRequestResultObj[i];
+				let EspId = TmpResultRow[0];
+				
+				//Check the checkbox
+				document.getElementById("Esp_" + EspId + PlanteId).checked = true;
+				
+				//change Flg
+				PlanteEspeceStateListObj[EspId].FlgCurrentlyUsedByPlante = true;
+			}
+			// save usecase state array
+			globalThis.PrivatePlanteEspeceStateListObj = PlanteEspeceStateListObj;
+		}
+
 		// build list plante Usecase for addition
 		function BuildPlanteUsecaseListForAdd(FctId)
 		{
@@ -7071,6 +7174,11 @@
 				PlanteInfoTxt += "&emsp;<i>Ecriver sous le format : \"Forme galénique : Posologie (espèce)\"</i><br/><br/>";
 				PlanteInfoTxt += "<textarea id=\"PlantePosoInput\" >Initializing Rich text editor ...</textarea>";
 				RichTextDataPoso = CastBufferToRichText(PlantePoso);
+				PlanteInfoTxt += "<b>Espèces concernées : </b>";
+				PlanteInfoTxt += "<input type='checkbox' id='Esp_0" + PlanteId + "' value='CT'>Chat</input>";
+				PlanteInfoTxt += "<input type='checkbox' id='Esp_1" + PlanteId + "' value='CN'>Chien</input>";
+				PlanteInfoTxt += "<input type='checkbox' id='Esp_2" + PlanteId + "' value='CV'>Cheval</input>";
+				PlanteInfoTxt += "<input type='checkbox' id='Esp_3" + PlanteId + "' value='BV'>Bovin</input>";
 				
 				PlanteInfoTxt += "<h3>Toxicité :</h3><textarea id=\"PlanteSurdosageInput\" >Initializing Rich text editor ...</textarea><br/>";
 				RichTextDataSurdosage = CastBufferToRichText(PlanteSurdosage);
@@ -7120,6 +7228,8 @@
 				BuildPlanteFctListAndCombo(PlanteId);
 				//fill usecase list
 				BuildPlanteUsecaseList(PlanteId);
+				//fill espece list
+				FillPlanteEspeceList(PlanteId);
 				
 				//check Radios
 				CheckRadios(PlanteRchr,PlanteClin,PlanteReg,PlanteRegEQ,PlanteDop);
@@ -7490,5 +7600,3 @@
 	
 </body>
 </html>
-
-
