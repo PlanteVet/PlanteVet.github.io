@@ -67,6 +67,36 @@
 		.Start:hover {
 			background-color: #006A4E;
 		}
+		.Access {
+ 			border: 0;
+  			line-height: 2;
+  			padding: 0 20px;
+			background-color: #E0B0FF;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Access:hover {
+			background-color: #D891EF;
+		}
+		.Link {
+ 			border: 0;
+  			line-height: 2;
+  			padding: 0 20px;
+			background-color: #FFF8E7;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Link:hover {
+			background-color: #FFF0F5;
+		}
 	</style>
 	<script>
 		function OpenInNewTab(Url)
@@ -115,20 +145,21 @@
 		<br/>
 		<br/><table align=center width=50%>
 			<tr>
-				<td width=33%><button onclick="OpenInNewTab('https://drive.google.com/drive/folders/1cEjrPO3Fqio0Vqe9bDSBnmaV66o9UAdq?usp=drive_link')" type="button">Accès mode local</button></td>
-				<td width=33%><button onclick="OpenInNewTab('https://drive.google.com/file/d/1MN-jsTDgolW7-eT1xfY0xK5pEPJdxpF_/view?usp=drive_link')" type="button">Accès thèse</button></td>
-				<td width=33%><button onclick="OpenInNewTab('https://docs.google.com/document/d/19UThGQnSDQQSS7GLXsTRykIVcQ_j240DmRcTFQNxdeM/edit?usp=drive_link')" type="button">Accès Mode d'emploi</button></td>
+				<td width=33%><button onclick="OpenInNewTab('https://drive.google.com/drive/folders/1cEjrPO3Fqio0Vqe9bDSBnmaV66o9UAdq?usp=drive_link')" type="button" class="Access">Accès mode local</button></td>
+				<td width=33%><button onclick="OpenInNewTab('https://drive.google.com/file/d/1MN-jsTDgolW7-eT1xfY0xK5pEPJdxpF_/view?usp=drive_link')" type="button" class="Access">Accès thèse</button></td>
+				<td width=33%><button onclick="OpenInNewTab('https://docs.google.com/document/d/19UThGQnSDQQSS7GLXsTRykIVcQ_j240DmRcTFQNxdeM/edit?usp=drive_link')" type="button" class="Access">Accès Mode d'emploi</button></td>
 			</tr>
 			<tr>
 				<td colspan=3>
 					<br/>
-					<br/><button onclick="location.href='LiensExt.html'" type="button">Liens externes</button>
+					<br/><button onclick="location.href='LiensExt.html'" type="button" class="Link">Liens externes</button>
 				</td>
 			</tr>
 		</table>
 	</div>
 </body>
 </html>
+
 
 
 
