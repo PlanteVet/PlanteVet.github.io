@@ -731,7 +731,7 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + " (" + TmpResultRow[2] + ")</span><br/>";
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span><br/>";
 				}
 			}
 			// hidding search form
@@ -2448,8 +2448,8 @@
 		<span id="DatabasePath">No DB</span>
 		<table class="full">
 			<tr class="high">
-				<td rowspan=2><b>Liste des produits renseignés :</b><br/><i>(Cliquer pour en voir les détails)</i><br/><div id="ProductList">Empty List</div></td>
-				<td style="border-left: 3px ridge #B119AA; padding-left: 15px;">
+				<td rowspan=3><b>Liste des produits renseignés :</b><br/><i>(Cliquer pour en voir les détails)</i><br/><div id="ProductList">Empty List</div></td>
+				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche par nom</h2>
 					<input id="ProductNameLike" size="64" type="text" />
 					<br/>(Entrez '%' pour remplacer une chaîne de caractères et '_' pour remplacer un caractère unique.)
@@ -2459,6 +2459,9 @@
 					<br/>
 				</td>
 				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par plantes" onclick="DoListPlantes();" /></td>
+			</tr>
+			<tr class="high">
+				<td></td>
 			</tr>
 			<tr class="high">
 				<td style="border-left: 3px ridge #B119AA; padding-left: 15px;">
@@ -2494,7 +2497,7 @@
 			<tr class="high">
 				<td></td>
 			</tr>
-			<tr>
+			<tr class="high">
 				<td style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche avancée :</h2>
 					<br/>Notez que la recherche s'effectue en utilisant l'opérateur <b>et</b> entre les différents champs séléctionnés.
@@ -2524,6 +2527,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
