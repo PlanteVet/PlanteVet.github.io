@@ -682,7 +682,7 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +");\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +",-1);\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
 				}
 			}
 			// hidding search form
@@ -731,7 +731,7 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span><br/>";
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span><br/>";
 				}
 			}
 			// hidding search form
@@ -2527,6 +2527,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
