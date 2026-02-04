@@ -707,7 +707,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from PLANTE where Name like $a",
+					sql: "select Id,Name,Latin from PLANTE where Name like $a or Latin like $a",
 					rowMode: 'array',
 					bind: {$a: SearchTxt},
 				});
@@ -731,7 +731,7 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +");\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "(" + TmpResultRow[2] + ")</span><br/>";
 				}
 			}
 			// hidding search form
@@ -2516,6 +2516,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
