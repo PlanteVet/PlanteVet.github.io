@@ -669,7 +669,7 @@
 			// Pre build result
 			let ResultList = "";
 			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pr');\" /><br/>";
-			ResultList += "Liste des produits correspondants \"" + SearchTxt + "\" :<br/>(Cliquer sur un produit pour en voir les informations)<br/>";		
+			ResultList += "Liste des produits compatibles avec \"" + SearchTxt + "\" :<br/>(Cliquer sur un produit pour en voir les informations)<br/>";		
 			// append sql result
 			let NbResultRow = SQLRequestResultObj.length;
 			if(NbResultRow == 0)
@@ -718,7 +718,7 @@
 			// Pre build result
 			let ResultList = "";
 			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pl');\" /><br/>";
-			ResultList += "Liste des plantes compatibles \"" + SearchTxt + "\" :<br/>(Cliquer sur une plante pour en voir la monographie)<br/>";		
+			ResultList += "Liste des plantes compatibles avec \"" + SearchTxt + "\" :<br/>(Cliquer sur une plante pour en voir la monographie)<br/>";		
 			// append sql result
 			let NbResultRow = SQLRequestResultObj.length;
 			if(NbResultRow == 0)
@@ -731,7 +731,7 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "(" + TmpResultRow[2] + ")</span><br/>";
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + " (" + TmpResultRow[2] + ")</span><br/>";
 				}
 			}
 			// hidding search form
@@ -2455,6 +2455,8 @@
 					<br/>(Entrez '%' pour remplacer une chaîne de caractères et '_' pour remplacer un caractère unique.)
 					<br/>
 					<br/><input type="button" value="Rechercher" onclick="DoSearchProductByName();" />
+					<br/>
+					<br/>
 				</td>
 				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par plantes" onclick="DoListPlantes();" /></td>
 			</tr>
@@ -2483,6 +2485,8 @@
 					<br/>(Entrez '%' pour remplacer une chaîne de caractères et '_' pour remplacer un caractère unique.)
 					<br/>
 					<br/><input type="button" value="Rechercher" onclick="DoSearchPlanteByName();" />
+					<br/>
+					<br/>
 				</td>
 				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par produits" onclick="DoSearchProduct();" /></td>
 			</tr>
@@ -2516,6 +2520,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
