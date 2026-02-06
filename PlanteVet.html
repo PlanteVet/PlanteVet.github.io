@@ -129,7 +129,7 @@
 		
 		button {
 		}
-		.Start {
+		.Import {
  			border: 0;
   			line-height: 2.5;
   			padding: 0 20px;
@@ -141,7 +141,7 @@
 				inset 2px 2px 3px rgb(255 255 255 / 60%),
 				inset -2px -2px 3px rgb(0 0 0 / 60%);
 		}
-		.Start:hover {
+		.Import:hover {
 			background-color: #006A4E;
 		}
 	</style>
@@ -2450,7 +2450,7 @@
 		<br/>Sélectionner la base de donnée "PlanteVet.db" :
 		<br/>
 		<br/><input id="DatabasePathBtn" type="file" />
-		<br/><input id="DatabaseImportBtn" type="button" value="Importer" onclick="DoImportDatabase();" />
+		<br/><input id="DatabaseImportBtn" type="button" value="Importer" onclick="DoImportDatabase();" class="Import" />
 		<br/>
 		<br/>Les informations sont amenées à évoluer avec le temps.
 		<br/>
@@ -2553,6 +2553,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
