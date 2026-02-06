@@ -144,6 +144,14 @@
 		.Import:hover {
 			background-color: #006A4E;
 		}
+		input::file-selector-button {
+			font-weight: bold;			
+			background-color: #3EB489;
+			color: white;
+			padding: 20px;
+			border: none;
+			border-radius: 5px;
+		}
 	</style>
 	
 	<!-- Database interface script -->
@@ -2449,7 +2457,7 @@
 		<br/>
 		<br/>Sélectionner la base de donnée "PlanteVet.db" :
 		<br/>
-		<br/><input id="DatabasePathBtn" type="file" class="Import"/>
+		<br/><input id="DatabasePathBtn" type="file"/>
 		<br/>
 		<br/><input id="DatabaseImportBtn" type="button" value="Importer" onclick="DoImportDatabase();" class="Import" />
 		<br/>
@@ -2554,6 +2562,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
