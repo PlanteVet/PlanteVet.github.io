@@ -32,6 +32,81 @@
 		
 		button {
 		}
+		.Product {
+ 			border: 0;
+  			line-height: 2;
+  			padding: 0 10px;
+			background-color: #659EC7;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Product:hover {
+			background-color: #3090C7;
+		}
+		.Plant {
+ 			border: 0;
+  			line-height: 2;
+  			padding: 0 10px;
+			background-color: #DF73D4;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Plant:hover {
+			background-color: #B93B8F;
+		}
+		.Fct {
+ 			border: 0;
+  			line-height: 2;
+  			padding: 0 10px;
+			background-color: #FF69B4;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Fct:hover {
+			background-color: #E3319D;
+		}
+		.Tox {
+ 			border: 0;
+  			line-height: 2;
+  			padding: 0 10px;
+			background-color: #3EB489;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Tox:hover {
+			background-color: #006A4E;
+		}
+		.Save {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #C21E56;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Save:hover {
+			background-color: #DC143C;
+		}
 		.Import {
  			border: 0;
   			line-height: 2.5;
@@ -7603,21 +7678,23 @@
 	<!-- Select table to edit -->
 	<div id="TableChoiceForm" style="visibility: hidden;">
 		<span id="DatabasePath">No DB</span><br/>
+		<br/><input type="button" value="Edit PRODUIT" id="EditPdtBtn" onclick="DoEditProductTable();" class="Product" />
+		<br/><input type="button" value="Edit LABORATOIRE" onclick="DoEditLaboTable();" class="Product" />
+		<br/><input type="button" value="Edit GALENIQUE" onclick="DoEditGaleniqueTable();" class="Product" />
+		<br/><input type="button" value="Edit CATEGORIE" onclick="DoEditCategorieTable();" class="Product" />
 		<br/>
-		<input type="button" value="Edit PRODUIT" id="EditPdtBtn" onclick="DoEditProductTable();" /><br/><br/>
-		<input type="button" value="Edit GALENIQUE" onclick="DoEditGaleniqueTable();" /><br/>
-		<input type="button" value="Edit CATEGORIE" onclick="DoEditCategorieTable();" /><br/><br/>
-		<input type="button" value="Edit PLANTE" onclick="DoEditPlanteTable();" /><br/>
-		<input type="button" value="Edit PARTIE UTILISEE" onclick="DoEditUsePartTable();" /><br/><br/>
-		<input type="button" value="Edit LABORATOIRE" onclick="DoEditLaboTable();" /><br/>
+		<br/><input type="button" value="Edit PLANTE" onclick="DoEditPlanteTable();" class="Plant" />
+		<br/><input type="button" value="Edit PARTIE UTILISEE" onclick="DoEditUsePartTable();" class="Plant" />
 		<br/>
-		<input type="button" value="Edit GRANDES FONCTIONS" onclick="DoEditFctsTable();" /><br/>
-		<input type="button" value="Edit UTILISATION" onclick="DoEditUsecaseTable();" /><br/>
+		<br/><input type="button" value="Edit GRANDES FONCTIONS" onclick="DoEditFctsTable();" class="Fct" />
+		<br/><input type="button" value="Edit UTILISATION" onclick="DoEditUsecaseTable();" class="Fct" />
 		<br/>
-		<input type="button" value="Edit EFFET SECONDAIRE" onclick="DoEditEffet2Table();" /><br/>
-		<input type="button" value="Edit TOXICITE" onclick="DoEditToxiciteTable();" /><br/>
-		<input type="button" value="Edit CONTRE-INDICATION" onclick="DoEditCtrIndicTable();" /><br/><br/>
-		<input type="button" value="SAVE DATABASE" onclick="DoExportDatabase();" id="SaveDBBtn" disabled="true" /><br/>
+		<br/><input type="button" value="Edit EFFET SECONDAIRE" onclick="DoEditEffet2Table();" class="Tox" />
+		<br/><input type="button" value="Edit TOXICITE" onclick="DoEditToxiciteTable();" class="Tox" />
+		<br/><input type="button" value="Edit CONTRE-INDICATION" onclick="DoEditCtrIndicTable();" class="Tox" />
+		<br/>
+		<br/><input type="button" value="SAVE DATABASE" onclick="DoExportDatabase();" id="SaveDBBtn" disabled="true" class="Save" />
+		<br/>
 	</div>
 
 	<!-- Select Product/labo/usecase row to edit -->
@@ -7632,6 +7709,7 @@
 	
 </body>
 </html>
+
 
 
 
