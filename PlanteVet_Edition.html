@@ -4902,6 +4902,7 @@
 			// fecth value to save
 			let UsecaseNameTxt = document.getElementById("EltNameInput").value;
 			let UsecaseFctTxt = document.getElementById("UsecaseFctInputCombo").value;
+			let UsecaseSynd = document.getElementById("SyndOui").checked;
 			
 			// local save entry
 			if(globalThis.PrivateWorkingEltId == 0)
@@ -4911,9 +4912,9 @@
 				let SQLRequestResultObj = [];
 				try {
 					SQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "insert into USECASE values(null, $a, $b) returning Id",
+						sql: "insert into USECASE values(null, $a, $b, $c) returning Id",
 						rowMode: 'array',
-						bind: {$a: UsecaseNameTxt, $b: UsecaseFctTxt},
+						bind: {$a: UsecaseNameTxt, $b: UsecaseFctTxt, $c: UsecaseSynd},
 					});
 					console.log("End of insert usecase SQL request.");
 				} catch(ErrorObj) {
@@ -4934,9 +4935,9 @@
 				console.log("Doing update usecase SQL request ...");
 				try {
 					globalThis.WorkingDB.exec({
-						sql: "update USECASE set Name = $a, Fct = $b where Id = $c",
+						sql: "update USECASE set Name = $a, Fct = $b, Syndrome = $c where Id = $d",
 						rowMode: 'array',
-						bind: {$a: UsecaseNameTxt, $b: UsecaseFctTxt, $c: globalThis.PrivateWorkingEltId},
+						bind: {$a: UsecaseNameTxt, $b: UsecaseFctTxt, $c: UsecaseSynd, $d: globalThis.PrivateWorkingEltId},
 					});
 					console.log("End of update usecase SQL request.");
 				} catch(ErrorObj) {
@@ -4975,7 +4976,7 @@
 			{
 				// fresh new elt
 				// Mimic SQL request result
-				let UsecaseInfo = [0, "USECASE_0"];
+				let UsecaseInfo = [0, "USECASE_0", 0, 0];
 				UsecaseSQLRequestResultObj.push(UsecaseInfo);
 			}
 			else
@@ -5007,9 +5008,12 @@
 				if(UsecaseNameTxt == null) UsecaseNameTxt = "UNDEFINED";
 				UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
 				let UsecaseFctId = UsecaseInfo[2];
+				let UsecaseSynd = UsecaseInfo[3];
 				// build form
-				UsecaseInfoTxt += "<b>USECASE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + UsecaseNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
-				UsecaseInfoTxt += "<b>LINKED TO : </b>" + BuildUsecaseFctInputCombo(UsecaseFctId) + "<br/>";
+				UsecaseInfoTxt += "<b>Nom de l'utilisation : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + UsecaseNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
+				UsecaseInfoTxt += "<b>Liée à la : </b>" + BuildUsecaseFctInputCombo(UsecaseFctId) + "<br/>";
+				if(UsecaseSynd == 1) UsecaseInfoTxt += "<b>Est un grand syndrôme : </b><input type='radio' name='Syndrome' id='SyndOui' value='Oui' checked><label for 'Oui'>Oui</label><input type='radio' name='Syndrome' id='SyndNon' value='Non'><label for 'Non'>Non</label><br/>";
+				else UsecaseInfoTxt += "<b>Est un grand syndrôme : </b><input type='radio' name='Syndrome' id='SyndOui' value='Oui'><label for 'Oui'>Oui</label><input type='radio' name='Syndrome' id='SyndNon' value='Non' checked><label for 'Non'>Non</label><br/>";
 			}
 			RowEditFormTxt += UsecaseInfoTxt;
 			// hide row choice form
@@ -7727,6 +7731,7 @@
 	
 </body>
 </html>
+
 
 
 
