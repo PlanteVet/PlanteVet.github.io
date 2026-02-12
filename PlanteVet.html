@@ -1172,6 +1172,7 @@
 			//chercher les correspondances entre les différentes listes
 			let NbFct = FctSQLRequestResultObj.length;
 			let NbPoso = PosoSQLRequestResultObj.length;
+			let NbSyndrome = SyndromeSQLRequestResultObj.length;
 			let NbCtrIndic = CtrIndicSQLRequestResultObj.length;
 			let NbEffet2 = Effet2SQLRequestResultObj.length;
 			let ResultObj = [];
@@ -1183,8 +1184,15 @@
 					let Plante2 = PosoSQLRequestResultObj[j];
 					if(Plante[0] == Plante2[0])
 					{
-						ResultObj.push(Plante);
-						break;
+						for(let k=0; k < NbSyndrome; k++)
+						{
+							let Plante3 = SyndromeSQLRequestResultObj[k];
+							if(Plante[0] == Plante3[0])
+							{
+								ResultObj.push(Plante);
+								break;
+							}
+						}
 					}
 				}
 			}
@@ -2652,6 +2660,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
