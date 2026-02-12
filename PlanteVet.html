@@ -1570,53 +1570,28 @@
 					};
 					ProductName = ProductSQLRequestResultObj[0][0];
 					ListeProduct += "<span class=\"PlanteView\" onclick=\"DoViewProduct(" + ProductId + ", " + PlanteId + ");\">" + ProductName + "<br/>";
-				
-					//fetch all especes
-					let EspecesSQLRequestResultObj = [];
-					try {
-						EspecesSQLRequestResultObj = globalThis.WorkingDB.exec({
-							sql: "select Espece from PRODUCT_POSO where Product = $a",
-							rowMode: 'array',
-							bind: {$a: ProductId},
-						});
-						console.log("End of espece info SQL request.");
-					} catch(ErrorObj) {
-						console.log("Echec espece info SQL request");
-					};
-					
-					let NbEspecesMax = EspecesSQLRequestResultObj.length;
-					let CN = false;
-					let CT = false;
-					let CV = false;
-					let BV = false;
-					let Espece = "";
-					for(j = 0; j < NbEspecesMax; j++)
-					{
-						Espece = EspecesSQLRequestResultObj[j][0];
-						if(Espece == "Chien" && !CN)
-						{
-							EspeceTxt += Espece + ", ";
-							CN = true;
-						}
-						if(Espece == "Chat" && !CT)
-						{
-							EspeceTxt += Espece + ", ";
-							CT = true;
-						}
-						if(Espece == "Cheval" && !CV)
-						{
-							EspeceTxt += Espece + ", ";
-							CV = true;
-						}
-						if(Espece == "Bovin" && !BV)
-						{
-							EspeceTxt += Espece + ", ";
-							BV = true;
-						}
-					}
-					EspeceTxt = EspeceTxt.slice(0, -2);
-					
 				}
+				
+				//fetch all especes
+				let EspecesSQLRequestResultObj = [];
+				try {
+					EspecesSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select EspeceTxt from PLANTE_ESPECE where Plante = $a",
+						rowMode: 'array',
+						bind: {$a: PlanteId},
+					});
+					console.log("End of espece info SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec espece info SQL request");
+				};
+				let NbEspecesMax = EspecesSQLRequestResultObj.length;
+				let Espece = "";
+				for(j = 0; j < NbEspecesMax; j++)
+				{
+					Espece = EspecesSQLRequestResultObj[j][0];
+					EspeceTxt += Espece + ", ";
+				}
+				EspeceTxt = EspeceTxt.slice(0, -2);
 				
 				//select IMG+txt Rchr
 				let RchrImg = "";
@@ -2660,6 +2635,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
