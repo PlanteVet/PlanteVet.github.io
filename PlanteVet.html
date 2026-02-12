@@ -1641,6 +1641,139 @@
 				if(PlanteDop == 2) TxtDop = "Réaction négative aux contrôles anti-dopages";
 				else TxtDop = "Aucune information disponible";
 				
+				//Applications medicales
+				//fetch grandes fonctions of plante
+				console.log("Doing plante fcts SQL request ...");
+				let PlanteFctsSQLRequestResultObj = [];
+				try {
+					PlanteFctsSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Fct from PLANTE_FCTS where Plante = $a",
+						rowMode: 'array',
+						bind: {$a: PlanteId},
+					});
+					console.log("End of plante fcts SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec plante fcts SQL request");
+				};
+				//fecth usecases of plante
+				console.log("Doing plante usecases SQL request ...");
+				let PlanteUsecasesSQLRequestResultObj = [];
+				try {
+					PlanteUsecasesSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Usecase from PLANTE_USECASE where Plante = $a",
+						rowMode: 'array',
+						bind: {$a: PlanteId},
+					});
+					console.log("End of plante usecases SQL request.");
+					} catch(ErrorObj) {
+					console.log("Echec plante usecases SQL request");
+				};
+				
+				let PlanteUseTxt = "";
+				let NbFcts = PlanteFctsSQLRequestResultObj.length;
+				let NbUsecases = PlanteUsecasesSQLRequestResultObj.length;
+				if(NbFcts == 0) PlanteUseTxt += "NON RENSEIGNE<br/>";
+				else
+				{
+					PlanteUseTxt += "<ul style=\"list-style-type:'► ';\" >"
+					for(let i = 0; i < NbFcts; i++)
+					{
+						// fetch fct id
+						let TmpResultRow = PlanteFctsSQLRequestResultObj[i];
+						let FctId = TmpResultRow[0];
+						// fecth Fct name
+						console.log("Doing Fct name " + FctId + " SQL request ...");
+						let FCTQLRequestResultObj = [];
+						try {
+							FCTQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Name from FCTS where Id = $a",
+								rowMode: 'array',
+								bind: {$a: FctId},
+							});
+							console.log("End of Fct name SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec Fct name SQL request");
+						};
+						let FctNameTxt = "";
+						if(FCTQLRequestResultObj.length != 1) FctNameTxt += "UNKNOWN Fct ID " + FctId;
+						else
+						{
+							let TmpResultRow2 = FCTQLRequestResultObj[0];
+							if(TmpResultRow2[0] == null) FctNameTxt += "UNDEFINED";
+							else FctNameTxt += DoSanitizeNameTxt(TmpResultRow2[0]);
+						}
+						// add Fct
+						PlanteUseTxt += "<li class=\"fct\">" + FctNameTxt + "<br/>";
+						
+						//fecth usecases of fct
+						console.log("Doing fct usecases SQL request ...");
+						let FctUsecasesSQLRequestResultObj = [];
+						try {
+							FctUsecasesSQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select Id from USECASE where Fct = $a",
+								rowMode: 'array',
+								bind: {$a: FctId},
+							});
+							console.log("End of fct usecases SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec fct usecases SQL request");
+						};
+						
+						let IdMatch = [];
+						let NbFctUsecases = FctUsecasesSQLRequestResultObj.length;
+						for(let j=0; j < NbFctUsecases; j++)
+						{
+							let FctUsecaseId = FctUsecasesSQLRequestResultObj[j][0];
+							for(let k=0; k < NbUsecases; k++)
+							{
+								let UsecaseId = PlanteUsecasesSQLRequestResultObj[k][0];
+								if(FctUsecaseId == UsecaseId)
+								{
+									IdMatch.push(UsecaseId);
+								}
+							}
+						}
+						
+						//add to list for all matchs
+						let NbMatch = IdMatch.length;
+						let UsecasesTxt = "";
+						if(NbMatch != 0)
+						{
+							UsecasesTxt += "<ul style=\"list-style-type:'• ';\" >";
+							for(let j=0; j < NbMatch; j++)
+							{
+								let UsecaseId = IdMatch[j];
+								console.log("UsecaseId = " + UsecaseId);
+								//fetch usecase name
+								console.log("Doing usecase name " + UsecaseId + " SQL request ...");
+								let UsecaseSQLRequestResultObj = [];
+								try {
+									UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
+										sql: "select Name from USECASE where Id = $a",
+										rowMode: 'array',
+										bind: {$a: UsecaseId},
+									});
+									console.log("End of usecase name SQL request.");
+								} catch(ErrorObj) {
+									console.log("Echec usecase name SQL request");
+								};
+								let UsecaseNameTxt = "";
+								if(UsecaseSQLRequestResultObj.length != 1) UsecaseNameTxt += "UNKNOWN USECASE ID " + UsecaseId;
+								else
+								{
+								let TmpResultRow = UsecaseSQLRequestResultObj[0];
+								if(TmpResultRow[0] == null) UsecaseNameTxt += "UNDEFINED";
+								else UsecaseNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+								}
+								UsecasesTxt += "<li class=\"usecase\">" + UsecaseNameTxt + "<br/>";
+							}
+							UsecasesTxt += "</ul>";
+						}
+						PlanteUseTxt += UsecasesTxt;
+					}
+					PlanteUseTxt += "</ul>";
+				}
+				
 				//setup view
 				PlanteInfoTxt += "<table class=\"full\"><tr><td>";
 				PlanteInfoTxt += "<h1>" + PlanteName + "</h1>";
@@ -1666,7 +1799,8 @@
 				PlanteInfoTxt += "<h3>Pharmacodynamie : </h3>" + CastBufferToRichText(PlantePDyn) + "<br/>";
 				PlanteInfoTxt += "<h3>Pharmacocinétique : </h3>" + CastBufferToRichText(PlantePCin) + "<br/>";
 				PlanteInfoTxt += "<h3>Données expérimentales : </h3>" + RchrTxt + "<br/>";
-				PlanteInfoTxt += "<h3>Données cliniques : </h3>" + ClinTxt + "<br/>";
+				PlanteInfoTxt += "<h3>Données cliniques : </h3>" + ClinTxt + "<br/><br/>";
+				PlanteInfoTxt += "<h3>Applications médicales</h3>" + PlanteUseTxt;
 				PlanteInfoTxt += "<h3>Contre-indications : </h3>" + PlanteCtrIndicsTxt + "<br/>";
 				PlanteInfoTxt += "<h3>Effets secondaires : </h3>" + PlanteEffet2sTxt + "<br/>";
 				PlanteInfoTxt += "<h3>Posologie : </h3>" + CastBufferToRichText(PlantePoso) + "<br/>";
@@ -2635,6 +2769,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
