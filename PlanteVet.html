@@ -1026,12 +1026,14 @@
 			let ResultListObj = document.getElementById("MatchingProductList");
 			let FctId = document.getElementById("FctInputCombo_Pl").value;
 			let Espece = document.getElementById("EspeceInputCombo_Pl").value;
+			let SyndromeId = document.getElementById("SyndromeInputCombo_Pl").value;
 			let CtrIndic = document.getElementById("CtrIndicInputCombo_Pl").value;
 			let Effet2 = document.getElementById("Effet2InputCombo_Pl").value;
 			
 			let ResultList = "";
 			let FctSQLRequestResultObj = [];
 			let PosoSQLRequestResultObj = [];
+			let SyndromeSQLRequestResultObj = [];
 			let CtrIndicSQLRequestResultObj = [];
 			let Effet2SQLRequestResultObj = [];
 			
@@ -1094,6 +1096,37 @@
 					console.log("End of search plante poso SQL request.");
 				} catch(ErrorObj) {
 					console.log("Echec search plante poso SQL request");
+				};
+			}
+			
+			//selection de toutes les syndromes correspondants
+			if(SyndromeId != "Choisir" && SyndromeId != -1)
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search plante syndrome SQL request ...");
+				try {
+					FctSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Plante from PLANTE_USECASE where Usecase like $a",
+						rowMode: 'array',
+						bind: {$a: SyndromeId},
+					});
+					console.log("End of search plante syndrome SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search plante syndrome SQL request");
+				};
+			}
+			else
+			{
+				// exec SQL request on Working DB
+				console.log("Doing search plante syndrome SQL request ...");
+				try {
+					FctSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Plante from PLANTE_USECASE",
+						rowMode: 'array',
+					});
+					console.log("End of search plante syndrome SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search plante syndrome SQL request");
 				};
 			}
 			
@@ -2619,6 +2652,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
