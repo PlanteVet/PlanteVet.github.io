@@ -1059,7 +1059,7 @@
 				console.log("Doing search plante fct SQL request ...");
 				try {
 					FctSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Plante from PLANTE_FCTS",
+						sql: "select Plante from PLANTE",
 						rowMode: 'array',
 					});
 					console.log("End of search plante fct SQL request.");
@@ -1090,7 +1090,7 @@
 				console.log("Doing all search plante poso SQL request ...");
 				try {
 					PosoSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Plante from PLANTE_ESPECE",
+						sql: "select Plante from PLANTE",
 						rowMode: 'array',
 					});
 					console.log("End of search plante poso SQL request.");
@@ -1121,7 +1121,7 @@
 				console.log("Doing search plante syndrome SQL request ...");
 				try {
 					SyndromeSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Plante from PLANTE_USECASE",
+						sql: "select Plante from PLANTE",
 						rowMode: 'array',
 					});
 					console.log("End of search plante syndrome SQL request.");
@@ -2660,6 +2660,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
