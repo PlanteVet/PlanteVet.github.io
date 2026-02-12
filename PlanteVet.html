@@ -532,7 +532,7 @@
 					SyndromeNameTxt = DoSanitizeNameTxt(SyndromeNameTxt);
 					// add to combo
 					SyndromeInputComboTxt += "<option value=\"" + SyndromeId + "\"";
-					if(SyndromeId == DfltSyndromeId) SyndromeInputComboTxt += " selected ";
+					if(SyndromeId == DfltSydnromeId) SyndromeInputComboTxt += " selected ";
 					SyndromeInputComboTxt += ">" + SyndromeNameTxt + "</option>";
 				}
 			}
@@ -2596,7 +2596,7 @@
 					<br/>Inclure : 
 					<div id="FctCombo_Pl">Grande fonction : <input type="button" id="FctInputCombo_Pl" value="Choisir" onclick="BuildFctInputCombo('Pl', 0);"></div>
 					<div id="EspeceCombo_Pl">Espèce : <input type="button" id="EspeceInputCombo_Pl" value="Choisir" onclick="BuildEspeceInputCombo('Pl');"></div>
-					<div id="SyndromeCombo_Pl">Syndrome : <input type="button" id="SyndromeInputCombo_Pl" value="Choisir" onclick="BuildSyndromeInputCombo('Pl');"></div>
+					<div id="SyndromeCombo_Pl">Syndrome : <input type="button" id="SyndromeInputCombo_Pl" value="Choisir" onclick="BuildSyndromeInputCombo('Pl',0);"></div>
 					<br/>
 					<br/>Exclure :
 					<div id="CtrIndicCombo_Pl">Contre-indication : <input type="button" id="CtrIndicInputCombo_Pl" value="Choisir" onclick="BuildCtrIndicInputCombo('Pl', 0);"></div>
@@ -2619,5 +2619,6 @@
 	</div>	
 </body>
 </html>
+
 
 
