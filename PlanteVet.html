@@ -1105,7 +1105,7 @@
 				// exec SQL request on Working DB
 				console.log("Doing search plante syndrome SQL request ...");
 				try {
-					FctSQLRequestResultObj = globalThis.WorkingDB.exec({
+					SyndromeSQLRequestResultObj = globalThis.WorkingDB.exec({
 						sql: "select Plante from PLANTE_USECASE where Usecase like $a",
 						rowMode: 'array',
 						bind: {$a: SyndromeId},
@@ -1120,7 +1120,7 @@
 				// exec SQL request on Working DB
 				console.log("Doing search plante syndrome SQL request ...");
 				try {
-					FctSQLRequestResultObj = globalThis.WorkingDB.exec({
+					SyndromeSQLRequestResultObj = globalThis.WorkingDB.exec({
 						sql: "select Plante from PLANTE_USECASE",
 						rowMode: 'array',
 					});
@@ -2660,6 +2660,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
