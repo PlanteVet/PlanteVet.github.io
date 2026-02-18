@@ -160,6 +160,7 @@
 		globalThis.RefDatabaseSchema_Cte = ["CREATE TABLE LABO(Id integer primary key, Name text)",
 												"CREATE TABLE GALENIQUE(Id integer primary key, Name text)",
 												"CREATE TABLE CATEGORIE(Id integer primary key, Name text)",
+												"CREATE TABLE ESPECE(Id integer primary key, Name text, IMG blob)",
 												"CREATE TABLE PLANTE(Id integer primary key, Name text, Photo blob, Latin text, Famille text, Botanique blob, Molecules blob, PDyn blob, P1 text, P2 text, P3 text, PCin blob, Gestation blob, Surdosage blob, Sources blob, Interac blob, MAJ blob, Rchr int, Clin int, Reg int, RegEQ int, Dop int, Poso blob)",
 												"CREATE TABLE USEPART(Id integer primary key, Name text)",
 												"CREATE TABLE FCTS(Id integer primary key, Name text)",
@@ -630,6 +631,30 @@
 			if(NbResultRow != 1) return false;
 			// fetch info
 			let TmpResultRow = CategorieSQLRequestResultObj[0];
+			let NbUsedCount = TmpResultRow[0];
+			if(NbUsedCount == 0) return false;
+			return true;
+		}
+		
+		// check if Espece can be deleted (aka. if used by a product or not)
+		function IsEspeceUsedBySomeProduct(EspeceId)
+		{
+			console.log("Doing is Espece used SQL request ...");
+			let EspeceSQLRequestResultObj = [];
+			try {
+				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select count(case EspeceId when $a then 1 else null end) from PLANTE_ESPECE",
+					rowMode: 'array',
+					bind: {$a: EspeceId},
+				});
+				console.log("End of is Espece used SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec is Espece used SQL request");
+			};			
+			let NbResultRow = EspeceSQLRequestResultObj.length;
+			if(NbResultRow != 1) return false;
+			// fetch info
+			let TmpResultRow = EspeceSQLRequestResultObj[0];
 			let NbUsedCount = TmpResultRow[0];
 			if(NbUsedCount == 0) return false;
 			return true;
@@ -7731,6 +7756,7 @@
 	
 </body>
 </html>
+
 
 
 
