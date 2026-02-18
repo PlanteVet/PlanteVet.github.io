@@ -6905,7 +6905,6 @@
 				
 				// get check state
 				let EspId = PlanteEspStateObj.EspeceId;
-				let EspName = PlanteEspStateObj.EspeceName;
 				let FlgEspChecked = document.getElementById("Esp_" + EspId + globalThis.PrivateWorkingEltId).checked;
 				
 				// check if this espece is to be removed from list of plante or added to
@@ -6935,9 +6934,9 @@
 					let SQLRequestResultObj = [];
 					try {
 						SQLRequestResultObj = globalThis.WorkingDB.exec({
-							sql: "insert into PLANTE_ESPECE values(null, $a, $b, $c)",
+							sql: "insert into PLANTE_ESPECE values(null, $a, $b)",
 							rowMode: 'array',
-							bind: {$a: globalThis.PrivateWorkingEltId, $b: EspId, $c: EspName},
+							bind: {$a: globalThis.PrivateWorkingEltId, $b: EspId},
 						});
 						console.log("End of insert plante espece SQL request.");
 					} catch(ErrorObj) {
@@ -7316,6 +7315,44 @@
 		//fill list plante espece
 		function FillPlanteEspeceList(PlanteId)
 		{
+			//pre-build div
+			let PlanteEspeceListObj = document.getElementById("ListCheckedPlanteEspece");
+			
+			// NOTA : PlanteEspeceStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByPlante
+			let PlanteEspeceStateListObj = [];
+			
+			// fetch all Espece
+			console.log("Doing list Espece SQL request ...");
+			let EspeceSQLRequestResultObj = [];
+			try {
+				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from ESPECE",
+					rowMode: 'array',
+				});
+				console.log("End of list Espece SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec list Espece SQL request");
+			};
+			
+			// build list Espece state array and div
+			let EspeceTxt = "<b>Espèces concernées : </b>";
+			let NbResultRow = EspeceSQLRequestResultObj.length;
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				// fetch info
+				let TmpResultRow = EspeceSQLRequestResultObj[i];
+				let EspeceId = TmpResultRow[0];
+				let EspeceNameTxt = TmpResultRow[1];
+				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
+				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
+				// add to Fct state array
+				let EspeceStateListObj = {EspeceId: EspeceId, EspeceName: EspeceNameTxt, FlgCurrentlyUsedByPlante: false};
+				PlanteEspeceStateListObj.push(EspeceStateListObj);
+				// add to Fct pool combo
+				EspeceTxt += "<input type='checkbox' id='Esp_"+ EspeceId + PlanteId + "' value='" + EspeceNameTxt +"'>" + EspeceNameTxt + "</input>";
+			}
+			PlanteEspeceListObj.innerHTML = EspeceTxt;
+			
 			//fetch plante espece
 			console.log("Doing plante espece SQL request ...");
 			let PlanteEspeceSQLRequestResultObj = [];
@@ -7330,20 +7367,9 @@
 				console.log("Echec plante Espece SQL request");
 			};
 			
-			// NOTA : PlanteEspeceStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByPlante
-			let PlanteEspeceStateListObj = [];
-			let CtStateListObj = {EspeceId: 0, EspeceName: 'Chat', FlgCurrentlyUsedByPlante: false};
-			PlanteEspeceStateListObj.push(CtStateListObj);
-			let CnStateListObj = {EspeceId: 1, EspeceName: 'Chien', FlgCurrentlyUsedByPlante: false};
-			PlanteEspeceStateListObj.push(CnStateListObj);
-			let CvStateListObj = {EspeceId: 2, EspeceName: 'Cheval', FlgCurrentlyUsedByPlante: false};
-			PlanteEspeceStateListObj.push(CvStateListObj);
-			let BvStateListObj = {EspeceId: 3, EspeceName: 'Bovin', FlgCurrentlyUsedByPlante: false};
-			PlanteEspeceStateListObj.push(BvStateListObj);
-			
 			//pour tous les especes cochees
-			let NbResultRow = PlanteEspeceSQLRequestResultObj.length;
-			for(let i = 0; i < NbResultRow; i++)
+			let NbEspece = PlanteEspeceSQLRequestResultObj.length;
+			for(let i = 0; i < NbEspece; i++)
 			{
 				// fetch espece id
 				let TmpResultRow = PlanteEspeceSQLRequestResultObj[i];
@@ -7353,7 +7379,7 @@
 				document.getElementById("Esp_" + EspId + PlanteId).checked = true;
 				
 				//change Flg
-				PlanteEspeceStateListObj[EspId].FlgCurrentlyUsedByPlante = true;
+				PlanteEspeceStateListObj[EspId-1].FlgCurrentlyUsedByPlante = true;
 			}
 			// save usecase state array
 			globalThis.PrivatePlanteEspeceStateListObj = PlanteEspeceStateListObj;
@@ -7598,11 +7624,7 @@
 				PlanteInfoTxt += "&emsp;<i>Ecriver sous le format : \"Forme galénique : Posologie (espèce)\"</i><br/><br/>";
 				PlanteInfoTxt += "<textarea id=\"PlantePosoInput\" >Initializing Rich text editor ...</textarea>";
 				RichTextDataPoso = CastBufferToRichText(PlantePoso);
-				PlanteInfoTxt += "<b>Espèces concernées : </b>";
-				PlanteInfoTxt += "<input type='checkbox' id='Esp_0" + PlanteId + "' value='CT'>Chat</input>";
-				PlanteInfoTxt += "<input type='checkbox' id='Esp_1" + PlanteId + "' value='CN'>Chien</input>";
-				PlanteInfoTxt += "<input type='checkbox' id='Esp_2" + PlanteId + "' value='CV'>Cheval</input>";
-				PlanteInfoTxt += "<input type='checkbox' id='Esp_3" + PlanteId + "' value='BV'>Bovin</input>";
+				PlanteInfoTxt += "<div id=\"ListCheckedPlanteEspece\">Empty list checked plante Espece</div>";
 				
 				PlanteInfoTxt += "<h3>Toxicité :</h3><textarea id=\"PlanteSurdosageInput\" >Initializing Rich text editor ...</textarea><br/>";
 				RichTextDataSurdosage = CastBufferToRichText(PlanteSurdosage);
@@ -8034,6 +8056,7 @@
 	
 </body>
 </html>
+
 
 
 
