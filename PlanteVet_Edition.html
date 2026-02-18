@@ -52,7 +52,7 @@
  			border: 0;
   			line-height: 2;
   			padding: 0 10px;
-			background-color: #DF73D4;
+			background-color: #663399;
 			color: white;
 			border-radius: 5px;
 			text-shadow: 1px 1px 1px black;
@@ -62,6 +62,22 @@
 			margin-bottom: 5px;
 		}
 		.Plant:hover {
+			background-color: #342D7E;
+		}
+		.Species {
+ 			border: 0;
+  			line-height: 2;
+  			padding: 0 10px;
+			background-color: #DF73D4;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+			margin-bottom: 5px;
+		}
+		.Species:hover {
 			background-color: #B93B8F;
 		}
 		.Fct {
@@ -7990,7 +8006,7 @@
 		<br/><input type="button" value="Edit PARTIE UTILISEE" onclick="DoEditUsePartTable();" class="Plant" />
 		<br/>
 		<br/>
-		<br/><input type="button" value="Edit ESPECE" onclick="DoEditEspeceTable();" />
+		<br/><input type="button" value="Edit ESPECE" onclick="DoEditEspeceTable();" class="Species" />
 		<br/>
 		<br/>
 		<br/><input type="button" value="Edit GRANDES FONCTIONS" onclick="DoEditFctsTable();" class="Fct" />
@@ -8018,6 +8034,7 @@
 	
 </body>
 </html>
+
 
 
 
