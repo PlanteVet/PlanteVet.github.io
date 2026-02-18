@@ -193,7 +193,7 @@
 												"CREATE TABLE PLANTE_USEPART(Plante integer not null, UsePart integer not null, foreign key(Plante) references PLANTE(Id), foreign key(UsePart) references USEPART(Id))",
 												"CREATE TABLE PLANTE_FCTS(Id integer primary key, Plante integer not null, Fct integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Fct) references FCTS(Id))",
 												"CREATE TABLE PLANTE_USECASE(Id integer primary key, Plante integer not null, Usecase integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Usecase) references USECASE(Id))",
-												"CREATE TABLE PLANTE_ESPECE(Id integer primary key, Plante integer not null, EspeceId int, EspeceTxt text, foreign key(Plante) references PLANTE(Id))"];
+												"CREATE TABLE PLANTE_ESPECE(Id integer primary key, Plante integer not null, EspeceId int, foreign key(Plante) references PLANTE(Id))"];
 
 		// Reset sqlite3 and database info
 		globalThis.WorkingDB = null;
@@ -2772,6 +2772,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
