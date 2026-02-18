@@ -1011,7 +1011,7 @@
 			return true;
 		}
 		
-		// check if labo exist (aka. if product can be edited)
+		// check if labo exist (aka. if labo can be edited)
 		function IsLaboTblEmpty()
 		{
 			console.log("Doing is labo empty SQL request ...");
@@ -1034,7 +1034,7 @@
 			return false;
 		}
 
-		// check if Galenique exist (aka. if product can be edited)
+		// check if Galenique exist (aka. if galenique can be edited)
 		function IsGaleniqueTblEmpty()
 		{
 			console.log("Doing is Galenique empty SQL request ...");
@@ -1057,7 +1057,7 @@
 			return false;
 		}
 		
-		// check if Categorie exist (aka. if product can be edited)
+		// check if Categorie exist (aka. if categorie can be edited)
 		function IsCategorieTblEmpty()
 		{
 			console.log("Doing is Categorie empty SQL request ...");
@@ -1075,6 +1075,29 @@
 			if(NbResultRow != 1) return true;
 			// fetch info
 			let TmpResultRow = CategorieSQLRequestResultObj[0];
+			let NbCount = TmpResultRow[0];
+			if(NbCount == 0) return true;
+			return false;
+		}
+		
+		// check if Espece exist (aka. if Espece can be edited)
+		function IsEspeceTblEmpty()
+		{
+			console.log("Doing is Espece empty SQL request ...");
+			let EspeceSQLRequestResultObj = [];
+			try {
+				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select count(*) from ESPECE",
+					rowMode: 'array',
+				});
+				console.log("End of is Espece empty SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec is Espece empty SQL request");
+			};			
+			let NbResultRow = EspeceSQLRequestResultObj.length;
+			if(NbResultRow != 1) return true;
+			// fetch info
+			let TmpResultRow = EspeceSQLRequestResultObj[0];
 			let NbCount = TmpResultRow[0];
 			if(NbCount == 0) return true;
 			return false;
@@ -1103,7 +1126,7 @@
 			return false;
 		}
 		
-		// check if UsePart exist (aka. if product can be edited)
+		// check if UsePart exist (aka. if usepart can be edited)
 		function IsUsePartTblEmpty()
 		{
 			console.log("Doing is UsePart empty SQL request ...");
@@ -1126,7 +1149,7 @@
 			return false;
 		}
 		
-		// check if Fcts exist (aka. if product can be edited)
+		// check if Fcts exist (aka. if fcts can be edited)
 		function IsFctsTblEmpty()
 		{
 			console.log("Doing is Fcts empty SQL request ...");
@@ -6157,6 +6180,242 @@
 			return;
 		}
 		
+		// delete Espece
+		function GoDeleteEspece(EspeceId)
+		{
+			// check something to do
+			if(globalThis.PrivateWorkingEltId != 0)
+			{
+				// ask confirmation
+				if(!window.confirm("Do you really want to delete this espece ?")) return;
+				// delete entry
+				console.log("Doing delete Espece SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from ESPECE where Id = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete Espece SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete Espece SQL request");
+					alert("Delete failed");
+					return;
+				};
+				// update working elt id
+				globalThis.PrivateWorkingEltId = 0;
+				// enable save db btn
+				document.getElementById("SaveDBBtn").disabled = false;
+				// enable/disable btn as needed
+				if(IsEspeceTblEmpty()) document.getElementById("EditPdtBtn").disabled = true;
+				else document.getElementById("EditPdtBtn").disabled = false;
+			}
+			// back to select row
+			DoEditEspeceTable();
+			return;
+		}
+
+		// update Espece
+		function GoUpdateEspece(EspeceId)
+		{
+			// fecth value to save
+			let EspeceNameTxt = document.getElementById("EltNameInput").value;
+			let EspecePhotoBlob = CastImgURLDataToBuffer(document.getElementById("EspecePhotoView").src);		
+			// local save entry
+			if(globalThis.PrivateWorkingEltId == 0)
+			{
+				// do insert
+				console.log("Doing insert Espece SQL request ...");
+				let SQLRequestResultObj = [];
+				try {
+					SQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "insert into ESPECE values(null, $a, $b) returning Id",
+						rowMode: 'array',
+						bind: {$a: EspeceNameTxt, $b: EspecePhotoBlob},
+					});
+					console.log("End of insert Espece SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec insert Espece SQL request");
+					alert("Insert failed");
+					return;
+				};
+				// update working elt id
+				let TmpResultRow = SQLRequestResultObj[0];
+				globalThis.PrivateWorkingEltId = TmpResultRow[0];
+				console.log("Inserted Espece Id = " + globalThis.PrivateWorkingEltId);
+				// notify done
+				alert("Insert done");
+			}
+			else
+			{
+				// do update
+				console.log("Doing update Espece SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "update ESPECE set Name = $a, IMG = $b where Id = $b",
+						rowMode: 'array',
+						bind: {$a: EspeceNameTxt, $b: EspecePhotoBlob, $c: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of update Espece SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec update Espece SQL request");
+					alert("Update failed");
+					return;
+				};
+				// notify done
+				alert("Update done");
+			}
+			// enable save db btn
+			document.getElementById("SaveDBBtn").disabled = false;
+			// enable/disable btn as needed
+			if(IsEspeceTblEmpty()) document.getElementById("EditPdtBtn").disabled = true;
+			else document.getElementById("EditPdtBtn").disabled = false;
+			return;
+		}
+		
+		// update Espece photo
+		function DoUpdateEspecePhoto()
+		{
+			let ListFilePathObj = document.getElementById("SelectedEspeceInput").files;
+			// get selected file
+			let FileObj = ListFilePathObj[0];
+			// Load file
+			DoReadImageFileAsURL(FileObj).then((OpsResult) => {
+				// get result
+				let FileDataURL = OpsResult;
+				// set data on image view
+				document.getElementById("EspecePhotoView").src = FileDataURL;
+			}).catch((OpsError) => {
+				alert("Echec reading image");
+			});
+			return;
+		}
+
+		// edit Espece
+		function DoEditEspece(EspeceId)
+		{
+			let RowEditFormObj = document.getElementById("RowEditForm");
+
+			// save working elt id (used by update / delete operations)
+			globalThis.PrivateWorkingEltId = EspeceId;
+			// Pre build view
+			let RowEditFormTxt = "";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateEspece(" + EspeceId + ");\" /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditEspeceTable();\" /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteEspece(" + EspeceId + ");\" ";
+			if(IsEspeceUsedBySomeProduct(EspeceId) || (EspeceId == 0)) RowEditFormTxt += "disabled=\"true\"";
+			RowEditFormTxt += " /><br/>";			
+			// append Categorie view
+			let EspeceInfoTxt = "";
+			EspeceInfoTxt += "<h1>Espece " + EspeceId + " Info :</h1><br/>";
+			// fetch Categorie info
+			let EspeceSQLRequestResultObj = [];
+			if(EspeceId == 0)
+			{
+				// fresh new elt
+				// Mimic SQL request result
+				let EspeceInfo = [0, "ESPECE_0", new Uint8Array()];
+				EspeceSQLRequestResultObj.push(EspeceInfo);
+			}
+			else
+			{
+				// existing elt
+				console.log("Doing Espece info SQL request ...");
+				try {
+					EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select * from ESPECE where Id = $a",
+						rowMode: 'array',
+						bind: {$a: EspeceId},
+					});
+					console.log("End of Espece info  SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec Espece info  SQL request");
+				};
+			}
+			// build view
+			let NbResultRow = EspeceSQLRequestResultObj.length;
+			if(NbResultRow != 1)
+			{
+				EspeceInfoTxt += "Nb Espece (" + NbResultRow +") missmatch for id " + EspeceId + "<br/>";
+			}
+			else
+			{
+				// fetch info
+				let EspeceInfo = EspeceSQLRequestResultObj[0];
+				let EspeceNameTxt = EspeceInfo[1];
+				if(EspeceNameTxt == null) EspeceNameTxt = "UNDEFINED";
+				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
+				let EspecePhotoBlob = EspeceInfo[2];
+				if(EspecePhotoBlob == null) EspecePhotoBlob = new Uint8Array();
+				// build form
+				EspeceInfoTxt += "<b>ESPECE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + EspeceNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/><br/>";
+				EspeceInfoTxt += "<img id=\"EspecePhotoView\" style=\"max-height: 200px; max-width: 200px\" src=" + CastBufferToImgURLData(EspecePhotoBlob) + " /> <input id=\"SelectedEspeceInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdateEspecePhoto()\" /><br/>";
+			}
+			RowEditFormTxt += EspeceInfoTxt;
+			// hide row choice form
+			document.getElementById("RowChoiceForm").style.display = 'none';
+			// show edit form
+			RowEditFormObj.innerHTML = RowEditFormTxt;
+			RowEditFormObj.style.visibility = 'visible';
+			return;
+		}
+
+		// add new Espece
+		function GoAddNewEspece()
+		{
+			// use special ID 0 to indicate New elt
+			DoEditEspece(0);
+			return;
+		}
+
+		// edit Espece table
+		function DoEditEspeceTable()
+		{
+			let RowChoiceFormObj = document.getElementById("RowChoiceForm");
+			
+			// Pre build view
+			let RowChoiceFormTxt = "";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Espece\" onclick=\"GoAddNewEspece();\" /> OR click an espece to edit :<br/>";
+			// list all existing Espece : exec SQL request on Working DB
+			console.log("Doing list Espece SQL request ...");
+			let SQLRequestResultObj = [];
+			try {
+				SQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from ESPECE",
+					rowMode: 'array',
+				});
+				console.log("End of list Espece SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec list Espece SQL request");
+			};
+			// append list product
+			let ResultList = "";
+			let NbResultRow = SQLRequestResultObj.length;
+			if(NbResultRow == 0)
+			{
+				ResultList += "NO ESPECE";
+			}
+			else
+			{			
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = SQLRequestResultObj[i];
+					
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoEditEspece(" + TmpResultRow[0] +");\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
+				}
+			}
+			RowChoiceFormTxt += ResultList;
+			// hide table choice and edit form
+			document.getElementById("TableChoiceForm").style.display = 'none';
+			document.getElementById("RowEditForm").style.visibility = 'hidden';
+			// show edit form
+			RowChoiceFormObj.innerHTML = RowChoiceFormTxt;
+			RowChoiceFormObj.style.display = 'inline';
+			RowChoiceFormObj.style.visibility = 'visible';
+			return;
+		}
+		
 		// delete Plante
 		function GoDeletePlante(PlanteId)
 		{
@@ -7731,6 +7990,9 @@
 		<br/><input type="button" value="Edit PARTIE UTILISEE" onclick="DoEditUsePartTable();" class="Plant" />
 		<br/>
 		<br/>
+		<br/><input type="button" value="Edit ESPECE" onclick="DoEditEspeceTable();" />
+		<br/>
+		<br/>
 		<br/><input type="button" value="Edit GRANDES FONCTIONS" onclick="DoEditFctsTable();" class="Fct" />
 		<br/><input type="button" value="Edit UTILISATION" onclick="DoEditUsecaseTable();" class="Fct" />
 		<br/>
@@ -7756,6 +8018,7 @@
 	
 </body>
 </html>
+
 
 
 
