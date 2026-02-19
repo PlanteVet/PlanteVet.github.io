@@ -187,7 +187,7 @@
 												"CREATE TABLE PRODUCT_EFFET2(Product integer not null, Effet2 integer not null, foreign key(Product) references PRODUCT(Id), foreign key(Effet2) references EFFET2(Id))",
 												"CREATE TABLE PRODUCT_TOXICITE(Product integer not null, Toxicite integer not null, foreign key(Product) references PRODUCT(Id), foreign key(Toxicite) references TOXICITE(Id))",
 												"CREATE TABLE PRODUCT_CTRINDIC(Product integer not null, CtrIndic integer not null, foreign key(Product) references PRODUCT(Id), foreign key(CtrIndic) references CTRINDIC(Id))",
-												"CREATE TABLE PRODUCT_POSO(Product integer not null, Espece text, Posologie blob, TA blob, foreign key(Product) references PRODUCT(Id))",
+												"CREATE TABLE PRODUCT_POSO(Product integer not null, Espece integer not null, Posologie blob, TA blob, foreign key(Product) references PRODUCT(Id), foreign key(Espece) references ESPECE(Id))",
 												"CREATE TABLE PLANTE_EFFET2(Plante integer not null, Effet2 integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Effet2) references EFFET2(Id))",
 												"CREATE TABLE PLANTE_CTRINDIC(Plante integer not null, CtrIndic integer not null, foreign key(Plante) references PLANTE(Id), foreign key(CtrIndic) references CTRINDIC(Id))",
 												"CREATE TABLE PLANTE_USEPART(Plante integer not null, UsePart integer not null, foreign key(Plante) references PLANTE(Id), foreign key(UsePart) references USEPART(Id))",
@@ -2792,6 +2792,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
