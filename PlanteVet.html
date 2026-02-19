@@ -2567,12 +2567,31 @@
 					for(let i = 0; i < NbPoso; i++)
 					{
 						let TmpResultRow = ProductPosoSQLRequestResultObj[i];
-						let Espece = TmpResultRow[0];
+						let EspeceId = TmpResultRow[0];
 						let Poso = TmpResultRow[1];
 						let TA = TmpResultRow[2];
-						ProductPosoTxt += "<tr align=center><td>" + Espece + "</td>";
-						ProductTATxt += "<tr align=center><td>" + Espece + "</td>";
-						EspecesTxt += Espece + ", ";
+						
+						//fetch Espece Info
+						let ThatEspecesSQLRequestResultObj = [];
+						try {
+							ThatEspecesSQLRequestResultObj = globalThis.WorkingDB.exec({
+								sql: "select * from ESPECE where Id = $a",
+								rowMode: 'array',
+								bind: {$a: EspeceId},
+							});
+							console.log("End of espece info SQL request.");
+						} catch(ErrorObj) {
+							console.log("Echec espece info SQL request");
+						};
+						let EspeceInfo = ThatEspecesSQLRequestResultObj[0];
+						let EspeceName = EspeceInfo[1];
+						if(EspeceName == null) EspeceName = "UNDEFINED";
+						let EspecePhoto = EspeceInfo[2];
+						if(EspecePhoto == null) EspecePhoto = new Uint8Array();
+						
+						ProductPosoTxt += "<tr align=center><td>" + EspeceName + "</td>";
+						ProductTATxt += "<tr align=center><td>" + EspeceName + "</td>";
+						EspecesTxt += "<img style=\"max-height: 20px; max-width: 20px\" src=" + CastBufferToImgURLData(EspecePhoto) + " /> " + EspeceName + ", ";
 						ProductPosoTxt += "<td>" + CastBufferToRichText(Poso) + "</td></tr>";
 						ProductTATxt += "<td>" + CastBufferToRichText(TA) + "</td></tr>";
 					}
@@ -2792,6 +2811,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
