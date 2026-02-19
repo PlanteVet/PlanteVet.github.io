@@ -193,7 +193,7 @@
 												"CREATE TABLE PRODUCT_EFFET2(Product integer not null, Effet2 integer not null, foreign key(Product) references PRODUCT(Id), foreign key(Effet2) references EFFET2(Id))",
 												"CREATE TABLE PRODUCT_TOXICITE(Product integer not null, Toxicite integer not null, foreign key(Product) references PRODUCT(Id), foreign key(Toxicite) references TOXICITE(Id))",
 												"CREATE TABLE PRODUCT_CTRINDIC(Product integer not null, CtrIndic integer not null, foreign key(Product) references PRODUCT(Id), foreign key(CtrIndic) references CTRINDIC(Id))",
-												"CREATE TABLE PRODUCT_POSO(Product integer not null, Espece text, Posologie blob, TA blob, foreign key(Product) references PRODUCT(Id))",
+												"CREATE TABLE PRODUCT_POSO(Product integer not null, Espece integer not null, Posologie blob, TA blob, foreign key(Product) references PRODUCT(Id), foreign key(Espece) references ESPECE(Id))",
 												"CREATE TABLE PLANTE_EFFET2(Plante integer not null, Effet2 integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Effet2) references EFFET2(Id))",
 												"CREATE TABLE PLANTE_CTRINDIC(Plante integer not null, CtrIndic integer not null, foreign key(Plante) references PLANTE(Id), foreign key(CtrIndic) references CTRINDIC(Id))",
 												"CREATE TABLE PLANTE_USEPART(Plante integer not null, UsePart integer not null, foreign key(Plante) references PLANTE(Id), foreign key(UsePart) references USEPART(Id))",
@@ -222,7 +222,7 @@
 		globalThis.PrivateProductToxiciteStateListObj = [];
 		// NOTA : ProductCtrIndicStateListObj array row is : CtrIndicId, CtrIndicName, FlgCurrentlyUsedByProduct, FlgInCheckList
 		globalThis.PrivateProductCtrIndicStateListObj = [];
-		// NOTA : ProductPosoStateListObj array row is : EspeceName, Id FlgCurrentlyUsedByProduct
+		// NOTA : ProductPosoStateListObj array row is : EspeceName, EspeceId, FlgCurrentlyUsedByProduct
 		globalThis.PrivateProductPosoStateListObj = [];
 		// NOTA : PlanteEffet2StateListObj array row is : Effet2Id, Effet2Name, FlgCurrentlyUsedByProduct, FlgInCheckList
 		globalThis.PrivatePlanteEffet2StateListObj = [];
@@ -2099,7 +2099,7 @@
 			}
 			
 			// update product poso
-			// NOTA : ProductPosoStateListObj array row is : EspeceName, FlgCurrentlyUsedByProduct
+			// NOTA : ProductPosoStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByProduct
 			let NbPoso = globalThis.PrivateProductPosoStateListObj.length;
 			for(let i = 0; i < NbPoso; i++)
 			{
@@ -2107,10 +2107,10 @@
 				
 				// get check state
 				let EspeceName = ProductPosoStateObj.EspeceName;
-				let EspeceId = ProductPosoStateObj.Id;
-				let Poso = CastRichTextToBuffer(GetRichTextContentAsHTML("ProductPoso" + EspeceId + "Input"));
-				let TA = CastRichTextToBuffer(GetRichTextContentAsHTML("ProductTA" + EspeceId + "Input"));
-				let FlgPosoChecked = document.getElementById(EspeceId).checked;
+				let EspeceId = ProductPosoStateObj.EspeceId;
+				let Poso = CastRichTextToBuffer(GetRichTextContentAsHTML("ProductPoso" + EspeceName + "Input"));
+				let TA = CastRichTextToBuffer(GetRichTextContentAsHTML("ProductTA" + EspeceName + "Input"));
+				let FlgPosoChecked = document.getElementById(EspeceName).checked;
 				// check if this Poso is removed from list of product Poso or added to
 				if(ProductPosoStateObj.FlgCurrentlyUsedByProduct && (!FlgPosoChecked))
 				{
@@ -2120,12 +2120,12 @@
 						globalThis.WorkingDB.exec({
 							sql: "delete from PRODUCT_POSO where Product = $a and Espece = $b",
 							rowMode: 'array',
-							bind: {$a: globalThis.PrivateWorkingEltId, $b: EspeceName},
+							bind: {$a: globalThis.PrivateWorkingEltId, $b: EspeceId},
 						});
 						console.log("End of delete Poso product SQL request.");
 					} catch(ErrorObj) {
 						console.log("Echec delete Poso product SQL request");
-						alert("Delete product Poso failled");
+						alert("Delete product Poso failed");
 						return;
 					};
 					// update state
@@ -2140,12 +2140,12 @@
 						SQLRequestResultObj = globalThis.WorkingDB.exec({
 							sql: "insert into PRODUCT_POSO values($a, $b, $c, $d)",
 							rowMode: 'array',
-							bind: {$a: globalThis.PrivateWorkingEltId, $b: EspeceName, $c: Poso, $d: TA},
+							bind: {$a: globalThis.PrivateWorkingEltId, $b: EspeceId, $c: Poso, $d: TA},
 						});
 						console.log("End of insert product Poso SQL request.");
 					} catch(ErrorObj) {
 						console.log("Echec insert product Poso SQL request");
-						alert("Insert product Poso failled");
+						alert("Insert product Poso failed");
 						return;
 					};
 					// update state
@@ -2159,7 +2159,7 @@
 						globalThis.WorkingDB.exec({
 							sql: "update PRODUCT_POSO set Posologie = $a, TA = $b where Product = $c and Espece = $d",
 							rowMode: 'array',
-							bind: {$a: Poso, $b: TA, $c: globalThis.PrivateWorkingEltId, $d: EspeceName},
+							bind: {$a: Poso, $b: TA, $c: globalThis.PrivateWorkingEltId, $d: EspeceId},
 						});
 						console.log("End of update product poso info SQL request.");
 					} catch(ErrorObj) {
@@ -2426,23 +2426,47 @@
 		// build list Poso
 		function BuildPosoList(ProductId)
 		{
+			//pre-build div
+			let PlanteEspeceListObj = document.getElementById("TableCheckEspece");
+			
 			//init state list Poso
 			// NOTA : ProductPosoStateListObj array row is : EspeceName, FlgCurrentlyUsedByProduct
 			let ProductPosoStateListObj = [];
-			ProductPosoStateListObj.push({EspeceName: "Chien", Id: "CN", FlgCurrentlyUsedByProduct: false});
-			ProductPosoStateListObj.push({EspeceName: "Chat", Id: "CT", FlgCurrentlyUsedByProduct: false});
-			ProductPosoStateListObj.push({EspeceName: "Bovin", Id: "BV", FlgCurrentlyUsedByProduct: false});
-			ProductPosoStateListObj.push({EspeceName: "Cheval", Id: "CV", FlgCurrentlyUsedByProduct: false});
 			
-			//init txt
-			let ProductPosoCNBlob = CastRichTextToBuffer("");
-			let ProductTACNBlob = CastRichTextToBuffer("");
-			let ProductPosoCTBlob = CastRichTextToBuffer("");
-			let ProductTACTBlob = CastRichTextToBuffer("");
-			let ProductPosoBVBlob = CastRichTextToBuffer("");
-			let ProductTABVBlob = CastRichTextToBuffer("");
-			let ProductPosoCVBlob = CastRichTextToBuffer("");
-			let ProductTACVBlob = CastRichTextToBuffer("");
+			// fetch all Espece
+			console.log("Doing list Espece SQL request ...");
+			let EspeceSQLRequestResultObj = [];
+			try {
+				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from ESPECE",
+					rowMode: 'array',
+				});
+				console.log("End of list Espece SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec list Espece SQL request");
+			};
+			
+			// build list Espece state array and div
+			let EspeceTxt = "<table border=1 cellspacing=0 cellpadding=5 valign=center><tr align=center><th>Espèce</th><th>Posologie</th><th>Temps d'attente</th></tr><tr valign=center>";
+			let NbResultRow = EspeceSQLRequestResultObj.length;
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				// fetch info
+				let TmpResultRow = EspeceSQLRequestResultObj[i];
+				let EspeceId = TmpResultRow[0];
+				let EspeceNameTxt = TmpResultRow[1];
+				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
+				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
+				// add to Product poso state array
+				let EspeceStateListObj = {EspeceId: EspeceId, EspeceName: EspeceNameTxt, FlgCurrentlyUsedByProduct: false};
+				ProductPosoStateListObj.push(EspeceStateListObj);
+				// add to Fct pool combo
+				EspeceTxt += "<tr align=center><td><input type='checkbox' name='Espece' id='" + EspeceNameTxt + "' value='" + EspeceNameTxt +"'><label for '" + EspeceNameTxt + "'>" + EspeceNameTxt +"</label></td>";
+				EspeceTxt += "<td><textarea id=\"ProductPoso" + EspeceNameTxt +"Input\">Initializing Rich text editor ...</textarea></td>";
+				EspeceTxt += "<td><textarea id=\"ProductTA" + EspeceNameTxt +"Input\">Initializing Rich text editor ...</textarea></td></tr>";
+			}
+			EspeceTxt += "</table>";
+			PlanteEspeceListObj.innerHTML = EspeceTxt;
 			
 			//fetch info poso
 			let ProductPosoSQLRequestResultObj = [];
@@ -2464,48 +2488,45 @@
 			{
 				//fetch poso info
 				let TmpResultRow = ProductPosoSQLRequestResultObj[i];
-				let EspeceName = TmpResultRow[0];
+				let EspeceId = TmpResultRow[0];
 				let Poso = TmpResultRow[1];
 				let TA = TmpResultRow[2];
-				if(EspeceName == "Chien")
-				{
-					ProductPosoCNBlob = Poso;
-					ProductTACNBlob = TA;
-					document.getElementById("CN").checked = true;
-					ProductPosoStateListObj[0].FlgCurrentlyUsedByProduct = true;
-				}
-				else if(EspeceName == "Chat")
-				{
-					ProductPosoCTBlob = Poso;
-					ProductTACTBlob = TA;
-					document.getElementById("CT").checked = true;
-					ProductPosoStateListObj[1].FlgCurrentlyUsedByProduct = true;
-				}
-				else if(EspeceName == "Bovin")
-				{
-					ProductPosoBVBlob = Poso;
-					ProductTABVBlob = TA;
-					document.getElementById("BV").checked = true;
-					ProductPosoStateListObj[2].FlgCurrentlyUsedByProduct = true;
-				}
-				else if(EspeceName == "Cheval")
-				{
-					ProductPosoCVBlob = Poso;
-					ProductTACVBlob = TA;
-					document.getElementById("CV").checked = true;
-					ProductPosoStateListObj[3].FlgCurrentlyUsedByProduct = true;
-				}
+				
+				let EspeceNameTxt = EspeceSQLRequestResultObj[EspeceId-1][1];
+				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
+				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
+				
+				let ProductPosoBlob = CastRichTextToBuffer("");
+				ProductPosoBlob = Poso;
+				let ProductTABlob = CastRichTextToBuffer("");
+				ProductTABlob = TA;
+				
+				document.getElementById(EspeceNameTxt).checked = true;
+				ProductPosoStateListObj[EspeceId-1].FlgCurrentlyUsedByProduct = true;
+				
+				ActivateRichTextOnSmallTextArea("ProductPoso" + EspeceNameTxt + "Input",CastBufferToRichText(ProductPosoBlob));
+				ActivateRichTextOnSmallTextArea("ProductTA" + EspeceNameTxt + "Input",CastBufferToRichText(ProductTABlob));
 			}
 			
-			//activate richtext
-			ActivateRichTextOnSmallTextArea("ProductPosoCNInput",CastBufferToRichText(ProductPosoCNBlob));
-			ActivateRichTextOnSmallTextArea("ProductTACNInput",CastBufferToRichText(ProductTACNBlob));
-			ActivateRichTextOnSmallTextArea("ProductPosoCTInput",CastBufferToRichText(ProductPosoCTBlob));
-			ActivateRichTextOnSmallTextArea("ProductTACTInput",CastBufferToRichText(ProductTACTBlob));
-			ActivateRichTextOnSmallTextArea("ProductPosoBVInput",CastBufferToRichText(ProductPosoBVBlob));
-			ActivateRichTextOnSmallTextArea("ProductTABVInput",CastBufferToRichText(ProductTABVBlob));
-			ActivateRichTextOnSmallTextArea("ProductPosoCVInput",CastBufferToRichText(ProductPosoCVBlob));
-			ActivateRichTextOnSmallTextArea("ProductTACVInput",CastBufferToRichText(ProductTACVBlob));
+			//activate richtext for unchecked species
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				// fetch info
+				let TmpResultRow = EspeceSQLRequestResultObj[i];
+				let EspeceId = TmpResultRow[0];
+				let EspeceNameTxt = TmpResultRow[1];
+				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
+				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
+				
+				let ProductPosoBlob = CastRichTextToBuffer("");
+				let ProductTABlob = CastRichTextToBuffer("");
+				
+				if(!document.getElementById(EspeceNameTxt).checked)
+				{
+					ActivateRichTextOnSmallTextArea("ProductPoso" + EspeceNameTxt + "Input",CastBufferToRichText(ProductPosoBlob));
+					ActivateRichTextOnSmallTextArea("ProductTA" + EspeceNameTxt + "Input",CastBufferToRichText(ProductTABlob));
+				}
+			}
 			
 			//update global var
 			globalThis.PrivateProductPosoStateListObj = ProductPosoStateListObj;
@@ -4251,14 +4272,33 @@
 			// Dectivate RichText 
 			DeactivateRichTextOnTextArea("ProductProprietesInput");
 			DeactivateRichTextOnTextArea("ProductPrecautionsInput");
-			DeactivateRichTextOnTextArea("ProductPosoCNInput");
-			DeactivateRichTextOnTextArea("ProductTACNInput");
-			DeactivateRichTextOnTextArea("ProductPosoCTInput");
-			DeactivateRichTextOnTextArea("ProductTACTInput");
-			DeactivateRichTextOnTextArea("ProductPosoBVInput");
-			DeactivateRichTextOnTextArea("ProductTABVInput");
-			DeactivateRichTextOnTextArea("ProductPosoCVInput");
-			DeactivateRichTextOnTextArea("ProductTACVInput");
+			
+			//deactivate all espece areas
+			// fetch all Espece
+			console.log("Doing list Espece SQL request ...");
+			let EspeceSQLRequestResultObj = [];
+			try {
+				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from ESPECE",
+					rowMode: 'array',
+				});
+				console.log("End of list Espece SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec list Espece SQL request");
+			};
+			let NbResultRow = EspeceSQLRequestResultObj.length;
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				// fetch info
+				let TmpResultRow = EspeceSQLRequestResultObj[i];
+				let EspeceId = TmpResultRow[0];
+				let EspeceNameTxt = TmpResultRow[1];
+				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
+				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
+				DeactivateRichTextOnTextArea("ProductPoso" + EspeceNameTxt + "Input");
+				DeactivateRichTextOnTextArea("ProductTA" + EspeceNameTxt + "Input");
+			}
+			
 			// go back to menu
 			DoEditProductTable();
 			return;
@@ -4371,23 +4411,7 @@
 				ProductInfoTxt += "&emsp;<select id=\"Effet2PoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendEffet2();\" /><br/><div id=\"ListCheckedProductEffet2\">Empty list checked product Effet2</div>";
 				
 				ProductInfoTxt += "<h3>Espèces cibles, Posologie et Temps d'attente</h3>";
-				ProductInfoTxt += "<table border=1 cellspacing=0 cellpadding=5 valign=center><tr align=center><th>Espèce</th><th>Posologie</th><th>Temps d'attente</th></tr><tr valign=center>";
-				ProductInfoTxt += "<tr align=center><td><input type='checkbox' name='Espece' id='CN' value='CN'><label for 'CN'>Chien</label></td>";
-				ProductInfoTxt += "<td><textarea id=\"ProductPosoCNInput\">Initializing Rich text editor ...</textarea></td>";
-				ProductInfoTxt += "<td><textarea id=\"ProductTACNInput\">Initializing Rich text editor ...</textarea></td></tr>";
-				
-				ProductInfoTxt += "<tr align=center><td><input type='checkbox' name='Espece' id='CT' value='CT'><label for 'CT'>Chat</label></td>";
-				ProductInfoTxt += "<td><textarea id=\"ProductPosoCTInput\">Initializing Rich text editor ...</textarea></td>";
-				ProductInfoTxt += "<td><textarea id=\"ProductTACTInput\">Initializing Rich text editor ...</textarea></td></tr>";
-				
-				ProductInfoTxt += "<tr align=center><td><input type='checkbox' name='Espece' id='BV' value='BV'><label for 'BV'>Bovin</label></td>";
-				ProductInfoTxt += "<td><textarea id=\"ProductPosoBVInput\">Initializing Rich text editor ...</textarea></td>";
-				ProductInfoTxt += "<td><textarea id=\"ProductTABVInput\">Initializing Rich text editor ...</textarea></td></tr>";
-				
-				ProductInfoTxt += "<tr align=center><td><input type='checkbox' name='Espece' id='CV' value='CV'><label for 'CV'>Cheval</label></td>";
-				ProductInfoTxt += "<td><textarea id=\"ProductPosoCVInput\">Initializing Rich text editor ...</textarea></td>";
-				ProductInfoTxt += "<td><textarea id=\"ProductTACVInput\">Initializing Rich text editor ...</textarea></td></tr>";
-				ProductInfoTxt += "</table>";
+				ProductInfoTxt += "<div id=\"TableCheckEspece\">Empty table checked product espece poso</div>";
 				
 				ProductInfoTxt += "<h3>Toxicité</h3>";
 				ProductInfoTxt += "&emsp;<select id=\"ToxicitePoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendToxicite();\" /><br/><div id=\"ListCheckedProductToxicite\">Empty list checked product Toxicite</div>";
@@ -8056,6 +8080,7 @@
 	
 </body>
 </html>
+
 
 
 
