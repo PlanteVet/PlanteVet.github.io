@@ -163,6 +163,12 @@
 				inset 2px 2px 3px rgb(255 255 255 / 60%),
 				inset -2px -2px 3px rgb(0 0 0 / 60%);
 		}
+
+		td {
+		}
+		.species {
+			text-align: left;
+		}
 	</style>
 	
 	<!-- Database interface script -->
@@ -2461,7 +2467,7 @@
 				let EspeceStateListObj = {EspeceId: EspeceId, EspeceName: EspeceNameTxt, FlgCurrentlyUsedByProduct: false};
 				ProductPosoStateListObj.push(EspeceStateListObj);
 				// add to Fct pool combo
-				EspeceTxt += "<tr align=center><td><input type='checkbox' name='Espece' id='" + EspeceNameTxt + "' value='" + EspeceNameTxt +"'><label for '" + EspeceNameTxt + "'>" + EspeceNameTxt +"</label></td>";
+				EspeceTxt += "<tr align=center><td class='species'><input type='checkbox' name='Espece' id='" + EspeceNameTxt + "' value='" + EspeceNameTxt +"'><label for '" + EspeceNameTxt + "'>" + EspeceNameTxt +"</label></td>";
 				EspeceTxt += "<td><textarea id=\"ProductPoso" + EspeceNameTxt +"Input\">Initializing Rich text editor ...</textarea></td>";
 				EspeceTxt += "<td><textarea id=\"ProductTA" + EspeceNameTxt +"Input\">Initializing Rich text editor ...</textarea></td></tr>";
 			}
@@ -8080,6 +8086,7 @@
 	
 </body>
 </html>
+
 
 
 
