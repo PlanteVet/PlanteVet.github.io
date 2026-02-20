@@ -164,8 +164,8 @@
 		}
 		.combo {
  			border: 0;
-  			line-height: 1.5;
-  			padding: 0 7.5px;
+  			line-height: 1.75;
+  			padding: 0 8.75px;
 			background-color: #F2A149;
 			color: white;
 			border-radius: 5px;
@@ -209,6 +209,13 @@
 		}
 		.Name::placeholder {
 			color: #DDDDDD;
+		}
+
+		select {
+		}
+		.Rchr {
+			background-color: #F2A149;
+			color: white;
 		}
 	</style>
 	
@@ -337,7 +344,7 @@
 			let LaboInputComboTxt = "Laboratoire : ";
 		
 			// pre build combo
-			LaboInputComboTxt += "<select id=\"LaboInputCombo" + PlOrPr + "\" style=\"width: 200px;\">";
+			LaboInputComboTxt += "<select id=\"LaboInputCombo" + PlOrPr + "\" style=\"width: 200px;\" class='Rchr'>";
 			// fetch list labo
 			console.log("Doing combo list labo SQL request ...");
 			let LaboSQLRequestResultObj = [];
@@ -386,7 +393,7 @@
 			let FctInputComboTxt = "Grande fonction : ";
 		
 			// pre build combo
-			FctInputComboTxt += "<select id=\"FctInputCombo_" + PrOrPl + "\" style=\"width: 200px;\">";
+			FctInputComboTxt += "<select id=\"FctInputCombo_" + PrOrPl + "\" style=\"width: 200px;\" class='Rchr'>";
 			// fetch list fct
 			console.log("Doing combo list fct SQL request ...");
 			let FctSQLRequestResultObj = [];
@@ -435,7 +442,7 @@
 			let EspeceInputComboTxt = "Espèce : ";
 		
 			//build combo
-			EspeceInputComboTxt += "<select id=\"EspeceInputCombo_" + PrOrPl + "\" style=\"width: 200px;\">";
+			EspeceInputComboTxt += "<select id=\"EspeceInputCombo_" + PrOrPl + "\" style=\"width: 200px;\" class='Rchr'>";
 			EspeceInputComboTxt += "<option value=\"-1\">Tous</option>";
 			EspeceInputComboTxt += "<option value=\"Chien\">Chien</option>";
 			EspeceInputComboTxt += "<option value=\"Chat\">Chat</option>";
@@ -453,7 +460,7 @@
 			let CtrIndicInputComboTxt = "Contre-indication : ";
 		
 			// pre build combo
-			CtrIndicInputComboTxt += "<select id=\"CtrIndicInputCombo_" + PrOrPl + "\" style=\"width: 200px;\">";
+			CtrIndicInputComboTxt += "<select id=\"CtrIndicInputCombo_" + PrOrPl + "\" style=\"width: 200px;\" class='Rchr'>";
 			// fetch list fct
 			console.log("Doing combo list ctrindic SQL request ...");
 			let CtrIndicSQLRequestResultObj = [];
@@ -502,7 +509,7 @@
 			let Effet2InputComboTxt = "Effet secondaire : ";
 		
 			// pre build combo
-			Effet2InputComboTxt += "<select id=\"Effet2InputCombo_" + PrOrPl + "\" style=\"width: 200px;\">";
+			Effet2InputComboTxt += "<select id=\"Effet2InputCombo_" + PrOrPl + "\" style=\"width: 200px;\" class='Rchr'>";
 			// fetch list fct
 			console.log("Doing combo list Effet2 SQL request ...");
 			let Effet2SQLRequestResultObj = [];
@@ -551,7 +558,7 @@
 			let SyndromeInputComboTxt = "Syndrome : ";
 		
 			// pre build combo
-			SyndromeInputComboTxt += "<select id=\"SyndromeInputCombo_" + PrOrPl + "\" style=\"width: 200px;\">";
+			SyndromeInputComboTxt += "<select id=\"SyndromeInputCombo_" + PrOrPl + "\" style=\"width: 200px;\" class='Rchr'>";
 			let SyndTrue = true;
 			// fetch list fct
 			console.log("Doing combo list Syndrome SQL request ...");
@@ -2875,6 +2882,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
