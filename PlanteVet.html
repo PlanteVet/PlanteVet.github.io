@@ -185,6 +185,9 @@
 			padding-right: 10px;
 			font-size: 18px;
 		}
+		.Name::Paceholder {
+			color: #DDDDDD;
+		}
 	</style>
 	
 	<!-- Database interface script -->
@@ -2756,7 +2759,7 @@
 				</td>
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche par nom</h2>
-					<input id="ProductNameLike" size="64" type="text" class="Name" />
+					<input id="ProductNameLike" size="64" type="text" paceholder="Entrez le nom déposé d'un produit." class="Name" />
 					<br/>(Entrez '%' pour remplacer une chaîne de caractères et '_' pour remplacer un caractère unique.)
 					<br/>
 					<br/><input type="button" value="Rechercher" onclick="DoSearchProductByName();" class="Import" />
@@ -2801,7 +2804,7 @@
 				</td>
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche par nom</h2>
-					<input id="PlanteNameLike" size="64" type="text" class="Name" />
+					<input id="PlanteNameLike" size="64" type="text" paceholder="Entrez le nom commun ou scientifique d'une plante." class="Name" />
 					<br/>(Entrez '%' pour remplacer une chaîne de caractères et '_' pour remplacer un caractère unique.)
 					<br/>
 					<br/><input type="button" value="Rechercher" onclick="DoSearchPlanteByName();" class="Import" />
@@ -2850,6 +2853,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
