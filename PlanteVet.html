@@ -147,6 +147,21 @@
 		.Import:hover {
 			background-color: #006A4E;
 		}
+		.Rchr {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #FF54F5;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Rchr:hover {
+			background-color: #B119AA;
+		}
 		
 		input::file-selector-button {
  			border: 0;
@@ -2723,7 +2738,12 @@
 		<span id="DatabasePath">No DB</span>
 		<table class="full">
 			<tr class="high">
-				<td rowspan=4><b>Liste des produits renseignés :</b><br/><i>(Cliquer pour en voir les détails)</i><br/><div id="ProductList">Empty List</div></td>
+				<td rowspan=4>
+					<b>Liste des produits renseignés :</b>
+					<br/><i>(Cliquer pour en voir les détails)</i>
+					<br/>
+					<br/><div id="ProductList">Empty List</div>
+				</td>
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche par nom</h2>
 					<input id="ProductNameLike" size="64" type="text" />
@@ -2733,7 +2753,9 @@
 					<br/>
 					<br/>
 				</td>
-				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par plantes" onclick="DoListPlantes();" /></td>
+				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;">
+					<input type="button" value="Rechercher par plantes" onclick="DoListPlantes();" class="Rchr" />
+				</td>
 			</tr>
 			<tr class="high">
 				<td></td>
@@ -2761,7 +2783,12 @@
 	<div id="ListePlanteForm" style="visibility: hidden; display: none;">
 		<table class="full">
 			<tr class="high">
-				<td rowspan=4><b>Liste des plantes renseignées :</b><br/><i>(Cliquer pour en voir la monographie)</i><br/><div id="PlanteList">Empty List</div></td>
+				<td rowspan=4>
+					<b>Liste des plantes renseignées :</b>
+					<br/><i>(Cliquer pour en voir la monographie)</i>
+					<br/>
+					<br/><div id="PlanteList">Empty List</div>
+				</td>
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
 					<h2>Recherche par nom</h2>
 					<input id="PlanteNameLike" size="64" type="text" />
@@ -2771,7 +2798,9 @@
 					<br/>
 					<br/>
 				</td>
-				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;"><input type="button" value="Rechercher par produits" onclick="DoSearchProduct();" /></td>
+				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;">
+					<input type="button" value="Rechercher par produits" onclick="DoSearchProduct();" class="Rchr" />
+				</td>
 			</tr>
 			<tr class="high">
 				<td></td>
@@ -2811,6 +2840,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
