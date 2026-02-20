@@ -147,7 +147,7 @@
 		.Import:hover {
 			background-color: #006A4E;
 		}
-		.Rchr {
+		.Rchrch {
  			border: 0;
   			line-height: 2.5;
   			padding: 0 20px;
@@ -159,7 +159,7 @@
 				inset 2px 2px 3px rgb(255 255 255 / 60%),
 				inset -2px -2px 3px rgb(0 0 0 / 60%);
 		}
-		.Rchr:hover {
+		.Rchrch:hover {
 			background-color: #B119AA;
 		}
 		.combo {
@@ -215,6 +215,10 @@
 		}
 		.Rchr {
 			background-color: #F2A149;
+			color: white;
+		}
+		.Rchr::picker-icon {
+			content: '&#11030';
 			color: white;
 		}
 	</style>
@@ -2796,7 +2800,7 @@
 					<br/>
 				</td>
 				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;">
-					<input type="button" value="Rechercher par plantes" onclick="DoListPlantes();" class="Rchr" />
+					<input type="button" value="Rechercher par plantes" onclick="DoListPlantes();" class="Rchrch" />
 				</td>
 			</tr>
 			<tr class="high">
@@ -2841,7 +2845,7 @@
 					<br/>
 				</td>
 				<td class="casedroite" style="width: 10%; height: 20px; border:3px; border-style: ridge; border-color: #B119AA; border-radius: 10px; padding: 15px;">
-					<input type="button" value="Rechercher par produits" onclick="DoSearchProduct();" class="Rchr" />
+					<input type="button" value="Rechercher par produits" onclick="DoSearchProduct();" class="Rchrch" />
 				</td>
 			</tr>
 			<tr class="high">
@@ -2882,6 +2886,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
