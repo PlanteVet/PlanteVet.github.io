@@ -214,7 +214,7 @@
 		select {
 		}
 		.Rchr {
- 			border: 0;
+ 			border: 1px solid black;
 			background-color: #F2A149;
 			color: white;
 			height: 25px;
@@ -222,7 +222,7 @@
 			border-radius: 5px;
 		}
 		.Rchr:hover, .Rchr:focus {
-			border: 1px solid black;
+			border: 2px solid black;
 		}
 		option:hover, option:focus {
 			font-weight: bold;
@@ -394,7 +394,7 @@
 			}
 			// finalize
 			LaboInputComboTxt += "</select>";
-			document.getElementById("LaboCombo_" + PrOrPl).innerHTML = LaboInputComboTxt;
+			document.getElementById("LaboCombo_" + PlOrPr).innerHTML = LaboInputComboTxt;
 			return;
 		}
 		
@@ -2893,6 +2893,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
