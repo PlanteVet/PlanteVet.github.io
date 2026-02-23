@@ -4503,7 +4503,7 @@
 				}
 				
 				// setup view
-				ProductInfoTxt += "<b>Produit (nom) : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + ProductNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/><br/>";
+				ProductInfoTxt += "<b>Produit (nom) : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + ProductNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom déposé du produit.'/><br/><br/>";
 				ProductInfoTxt += "<img id=\"ProductPhotoView\" style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(ProductPhotoBlob) + " /> <input id=\"SelectedPhotoInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdateProductPhoto()\" />";
 				
 				ProductInfoTxt += "<h2>Composition</h2>";
@@ -4781,7 +4781,7 @@
 				if(LaboNameTxt == null) LaboNameTxt = "UNDEFINED";
 				LaboNameTxt = DoSanitizeNameTxt(LaboNameTxt);
 				// build form
-				LaboInfoTxt += "<b>LABO NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + LaboNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
+				LaboInfoTxt += "<b>LABO NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + LaboNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom d'un laboratoire.' /><br/>";
 			}
 			RowEditFormTxt += LaboInfoTxt;
 			// hide row choice form
@@ -8190,6 +8190,7 @@
 	
 </body>
 </html>
+
 
 
 
