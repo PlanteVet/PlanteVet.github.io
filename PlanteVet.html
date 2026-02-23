@@ -192,6 +192,21 @@
 		.glossaire:hover {
 			background-color: #D891EF;
 		}
+		.Back {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #3EB489;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Back:hover {
+			background-color: #006A4E;
+		}
 		
 		input::file-selector-button {
  			border: 0;
@@ -843,7 +858,7 @@
 			};
 			// Pre build result
 			let ResultList = "";
-			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pr');\" /><br/>";
+			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pr');\" class='Back' /><br/>";
 			ResultList += "Liste des produits compatibles avec \"" + SearchTxt + "\" :<br/>(Cliquer sur un produit pour en voir les informations)<br/>";		
 			// append sql result
 			let NbResultRow = SQLRequestResultObj.length;
@@ -892,7 +907,7 @@
 			};
 			// Pre build result
 			let ResultList = "";
-			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pl');\" /><br/>";
+			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pl');\" class='Back' /><br/>";
 			ResultList += "Liste des plantes compatibles avec \"" + SearchTxt + "\" :<br/>(Cliquer sur une plante pour en voir la monographie)<br/>";		
 			// append sql result
 			let NbResultRow = SQLRequestResultObj.length;
@@ -1058,7 +1073,7 @@
 			}
 			
 			// Pre build result
-			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pr');\" /><br/>";
+			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pr');\" class='Back' /><br/>";
 			ResultList += "Liste des produits correspondants :<br/>(Cliquer sur un produit pour en voir les détails)<br/>";
 			
 			//chercher les correspondances entre les différentes listes
@@ -1259,7 +1274,7 @@
 			
 			
 			// Pre build result
-			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pl');\" /><br/>";
+			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pl');\" class='Back' /><br/>";
 			ResultList += "Liste des plantes correspondantes :<br/>(Cliquer sur une plante pour en voir la monographie)<br/>";
 			
 			//chercher les correspondances entre les différentes listes
@@ -1391,10 +1406,10 @@
 			let PlanteViewObj = document.getElementById("ProductView");
 			
 			let PlanteInfoTxt = "";
-			if(ProductId == -1) PlanteInfoTxt += "<input type=\"button\" value=\"Retour à la recherche\" onclick=\"DoListPlantes();\" /><br/>";
+			if(ProductId == -1) PlanteInfoTxt += "<input type=\"button\" value=\"Retour à la recherche\" onclick=\"DoListPlantes();\" class='Back' /><br/>";
 			else
 			{
-				PlanteInfoTxt += "<input type=\"button\" value=\"Retour au produit\" onclick=\"DoViewProduct(" + ProductId + ", -1);\" /><br/>";
+				PlanteInfoTxt += "<input type=\"button\" value=\"Retour au produit\" onclick=\"DoViewProduct(" + ProductId + ", -1);\" class='Back' /><br/>";
 			}
 			
 			//fetch plante info
@@ -1945,10 +1960,10 @@
 			
 			// Pre build result
 			let ProductInfoTxt = "";
-			if(PlanteId == -1) ProductInfoTxt += "<input type=\"button\" value=\"Retour à la recherche\" onclick=\"GoBackToSearch('Pr');\" /><br/>";
+			if(PlanteId == -1) ProductInfoTxt += "<input type=\"button\" value=\"Retour à la recherche\" onclick=\"GoBackToSearch('Pr');\" class='Back' /><br/>";
 			else
 			{
-				ProductInfoTxt += "<input type=\"button\" value=\"Retour à la plante\" onclick=\"DoViewPlante(" + PlanteId + ", -1);\" /><br/>";
+				ProductInfoTxt += "<input type=\"button\" value=\"Retour à la plante\" onclick=\"DoViewPlante(" + PlanteId + ", -1);\" class='Back' /><br/>";
 			}
 			// fetch product info
 			console.log("Doing product info SQL request ...");
@@ -2914,6 +2929,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
