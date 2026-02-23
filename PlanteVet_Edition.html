@@ -7728,10 +7728,10 @@
 				}
 				
 				// build form
-				PlanteInfoTxt += "<h2>Informations générales</h2><b>Nom vernaculaire : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + PlanteNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom commun de la plante.' /><br/><br/>";
+				PlanteInfoTxt += "<h2>Informations générales</h2><b>Nom vernaculaire : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + PlanteNameTxt + "\" onchange=\"DoCheckNameValidity()\" placeholder='Entrez le nom commun de la plante.' /><br/><br/>";
 				PlanteInfoTxt += "<img id=\"PlantePhotoView\" style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(PlantePhotoBlob) + " /> <input id=\"SelectedPhotoInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdatePlantePhoto()\" /><br/><br/>";
-				PlanteInfoTxt += "<b>Nom scientifique : </b><input id=\"EltLatinInput\" size=\"64\" type=\"text\" value=\"" + PlanteLatinTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/><br/>";
-				PlanteInfoTxt += "<b>Famille : </b><input id=\"EltFamilleInput\" size=\"64\" type=\"text\" value=\"" + PlanteFamilleTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/><br/>";
+				PlanteInfoTxt += "<b>Nom scientifique : </b><input id=\"EltLatinInput\" size=\"64\" type=\"text\" value=\"" + PlanteLatinTxt + "\" onchange=\"DoCheckNameValidity()\" placeholder='Entrez le nom scientifique de la plante.' /><br/><br/>";
+				PlanteInfoTxt += "<b>Famille : </b><input id=\"EltFamilleInput\" size=\"64\" type=\"text\" value=\"" + PlanteFamilleTxt + "\" onchange=\"DoCheckNameValidity()\" placeholder='Entrez la famille de la plante.' /><br/><br/>";
 				PlanteInfoTxt += "<h3>Informations traitant de la botanique :</h3><textarea id=\"PlanteBotaniqueInput\" >Initializing Rich text editor ...</textarea><br/>";
 				RichTextDataBotanique = CastBufferToRichText(PlanteBotanique);
 				PlanteInfoTxt += "<h3>Partie(s) utilisée(s)</h3>";
@@ -8190,6 +8190,7 @@
 	
 </body>
 </html>
+
 
 
 
