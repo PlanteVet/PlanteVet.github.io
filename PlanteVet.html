@@ -1902,7 +1902,7 @@
 				PlanteInfoTxt += "&emsp;<b>Inscription à l'annexe du réglement des LMR : </b>" + TxtReg + "<br/>";
 				PlanteInfoTxt += "&emsp;<b>Inscription à la liste des \"subtances essentielles\" pour le traitement des équidés : </b>" + TxtRegEQ + "<br/>";
 				PlanteInfoTxt += "&emsp;<b>Informations concernant le dopage : </b>" + TxtDop + "<br/>";
-				PlanteInfoTxt += "<h2>Sources</h2>";
+				PlanteInfoTxt += "<h2>Sources &nbsp; <input type='button' id='Glossaire' value='Glossaire des abréviations' onclick=\"BuildCtrIndicInputCombo('Pl', 0);\" class='glossaire'></h2>";
 				PlanteInfoTxt += CastBufferToRichText(PlanteSources) + "<br/>";PlanteInfoTxt += "</td><td class=\"casedroite\" style=\"width: 30%; vertical-align: top; border-left: 1px solid black; padding-left: 15px;\">";
 				PlanteInfoTxt += "<h2>Liste des produits contenant cette plante</h2>";
 				PlanteInfoTxt += ListeProduct + "<br/>";
@@ -2893,6 +2893,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
