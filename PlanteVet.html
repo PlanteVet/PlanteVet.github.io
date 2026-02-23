@@ -1366,7 +1366,7 @@
 						console.log("Echec search plante name SQL request");
 					};
 					
-					let TmpResultRow = PlanteSQLRequestResultObj[i];
+					let TmpResultRow = PlanteSQLRequestResultObj[0];
 					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">Elt " + PlanteId + " : " + TmpResultRow[0] + "</span><br/>";
 				}
 			}
@@ -2929,6 +2929,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
