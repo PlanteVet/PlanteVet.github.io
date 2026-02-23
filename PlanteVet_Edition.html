@@ -150,6 +150,89 @@
 		.Import:hover {
 			background-color: #006A4E;
 		}
+		.Update {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #3EB489;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Update:hover {
+			background-color: #006A4E;
+		}
+		.Cancel {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #3EB489;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Cancel:hover {
+			background-color: #006A4E;
+		}
+		.Delete:enabled {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #3EB489;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Delete:hover {
+			background-color: #006A4E;
+		}
+		.Delete:disabled {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #7C9D8E;
+			color: white;
+			border-radius: 5px;
+		}
+		.Back {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #3EB489;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.Back:hover {
+			background-color: #006A4E;
+		}
+		.New {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #3EB489;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.New:hover {
+			background-color: #006A4E;
+		}
 		
 		input::file-selector-button {
  			border: 0;
@@ -4337,9 +4420,9 @@
 			globalThis.PrivateWorkingEltId = ProductId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateProduct(" + ProductId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"AfterEditProduct();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteProduct(" + ProductId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateProduct(" + ProductId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"AfterEditProduct();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteProduct(" + ProductId + ");\" class='Delete' ";
 			if(ProductId == 0) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append product view
@@ -4489,8 +4572,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new product\" onclick=\"GoAddNewProduct();\" /> OR click a product to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new product\" onclick=\"GoAddNewProduct();\" class='New' /> OR click a product to edit :<br/>";
 			// list all existing product : exec SQL request on Working DB
 			console.log("Doing list product SQL request ...");
 			let SQLRequestResultObj = [];
@@ -4631,9 +4714,9 @@
 			globalThis.PrivateWorkingEltId = LaboId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateLabo(" + LaboId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditLaboTable();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteLabo(" + LaboId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateLabo(" + LaboId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditLaboTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteLabo(" + LaboId + ");\" class='Delete' ";
 			if(IsLaboUsedBySomeProduct(LaboId) || (LaboId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Labo view
@@ -4703,8 +4786,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new labo\" onclick=\"GoAddNewLabo();\" /> OR click a labo to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new labo\" onclick=\"GoAddNewLabo();\" class='New' /> OR click a labo to edit :<br/>";
 			// list all existing labo : exec SQL request on Working DB
 			console.log("Doing list labo SQL request ...");
 			let SQLRequestResultObj = [];
@@ -4845,9 +4928,9 @@
 			globalThis.PrivateWorkingEltId = FctsId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateFcts(" + FctsId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditFctsTable();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteFcts(" + FctsId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateFcts(" + FctsId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditFctsTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteFcts(" + FctsId + ");\" class='Delete' ";
 			if(IsFctsUsedBySomeProduct(FctsId) || (FctsId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Fcts view
@@ -4917,8 +5000,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Fcts\" onclick=\"GoAddNewFcts();\" /> OR click a body function to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Fcts\" onclick=\"GoAddNewFcts();\" class='New' /> OR click a body function to edit :<br/>";
 			// list all existing Fcts : exec SQL request on Working DB
 			console.log("Doing list Fcts SQL request ...");
 			let SQLRequestResultObj = [];
@@ -5056,9 +5139,9 @@
 			globalThis.PrivateWorkingEltId = UsecaseId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateUsecase(" + UsecaseId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditUsecaseTable();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteUsecase(" + UsecaseId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateUsecase(" + UsecaseId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditUsecaseTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteUsecase(" + UsecaseId + ");\" class='Delete' ";
 			if(IsUsecaseUsedBySomeProduct(UsecaseId) || (UsecaseId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
 			// append Usecase view
@@ -5133,8 +5216,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new usecase\" onclick=\"GoAddNewUsecase();\" /> OR click a usecase to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new usecase\" onclick=\"GoAddNewUsecase();\" class='New' /> OR click a usecase to edit :<br/>";
 			// list all existing usecase : exec SQL request on Working DB
 			console.log("Doing list usecase SQL request ...");
 			let SQLRequestResultObj = [];
@@ -5269,9 +5352,9 @@
 			globalThis.PrivateWorkingEltId = ToxiciteId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateToxicite(" + ToxiciteId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditToxiciteTable();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteToxicite(" + ToxiciteId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateToxicite(" + ToxiciteId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditToxiciteTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteToxicite(" + ToxiciteId + ");\" class='Delete' ";
 			if(IsToxiciteUsedBySomeProduct(ToxiciteId) || (ToxiciteId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
 			// append Toxicite view
@@ -5341,8 +5424,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Toxicite\" onclick=\"GoAddNewToxicite();\" /> OR click a toxicity to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Toxicite\" onclick=\"GoAddNewToxicite();\" class='New' /> OR click a toxicity to edit :<br/>";
 			// list all existing Toxicite : exec SQL request on Working DB
 			console.log("Doing list Toxicite SQL request ...");
 			let SQLRequestResultObj = [];
@@ -5477,9 +5560,9 @@
 			globalThis.PrivateWorkingEltId = Effet2Id;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateEffet2(" + Effet2Id + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditEffet2Table();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteEffet2(" + Effet2Id + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateEffet2(" + Effet2Id + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditEffet2Table();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteEffet2(" + Effet2Id + ");\" class='Delete' ";
 			if(IsEffet2UsedBySomeProduct(Effet2Id) || (Effet2Id == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
 			// append Effet2 view
@@ -5549,8 +5632,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Effet2\" onclick=\"GoAddNewEffet2();\" /> OR click a side effect to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Effet2\" onclick=\"GoAddNewEffet2();\" class='New' /> OR click a side effect to edit :<br/>";
 			// list all existing Effet2 : exec SQL request on Working DB
 			console.log("Doing list Effet2 SQL request ...");
 			let SQLRequestResultObj = [];
@@ -5685,9 +5768,9 @@
 			globalThis.PrivateWorkingEltId = CtrIndicId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateCtrIndic(" + CtrIndicId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditCtrIndicTable();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteCtrIndic(" + CtrIndicId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateCtrIndic(" + CtrIndicId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditCtrIndicTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteCtrIndic(" + CtrIndicId + ");\" class='Delete' ";
 			if(IsCtrIndicUsedBySomeProduct(CtrIndicId) || (CtrIndicId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
 			// append CtrIndic view
@@ -5757,8 +5840,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new CtrIndic\" onclick=\"GoAddNewCtrIndic();\" /> OR click a ctrindic to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new CtrIndic\" onclick=\"GoAddNewCtrIndic();\" class='New' /> OR click a ctrindic to edit :<br/>";
 			// list all existing CtrIndic : exec SQL request on Working DB
 			console.log("Doing list CtrIndic SQL request ...");
 			let SQLRequestResultObj = [];
@@ -5899,9 +5982,9 @@
 			globalThis.PrivateWorkingEltId = GaleniqueId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateGalenique(" + GaleniqueId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditGaleniqueTable();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteGalenique(" + GaleniqueId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateGalenique(" + GaleniqueId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditGaleniqueTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteGalenique(" + GaleniqueId + ");\" class='Delete' ";
 			if(IsGaleniqueUsedBySomeProduct(GaleniqueId) || (GaleniqueId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Galenique view
@@ -5971,8 +6054,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Galenique\" onclick=\"GoAddNewGalenique();\" /> OR click a galenique to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Galenique\" onclick=\"GoAddNewGalenique();\" class='New' /> OR click a galenique to edit :<br/>";
 			// list all existing Galenique : exec SQL request on Working DB
 			console.log("Doing list Galenique SQL request ...");
 			let SQLRequestResultObj = [];
@@ -6113,9 +6196,9 @@
 			globalThis.PrivateWorkingEltId = CategorieId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateCategorie(" + CategorieId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditCategorieTable();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteCategorie(" + CategorieId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateCategorie(" + CategorieId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditCategorieTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteCategorie(" + CategorieId + ");\" class='Delete' ";
 			if(IsCategorieUsedBySomeProduct(CategorieId) || (CategorieId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Categorie view
@@ -6185,8 +6268,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Categorie\" onclick=\"GoAddNewCategorie();\" /> OR click a category to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Categorie\" onclick=\"GoAddNewCategorie();\" class='New' /> OR click a category to edit :<br/>";
 			// list all existing Categorie : exec SQL request on Working DB
 			console.log("Doing list Categorie SQL request ...");
 			let SQLRequestResultObj = [];
@@ -6346,9 +6429,9 @@
 			globalThis.PrivateWorkingEltId = EspeceId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateEspece(" + EspeceId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditEspeceTable();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteEspece(" + EspeceId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateEspece(" + EspeceId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditEspeceTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteEspece(" + EspeceId + ");\" class='Delete' ";
 			if(IsEspeceUsedBySomeProduct(EspeceId) || (EspeceId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Categorie view
@@ -6421,8 +6504,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Espece\" onclick=\"GoAddNewEspece();\" /> OR click an espece to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Espece\" onclick=\"GoAddNewEspece();\" class='New' /> OR click an espece to edit :<br/>";
 			// list all existing Espece : exec SQL request on Working DB
 			console.log("Doing list Espece SQL request ...");
 			let SQLRequestResultObj = [];
@@ -7517,9 +7600,9 @@
 			globalThis.PrivateWorkingEltId = PlanteId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdatePlante(" + PlanteId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"AfterEditPlante();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeletePlante(" + PlanteId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdatePlante(" + PlanteId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"AfterEditPlante();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeletePlante(" + PlanteId + ");\" class='Delete' ";
 			if(IsPlanteUsedBySomeProduct(PlanteId) || IsPlanteUsedBySomeUsecase(PlanteId) || (PlanteId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Plante view
@@ -7739,8 +7822,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Plante\" onclick=\"GoAddNewPlante();\" /> OR click a plant to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Plante\" onclick=\"GoAddNewPlante();\" class='New' /> OR click a plant to edit :<br/>";
 			// list all existing Plante : exec SQL request on Working DB
 			console.log("Doing list Plante SQL request ...");
 			let SQLRequestResultObj = [];
@@ -7881,9 +7964,9 @@
 			globalThis.PrivateWorkingEltId = UsePartId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateUsePart(" + UsePartId + ");\" /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditUsePartTable();\" /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteUsePart(" + UsePartId + ");\" ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateUsePart(" + UsePartId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditUsePartTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteUsePart(" + UsePartId + ");\" class='Delete' ";
 			if(IsUsePartUsedBySomeProduct(UsePartId) || (UsePartId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append UsePart view
@@ -7953,8 +8036,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new UsePart\" onclick=\"GoAddNewUsePart();\" /> OR click a usepart to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new UsePart\" onclick=\"GoAddNewUsePart();\" class='New' /> OR click a usepart to edit :<br/>";
 			// list all existing UsePart : exec SQL request on Working DB
 			console.log("Doing list UsePart SQL request ...");
 			let SQLRequestResultObj = [];
@@ -8086,6 +8169,7 @@
 	
 </body>
 </html>
+
 
 
 
