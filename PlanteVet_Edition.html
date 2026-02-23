@@ -4995,7 +4995,7 @@
 				if(FctsNameTxt == null) FctsNameTxt = "UNDEFINED";
 				FctsNameTxt = DoSanitizeNameTxt(FctsNameTxt);
 				// build form
-				FctsInfoTxt += "<b>Fcts NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + FctsNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
+				FctsInfoTxt += "<b>Fcts NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + FctsNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom d'une grande fonction de l'organisme.' /><br/>";
 			}
 			RowEditFormTxt += FctsInfoTxt;
 			// hide row choice form
@@ -5208,7 +5208,7 @@
 				let UsecaseFctId = UsecaseInfo[2];
 				let UsecaseSynd = UsecaseInfo[3];
 				// build form
-				UsecaseInfoTxt += "<b>Nom de l'utilisation : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + UsecaseNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
+				UsecaseInfoTxt += "<b>Nom de l'utilisation : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + UsecaseNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom d'une utilisation clinique.' /><br/>";
 				UsecaseInfoTxt += "<b>Liée à la : </b>" + BuildUsecaseFctInputCombo(UsecaseFctId) + "<br/>";
 				if(UsecaseSynd == 1) UsecaseInfoTxt += "<b>Est un grand syndrôme : </b><input type='radio' name='Syndrome' id='SyndOui' value='Oui' checked><label for 'Oui'>Oui</label><input type='radio' name='Syndrome' id='SyndNon' value='Non'><label for 'Non'>Non</label><br/>";
 				else UsecaseInfoTxt += "<b>Est un grand syndrôme : </b><input type='radio' name='Syndrome' id='SyndOui' value='Oui'><label for 'Oui'>Oui</label><input type='radio' name='Syndrome' id='SyndNon' value='Non' checked><label for 'Non'>Non</label><br/>";
@@ -5419,7 +5419,7 @@
 				if(ToxiciteNameTxt == null) ToxiciteNameTxt = "UNDEFINED";
 				ToxiciteNameTxt = DoSanitizeNameTxt(ToxiciteNameTxt);
 				// build form
-				ToxiciteInfoTxt += "<b>Toxicite NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + ToxiciteNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
+				ToxiciteInfoTxt += "<b>Toxicite NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + ToxiciteNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom d'une toxicité.' /><br/>";
 			}
 			RowEditFormTxt += ToxiciteInfoTxt;
 			// hide row choice form
@@ -5627,7 +5627,7 @@
 				if(Effet2NameTxt == null) Effet2NameTxt = "UNDEFINED";
 				Effet2NameTxt = DoSanitizeNameTxt(Effet2NameTxt);
 				// build form
-				Effet2InfoTxt += "<b>Effet2 NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + Effet2NameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
+				Effet2InfoTxt += "<b>Effet2 NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + Effet2NameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom d'un effet secondaire.' /><br/>";
 			}
 			RowEditFormTxt += Effet2InfoTxt;
 			// hide row choice form
@@ -5835,7 +5835,7 @@
 				if(CtrIndicNameTxt == null) CtrIndicNameTxt = "UNDEFINED";
 				CtrIndicNameTxt = DoSanitizeNameTxt(CtrIndicNameTxt);
 				// build form
-				CtrIndicInfoTxt += "<b>CtrIndic NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + CtrIndicNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
+				CtrIndicInfoTxt += "<b>CtrIndic NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + CtrIndicNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom d'une contre-indication.' /><br/>";
 			}
 			RowEditFormTxt += CtrIndicInfoTxt;
 			// hide row choice form
@@ -6049,7 +6049,7 @@
 				if(GaleniqueNameTxt == null) GaleniqueNameTxt = "UNDEFINED";
 				GaleniqueNameTxt = DoSanitizeNameTxt(GaleniqueNameTxt);
 				// build form
-				GaleniqueInfoTxt += "<b>GALENIQUE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + GaleniqueNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
+				GaleniqueInfoTxt += "<b>GALENIQUE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + GaleniqueNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom d'une forme galénique.' /><br/>";
 			}
 			RowEditFormTxt += GaleniqueInfoTxt;
 			// hide row choice form
@@ -6263,7 +6263,7 @@
 				if(CategorieNameTxt == null) CategorieNameTxt = "UNDEFINED";
 				CategorieNameTxt = DoSanitizeNameTxt(CategorieNameTxt);
 				// build form
-				CategorieInfoTxt += "<b>CATEGORIE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + CategorieNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
+				CategorieInfoTxt += "<b>CATEGORIE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + CategorieNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom d'une catégorie de médicament.' /><br/>";
 			}
 			RowEditFormTxt += CategorieInfoTxt;
 			// hide row choice form
@@ -6498,7 +6498,7 @@
 				let EspecePhotoBlob = EspeceInfo[2];
 				if(EspecePhotoBlob == null) EspecePhotoBlob = new Uint8Array();
 				// build form
-				EspeceInfoTxt += "<b>ESPECE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + EspeceNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/><br/>";
+				EspeceInfoTxt += "<b>ESPECE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + EspeceNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom d'une espèce.' /><br/><br/>";
 				EspeceInfoTxt += "<img id=\"EspecePhotoView\" style=\"max-height: 200px; max-width: 200px\" src=" + CastBufferToImgURLData(EspecePhotoBlob) + " /> <input id=\"SelectedEspeceInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdateEspecePhoto()\" /><br/>";
 			}
 			RowEditFormTxt += EspeceInfoTxt;
@@ -7728,7 +7728,7 @@
 				}
 				
 				// build form
-				PlanteInfoTxt += "<h2>Informations générales</h2><b>Nom vernaculaire : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + PlanteNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/><br/>";
+				PlanteInfoTxt += "<h2>Informations générales</h2><b>Nom vernaculaire : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + PlanteNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom commin de la plante.' /><br/><br/>";
 				PlanteInfoTxt += "<img id=\"PlantePhotoView\" style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(PlantePhotoBlob) + " /> <input id=\"SelectedPhotoInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdatePlantePhoto()\" /><br/><br/>";
 				PlanteInfoTxt += "<b>Nom scientifique : </b><input id=\"EltLatinInput\" size=\"64\" type=\"text\" value=\"" + PlanteLatinTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/><br/>";
 				PlanteInfoTxt += "<b>Famille : </b><input id=\"EltFamilleInput\" size=\"64\" type=\"text\" value=\"" + PlanteFamilleTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/><br/>";
@@ -8190,6 +8190,7 @@
 	
 </body>
 </html>
+
 
 
 
