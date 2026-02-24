@@ -310,7 +310,7 @@
 			border: 2px solid black;
 		}
 		
-		input[type="checkbox"] {
+		input[type="checkbox"]:not(:checked) {
 			appearance: none;
 			width: 20px;
 			height: 20px;
@@ -319,7 +319,12 @@
 			border-radius: 5px;
 		}
 		input[type="checkbox"]:checked {
-			color: red;
+			appearance: none;
+			width: 20px;
+			height: 20px;
+			border: 2px solid #3EB489;
+			background-color: red;
+			border-radius: 5px;
 		}
 	</style>
 	
@@ -8252,6 +8257,7 @@
 	
 </body>
 </html>
+
 
 
 
