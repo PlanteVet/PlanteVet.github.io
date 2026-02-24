@@ -309,6 +309,30 @@
 		select:hover, select:focus {
 			border: 2px solid black;
 		}
+
+		input[type=checkbox] {
+			-moz-appearance:none;
+			-webkit-appearance:none;
+			-o-appearance:none;
+			outline: none;
+			content: none;	
+		}
+		
+		input[type=checkbox]:before {
+		    content: "✓";
+		    font-size: 15px;
+		    color: transparent !important;
+		    background: #fef2e0;
+		    display: block;
+		    width: 15px;
+		    height: 15px;
+		    border: 1px solid black;
+		    margin-right: 7px;
+		}
+		
+		input[type=checkbox]:checked:before {
+			color: black !important;
+		}
 	</style>
 	
 	<!-- Database interface script -->
@@ -8240,6 +8264,7 @@
 	
 </body>
 </html>
+
 
 
 
