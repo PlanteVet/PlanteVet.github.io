@@ -24,9 +24,6 @@
 			border-radius: 10px;
 			border: 2px solid #3EB489; 
 		}
-		.tox.tox-tinymce:focus {
-			border: 4px solid #3EB489;
-		}
 		
 		ul {
 			margin-top: 0;
@@ -7752,7 +7749,7 @@
 				RichTextDataMolecules = CastBufferToRichText(PlanteMolecules);
 				PlanteInfoTxt += "<h3>Propriétés pharmacodynamiques :</h3><textarea id=\"PlantePDynInput\" >Initializing Rich text editor ...</textarea><br/>";
 				RichTextDataPDyn = CastBufferToRichText(PlantePDyn);
-				PlanteInfoTxt += "&emsp; <b>Propriétés principales :</b> 1 - <input id=\"EltP1Input\" size=\"32\" type=\"text\" value=\"" + PlanteP1 + "\" onchange=\"DoCheckNameValidity()\" />&nbsp; 2 - <input id=\"EltP2Input\" size=\"32\" type=\"text\" value=\"" + PlanteP2 + "\" onchange=\"DoCheckNameValidity()\" />&nbsp; 3 - <input id=\"EltP3Input\" size=\"32\" type=\"text\" value=\"" + PlanteP3 + "\" onchange=\"DoCheckNameValidity()\" /><br/><br/>";
+				PlanteInfoTxt += "&emsp; <b>Propriétés principales :</b> 1 - <input id=\"EltP1Input\" size=\"32\" type=\"text\" value=\"" + PlanteP1 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 1' />&nbsp; 2 - <input id=\"EltP2Input\" size=\"32\" type=\"text\" value=\"" + PlanteP2 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 2' />&nbsp; 3 - <input id=\"EltP3Input\" size=\"32\" type=\"text\" value=\"" + PlanteP3 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 3' /><br/><br/>";
 				PlanteInfoTxt += "<h3>Propriétés pharmacocinétiques :</h3><textarea id=\"PlantePCinInput\" >Initializing Rich text editor ...</textarea><br/>";
 				PlanteInfoTxt += "<h3>Applications médicales</h3>";
 				PlanteInfoTxt += "&emsp;<b>Utilisation(s) pour la : </b> <select id=\"PlFctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlanteFcts();\" /><br/><div id=\"ListCheckedPlanteFcts\">Empty list checked product fcts</div>";
@@ -8198,6 +8195,7 @@
 	
 </body>
 </html>
+
 
 
 
