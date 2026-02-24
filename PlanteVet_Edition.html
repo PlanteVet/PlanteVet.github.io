@@ -311,7 +311,9 @@
 		}
 		
 		input[type="checkbox"]:not(:checked) {
-			appearance: none;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			-ms-appearance: none;
 			width: 20px;
 			height: 20px;
 			border: 2px solid #3EB489;
@@ -319,10 +321,17 @@
 			border-radius: 5px;
 		}
 		input[type="checkbox"]:checked {
-			appearance: none;
-			background-color: red;
-			transform-origin: bottom left;
-			clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+			background: yellow;
+			  margin:0px;
+			  position: relative;
+			  &:before {
+			    font-family: FontAwesome;
+			    content: '\f00c';
+			    display: block;
+			    color: grey;
+			    font-size: 13px;
+			    position: absolute;
+			  }
 		}
 	</style>
 	
@@ -8255,6 +8264,7 @@
 	
 </body>
 </html>
+
 
 
 
