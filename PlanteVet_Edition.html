@@ -241,6 +241,21 @@
 		.New:hover {
 			background-color: #006A4E;
 		}
+		.append {
+ 			border: 0;
+  			line-height: 2;
+  			padding: 0 10px;
+			background-color: #3EB489;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+		}
+		.append:hover {
+			background-color: #006A4E;
+		}
 		
 		input::file-selector-button {
  			border: 0;
@@ -3127,7 +3142,7 @@
 			
 			//...
 			let UsecasePlanteCombo = document.createElement('text');
-			UsecasePlanteCombo.innerHTML = "&nbsp;(en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;Empty list checked plante</div>";
+			UsecasePlanteCombo.innerHTML = "&nbsp;(en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" class='append' />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;Empty list checked plante</div>";
 			ProductUsecaseListObj.appendChild(UsecasePlanteCombo);
 			//...
 			//ProductUsecaseListObj.appendChild(document.createElement('br'));
@@ -3366,7 +3381,7 @@
 				let TmpFctIdx = FctPoolObj.value;
 				let ProductFctStateObj = ProductFctStateListObj[TmpFctIdx];
 				// update check list
-				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"FctCheckListId_" + FctId + "\" onclick=\"CollapseDivPrdFct(" + FctId + ")\" checked>" + ProductFctStateObj.FctName + "</input> (utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + FctId + ");\" />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
+				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"FctCheckListId_" + FctId + "\" onclick=\"CollapseDivPrdFct(" + FctId + ")\" checked>" + ProductFctStateObj.FctName + "</input> (utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
 				// update combo
 				FctPoolObj.disabled = true;
 				let Fct2PoolObj = document.getElementById("Fct2PoolId_" + FctId);
@@ -3406,7 +3421,7 @@
 				let TmpFct2Idx = Fct2PoolObj.value;
 				let ProductFct2StateObj = ProductFct2StateListObj[TmpFct2Idx];
 				// update check list
-				Fct2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Fct2CheckListId_" + Fct2Id + "\" onclick=\"CollapseDivPrdFct2(" + Fct2Id + ")\" checked>" + ProductFct2StateObj.FctName + "</input> (utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;&emsp;Empty list checked usecase</div>";
+				Fct2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Fct2CheckListId_" + Fct2Id + "\" onclick=\"CollapseDivPrdFct2(" + Fct2Id + ")\" checked>" + ProductFct2StateObj.FctName + "</input> (utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;&emsp;Empty list checked usecase</div>";
 				// update combo
 				Fct2PoolObj.disabled = true;
 				let FctPoolObj = document.getElementById("FctPoolId_" + Fct2Id);
@@ -3460,7 +3475,7 @@
 			
 			//...
 			let UsecaseFctCombo = document.createElement('text');
-			UsecaseFctCombo.innerHTML = "&nbsp;(utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + FctId + ");\" />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;Empty list checked usecase</div>";
+			UsecaseFctCombo.innerHTML = "&nbsp;(utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;Empty list checked usecase</div>";
 			ProductFctListObj.appendChild(UsecaseFctCombo);
 			
 			// update combo
@@ -3513,7 +3528,7 @@
 			
 			//...
 			let UsecaseFct2Combo = document.createElement('text');
-			UsecaseFct2Combo.innerHTML = "&nbsp;(utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;Empty list checked usecase</div>";
+			UsecaseFct2Combo.innerHTML = "&nbsp;(utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;Empty list checked usecase</div>";
 			ProductFct2ListObj.appendChild(UsecaseFct2Combo);
 			
 			// update combo
@@ -3655,7 +3670,7 @@
 								}
 							}
 							// update check list
-							UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"UsecaseCheckListId_" + UsecaseId + "\" onclick=\"CollapseDivPrdUsecase(" + ProductId + "," + UsecaseId + ")\" checked>" + ProductUsecaseStateObj.UsecaseName + "</input> (en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;&emsp;&emsp;Empty list checked usecase plante</div>";
+							UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"UsecaseCheckListId_" + UsecaseId + "\" onclick=\"CollapseDivPrdUsecase(" + ProductId + "," + UsecaseId + ")\" checked>" + ProductUsecaseStateObj.UsecaseName + "</input> (en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" class='append' />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;&emsp;&emsp;Empty list checked usecase plante</div>";
 							// update combo
 							UsecasePoolObj.disabled = true;
 							// update usecase state array
@@ -4542,24 +4557,24 @@
 				ProductInfoTxt += "<img id=\"ProductPhotoView\" style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(ProductPhotoBlob) + " /> <input id=\"SelectedPhotoInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdateProductPhoto()\" />";
 				
 				ProductInfoTxt += "<h2>Composition</h2>";
-				ProductInfoTxt += "&emsp;<b>Plante(s) : </b> <select id=\"PlantePoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendProductPlante();\" /><br/><div id=\"ListCheckedProductPlante\">Empty list checked product plante</div>";
+				ProductInfoTxt += "&emsp;<b>Plante(s) : </b> <select id=\"PlantePoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendProductPlante();\" class='append' /><br/><div id=\"ListCheckedProductPlante\">Empty list checked product plante</div>";
 				ProductInfoTxt += "<h2>Forme galénique</h2>";
 				ProductInfoTxt += "&emsp;" + BuildGaleniqueInputCombo(GaleniqueId) + "<br/>";
 				
 				ProductInfoTxt += "<h2>Informations cliniques</h2>";
 				ProductInfoTxt += "<h3>Utilisations</h3>";
-				ProductInfoTxt += "&emsp;<b>Utilisation(s) principale(s) pour la : </b> <select id=\"FctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendFcts();\" /><br/><div id=\"ListCheckedProductFcts\">Empty list checked product fcts</div>";
-				ProductInfoTxt += "<br/>&emsp;<b>Utilisation(s) secondaire(s) pour la : </b> <select id=\"FctsPoolCombo2\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendFcts2();\" /><br/><div id=\"ListCheckedProductFcts2\">Empty list checked product fcts 2</div>";
+				ProductInfoTxt += "&emsp;<b>Utilisation(s) principale(s) pour la : </b> <select id=\"FctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendFcts();\" class='append' /><br/><div id=\"ListCheckedProductFcts\">Empty list checked product fcts</div>";
+				ProductInfoTxt += "<br/>&emsp;<b>Utilisation(s) secondaire(s) pour la : </b> <select id=\"FctsPoolCombo2\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendFcts2();\" class='append' /><br/><div id=\"ListCheckedProductFcts2\">Empty list checked product fcts 2</div>";
 				ProductInfoTxt += "<h3>Contre-indications</h3>";
-				ProductInfoTxt += "&emsp;<select id=\"CtrIndicPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendCtrIndic();\" /><br/><div id=\"ListCheckedProductCtrIndic\">Empty list checked product CtrIndic</div>";
+				ProductInfoTxt += "&emsp;<select id=\"CtrIndicPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendCtrIndic();\" class='append' /><br/><div id=\"ListCheckedProductCtrIndic\">Empty list checked product CtrIndic</div>";
 				ProductInfoTxt += "<h3>Effets secondaires</h3>";
-				ProductInfoTxt += "&emsp;<select id=\"Effet2PoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendEffet2();\" /><br/><div id=\"ListCheckedProductEffet2\">Empty list checked product Effet2</div>";
+				ProductInfoTxt += "&emsp;<select id=\"Effet2PoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendEffet2();\" class='append' /><br/><div id=\"ListCheckedProductEffet2\">Empty list checked product Effet2</div>";
 				
 				ProductInfoTxt += "<h3>Espèces cibles, Posologie et Temps d'attente</h3>";
 				ProductInfoTxt += "<div id=\"TableCheckEspece\">Empty table checked product espece poso</div>";
 				
 				ProductInfoTxt += "<h3>Toxicité</h3>";
-				ProductInfoTxt += "&emsp;<select id=\"ToxicitePoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendToxicite();\" /><br/><div id=\"ListCheckedProductToxicite\">Empty list checked product Toxicite</div>";
+				ProductInfoTxt += "&emsp;<select id=\"ToxicitePoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendToxicite();\" class='append' /><br/><div id=\"ListCheckedProductToxicite\">Empty list checked product Toxicite</div>";
 				
 				ProductInfoTxt += "<h2>Propriétés pharmacologiques</h2>";
 				ProductInfoTxt += "<textarea id=\"ProductProprietesInput\" >Initializing Rich text editor ...</textarea>";
@@ -7345,7 +7360,7 @@
 				let TmpFctIdx = FctPoolObj.value;
 				let PlanteFctStateObj = PlanteFctStateListObj[TmpFctIdx];
 				// update check list
-				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"PlFctCheckListId_" + FctId + "\" onclick=\"CollapseDivPlFct(" + FctId + ")\" checked>" + PlanteFctStateObj.FctName + "</input> (utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
+				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"PlFctCheckListId_" + FctId + "\" onclick=\"CollapseDivPlFct(" + FctId + ")\" checked>" + PlanteFctStateObj.FctName + "</input> (utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
 				// update combo
 				FctPoolObj.disabled = true;
 				// update Plante state array
@@ -7633,7 +7648,7 @@
 			PlanteFctListObj.appendChild(FctCheckListTextObj);
 			//...
 			let UsecaseFctCombo = document.createElement('text');
-			UsecaseFctCombo.innerHTML = "&nbsp;(utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;Empty list checked usecase</div>";
+			UsecaseFctCombo.innerHTML = "&nbsp;(utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;Empty list checked usecase</div>";
 			PlanteFctListObj.appendChild(UsecaseFctCombo);
 			
 			// update combo
@@ -7770,7 +7785,7 @@
 				PlanteInfoTxt += "<h3>Informations traitant de la botanique :</h3><textarea id=\"PlanteBotaniqueInput\" >Initializing Rich text editor ...</textarea><br/>";
 				RichTextDataBotanique = CastBufferToRichText(PlanteBotanique);
 				PlanteInfoTxt += "<h3>Partie(s) utilisée(s)</h3>";
-				PlanteInfoTxt += "&emsp;<select id=\"UsePartPlPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlUsePart();\" /><br/><div id=\"ListCheckedPlanteUsePart\">Empty list checked plante UsePart</div>";
+				PlanteInfoTxt += "&emsp;<select id=\"UsePartPlPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlUsePart();\" class='append' /><br/><div id=\"ListCheckedPlanteUsePart\">Empty list checked plante UsePart</div>";
 				PlanteInfoTxt += "<h3>Données expérimentales</h3>";
 				PlanteInfoTxt += "&emsp;<input type='radio' name='Rchr' id='Rchr0' value='0'><label for 'Rchr0'>Aucune recherche expérimentale n'a été effectuée.</label><br/>&emsp;<input type='radio' name='Rchr' id='Rchr1' value='1'><label for 'Rchr1'>Des recherches ont été faites in vitro.</label><br/>&emsp;<input type='radio' name='Rchr' id='Rchr2' value='2'><label for 'Rchr2'>Quelques recherches ont été faites sur des rongeurs.</label><br/>&emsp;<input type='radio' name='Rchr' id='Rchr3' value='3'><label for 'Rchr3'>De  nombreuses recherches ont été faites sur des rongeurs.</label><br/>&emsp;<input type='radio' name='Rchr' id='Rchr4' value='4'><label for 'Rchr4'>Quelques recherches ont été faites sur des espèces cibles.</label><br/>&emsp;<input type='radio' name='Rchr' id='Rchr5' value='5'><label for 'Rchr5'>De nombreuses recherches ont été faites sur des espèces cibles.</label><br/>";
 				PlanteInfoTxt += "<h3>Données cliniques</h3>";
@@ -7782,11 +7797,11 @@
 				PlanteInfoTxt += "&emsp; <b>Propriétés principales :</b> 1 - <input id=\"EltP1Input\" size=\"32\" type=\"text\" value=\"" + PlanteP1 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 1' />&nbsp; 2 - <input id=\"EltP2Input\" size=\"32\" type=\"text\" value=\"" + PlanteP2 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 2' />&nbsp; 3 - <input id=\"EltP3Input\" size=\"32\" type=\"text\" value=\"" + PlanteP3 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 3' /><br/><br/>";
 				PlanteInfoTxt += "<h3>Propriétés pharmacocinétiques :</h3><textarea id=\"PlantePCinInput\" >Initializing Rich text editor ...</textarea><br/>";
 				PlanteInfoTxt += "<h3>Applications médicales</h3>";
-				PlanteInfoTxt += "&emsp;<b>Utilisation(s) pour la : </b> <select id=\"PlFctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlanteFcts();\" /><br/><div id=\"ListCheckedPlanteFcts\">Empty list checked product fcts</div>";
+				PlanteInfoTxt += "&emsp;<b>Utilisation(s) pour la : </b> <select id=\"PlFctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlanteFcts();\" class='append' /><br/><div id=\"ListCheckedPlanteFcts\">Empty list checked product fcts</div>";
 				PlanteInfoTxt += "<h3>Contre-indications</h3>";
-				PlanteInfoTxt += "&emsp;<select id=\"CtrIndicPlPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlCtrIndic();\" /><br/><div id=\"ListCheckedPlanteCtrIndic\">Empty list checked plante CtrIndic</div>";
+				PlanteInfoTxt += "&emsp;<select id=\"CtrIndicPlPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlCtrIndic();\" class='append' /><br/><div id=\"ListCheckedPlanteCtrIndic\">Empty list checked plante CtrIndic</div>";
 				PlanteInfoTxt += "<h3>Effets secondaires</h3>";
-				PlanteInfoTxt += "&emsp;<select id=\"Effet2PlPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlEffet2();\" /><br/><div id=\"ListCheckedPlanteEffet2\">Empty list checked plante Effet2</div>";
+				PlanteInfoTxt += "&emsp;<select id=\"Effet2PlPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlEffet2();\" class='append' /><br/><div id=\"ListCheckedPlanteEffet2\">Empty list checked plante Effet2</div>";
 				RichTextDataPCin = CastBufferToRichText(PlantePCin);
 				
 				PlanteInfoTxt += "<h3>Posologie</h3>";
@@ -8225,6 +8240,7 @@
 	
 </body>
 </html>
+
 
 
 
