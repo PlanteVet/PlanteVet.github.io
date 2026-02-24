@@ -24,6 +24,9 @@
 			border-radius: 10px;
 			border: 2px solid #3EB489; 
 		}
+		.tox.tox-tinymce.focused {
+			border: 4px solid #3EB489; 
+		}
 		
 		ul {
 			margin-top: 0;
@@ -382,6 +385,13 @@
 							console.log("MCE init done");
 							EventObj.target.setContent(InitHTMLRichText);
 					});
+					//toggle focused state
+					RichTextEditorObj.on('focus', (e) => {
+					e.target.editorContainer.classList.toggle('focused');
+					});
+					RichTextEditorObj.on('blur', (e) => {
+					e.target.editorContainer.classList.toggle('focused');
+					});
 				}
 			});
 			return;
@@ -411,6 +421,13 @@
 					RichTextEditorObj.on('init', (EventObj) => {
 							console.log("MCE init done");
 							EventObj.target.setContent(InitHTMLRichText);
+					});
+					//toggle focused state
+					RichTextEditorObj.on('focus', (e) => {
+					e.target.editorContainer.classList.toggle('focused');
+					});
+					RichTextEditorObj.on('blur', (e) => {
+					e.target.editorContainer.classList.toggle('focused');
 					});
 				}
 			});
@@ -8195,6 +8212,7 @@
 	
 </body>
 </html>
+
 
 
 
