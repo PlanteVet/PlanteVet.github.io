@@ -310,7 +310,7 @@
 			border: 2px solid black;
 		}
 		
-		input[type="checkbox"] label::before {
+		input[type="checkbox"]:not(:checked) {
 			width:15px;
 			height: 15px;
 			border: 2px solid #3EB489;
@@ -320,7 +320,7 @@
 				inset 2px 2px 3px rgb(255 255 255 / 60%),
 				inset -2px -2px 3px rgb(0 0 0 / 60%);
 		}
-		input[type="checkbox"] label::after {
+		input[type="checkbox"]:checked {
 			color: red;
 		}
 	</style>
@@ -8254,6 +8254,7 @@
 	
 </body>
 </html>
+
 
 
 
