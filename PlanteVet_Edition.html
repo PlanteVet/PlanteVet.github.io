@@ -338,6 +338,25 @@
 		input[type=checkbox]:checked:before {
 			color: black !important;
 		}
+
+		input[type=radio] {
+			-moz-appearance:none;
+			-webkit-appearance:none;
+			-o-appearance:none;
+			outline: none;
+			content: none;
+		}
+		input[type=radio]:before {
+			width: 15px;
+			height: 15px;
+			border: 2px solid #3EB489;
+			border-radius: 50%;
+			transform: scale(0);
+		}
+
+		input[type=radio]:checked:before {
+			transform: scale(1);
+		}
 	</style>
 	
 	<!-- Database interface script -->
@@ -8269,6 +8288,7 @@
 	
 </body>
 </html>
+
 
 
 
