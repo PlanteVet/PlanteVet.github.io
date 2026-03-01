@@ -1400,7 +1400,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this product ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprimer ce produit ?")) return;
 				// delete entry
 				console.log("Doing delete product SQL request ...");
 				try {
@@ -3169,17 +3169,6 @@
 			let UsecaseTabObj = document.createElement('text');
 			UsecaseTabObj.innerHTML = "&emsp;&emsp;";
 			ProductUsecaseListObj.appendChild(UsecaseTabObj);
-			<!-- //... -->
-			<!-- let UsecaseCheckListObj = document.createElement('input'); -->
-			<!-- UsecaseCheckListObj.type = 'checkbox'; -->
-			<!-- UsecaseCheckListObj.id = "UsecaseCheckListId_" + UsecaseId; -->
-			<!-- UsecaseCheckListObj.checked = true; -->
-			<!-- ProductUsecaseListObj.appendChild(UsecaseCheckListObj); -->
-			<!-- //... -->
-			<!-- let CheckBoxValueTxt = ""; -->
-			<!-- CheckBoxValueTxt += ProductUsecaseStateObj.UsecaseName; -->
-			<!-- let UsecaseCheckListTextObj = document.createTextNode(CheckBoxValueTxt); -->
-			<!-- ProductUsecaseListObj.appendChild(UsecaseCheckListTextObj); -->
 			
 			//...
 			let UsecaseCheckListObj = document.createElement('text');
@@ -3188,7 +3177,7 @@
 			
 			//...
 			let UsecasePlanteCombo = document.createElement('text');
-			UsecasePlanteCombo.innerHTML = "&nbsp;(en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" class='append' />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;Empty list checked plante</div>";
+			UsecasePlanteCombo.innerHTML = "&nbsp;(en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" class='append' />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;Empty list checked plante</div>";
 			ProductUsecaseListObj.appendChild(UsecasePlanteCombo);
 			//...
 			//ProductUsecaseListObj.appendChild(document.createElement('br'));
@@ -3427,7 +3416,7 @@
 				let TmpFctIdx = FctPoolObj.value;
 				let ProductFctStateObj = ProductFctStateListObj[TmpFctIdx];
 				// update check list
-				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"FctCheckListId_" + FctId + "\" onclick=\"CollapseDivPrdFct(" + FctId + ")\" checked>" + ProductFctStateObj.FctName + "</input> (utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
+				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"FctCheckListId_" + FctId + "\" onclick=\"CollapseDivPrdFct(" + FctId + ")\" checked>" + ProductFctStateObj.FctName + "</input> (utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
 				// update combo
 				FctPoolObj.disabled = true;
 				let Fct2PoolObj = document.getElementById("Fct2PoolId_" + FctId);
@@ -3467,7 +3456,7 @@
 				let TmpFct2Idx = Fct2PoolObj.value;
 				let ProductFct2StateObj = ProductFct2StateListObj[TmpFct2Idx];
 				// update check list
-				Fct2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Fct2CheckListId_" + Fct2Id + "\" onclick=\"CollapseDivPrdFct2(" + Fct2Id + ")\" checked>" + ProductFct2StateObj.FctName + "</input> (utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;&emsp;Empty list checked usecase</div>";
+				Fct2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Fct2CheckListId_" + Fct2Id + "\" onclick=\"CollapseDivPrdFct2(" + Fct2Id + ")\" checked>" + ProductFct2StateObj.FctName + "</input> (utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;&emsp;Empty list checked usecase</div>";
 				// update combo
 				Fct2PoolObj.disabled = true;
 				let FctPoolObj = document.getElementById("FctPoolId_" + Fct2Id);
@@ -3503,17 +3492,6 @@
 			UsecaseFctTab.innerHTML = "&emsp;";
 			ProductFctListObj.appendChild(UsecaseFctTab);
 			
-			<!-- let FctCheckListObj = document.createElement('input'); -->
-			<!-- FctCheckListObj.type = 'checkbox'; -->
-			<!-- FctCheckListObj.id = "FctCheckListId_" + FctId; -->
-			<!-- FctCheckListObj.checked = true; -->
-			<!-- ProductFctListObj.appendChild(FctCheckListObj); -->
-			<!-- //... -->
-			<!-- let CheckBoxValueTxt = ""; -->
-			<!-- CheckBoxValueTxt += ProductFctStateObj.FctName; -->
-			<!-- let FctCheckListTextObj = document.createTextNode(CheckBoxValueTxt); -->
-			<!-- ProductFctListObj.appendChild(FctCheckListTextObj); -->
-			
 			//...
 			let FctCheckListObj = document.createElement('text');
 			FctCheckListObj.innerHTML = "<input type=\"checkbox\" id=\"FctCheckListId_" + FctId + "\" onclick=\"CollapseDivPrdFct(" + FctId + ")\" checked>" + ProductFctStateObj.FctName + "</input>";
@@ -3521,7 +3499,7 @@
 			
 			//...
 			let UsecaseFctCombo = document.createElement('text');
-			UsecaseFctCombo.innerHTML = "&nbsp;(utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;Empty list checked usecase</div>";
+			UsecaseFctCombo.innerHTML = "&nbsp;(utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;Empty list checked usecase</div>";
 			ProductFctListObj.appendChild(UsecaseFctCombo);
 			
 			// update combo
@@ -3556,17 +3534,6 @@
 			UsecaseFct2Tab.innerHTML = "&emsp;";
 			ProductFct2ListObj.appendChild(UsecaseFct2Tab);
 			
-			<!-- let Fct2CheckListObj = document.createElement('input'); -->
-			<!-- Fct2CheckListObj.type = 'checkbox'; -->
-			<!-- Fct2CheckListObj.id = "Fct2CheckListId_" + Fct2Id; -->
-			<!-- Fct2CheckListObj.checked = true; -->
-			<!-- ProductFct2ListObj.appendChild(Fct2CheckListObj); -->
-			<!-- //... -->
-			<!-- let CheckBoxValueTxt = ""; -->
-			<!-- CheckBoxValueTxt += ProductFct2StateObj.FctName; -->
-			<!-- let Fct2CheckListTextObj = document.createTextNode(CheckBoxValueTxt); -->
-			<!-- ProductFct2ListObj.appendChild(Fct2CheckListTextObj); -->
-			
 			//...
 			let Fct2CheckListObj = document.createElement('text');
 			Fct2CheckListObj.innerHTML = "<input type=\"checkbox\" id=\"Fct2CheckListId_" + Fct2Id + "\" onclick=\"CollapseDivPrdFct2(" + Fct2Id + ")\" checked>" + ProductFct2StateObj.FctName + "</input>";
@@ -3574,7 +3541,7 @@
 			
 			//...
 			let UsecaseFct2Combo = document.createElement('text');
-			UsecaseFct2Combo.innerHTML = "&nbsp;(utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;Empty list checked usecase</div>";
+			UsecaseFct2Combo.innerHTML = "&nbsp;(utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;Empty list checked usecase</div>";
 			ProductFct2ListObj.appendChild(UsecaseFct2Combo);
 			
 			// update combo
@@ -3716,7 +3683,7 @@
 								}
 							}
 							// update check list
-							UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"UsecaseCheckListId_" + UsecaseId + "\" onclick=\"CollapseDivPrdUsecase(" + ProductId + "," + UsecaseId + ")\" checked>" + ProductUsecaseStateObj.UsecaseName + "</input> (en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" class='append' />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;&emsp;&emsp;Empty list checked usecase plante</div>";
+							UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"UsecaseCheckListId_" + UsecaseId + "\" onclick=\"CollapseDivPrdUsecase(" + ProductId + "," + UsecaseId + ")\" checked>" + ProductUsecaseStateObj.UsecaseName + "</input> (en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" class='append' />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;&emsp;&emsp;Empty list checked usecase plante</div>";
 							// update combo
 							UsecasePoolObj.disabled = true;
 							// update usecase state array
@@ -4537,14 +4504,14 @@
 			globalThis.PrivateWorkingEltId = ProductId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateProduct(" + ProductId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"AfterEditProduct();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteProduct(" + ProductId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateProduct(" + ProductId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"AfterEditProduct();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteProduct(" + ProductId + ");\" class='Delete' ";
 			if(ProductId == 0) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append product view
 			let ProductInfoTxt = "";
-			ProductInfoTxt += "<h1>Product " + ProductId + " Info :</h1>";
+			ProductInfoTxt += "<h1>Informations du Produit " + ProductId + " :</h1>";
 			// fetch product info
 			let ProductSQLRequestResultObj = [];
 			if(ProductId == 0)
@@ -4603,24 +4570,24 @@
 				ProductInfoTxt += "<img id=\"ProductPhotoView\" style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(ProductPhotoBlob) + " /> <input id=\"SelectedPhotoInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdateProductPhoto()\" />";
 				
 				ProductInfoTxt += "<h2>Composition</h2>";
-				ProductInfoTxt += "&emsp;<b>Plante(s) : </b> <select id=\"PlantePoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendProductPlante();\" class='append' /><br/><div id=\"ListCheckedProductPlante\">Empty list checked product plante</div>";
+				ProductInfoTxt += "&emsp;<b>Plante(s) : </b> <select id=\"PlantePoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendProductPlante();\" class='append' /><br/><div id=\"ListCheckedProductPlante\">Empty list checked product plante</div>";
 				ProductInfoTxt += "<h2>Forme galénique</h2>";
 				ProductInfoTxt += "&emsp;" + BuildGaleniqueInputCombo(GaleniqueId) + "<br/>";
 				
 				ProductInfoTxt += "<h2>Informations cliniques</h2>";
 				ProductInfoTxt += "<h3>Utilisations</h3>";
-				ProductInfoTxt += "&emsp;<b>Utilisation(s) principale(s) pour la : </b> <select id=\"FctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendFcts();\" class='append' /><br/><div id=\"ListCheckedProductFcts\">Empty list checked product fcts</div>";
-				ProductInfoTxt += "<br/>&emsp;<b>Utilisation(s) secondaire(s) pour la : </b> <select id=\"FctsPoolCombo2\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendFcts2();\" class='append' /><br/><div id=\"ListCheckedProductFcts2\">Empty list checked product fcts 2</div>";
+				ProductInfoTxt += "&emsp;<b>Utilisation(s) principale(s) pour la : </b> <select id=\"FctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendFcts();\" class='append' /><br/><div id=\"ListCheckedProductFcts\">Empty list checked product fcts</div>";
+				ProductInfoTxt += "<br/>&emsp;<b>Utilisation(s) secondaire(s) pour la : </b> <select id=\"FctsPoolCombo2\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendFcts2();\" class='append' /><br/><div id=\"ListCheckedProductFcts2\">Empty list checked product fcts 2</div>";
 				ProductInfoTxt += "<h3>Contre-indications</h3>";
-				ProductInfoTxt += "&emsp;<select id=\"CtrIndicPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendCtrIndic();\" class='append' /><br/><div id=\"ListCheckedProductCtrIndic\">Empty list checked product CtrIndic</div>";
+				ProductInfoTxt += "&emsp;<select id=\"CtrIndicPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendCtrIndic();\" class='append' /><br/><div id=\"ListCheckedProductCtrIndic\">Empty list checked product CtrIndic</div>";
 				ProductInfoTxt += "<h3>Effets secondaires</h3>";
-				ProductInfoTxt += "&emsp;<select id=\"Effet2PoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendEffet2();\" class='append' /><br/><div id=\"ListCheckedProductEffet2\">Empty list checked product Effet2</div>";
+				ProductInfoTxt += "&emsp;<select id=\"Effet2PoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendEffet2();\" class='append' /><br/><div id=\"ListCheckedProductEffet2\">Empty list checked product Effet2</div>";
 				
 				ProductInfoTxt += "<h3>Espèces cibles, Posologie et Temps d'attente</h3>";
 				ProductInfoTxt += "<div id=\"TableCheckEspece\">Empty table checked product espece poso</div>";
 				
 				ProductInfoTxt += "<h3>Toxicité</h3>";
-				ProductInfoTxt += "&emsp;<select id=\"ToxicitePoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendToxicite();\" class='append' /><br/><div id=\"ListCheckedProductToxicite\">Empty list checked product Toxicite</div>";
+				ProductInfoTxt += "&emsp;<select id=\"ToxicitePoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendToxicite();\" class='append' /><br/><div id=\"ListCheckedProductToxicite\">Empty list checked product Toxicite</div>";
 				
 				ProductInfoTxt += "<h2>Propriétés pharmacologiques</h2>";
 				ProductInfoTxt += "<textarea id=\"ProductProprietesInput\" >Initializing Rich text editor ...</textarea>";
@@ -4689,8 +4656,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new product\" onclick=\"GoAddNewProduct();\" class='New' /> OR click a product to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter un nouveau produit\" onclick=\"GoAddNewProduct();\" class='New' /> OU cliquer sur un produit pour l'éditer :<br/>";
 			// list all existing product : exec SQL request on Working DB
 			console.log("Doing list product SQL request ...");
 			let SQLRequestResultObj = [];
@@ -4737,7 +4704,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this labo ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprimer ce laboratoire ?")) return;
 				// delete entry
 				console.log("Doing delete labo SQL request ...");
 				try {
@@ -4831,14 +4798,14 @@
 			globalThis.PrivateWorkingEltId = LaboId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateLabo(" + LaboId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditLaboTable();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteLabo(" + LaboId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateLabo(" + LaboId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditLaboTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteLabo(" + LaboId + ");\" class='Delete' ";
 			if(IsLaboUsedBySomeProduct(LaboId) || (LaboId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Labo view
 			let LaboInfoTxt = "";
-			LaboInfoTxt += "<h1>Labo " + LaboId + " Info :</h1><br/>";
+			LaboInfoTxt += "<h1>Informations du Laboratoire " + LaboId + " :</h1><br/>";
 			// fetch Labo info
 			let LaboSQLRequestResultObj = [];
 			if(LaboId == 0)
@@ -4877,7 +4844,7 @@
 				if(LaboNameTxt == null) LaboNameTxt = "UNDEFINED";
 				LaboNameTxt = DoSanitizeNameTxt(LaboNameTxt);
 				// build form
-				LaboInfoTxt += "<b>LABO NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + LaboNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'un laboratoire.\" /><br/>";
+				LaboInfoTxt += "<b>Nom du laboratoire : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + LaboNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'un laboratoire.\" /><br/>";
 			}
 			RowEditFormTxt += LaboInfoTxt;
 			// hide row choice form
@@ -4903,8 +4870,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new labo\" onclick=\"GoAddNewLabo();\" class='New' /> OR click a labo to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter un nouveau laboratoire\" onclick=\"GoAddNewLabo();\" class='New' /> OU cliquer sur un laboratoire pour l'éditer :<br/>";
 			// list all existing labo : exec SQL request on Working DB
 			console.log("Doing list labo SQL request ...");
 			let SQLRequestResultObj = [];
@@ -4951,7 +4918,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this function ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprimer cette grande fonction organique ?")) return;
 				// delete entry
 				console.log("Doing delete Fcts SQL request ...");
 				try {
@@ -5045,14 +5012,14 @@
 			globalThis.PrivateWorkingEltId = FctsId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateFcts(" + FctsId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditFctsTable();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteFcts(" + FctsId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateFcts(" + FctsId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditFctsTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteFcts(" + FctsId + ");\" class='Delete' ";
 			if(IsFctsUsedBySomeProduct(FctsId) || (FctsId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Fcts view
 			let FctsInfoTxt = "";
-			FctsInfoTxt += "<h1>Fcts " + FctsId + " Info :</h1><br/>";
+			FctsInfoTxt += "<h1>Informations de la grande fonction organique " + FctsId + " :</h1><br/>";
 			// fetch Fcts info
 			let FctsSQLRequestResultObj = [];
 			if(FctsId == 0)
@@ -5091,7 +5058,7 @@
 				if(FctsNameTxt == null) FctsNameTxt = "UNDEFINED";
 				FctsNameTxt = DoSanitizeNameTxt(FctsNameTxt);
 				// build form
-				FctsInfoTxt += "<b>Fcts NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + FctsNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une grande fonction de l'organisme.\" /><br/>";
+				FctsInfoTxt += "<b>Nom de la grande fonction organique : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + FctsNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une grande fonction de l'organisme.\" /><br/>";
 			}
 			RowEditFormTxt += FctsInfoTxt;
 			// hide row choice form
@@ -5117,8 +5084,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Fcts\" onclick=\"GoAddNewFcts();\" class='New' /> OR click a body function to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter une grande fonction\" onclick=\"GoAddNewFcts();\" class='New' /> OU cliquer l'une des grandes fonctions pour l'éditer :<br/>";
 			// list all existing Fcts : exec SQL request on Working DB
 			console.log("Doing list Fcts SQL request ...");
 			let SQLRequestResultObj = [];
@@ -5165,7 +5132,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this usecase ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprimer cette utilisation ?")) return;
 				// delete entry
 				console.log("Doing delete usecase SQL request ...");
 				try {
@@ -5256,14 +5223,14 @@
 			globalThis.PrivateWorkingEltId = UsecaseId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateUsecase(" + UsecaseId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditUsecaseTable();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteUsecase(" + UsecaseId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateUsecase(" + UsecaseId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditUsecaseTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteUsecase(" + UsecaseId + ");\" class='Delete' ";
 			if(IsUsecaseUsedBySomeProduct(UsecaseId) || (UsecaseId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
 			// append Usecase view
 			let UsecaseInfoTxt = "";
-			 UsecaseInfoTxt += "<h1>Usecase " + UsecaseId + " Info :</h1><br/>";
+			 UsecaseInfoTxt += "<h1>Informations de l'utilisation " + UsecaseId + " :</h1><br/>";
 			// fetch Usecase info			
 			let UsecaseSQLRequestResultObj = [];
 			if(UsecaseId == 0)
@@ -5333,8 +5300,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new usecase\" onclick=\"GoAddNewUsecase();\" class='New' /> OR click a usecase to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter une nouvelle utilisation\" onclick=\"GoAddNewUsecase();\" class='New' /> OU cliquer une utilisation pour l'éditer :<br/>";
 			// list all existing usecase : exec SQL request on Working DB
 			console.log("Doing list usecase SQL request ...");
 			let SQLRequestResultObj = [];
@@ -5381,7 +5348,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this Toxicite ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprimer cette toxicité ?")) return;
 				// delete entry
 				console.log("Doing delete Toxicite SQL request ...");
 				try {
@@ -5469,14 +5436,14 @@
 			globalThis.PrivateWorkingEltId = ToxiciteId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateToxicite(" + ToxiciteId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditToxiciteTable();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteToxicite(" + ToxiciteId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateToxicite(" + ToxiciteId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditToxiciteTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteToxicite(" + ToxiciteId + ");\" class='Delete' ";
 			if(IsToxiciteUsedBySomeProduct(ToxiciteId) || (ToxiciteId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
 			// append Toxicite view
 			let ToxiciteInfoTxt = "";
-			 ToxiciteInfoTxt += "<h1>Toxicite " + ToxiciteId + " Info :</h1><br/>";
+			 ToxiciteInfoTxt += "<h1>Informations de la toxicité " + ToxiciteId + " :</h1><br/>";
 			// fetch Toxicite info			
 			let ToxiciteSQLRequestResultObj = [];
 			if(ToxiciteId == 0)
@@ -5515,7 +5482,7 @@
 				if(ToxiciteNameTxt == null) ToxiciteNameTxt = "UNDEFINED";
 				ToxiciteNameTxt = DoSanitizeNameTxt(ToxiciteNameTxt);
 				// build form
-				ToxiciteInfoTxt += "<b>Toxicite NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + ToxiciteNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une toxicité.\" /><br/>";
+				ToxiciteInfoTxt += "<b>Nom de la oxicité : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + ToxiciteNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une toxicité.\" /><br/>";
 			}
 			RowEditFormTxt += ToxiciteInfoTxt;
 			// hide row choice form
@@ -5541,8 +5508,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Toxicite\" onclick=\"GoAddNewToxicite();\" class='New' /> OR click a toxicity to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter une nouvelle toxicité\" onclick=\"GoAddNewToxicite();\" class='New' /> OU cliquer une toxicité pour l'éditer :<br/>";
 			// list all existing Toxicite : exec SQL request on Working DB
 			console.log("Doing list Toxicite SQL request ...");
 			let SQLRequestResultObj = [];
@@ -5589,7 +5556,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this Effet2 ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprimer cet effet secondaire ?")) return;
 				// delete entry
 				console.log("Doing delete Effet2 SQL request ...");
 				try {
@@ -5677,14 +5644,14 @@
 			globalThis.PrivateWorkingEltId = Effet2Id;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateEffet2(" + Effet2Id + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditEffet2Table();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteEffet2(" + Effet2Id + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateEffet2(" + Effet2Id + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditEffet2Table();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteEffet2(" + Effet2Id + ");\" class='Delete' ";
 			if(IsEffet2UsedBySomeProduct(Effet2Id) || (Effet2Id == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
 			// append Effet2 view
 			let Effet2InfoTxt = "";
-			 Effet2InfoTxt += "<h1>Effet2 " + Effet2Id + " Info :</h1><br/>";
+			 Effet2InfoTxt += "<h1>Informations de l'effet secondaire " + Effet2Id + " :</h1><br/>";
 			// fetch Effet2 info			
 			let Effet2SQLRequestResultObj = [];
 			if(Effet2Id == 0)
@@ -5723,7 +5690,7 @@
 				if(Effet2NameTxt == null) Effet2NameTxt = "UNDEFINED";
 				Effet2NameTxt = DoSanitizeNameTxt(Effet2NameTxt);
 				// build form
-				Effet2InfoTxt += "<b>Effet2 NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + Effet2NameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'un effet secondaire.\" /><br/>";
+				Effet2InfoTxt += "<b>Nom de l'effet secondaire : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + Effet2NameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'un effet secondaire.\" /><br/>";
 			}
 			RowEditFormTxt += Effet2InfoTxt;
 			// hide row choice form
@@ -5749,8 +5716,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Effet2\" onclick=\"GoAddNewEffet2();\" class='New' /> OR click a side effect to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter un nouvel effet secondaire\" onclick=\"GoAddNewEffet2();\" class='New' /> OU cliquer un effet secondaire pour l'éditer :<br/>";
 			// list all existing Effet2 : exec SQL request on Working DB
 			console.log("Doing list Effet2 SQL request ...");
 			let SQLRequestResultObj = [];
@@ -5797,7 +5764,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this CtrIndic ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprilmer cette contre-indication ?")) return;
 				// delete entry
 				console.log("Doing delete CtrIndic SQL request ...");
 				try {
@@ -5885,14 +5852,14 @@
 			globalThis.PrivateWorkingEltId = CtrIndicId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateCtrIndic(" + CtrIndicId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditCtrIndicTable();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteCtrIndic(" + CtrIndicId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateCtrIndic(" + CtrIndicId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditCtrIndicTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteCtrIndic(" + CtrIndicId + ");\" class='Delete' ";
 			if(IsCtrIndicUsedBySomeProduct(CtrIndicId) || (CtrIndicId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
 			// append CtrIndic view
 			let CtrIndicInfoTxt = "";
-			 CtrIndicInfoTxt += "<h1>CtrIndic " + CtrIndicId + " Info :</h1><br/>";
+			 CtrIndicInfoTxt += "<h1>Informations de la contre-indication " + CtrIndicId + " :</h1><br/>";
 			// fetch CtrIndic info			
 			let CtrIndicSQLRequestResultObj = [];
 			if(CtrIndicId == 0)
@@ -5931,7 +5898,7 @@
 				if(CtrIndicNameTxt == null) CtrIndicNameTxt = "UNDEFINED";
 				CtrIndicNameTxt = DoSanitizeNameTxt(CtrIndicNameTxt);
 				// build form
-				CtrIndicInfoTxt += "<b>CtrIndic NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + CtrIndicNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\#Entrez le nom d'une contre-indication.\" /><br/>";
+				CtrIndicInfoTxt += "<b>Nom de la contre-indication : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + CtrIndicNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\#Entrez le nom d'une contre-indication.\" /><br/>";
 			}
 			RowEditFormTxt += CtrIndicInfoTxt;
 			// hide row choice form
@@ -5957,8 +5924,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new CtrIndic\" onclick=\"GoAddNewCtrIndic();\" class='New' /> OR click a ctrindic to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter une nouvelle contre-indication\" onclick=\"GoAddNewCtrIndic();\" class='New' /> OU cliquer une contre-indication pour l'éditer :<br/>";
 			// list all existing CtrIndic : exec SQL request on Working DB
 			console.log("Doing list CtrIndic SQL request ...");
 			let SQLRequestResultObj = [];
@@ -6005,7 +5972,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this drug form ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprimer cet forme galénique ?")) return;
 				// delete entry
 				console.log("Doing delete Galenique SQL request ...");
 				try {
@@ -6099,14 +6066,14 @@
 			globalThis.PrivateWorkingEltId = GaleniqueId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateGalenique(" + GaleniqueId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditGaleniqueTable();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteGalenique(" + GaleniqueId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateGalenique(" + GaleniqueId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditGaleniqueTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteGalenique(" + GaleniqueId + ");\" class='Delete' ";
 			if(IsGaleniqueUsedBySomeProduct(GaleniqueId) || (GaleniqueId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Galenique view
 			let GaleniqueInfoTxt = "";
-			GaleniqueInfoTxt += "<h1>Galenique " + GaleniqueId + " Info :</h1><br/>";
+			GaleniqueInfoTxt += "<h1>Informations sur la forme galénique " + GaleniqueId + " :</h1><br/>";
 			// fetch Galenique info
 			let GaleniqueSQLRequestResultObj = [];
 			if(GaleniqueId == 0)
@@ -6145,7 +6112,7 @@
 				if(GaleniqueNameTxt == null) GaleniqueNameTxt = "UNDEFINED";
 				GaleniqueNameTxt = DoSanitizeNameTxt(GaleniqueNameTxt);
 				// build form
-				GaleniqueInfoTxt += "<b>GALENIQUE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + GaleniqueNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une forme galénique.\" /><br/>";
+				GaleniqueInfoTxt += "<b>Nom de la forme galénique : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + GaleniqueNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une forme galénique.\" /><br/>";
 			}
 			RowEditFormTxt += GaleniqueInfoTxt;
 			// hide row choice form
@@ -6171,8 +6138,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Galenique\" onclick=\"GoAddNewGalenique();\" class='New' /> OR click a galenique to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter une nouvelle forme galénique\" onclick=\"GoAddNewGalenique();\" class='New' /> OU cliquer une forme galénique pour l'éditer :<br/>";
 			// list all existing Galenique : exec SQL request on Working DB
 			console.log("Doing list Galenique SQL request ...");
 			let SQLRequestResultObj = [];
@@ -6219,7 +6186,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this drug form ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprimer cette catégorie de médicament ?")) return;
 				// delete entry
 				console.log("Doing delete Categorie SQL request ...");
 				try {
@@ -6313,14 +6280,14 @@
 			globalThis.PrivateWorkingEltId = CategorieId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateCategorie(" + CategorieId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditCategorieTable();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteCategorie(" + CategorieId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateCategorie(" + CategorieId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditCategorieTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteCategorie(" + CategorieId + ");\" class='Delete' ";
 			if(IsCategorieUsedBySomeProduct(CategorieId) || (CategorieId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Categorie view
 			let CategorieInfoTxt = "";
-			CategorieInfoTxt += "<h1>Categorie " + CategorieId + " Info :</h1><br/>";
+			CategorieInfoTxt += "<h1>Informations de la catégorie de médicament " + CategorieId + " :</h1><br/>";
 			// fetch Categorie info
 			let CategorieSQLRequestResultObj = [];
 			if(CategorieId == 0)
@@ -6359,7 +6326,7 @@
 				if(CategorieNameTxt == null) CategorieNameTxt = "UNDEFINED";
 				CategorieNameTxt = DoSanitizeNameTxt(CategorieNameTxt);
 				// build form
-				CategorieInfoTxt += "<b>CATEGORIE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + CategorieNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une catégorie de médicament.\" /><br/>";
+				CategorieInfoTxt += "<b>Nom de la catégorie de médicament : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + CategorieNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une catégorie de médicament.\" /><br/>";
 			}
 			RowEditFormTxt += CategorieInfoTxt;
 			// hide row choice form
@@ -6385,8 +6352,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Categorie\" onclick=\"GoAddNewCategorie();\" class='New' /> OR click a category to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter une nouvelle catégorie de médicament\" onclick=\"GoAddNewCategorie();\" class='New' /> OU cliquer une catégorie pour l'éditer :<br/>";
 			// list all existing Categorie : exec SQL request on Working DB
 			console.log("Doing list Categorie SQL request ...");
 			let SQLRequestResultObj = [];
@@ -6433,7 +6400,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this espece ?")) return;
+				if(!window.confirm("Voulez-vous vriament supprimer cette espèce ?")) return;
 				// delete entry
 				console.log("Doing delete Espece SQL request ...");
 				try {
@@ -6546,14 +6513,14 @@
 			globalThis.PrivateWorkingEltId = EspeceId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateEspece(" + EspeceId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditEspeceTable();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteEspece(" + EspeceId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateEspece(" + EspeceId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditEspeceTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteEspece(" + EspeceId + ");\" class='Delete' ";
 			if(IsEspeceUsedBySomeProduct(EspeceId) || (EspeceId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Categorie view
 			let EspeceInfoTxt = "";
-			EspeceInfoTxt += "<h1>Espece " + EspeceId + " Info :</h1><br/>";
+			EspeceInfoTxt += "<h1>Informations de l'espèce " + EspeceId + " :</h1><br/>";
 			// fetch Categorie info
 			let EspeceSQLRequestResultObj = [];
 			if(EspeceId == 0)
@@ -6594,7 +6561,7 @@
 				let EspecePhotoBlob = EspeceInfo[2];
 				if(EspecePhotoBlob == null) EspecePhotoBlob = new Uint8Array();
 				// build form
-				EspeceInfoTxt += "<b>ESPECE NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + EspeceNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une espèce.\" /><br/><br/>";
+				EspeceInfoTxt += "<b>Nom de l'espèce : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + EspeceNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une espèce.\" /><br/><br/>";
 				EspeceInfoTxt += "<img id=\"EspecePhotoView\" style=\"max-height: 200px; max-width: 200px\" src=" + CastBufferToImgURLData(EspecePhotoBlob) + " /> <input id=\"SelectedEspeceInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdateEspecePhoto()\" /><br/>";
 			}
 			RowEditFormTxt += EspeceInfoTxt;
@@ -6621,8 +6588,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Espece\" onclick=\"GoAddNewEspece();\" class='New' /> OR click an espece to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter une nouvelle espèce\" onclick=\"GoAddNewEspece();\" class='New' /> OU cliquer une espèce pour l'éditer :<br/>";
 			// list all existing Espece : exec SQL request on Working DB
 			console.log("Doing list Espece SQL request ...");
 			let SQLRequestResultObj = [];
@@ -6669,7 +6636,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this drug form ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprimer cette plante ?")) return;
 				// delete entry
 				console.log("Doing delete Plante SQL request ...");
 				try {
@@ -7406,7 +7373,7 @@
 				let TmpFctIdx = FctPoolObj.value;
 				let PlanteFctStateObj = PlanteFctStateListObj[TmpFctIdx];
 				// update check list
-				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"PlFctCheckListId_" + FctId + "\" onclick=\"CollapseDivPlFct(" + FctId + ")\" checked>" + PlanteFctStateObj.FctName + "</input> (utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
+				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"PlFctCheckListId_" + FctId + "\" onclick=\"CollapseDivPlFct(" + FctId + ")\" checked>" + PlanteFctStateObj.FctName + "</input> (utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
 				// update combo
 				FctPoolObj.disabled = true;
 				// update Plante state array
@@ -7676,25 +7643,13 @@
 			UsecaseFctTab.innerHTML = "&emsp;";
 			PlanteFctListObj.appendChild(UsecaseFctTab);
 			
-			<!-- let FctCheckListObj = document.createElement('input'); -->
-			<!-- FctCheckListObj.type = 'checkbox'; -->
-			<!-- FctCheckListObj.id = "PlFctCheckListId_" + FctId; -->
-			<!-- //FctCheckListObj.onclick = "CollapseDivPlFct(" + FctId + ")"; -->
-			<!-- FctCheckListObj.checked = true; -->
-			<!-- PlanteFctListObj.appendChild(FctCheckListObj);
-			<!-- //... -->
-			<!-- let CheckBoxValueTxt = ""; -->
-			<!-- CheckBoxValueTxt += PlanteFctStateObj.FctName; -->
-			<!-- let FctCheckListTextObj = document.createTextNode(CheckBoxValueTxt); -->
-			<!-- PlanteFctListObj.appendChild(FctCheckListTextObj); -->
-			
 			//...
 			let FctCheckListTextObj = document.createElement('text');
 			FctCheckListTextObj.innerHTML = "<input type=\"checkbox\" id=\"PlFctCheckListId_" + FctId + "\" onclick=\"CollapseDivPlFct(" + FctId + ")\" checked>" + PlanteFctStateObj.FctName + "</input>";
 			PlanteFctListObj.appendChild(FctCheckListTextObj);
 			//...
 			let UsecaseFctCombo = document.createElement('text');
-			UsecaseFctCombo.innerHTML = "&nbsp;(utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;Empty list checked usecase</div>";
+			UsecaseFctCombo.innerHTML = "&nbsp;(utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;Empty list checked usecase</div>";
 			PlanteFctListObj.appendChild(UsecaseFctCombo);
 			
 			// update combo
@@ -7717,9 +7672,9 @@
 			globalThis.PrivateWorkingEltId = PlanteId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdatePlante(" + PlanteId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"AfterEditPlante();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeletePlante(" + PlanteId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdatePlante(" + PlanteId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"AfterEditPlante();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeletePlante(" + PlanteId + ");\" class='Delete' ";
 			if(IsPlanteUsedBySomeProduct(PlanteId) || IsPlanteUsedBySomeUsecase(PlanteId) || (PlanteId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Plante view
@@ -7831,7 +7786,7 @@
 				PlanteInfoTxt += "<h3>Informations traitant de la botanique :</h3><textarea id=\"PlanteBotaniqueInput\" >Initializing Rich text editor ...</textarea><br/>";
 				RichTextDataBotanique = CastBufferToRichText(PlanteBotanique);
 				PlanteInfoTxt += "<h3>Partie(s) utilisée(s)</h3>";
-				PlanteInfoTxt += "&emsp;<select id=\"UsePartPlPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlUsePart();\" class='append' /><br/><div id=\"ListCheckedPlanteUsePart\">Empty list checked plante UsePart</div>";
+				PlanteInfoTxt += "&emsp;<select id=\"UsePartPlPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlUsePart();\" class='append' /><br/><div id=\"ListCheckedPlanteUsePart\">Empty list checked plante UsePart</div>";
 				PlanteInfoTxt += "<h3>Données expérimentales</h3>";
 				PlanteInfoTxt += "&emsp;<input type='radio' name='Rchr' id='Rchr0' value='0'><label for 'Rchr0'>Aucune recherche expérimentale n'a été effectuée.</label><br/>&emsp;<input type='radio' name='Rchr' id='Rchr1' value='1'><label for 'Rchr1'>Des recherches ont été faites in vitro.</label><br/>&emsp;<input type='radio' name='Rchr' id='Rchr2' value='2'><label for 'Rchr2'>Quelques recherches ont été faites sur des rongeurs.</label><br/>&emsp;<input type='radio' name='Rchr' id='Rchr3' value='3'><label for 'Rchr3'>De  nombreuses recherches ont été faites sur des rongeurs.</label><br/>&emsp;<input type='radio' name='Rchr' id='Rchr4' value='4'><label for 'Rchr4'>Quelques recherches ont été faites sur des espèces cibles.</label><br/>&emsp;<input type='radio' name='Rchr' id='Rchr5' value='5'><label for 'Rchr5'>De nombreuses recherches ont été faites sur des espèces cibles.</label><br/>";
 				PlanteInfoTxt += "<h3>Données cliniques</h3>";
@@ -7843,11 +7798,11 @@
 				PlanteInfoTxt += "&emsp; <b>Propriétés principales :</b> 1 - <input id=\"EltP1Input\" size=\"32\" type=\"text\" value=\"" + PlanteP1 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 1' />&nbsp; 2 - <input id=\"EltP2Input\" size=\"32\" type=\"text\" value=\"" + PlanteP2 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 2' />&nbsp; 3 - <input id=\"EltP3Input\" size=\"32\" type=\"text\" value=\"" + PlanteP3 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 3' /><br/><br/>";
 				PlanteInfoTxt += "<h3>Propriétés pharmacocinétiques :</h3><textarea id=\"PlantePCinInput\" >Initializing Rich text editor ...</textarea><br/>";
 				PlanteInfoTxt += "<h3>Applications médicales</h3>";
-				PlanteInfoTxt += "&emsp;<b>Utilisation(s) pour la : </b> <select id=\"PlFctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlanteFcts();\" class='append' /><br/><div id=\"ListCheckedPlanteFcts\">Empty list checked product fcts</div>";
+				PlanteInfoTxt += "&emsp;<b>Utilisation(s) pour la : </b> <select id=\"PlFctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlanteFcts();\" class='append' /><br/><div id=\"ListCheckedPlanteFcts\">Empty list checked product fcts</div>";
 				PlanteInfoTxt += "<h3>Contre-indications</h3>";
-				PlanteInfoTxt += "&emsp;<select id=\"CtrIndicPlPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlCtrIndic();\" class='append' /><br/><div id=\"ListCheckedPlanteCtrIndic\">Empty list checked plante CtrIndic</div>";
+				PlanteInfoTxt += "&emsp;<select id=\"CtrIndicPlPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlCtrIndic();\" class='append' /><br/><div id=\"ListCheckedPlanteCtrIndic\">Empty list checked plante CtrIndic</div>";
 				PlanteInfoTxt += "<h3>Effets secondaires</h3>";
-				PlanteInfoTxt += "&emsp;<select id=\"Effet2PlPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Append\" onclick=\"DoAppendPlEffet2();\" class='append' /><br/><div id=\"ListCheckedPlanteEffet2\">Empty list checked plante Effet2</div>";
+				PlanteInfoTxt += "&emsp;<select id=\"Effet2PlPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlEffet2();\" class='append' /><br/><div id=\"ListCheckedPlanteEffet2\">Empty list checked plante Effet2</div>";
 				RichTextDataPCin = CastBufferToRichText(PlantePCin);
 				
 				PlanteInfoTxt += "<h3>Posologie</h3>";
@@ -7939,8 +7894,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new Plante\" onclick=\"GoAddNewPlante();\" class='New' /> OR click a plant to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter une nouvelle plante\" onclick=\"GoAddNewPlante();\" class='New' /> OU cliquer une plante pour l'éditer :<br/>";
 			// list all existing Plante : exec SQL request on Working DB
 			console.log("Doing list Plante SQL request ...");
 			let SQLRequestResultObj = [];
@@ -7987,7 +7942,7 @@
 			if(globalThis.PrivateWorkingEltId != 0)
 			{
 				// ask confirmation
-				if(!window.confirm("Do you really want to delete this drug form ?")) return;
+				if(!window.confirm("Voulez-vous vraiment supprimer cette partie de plante ?")) return;
 				// delete entry
 				console.log("Doing delete UsePart SQL request ...");
 				try {
@@ -8081,14 +8036,14 @@
 			globalThis.PrivateWorkingEltId = UsePartId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Update\" onclick=\"GoUpdateUsePart(" + UsePartId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Cancel\" onclick=\"DoEditUsePartTable();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Delete\" onclick=\"GoDeleteUsePart(" + UsePartId + ");\" class='Delete' ";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateUsePart(" + UsePartId + ");\" class='Update' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditUsePartTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteUsePart(" + UsePartId + ");\" class='Delete' ";
 			if(IsUsePartUsedBySomeProduct(UsePartId) || (UsePartId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append UsePart view
 			let UsePartInfoTxt = "";
-			UsePartInfoTxt += "<h1>UsePart " + UsePartId + " Info :</h1><br/>";
+			UsePartInfoTxt += "<h1>Informations de la partie de plante utilisée " + UsePartId + " :</h1><br/>";
 			// fetch UsePart info
 			let UsePartSQLRequestResultObj = [];
 			if(UsePartId == 0)
@@ -8127,7 +8082,7 @@
 				if(UsePartNameTxt == null) UsePartNameTxt = "UNDEFINED";
 				UsePartNameTxt = DoSanitizeNameTxt(UsePartNameTxt);
 				// build form
-				UsePartInfoTxt += "<b>UsePart NAME : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + UsePartNameTxt + "\" onchange=\"DoCheckNameValidity()\" /><br/>";
+				UsePartInfoTxt += "<b>Nom de la partie utilisée : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + UsePartNameTxt + "\" onchange=\"DoCheckNameValidity()\" placeholder=\"Entrez le nom d'une partie de plante.\" /><br/>";
 			}
 			RowEditFormTxt += UsePartInfoTxt;
 			// hide row choice form
@@ -8153,8 +8108,8 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
-			RowChoiceFormTxt += "<input type=\"button\" value=\"Back to table choice\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
-			RowChoiceFormTxt += "Click <input type=\"button\" value=\"Add new UsePart\" onclick=\"GoAddNewUsePart();\" class='New' /> OR click a usepart to edit :<br/>";
+			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
+			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter une nouvelle partie de plante\" onclick=\"GoAddNewUsePart();\" class='New' /> OU cliquer une partie de plante pour l'éditer :<br/>";
 			// list all existing UsePart : exec SQL request on Working DB
 			console.log("Doing list UsePart SQL request ...");
 			let SQLRequestResultObj = [];
@@ -8248,29 +8203,29 @@
 	<!-- Select table to edit -->
 	<div id="TableChoiceForm" style="visibility: hidden;">
 		<span id="DatabasePath">No DB</span>
-		<input type="button" value="Edit PRODUIT" id="EditPdtBtn" onclick="DoEditProductTable();" class="Product" />
-		<br/><input type="button" value="Edit LABORATOIRE" onclick="DoEditLaboTable();" class="Product" />
-		<br/><input type="button" value="Edit GALENIQUE" onclick="DoEditGaleniqueTable();" class="Product" />
-		<br/><input type="button" value="Edit CATEGORIE" onclick="DoEditCategorieTable();" class="Product" />
+		<input type="button" value="Editer un PRODUIT" id="EditPdtBtn" onclick="DoEditProductTable();" class="Product" />
+		<br/><input type="button" value="Editer un LABORATOIRE" onclick="DoEditLaboTable();" class="Product" />
+		<br/><input type="button" value="Editer une FORME GALENIQUE" onclick="DoEditGaleniqueTable();" class="Product" />
+		<br/><input type="button" value="Editer une CATEGORIE DE MEDICAMENT" onclick="DoEditCategorieTable();" class="Product" />
 		<br/>
 		<br/>
-		<br/><input type="button" value="Edit PLANTE" onclick="DoEditPlanteTable();" class="Plant" />
-		<br/><input type="button" value="Edit PARTIE UTILISEE" onclick="DoEditUsePartTable();" class="Plant" />
+		<br/><input type="button" value="Editer une PLANTE" onclick="DoEditPlanteTable();" class="Plant" />
+		<br/><input type="button" value="Editer une PARTIE DE PLANTE UTILISEE" onclick="DoEditUsePartTable();" class="Plant" />
 		<br/>
 		<br/>
-		<br/><input type="button" value="Edit ESPECE" onclick="DoEditEspeceTable();" class="Species" />
+		<br/><input type="button" value="Editer une ESPECE" onclick="DoEditEspeceTable();" class="Species" />
 		<br/>
 		<br/>
-		<br/><input type="button" value="Edit GRANDES FONCTIONS" onclick="DoEditFctsTable();" class="Fct" />
-		<br/><input type="button" value="Edit UTILISATION" onclick="DoEditUsecaseTable();" class="Fct" />
+		<br/><input type="button" value="Editer une GRANDE FONCTION ORGANIQUE" onclick="DoEditFctsTable();" class="Fct" />
+		<br/><input type="button" value="Editer une UTILISATION" onclick="DoEditUsecaseTable();" class="Fct" />
 		<br/>
 		<br/>
-		<br/><input type="button" value="Edit EFFET SECONDAIRE" onclick="DoEditEffet2Table();" class="Tox" />
-		<br/><input type="button" value="Edit TOXICITE" onclick="DoEditToxiciteTable();" class="Tox" />
-		<br/><input type="button" value="Edit CONTRE-INDICATION" onclick="DoEditCtrIndicTable();" class="Tox" />
+		<br/><input type="button" value="Editer un EFFET SECONDAIRE" onclick="DoEditEffet2Table();" class="Tox" />
+		<br/><input type="button" value="Editer une TOXICITE" onclick="DoEditToxiciteTable();" class="Tox" />
+		<br/><input type="button" value="Editer une CONTRE-INDICATION" onclick="DoEditCtrIndicTable();" class="Tox" />
 		<br/>
 		<br/>
-		<br/><input type="button" value="SAVE DATABASE" onclick="DoExportDatabase();" id="SaveDBBtn" disabled="true" class="Save" />
+		<br/><input type="button" value="SAUVEGARDER LA BASE DE DONEES" onclick="DoExportDatabase();" id="SaveDBBtn" disabled="true" class="Save" />
 		<br/>
 	</div>
 
@@ -8286,6 +8241,7 @@
 	
 </body>
 </html>
+
 
 
 
