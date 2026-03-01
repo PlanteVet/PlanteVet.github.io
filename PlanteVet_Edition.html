@@ -27,10 +27,14 @@
 		.tox.tox-tinymce.focused {
 			border: 4px solid #3EB489; 
 		}
-		
+
+		ul {
+			list-style-type: '✤ ';
+			margin-top: 10px;
+		}
 		li {
-			margin-top: 2px;
-			margin-bottom: 0;
+			margin-top: 0;
+			margin-bottom: 1px;
 			margin-left: 0;
 		}
 		p {
@@ -7930,7 +7934,7 @@
 			};
 			// append list product
 			let ResultList = "";
-			ResultList += "<ul style=\"list-style-type:'✤ ';\" >";
+			ResultList += "<ul>";
 			let NbResultRow = SQLRequestResultObj.length;
 			if(NbResultRow == 0)
 			{
@@ -8264,6 +8268,7 @@
 	
 </body>
 </html>
+
 
 
 
