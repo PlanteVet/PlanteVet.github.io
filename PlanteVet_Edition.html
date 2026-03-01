@@ -7901,7 +7901,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from Plante",
+					sql: "select Id,Name,Latin from Plante",
 					rowMode: 'array',
 				});
 				console.log("End of list Plante SQL request.");
@@ -7921,7 +7921,7 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoEditPlante(" + TmpResultRow[0] +");\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoEditPlante(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span><br/>";
 				}
 			}
 			RowChoiceFormTxt += ResultList;
@@ -8241,6 +8241,7 @@
 	
 </body>
 </html>
+
 
 
 
