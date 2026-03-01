@@ -714,7 +714,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from PLANTE order by Name ASC",
+					sql: "select Id,Name,Latin from PLANTE order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of search plantes SQL request.");
@@ -738,7 +738,7 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + "</span><br/>";
+					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span><br/>";
 				}
 			}
 			
@@ -2927,6 +2927,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
