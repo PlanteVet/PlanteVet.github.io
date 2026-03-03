@@ -289,7 +289,8 @@
 												"CREATE TABLE PLANTE_USEPART(Plante integer not null, UsePart integer not null, foreign key(Plante) references PLANTE(Id), foreign key(UsePart) references USEPART(Id))",
 												"CREATE TABLE PLANTE_FCTS(Id integer primary key, Plante integer not null, Fct integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Fct) references FCTS(Id))",
 												"CREATE TABLE PLANTE_USECASE(Id integer primary key, Plante integer not null, Usecase integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Usecase) references USECASE(Id))",
-												"CREATE TABLE PLANTE_ESPECE(Id integer primary key, Plante integer not null, EspeceId int, foreign key(Plante) references PLANTE(Id))"];
+												"CREATE TABLE PLANTE_ESPECE(Id integer primary key, Plante integer not null, EspeceId int, foreign key(Plante) references PLANTE(Id))",
+												"CREATE TABLE PLANTE_ESPECE_TOX(Id integer primary key, Plante integer not null, EspeceId int, foreign key(Plante) references PLANTE(Id))"];
 
 		// Reset sqlite3 and database info
 		globalThis.WorkingDB = null;
@@ -1659,7 +1660,6 @@
 				
 				let ListeProduct = "";
 				let NbProduct = ProductIdSQLRequestResultObj.length;
-				let EspeceTxt = "";
 				for(i = 0; i < NbProduct; i++)
 				{
 					ProductId = ProductIdSQLRequestResultObj[i][0];
@@ -1691,10 +1691,10 @@
 					console.log("Echec plante espece info SQL request");
 				};
 				let NbEspecesMax = EspecesSQLRequestResultObj.length;
-				let Espece = "";
+				let EspeceTxt = "";
 				for(j = 0; j < NbEspecesMax; j++)
 				{
-					EspeceId = EspecesSQLRequestResultObj[j][0];
+					let EspeceId = EspecesSQLRequestResultObj[j][0];
 					
 					//fetch info espece
 					let ThatEspecesSQLRequestResultObj = [];
@@ -1718,6 +1718,47 @@
 					EspeceTxt += "<img style=\"max-height: 20px; max-width: 20px\" src=" + CastBufferToImgURLData(EspecePhoto) + " /> " + EspeceName + ", ";
 				}
 				EspeceTxt = EspeceTxt.slice(0, -2);
+				
+				//fetch all especes tox
+				let EspecesToxSQLRequestResultObj = [];
+				try {
+					EspecesToxSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select EspeceId from PLANTE_ESPECE_TOX where Plante = $a",
+						rowMode: 'array',
+						bind: {$a: PlanteId},
+					});
+					console.log("End of plante espece tox info SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec plante espece tox info SQL request");
+				};
+				let NbEspecesToxMax = EspecesToxSQLRequestResultObj.length;
+				let EspeceToxTxt = "";
+				for(j = 0; j < NbEspecesToxMax; j++)
+				{
+					let EspeceToxId = EspecesToxSQLRequestResultObj[j][0];
+					
+					//fetch info espece
+					let ThatEspecesToxSQLRequestResultObj = [];
+					try {
+						ThatEspecesToxSQLRequestResultObj = globalThis.WorkingDB.exec({
+							sql: "select * from ESPECE where Id = $a",
+							rowMode: 'array',
+							bind: {$a: EspeceId},
+						});
+						console.log("End of espece info SQL request.");
+					} catch(ErrorObj) {
+						console.log("Echec espece info SQL request");
+					};
+					
+					let EspeceToxInfo = ThatEspecesToxSQLRequestResultObj[0];
+					let EspeceToxName = EspeceToxInfo[1];
+					if(EspeceToxName == null) EspeceToxName = "UNDEFINED";
+					let EspeceToxPhoto = EspeceToxInfo[2];
+					if(EspeceToxPhoto == null) EspeceToxPhoto = new Uint8Array();
+					
+					EspeceToxTxt += "<img style=\"max-height: 20px; max-width: 20px\" src=" + CastBufferToImgURLData(EspeceToxPhoto) + " /> " + EspeceToxName + ", ";
+				}
+				EspeceToxTxt = EspeceToxTxt.slice(0, -2);
 				
 				//select IMG+txt Rchr
 				let RchrImg = "";
@@ -1908,6 +1949,7 @@
 				PlanteInfoTxt += "<b>Date de dernière mise à jour : </b>" + CastBufferToRichText(Today) + "<br/><br/><br/>";
 				PlanteInfoTxt += "<b>Proprietés principales : </b><br/>&emsp;" + PlanteP + "<br/><br/>";
 				PlanteInfoTxt += "<b>Espèces chez lesquelles l'utilisation est décrite : </b><br/>&emsp;" + EspeceTxt + "<br/><br/>";
+				PlanteInfoTxt += "<b>Espèces chez lesquelles la plante est toxique : </b><br/>&emsp;" + EspeceToxTxt + "<br/><br/>";
 				PlanteInfoTxt += "<div class=\"Recherche\"><b>Données expérimentales : </b>" + RchrImg;
 				PlanteInfoTxt += "<span class=\"PopUpRecherches\"><table border = 0px margin-left=auto margin-right=auto valign=center><tr><td align=right></td><td align=center>=</td><td align=left>Aucune recherche expérimentale n'a été effectuée.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Des recherches ont été faites in vitro.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Quelques recherches ont été faites sur des rongeurs.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>De  nombreuses recherches ont été faites sur des rongeurs.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Quelques recherches ont été faites sur des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>De nombreuses recherches ont été faites sur des espèces cibles.</td></tr></table></span></div><br/>";
 				PlanteInfoTxt += "<div class=\"Clinique\"><br/><b>Données cliniques : </b>" + ClinImg;
@@ -2927,6 +2969,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
