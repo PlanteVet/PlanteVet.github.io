@@ -395,7 +395,8 @@
 												"CREATE TABLE PLANTE_USEPART(Plante integer not null, UsePart integer not null, foreign key(Plante) references PLANTE(Id), foreign key(UsePart) references USEPART(Id))",
 												"CREATE TABLE PLANTE_FCTS(Id integer primary key, Plante integer not null, Fct integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Fct) references FCTS(Id))",
 												"CREATE TABLE PLANTE_USECASE(Id integer primary key, Plante integer not null, Usecase integer not null, foreign key(Plante) references PLANTE(Id), foreign key(Usecase) references USECASE(Id))",
-												"CREATE TABLE PLANTE_ESPECE(Id integer primary key, Plante integer not null, EspeceId int, foreign key(Plante) references PLANTE(Id))"];
+												"CREATE TABLE PLANTE_ESPECE(Id integer primary key, Plante integer not null, EspeceId int, foreign key(Plante) references PLANTE(Id))",
+												"CREATE TABLE PLANTE_ESPECE_TOX(Id integer primary key, Plante integer not null, EspeceId int, foreign key(Plante) references PLANTE(Id))"];
 
 		// Reset sqlite3 and database info
 		globalThis.WorkingDB = null;
@@ -432,6 +433,8 @@
 		globalThis.PrivatePlanteUsecaseStateListObj = [];
 		// NOTA : PlanteEspeceStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByPlante
 		globalThis.PrivatePlanteEspeceStateListObj = [];
+		// NOTA : PlanteEspeceToxStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByPlante
+		globalThis.PrivatePlanteEspeceToxStateListObj = [];
 		globalThis.PrivateWorkingEltId = 0;
 		
 		// associate Rich text to the specified textarea
@@ -7169,6 +7172,59 @@
 					PlanteEspStateObj.FlgCurrentlyUsedByPlante = true;
 				}
 			}
+
+			//update plante Espece Tox
+			// NOTA : PlanteEspeceToxStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByPlante
+			let NbEspTox = globalThis.PrivatePlanteEspeceToxStateListObj.length;
+			for(let i = 0; i < NbEspTox; i++)
+			{
+				let PlanteEspToxStateObj = globalThis.PrivatePlanteEspeceToxStateListObj[i];
+				
+				// get check state
+				let EspToxId = PlanteEspToxStateObj.EspeceId;
+				let FlgEspToxChecked = document.getElementById("Esp_Tox_" + EspToxId + globalThis.PrivateWorkingEltId).checked;
+				
+				// check if this espece is to be removed from list of plante or added to
+				if(PlanteEspToxStateObj.FlgCurrentlyUsedByPlante && (!FlgEspToxChecked))
+				{
+					// HERE : this Espece is to be removed form list of plante espece tox
+					console.log("Doing delete plante espece tox SQL request ...");
+					try {
+						globalThis.WorkingDB.exec({
+							sql: "delete from PLANTE_ESPECE_TOX where Plante = $a and EspeceId = $b",
+							rowMode: 'array',
+							bind: {$a: globalThis.PrivateWorkingEltId, $b: EspToxId},
+						});
+						console.log("End of delete espece plante tox SQL request.");
+					} catch(ErrorObj) {
+						console.log("Echec delete espece plante tox SQL request");
+						alert("Delete plante espece tox failed");
+						return;
+					};
+					// update state
+					PlanteEspToxStateObj.FlgCurrentlyUsedByPlante = false;
+				}
+				else if((!PlanteEspToxStateObj.FlgCurrentlyUsedByPlante) && FlgEspToxChecked)
+				{
+					// HERE : this Esp is to be added to list of plante esp tox
+					console.log("Doing insert plante Espece tox SQL request ...");
+					let SQLRequestResultObj = [];
+					try {
+						SQLRequestResultObj = globalThis.WorkingDB.exec({
+							sql: "insert into PLANTE_ESPECE_TOX values(null, $a, $b)",
+							rowMode: 'array',
+							bind: {$a: globalThis.PrivateWorkingEltId, $b: EspToxId},
+						});
+						console.log("End of insert plante espece tox SQL request.");
+					} catch(ErrorObj) {
+						console.log("Echec insert plante espece tox SQL request");
+						alert("Insert plante espece tox failed");
+						return;
+					};
+					// update state
+					PlanteEspToxStateObj.FlgCurrentlyUsedByPlante = true;
+				}
+			}
 			
 			// enable save db btn
 			document.getElementById("SaveDBBtn").disabled = false;
@@ -7606,6 +7662,79 @@
 			globalThis.PrivatePlanteEspeceStateListObj = PlanteEspeceStateListObj;
 		}
 
+		//fill list plante espece tox
+		function FillPlanteEspeceToxList(PlanteId)
+		{
+			//pre-build div
+			let PlanteEspeceListObj = document.getElementById("ListCheckedPlanteEspeceTox");
+			
+			// NOTA : PlanteEspeceToxStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByPlante
+			let PlanteEspeceStateListObj = [];
+			
+			// fetch all Espece
+			console.log("Doing list Espece SQL request ...");
+			let EspeceSQLRequestResultObj = [];
+			try {
+				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from ESPECE",
+					rowMode: 'array',
+				});
+				console.log("End of list Espece SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec list Espece SQL request");
+			};
+			
+			// build list Espece state array and div
+			let EspeceTxt = "<b>Toxique pous l'espèce : </b>";
+			let NbResultRow = EspeceSQLRequestResultObj.length;
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				// fetch info
+				let TmpResultRow = EspeceSQLRequestResultObj[i];
+				let EspeceId = TmpResultRow[0];
+				let EspeceNameTxt = TmpResultRow[1];
+				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
+				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
+				// add to Fct state array
+				let EspeceStateListObj = {EspeceId: EspeceId, EspeceName: EspeceNameTxt, FlgCurrentlyUsedByPlante: false};
+				PlanteEspeceStateListObj.push(EspeceStateListObj);
+				// add to Fct pool combo
+				EspeceTxt += "<input type='checkbox' id='Esp_Tox_"+ EspeceId + PlanteId + "' value='" + EspeceNameTxt +"'>" + EspeceNameTxt + "</input>";
+			}
+			PlanteEspeceListObj.innerHTML = EspeceTxt;
+			
+			//fetch plante espece
+			console.log("Doing plante espece SQL request ...");
+			let PlanteEspeceSQLRequestResultObj = [];
+			try {
+				PlanteEspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select EspeceId from PLANTE_ESPECE_TOX where Plante = $a",
+					rowMode: 'array',
+					bind: {$a: PlanteId},
+				});
+				console.log("End of plante Espece SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec plante Espece SQL request");
+			};
+			
+			//pour tous les especes cochees
+			let NbEspece = PlanteEspeceSQLRequestResultObj.length;
+			for(let i = 0; i < NbEspece; i++)
+			{
+				// fetch espece id
+				let TmpResultRow = PlanteEspeceSQLRequestResultObj[i];
+				let EspId = TmpResultRow[0];
+				
+				//Check the checkbox
+				document.getElementById("Esp_Tox_" + EspId + PlanteId).checked = true;
+				
+				//change Flg
+				PlanteEspeceStateListObj[EspId-1].FlgCurrentlyUsedByPlante = true;
+			}
+			// save usecase state array
+			globalThis.PrivatePlanteEspeceToxStateListObj = PlanteEspeceStateListObj;
+		}
+
 		// build list plante Usecase for addition
 		function BuildPlanteUsecaseListForAdd(FctId)
 		{
@@ -7835,8 +7964,9 @@
 				RichTextDataPoso = CastBufferToRichText(PlantePoso);
 				PlanteInfoTxt += "<div id=\"ListCheckedPlanteEspece\">Empty list checked plante Espece</div>";
 				
-				PlanteInfoTxt += "<h3>Toxicité :</h3><textarea id=\"PlanteSurdosageInput\" >Initializing Rich text editor ...</textarea><br/>";
+				PlanteInfoTxt += "<h3>Toxicité :</h3><textarea id=\"PlanteSurdosageInput\" >Initializing Rich text editor ...</textarea>";
 				RichTextDataSurdosage = CastBufferToRichText(PlanteSurdosage);
+				PlanteInfoTxt += "<div id=\"ListCheckedPlanteEspeceTox\">Empty list checked plante Espece Tox</div><br/>";
 				PlanteInfoTxt += "<b>Gestation et lactation :</b><br/><textarea id=\"PlanteGestInput\" >Initializing Rich text editor ...</textarea><br/>";
 				RichTextDataGest = CastBufferToRichText(PlanteGest);
 				PlanteInfoTxt += "<h3>Intéractions médicamenteuses :</h3><textarea id=\"PlanteInteracInput\" >Initializing Rich text editor ...</textarea><br/>";
@@ -7885,6 +8015,8 @@
 				BuildPlanteUsecaseList(PlanteId);
 				//fill espece list
 				FillPlanteEspeceList(PlanteId);
+				//fill espece tox list
+				FillPlanteEspeceToxList(PlanteId);
 				
 				//check Radios
 				CheckRadios(PlanteRchr,PlanteClin,PlanteReg,PlanteRegEQ,PlanteDop);
@@ -8268,6 +8400,7 @@
 	
 </body>
 </html>
+
 
 
 
