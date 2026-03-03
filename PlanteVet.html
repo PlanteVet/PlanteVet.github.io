@@ -2750,9 +2750,9 @@
 				ProductInfoTxt += "<img style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(ProductPhotoBlob) + " /><br/></td><td>";
 				ProductInfoTxt += "<h1>" + ProductNameTxt + "</h1>";
 				ProductInfoTxt += "</td><td class=\"casedroite\" style=\"width: 30%; border: 5px; border-style: ridge; border-color: #E5CF45; border-radius: 10px; padding: 15px;\">";
-				ProductInfoTxt += "<b>Date de dernière mise à jour : </b>" + CastBufferToRichText(Today) +"<br/>";
-				ProductInfoTxt += "<b>Principales fonctions concernées : </b>" + GrdFctsTxt + "<br/>";
-				ProductInfoTxt += "<b>Espèces concernées : </b>" + EspecesTxt + "<br/>";
+				ProductInfoTxt += "<b>Date de dernière mise à jour : </b>" + CastBufferToRichText(Today) +"<br/><br/>";
+				ProductInfoTxt += "<b>Principales fonctions concernées : </b><br/>&emsp;" + GrdFctsTxt + "<br/><br/>";
+				ProductInfoTxt += "<b>Espèces concernées : </b><br/>&emsp;" + EspecesTxt + "<br/>";
 				ProductInfoTxt += "</td></tr></table>";
 				
 				ProductInfoTxt += "<h2>Composition</h2>";
@@ -2969,6 +2969,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
