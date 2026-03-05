@@ -123,6 +123,12 @@
 		.full {
 			width: 100%;
 		}
+		.casedroite {
+			position: right;
+		}
+		.high {
+			vertical-align: top
+		}
 		.half {
 			width: 50%;
 			text-align: center;
@@ -131,11 +137,21 @@
 			border-spacing: 0;
 			border-collapse: separate;
 		}
-		.casedroite {
-			position: right;
+		td {
 		}
-		.high {
-			vertical-align: top
+		.top {
+			border-left: 5px solid green;
+			border-right: 5px solid green;
+			border-top: 5px solid green;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+		}
+		.bottom {
+			border-left: 5px solid green;
+			border-right: 5px solid green;
+			border-bottom: 5px solid green;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
 		}
 		
 		button {
@@ -2966,6 +2982,7 @@
 				<td class="bottom"><input id="DatabaseImportBtnGlobal" type="button" value="Importer" onclick="DoImportDatabaseGlobal('https://drive.usercontent.google.com/uc?id=1NIn9TmYA7aEHxC7jzy_OmIa3GVeRyaCF');" class='Import' /></td>
 				<td></td>
 				<td class="bottom"><input id="DatabasePathBtn" type="file" />
+					<br/>
 					<br/><input id="DatabaseImportBtn" type="button" value="Importer" onclick="DoImportDatabase();" class='Import' /><br/><br/></td>
 			</tr>
 		</table>
@@ -3086,6 +3103,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
