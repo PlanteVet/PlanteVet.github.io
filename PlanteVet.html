@@ -371,9 +371,17 @@
 		//get file from url
 		async function httpGetAsync (url)
 		{
-		  let response = await fetch(url);
-		  let data = await response.json();
-		  return data;
+			try {
+				let response = await fetch(url);
+				if (!reponse.ok) {
+	      		throw new Error(`Statut de réponse : ${reponse.status}`);
+	    		}
+				let data = await response.json();
+				console.log(data);
+				return data;
+			} catch (erreur) {
+			    console.error(erreur.message);
+			  }
 		}
 	
 		// cast a buffer to an image URL data
@@ -3103,6 +3111,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
