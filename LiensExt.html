@@ -52,7 +52,7 @@
  			border: 0;
   			line-height: 2;
   			padding: 0 10px;
-			margin-bottom: 2px;
+			margin-bottom: 5px;
 			background-color: #3EB489;
 			color: white;
 			border-radius: 5px;
@@ -69,10 +69,6 @@
 		function OpenInNewTab(Url)
 		{
 			window.open(Url, '_blank').focus();
-		}
-		function OpenUrl(Url)
-		{
-			window.open(Url, '_self').focus();
 		}
 	</script>
 </head>
@@ -97,12 +93,12 @@
     <table class="ExtLink">
       <tr class="DblLink">
         <td class="link"><img src="Images/WikiPhyto.png" style="width:75px;"></td>
-        <td class="link2"><input type="button" id="WikiPhyto" value="WikiPhyto" onclick="OpenUrl('https://www.wikiphyto.org/wiki/Cat%C3%A9gorie:Plantes_m%C3%A9dicinales');" class='LienExt' />
+        <td class="link2"><input type="button" id="WikiPhyto" value="WikiPhyto" onclick="OpenInNewTab('https://www.wikiphyto.org/wiki/Cat%C3%A9gorie:Plantes_m%C3%A9dicinales');" class='LienExt' />
 			<br/>Disponible en : Français
 		</td>
 		<td>&nbsp;</td>
         <td class="link"><img src="Images/CliniPharm CliniTox.jpg" style="width:75px;"></td>
-        <td class="link2"><input type="button" id="CliniPharm CliniTox" value="CliniPharm CliniTox" onclick="OpenUrl('https://www.vetpharm.uzh.ch/ArzneidrogenSuche/ArzneidrogenSuche.html');" class='LienExt' />
+        <td class="link2"><input type="button" id="CliniPharm CliniTox" value="CliniPharm CliniTox" onclick="OpenInNewTab('https://www.vetpharm.uzh.ch/ArzneidrogenSuche/ArzneidrogenSuche.html');" class='LienExt' />
 			<br/>Disponible en : Allemand
 		</td>
       </tr>
@@ -111,12 +107,12 @@
       </tr>
       <tr class="DblLink">
         <td class="link"><img src="Images/Kooperation Phytopharmaka.png" style="width:75px;"></td>
-        <td class="link2"><input type="button" id="Kooperation Phytopharmaka" value="Kooperation Phytopharmaka" onclick="OpenUrl('https://www.arzneipflanzenlexikon.info/en/');" class='LienExt' />
+        <td class="link2"><input type="button" id="Kooperation Phytopharmaka" value="Kooperation Phytopharmaka" onclick="OpenInNewTab('https://www.arzneipflanzenlexikon.info/en/');" class='LienExt' />
 			<br/>Disponible en : Anglais, Allemand
 		</td>
 		<td>&nbsp;</td>
         <td class="link"><img src="Images/Hedrine.png" style="width:75px;"></td>
-        <td class="link2"><input type="button" id="Hedrine" value="Hedrine" onclick="OpenUrl('https://hedrine.ulb.be/herbs');" class='LienExt' />
+        <td class="link2"><input type="button" id="Hedrine" value="Hedrine" onclick="OpenInNewTab('https://hedrine.ulb.be/herbs');" class='LienExt' />
 			<br/>Disponible en : Français, Anglais
 		</td>
       </tr>
