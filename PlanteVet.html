@@ -775,16 +775,16 @@
 		
 		// Import database
 		// NOTA : this function does a fake upload
-		function DoImportDatabase(GlbORLoc)
+		function DoImportDatabase()
 		{
 			let ProgressBarObj = document.getElementById("DatabaseImportProgressBar");
-			let ListFilePathObj = document.getElementById("DatabasePathBtn" + GlbORLoc).files;
+			let ListFilePathObj = document.getElementById("DatabasePathBtn").files;
 			let NbFile = ListFilePathObj.length;
 
 			// check if a file was selected
 			if(NbFile != 1)
 			{
-				alert("Sélectionner une base de données.");
+				alert("Select a database");
 				return;
 			}
 			let FileObj = ListFilePathObj[0];
@@ -792,12 +792,14 @@
 			// Load database
 			document.getElementById("DatabasePathBtn").disabled = true;
 			document.getElementById("DatabaseImportBtn").disabled = true;
+			document.getElementById("DatabaseImportBtnGlobal").disabled = true;
 			ProgressBarObj.value = 0;
 			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Loading ...';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
-			DoReadFileAsync(FileObj,ProgressBarObj).then((OpsResult) => {
+			fetch('PlanteVet.db', { method: 'GET' }).then((OpsResult) => {
+				console.log("hello");
 				// get result
-				let FileData = OpsResult;
+				new Response(OpsResult.blob).arrayBuffer().then((FileData) => {
 				// feed sqlite3 with just loaded database
 				document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Parsing ...';
 				try {
@@ -851,6 +853,7 @@
 				document.getElementById("DatabasePath").style.visibility = 'Hidden';
 				document.getElementById("ListePlanteForm").style.visibility = 'visible';
 				DoListPlantes();
+				});
 			}).catch((OpsError) => {
 				alert("Echec reading database");
 				document.getElementById("DatabasePathBtn").disabled = false;
@@ -3004,6 +3007,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
