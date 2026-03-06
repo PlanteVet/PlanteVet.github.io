@@ -796,10 +796,8 @@
 			ProgressBarObj.value = 0;
 			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Loading ...';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
-			fetch('PlanteVet.db').then((OpsResult) => {
-				console.log("hello");
+			fetch('PlanteVet.db', {method: 'GET'}).then((OpsResult) => {
 				// get result
-				//FileData = OpsResult.arrayBuffer();
 				OpsResult.arrayBuffer().then((FileData) => {
 				// feed sqlite3 with just loaded database
 				document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Parsing ...';
@@ -3008,6 +3006,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
