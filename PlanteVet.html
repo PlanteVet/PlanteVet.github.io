@@ -796,7 +796,7 @@
 			ProgressBarObj.value = 0;
 			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Loading ...';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
-			fetch('https://drive.usercontent.google.com/uc?id=1iCVT08nCeb0wtXViqPzP-mFJB4K3Tb1F', {method: 'GET', mode: 'no-cors'}).then((OpsResult) => {
+			fetch('https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw', {method: 'GET', mode: 'no-cors'}).then((OpsResult) => {
 				// get result
 				OpsResult.arrayBuffer().then((FileData) => {
 				// feed sqlite3 with just loaded database
@@ -3007,6 +3007,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
