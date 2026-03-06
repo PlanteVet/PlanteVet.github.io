@@ -778,8 +778,6 @@
 		function DoImportDatabase(GlbORLoc)
 		{
 			let ProgressBarObj = document.getElementById("DatabaseImportProgressBar");
-			let ListFilePath = document.getElementById("DatabasePathBtn" + GlbORLoc).value;
-			console.log("Path = " + ListFilePath);
 			let ListFilePathObj = document.getElementById("DatabasePathBtn" + GlbORLoc).files;
 			let NbFile = ListFilePathObj.length;
 
@@ -2880,7 +2878,7 @@
 				<td width=45% class="top"><h2>Base de données locale</h2></td>
 			</tr>
 			<tr>
-				<td class="bottom"><input id="DatabasePathBtnGlb" type="file" value='https://drive.usercontent.google.com/uc?id=1NIn9TmYA7aEHxC7jzy_OmIa3GVeRyaCF' visibility='hidden' />
+				<td class="bottom"><input id="DatabasePathBtnGlb" type="file" value='https://drive.usercontent.google.com/uc?id=1NIn9TmYA7aEHxC7jzy_OmIa3GVeRyaCF' style="visibility: hidden;" />
 					<br/>
 					<br/><input id="DatabaseImportBtnGlobal" type="button" value="Importer" onclick="DoImportDatabase('Glb');" class='Import' /><br/><br/></td>
 				<td></td>
@@ -3006,6 +3004,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
