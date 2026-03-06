@@ -67,6 +67,10 @@
 		{
 			window.open(Url, '_blank').focus();
 		}
+		function OpenUrl(Url)
+		{
+			window.open(Url, '_self').focus();
+		}
 	</script>
 </head>
 <body>
@@ -90,7 +94,7 @@
     <table class="ExtLink">
       <tr class="DblLink">
         <td class="link"><img src="Images/WikiPhyto.png" style="width:75px;"></td>
-        <td class="link2"><a href='https://www.wikiphyto.org/wiki/Cat%C3%A9gorie:Plantes_m%C3%A9dicinales' target='_blank'>WikiPhyto</a>
+        <td class="link2"><input type="button" id="WikiPhyto" value="WikiPhyto" onclick="OpenUrl('https://www.wikiphyto.org/wiki/Cat%C3%A9gorie:Plantes_m%C3%A9dicinales');">
 			<br/>Disponible en Français
 		</td>
 		<td>&nbsp;</td>
