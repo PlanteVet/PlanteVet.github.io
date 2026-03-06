@@ -799,7 +799,8 @@
 			fetch('PlanteVet.db', { method: 'GET' }).then((OpsResult) => {
 				console.log("hello");
 				// get result
-				new Response(OpsResult.blob).arrayBuffer().then((FileData) => {
+				FileData = OpsResult.arrayBuffer();
+				//new Response(OpsResult.blob).arrayBuffer().then((FileData) => {
 				// feed sqlite3 with just loaded database
 				document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Parsing ...';
 				try {
@@ -853,7 +854,7 @@
 				document.getElementById("DatabasePath").style.visibility = 'Hidden';
 				document.getElementById("ListePlanteForm").style.visibility = 'visible';
 				DoListPlantes();
-				});
+				//});
 			}).catch((OpsError) => {
 				alert("Echec reading database");
 				document.getElementById("DatabasePathBtn").disabled = false;
@@ -3007,6 +3008,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
