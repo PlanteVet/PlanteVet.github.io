@@ -798,7 +798,6 @@
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
 			fetch('PlanteVet.db', { method: 'GET' }).then((OpsResult) => {
 				console.log("hello");
-				console.log(OpsResult);
 				// get result
 				new Response(OpsResult.blob).arrayBuffer().then((FileData) => {
 				// feed sqlite3 with just loaded database
@@ -3008,6 +3007,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
