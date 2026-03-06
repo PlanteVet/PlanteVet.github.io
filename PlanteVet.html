@@ -367,18 +367,6 @@
 				FileReaderObj.readAsArrayBuffer(FileObj);			
 			});
 		}
-
-		//get file from url
-		function httpGetAsync (url)
-		{
-			fetch(url, {mode: 'no-cors'})
-				.then((Result) => {
-					return Result;
-				}).catch((Error) => {
-					alert("Database not found.");
-					return false;
-			});			
-		}
 	
 		// cast a buffer to an image URL data
 		function CastBufferToImgURLData(ImageData)
@@ -787,10 +775,10 @@
 		
 		// Import database
 		// NOTA : this function does a fake upload
-		function DoImportDatabase()
+		function DoImportDatabase(GlbORLoc)
 		{
 			let ProgressBarObj = document.getElementById("DatabaseImportProgressBar");
-			let ListFilePathObj = document.getElementById("DatabasePathBtn").files;
+			let ListFilePathObj = document.getElementById("DatabasePathBtn" + GlbORLoc).files;
 			let NbFile = ListFilePathObj.length;
 
 			// check if a file was selected
@@ -869,100 +857,6 @@
 				document.getElementById("DatabaseImportBtn").disabled = false;
 				document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
 			});
-			return;
-		}
-		
-		// Import database Global
-		// NOTA : this function does a fake upload
-		function DoImportDatabaseGlobal(URL)
-		{
-			let ProgressBarObj = document.getElementById("DatabaseImportProgressBar");
-			
-			// Load database
-			document.getElementById("DatabasePathBtn").disabled = true;
-			document.getElementById("DatabaseImportBtn").disabled = true;
-			document.getElementById("DatabaseImportBtnGlobal").disabled = true;
-			ProgressBarObj.value = 0;
-			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Loading ...';
-			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
-			
-			try {
-				//get result
-				let FileObj = httpGetAsync(URL);
-				if(FileObj == false) return;
-				//read db
-				DoReadFileAsync(FileObj,ProgressBarObj).then((OpsResult) => {
-					// get result
-					let FileData = OpsResult;
-					// feed sqlite3 with just loaded database
-					document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Parsing ...';
-					try {
-						let TmpData = globalThis.sqlite3.wasm.allocFromTypedArray(FileData);			
-						globalThis.WorkingDB = new globalThis.sqlite3.oo1.DB();
-						let RetCode = globalThis.sqlite3.capi.sqlite3_deserialize(globalThis.WorkingDB,
-																				'main',
-																				TmpData,
-																				FileData.byteLength,
-																				FileData.byteLength,
-																				globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
-						console.log("Deserialize status : " + RetCode);
-						globalThis.WorkingDB.checkRc(RetCode);
-						console.log("Deserialize OK");
-						// try get database schema to validate its format
-						console.log("Getting Database schema ...");
-						let SQLRequestResultObj = globalThis.WorkingDB.exec({
-							sql: "select * from sqlite_schema",
-							rowMode: 'array',
-						});
-						console.log("DB schema : " + SQLRequestResultObj);
-						if(!IsDatabaseSchemaValid(SQLRequestResultObj))
-						{
-							console.log("DB schema is invalid");
-							alert("Database schema is invalid");
-							if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
-							globalThis.WorkingDB = null;
-							document.getElementById("DatabasePathBtn").disabled = false;
-							document.getElementById("DatabaseImportBtn").disabled = false;
-							document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
-							return;
-						}
-						console.log("DB schema is OK");
-					} catch(ErrorObj) {
-						console.log("Echec importing database");
-						alert("Echec importing database");
-						if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
-						globalThis.WorkingDB = null;
-						document.getElementById("DatabasePathBtn").disabled = false;
-						document.getElementById("DatabaseImportBtn").disabled = false;
-						document.getElementById("DatabaseImportBtnGlobal").disabled = false;
-						document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
-						return;
-					}
-					
-					// disable import
-					document.getElementById("DatabasePathForm").style.display = 'none';
-					// activate search
-					//document.getElementById("DatabasePath").innerHTML = "Working with database : " + document.URL;
-					document.getElementById("DatabasePath").innerHTML = "Working with database : PlanteVet.db";
-					document.getElementById("DatabasePath").style.display = 'None';
-					document.getElementById("DatabasePath").style.visibility = 'Hidden';
-					document.getElementById("ListePlanteForm").style.visibility = 'visible';
-					DoListPlantes();
-				}).catch((OpsError) => {
-					alert("Echec reading database");
-					document.getElementById("DatabasePathBtn").disabled = false;
-					document.getElementById("DatabaseImportBtn").disabled = false;
-					document.getElementById("DatabaseImportBtnGlobal").disabled = false;
-					document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
-				});
-			} catch(ErrorObj) {
-				console.log("Echec reading database");
-				alert("Echec reading database");
-				document.getElementById("DatabasePathBtn").disabled = false;
-				document.getElementById("DatabaseImportBtn").disabled = false;
-				document.getElementById("DatabaseImportBtnGlobal").disabled = false;
-				document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
-			};
 			return;
 		}
 
@@ -2984,11 +2878,13 @@
 				<td width=45% class="top"><h2>Base de données locale</h2></td>
 			</tr>
 			<tr>
-				<td class="bottom"><input id="DatabaseImportBtnGlobal" type="button" value="Importer" onclick="DoImportDatabaseGlobal('https://drive.usercontent.google.com/uc?id=1NIn9TmYA7aEHxC7jzy_OmIa3GVeRyaCF');" class='Import' /></td>
+				<td class="bottom"><input id="DatabasePathBtnGlb" type="file" value='https://drive.usercontent.google.com/uc?id=1NIn9TmYA7aEHxC7jzy_OmIa3GVeRyaCF' />
+					<br/>
+					<br/><input id="DatabaseImportBtnGlobal" type="button" value="Importer" onclick="DoImportDatabase('Glb');" class='Import' /></td>
 				<td></td>
 				<td class="bottom"><input id="DatabasePathBtn" type="file" />
 					<br/>
-					<br/><input id="DatabaseImportBtn" type="button" value="Importer" onclick="DoImportDatabase();" class='Import' /><br/><br/></td>
+					<br/><input id="DatabaseImportBtnLoc" type="button" value="Importer" onclick="DoImportDatabase('Loc');" class='Import' /><br/><br/></td>
 			</tr>
 		</table>
 		<br/>
@@ -3108,6 +3004,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
