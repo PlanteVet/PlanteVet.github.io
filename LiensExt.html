@@ -45,29 +45,14 @@
 			border-left: none;
 			width: 35%;
 		}
-		a:link {
-			text-decoration: none;
-			color: black;
-		}
-		a:visited {
-			text-decoration: none;
-			color: black;
-		}
-		a:hover {
-			text-decoration: underline;
-			color: red;
-		}
-		a:active {
-			text-decoration: underline;
-			color: red;
-		}
 
 		button {
 		}
 		.LienExt {
  			border: 0;
-  			line-height: 2.5;
-  			padding: 0 20px;
+  			line-height: 2;
+  			padding: 0 10px;
+			margin-bottom: 2px;
 			background-color: #3EB489;
 			color: white;
 			border-radius: 5px;
@@ -113,12 +98,12 @@
       <tr class="DblLink">
         <td class="link"><img src="Images/WikiPhyto.png" style="width:75px;"></td>
         <td class="link2"><input type="button" id="WikiPhyto" value="WikiPhyto" onclick="OpenUrl('https://www.wikiphyto.org/wiki/Cat%C3%A9gorie:Plantes_m%C3%A9dicinales');" class='LienExt' />
-			<br/>Disponible en Français
+			<br/>Disponible en : Français
 		</td>
 		<td>&nbsp;</td>
         <td class="link"><img src="Images/CliniPharm CliniTox.jpg" style="width:75px;"></td>
-        <td class="link2"><a href='https://www.vetpharm.uzh.ch/ArzneidrogenSuche/ArzneidrogenSuche.html' target='_blank'>CliniPharm CliniTox</a>
-			<br/>Disponible en Allemand
+        <td class="link2"><input type="button" id="CliniPharm CliniTox" value="CliniPharm CliniTox" onclick="OpenUrl('https://www.vetpharm.uzh.ch/ArzneidrogenSuche/ArzneidrogenSuche.html');" class='LienExt' />
+			<br/>Disponible en : Allemand
 		</td>
       </tr>
       <tr>
@@ -126,13 +111,13 @@
       </tr>
       <tr class="DblLink">
         <td class="link"><img src="Images/Kooperation Phytopharmaka.png" style="width:75px;"></td>
-        <td class="link2"><a href='https://www.arzneipflanzenlexikon.info/en/' target='_blank'>Kooperation Phytopharmaka</a>
-			<br/>Disponible en Anglais et en Allemand
+        <td class="link2"><input type="button" id="Kooperation Phytopharmaka" value="Kooperation Phytopharmaka" onclick="OpenUrl('https://www.arzneipflanzenlexikon.info/en/');" class='LienExt' />
+			<br/>Disponible en : Anglais, Allemand
 		</td>
 		<td>&nbsp;</td>
         <td class="link"><img src="Images/Hedrine.png" style="width:75px;"></td>
-        <td class="link2"><a href='https://hedrine.ulb.be/herbs' target='_blank'>Hedrine</a>
-			<br/>Disponible en Français et en Anglais
+        <td class="link2"><input type="button" id="Hedrine" value="Hedrine" onclick="OpenUrl('https://hedrine.ulb.be/herbs');" class='LienExt' />
+			<br/>Disponible en : Français, Anglais
 		</td>
       </tr>
     </table>
