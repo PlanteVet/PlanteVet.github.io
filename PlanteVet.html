@@ -400,6 +400,9 @@
 							console.log("Some Error occured during load");
 							reject(null);
 						});
+					}) .catch((ErrorObj) => {
+						console.log("Error Read");
+						reject(null);
 					});
 				}) .catch((ErrorObj) => {
 					console.log("Error Url");
@@ -3050,6 +3053,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
