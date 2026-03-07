@@ -387,12 +387,14 @@
 							resolve(ReceivedData.buffer);
 							return;
 						}
-						//update progress bar
-						ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
-						console.log("Progress " + ProgressBarObj.value + "%");
 						
 						//accumulation donées lues
 						ReceivedData += value;
+						ReceivedLength += value.length;
+						
+						//update progress bar
+						ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
+						console.log("Progress " + ProgressBarObj.value + "%");
 	
 						//lecture donées suivantes
 						return ReaderObj.read().then(pump)
@@ -3053,6 +3055,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
