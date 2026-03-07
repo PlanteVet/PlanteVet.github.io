@@ -376,7 +376,7 @@
 					const ReaderObj = ResponseObj.body.getReader();
 					const ContentLength = ResponseObj.headers.get('Content-Length');
 					let ReceivedLength = 0;
-					let ReceivedData = new Uint8Array(ContentLength);
+					let ReceivedData = new Uint8Array();
 					
 					//init lecture
 					ReaderObj.read().then(function pump({done, value}) {
@@ -389,8 +389,12 @@
 						}
 						
 						//accumulation donées lues
-						ReceivedData.set(value,ReceivedLength);
+						let TmpSize = ReceivedLength;
 						ReceivedLength += value.length;
+						let TmpBuffer = new Uint8Array(ReceivedLength);
+						TmpBuffer.set(ReceivedData,0);
+						TmpBuffer.set(value,TmpSize);
+						ReceivedData = TmpBuffer;
 						
 						//update progress bar
 						ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
@@ -3055,6 +3059,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
