@@ -389,7 +389,7 @@
 						}
 						
 						//accumulation donées lues
-						ReceivedData.push(value);
+						ReceivedData = ReceivedData.set(value,ReceivedLength);
 						ReceivedLength += value.length;
 						
 						//update progress bar
@@ -3055,6 +3055,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
