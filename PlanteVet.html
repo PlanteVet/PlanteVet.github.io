@@ -376,7 +376,7 @@
 					const ReaderObj = ResponseObj.body.getReader();
 					const ContentLength = ResponseObj.headers.get('Content-Length');
 					let ReceivedLength = 0;
-					let ReceivedData = new Uint8Array();
+					let ReceivedData = new Uint8Array(ContentLength);
 					
 					//init lecture
 					ReaderObj.read().then(function pump({done, value}) {
@@ -3055,6 +3055,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
