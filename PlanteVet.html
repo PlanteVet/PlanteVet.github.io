@@ -352,7 +352,7 @@
 				// setup callbacks
 				FileReaderObj.onprogress = (EventObj) => {
 					ProgressBarObj.value = parseInt((100*EventObj.loaded)/EventObj.total);
-					console.log("Progrees " + ProgressBarObj.value + "%");
+					console.log("Progress " + ProgressBarObj.value + "%");
 				};
 				FileReaderObj.onload = (EventObj) => {
 					ProgressBarObj.value = 100;
@@ -364,7 +364,7 @@
 					reject(null);
 				};
 				// fire read ops
-				FileReaderObj.readAsArrayBuffer(FileObj);			
+				FileReaderObj.readAsArrayBuffer(FileObj);
 			});
 		}
 
@@ -389,7 +389,7 @@
 						}
 						
 						//accumulation donées lues
-						ReceivedData += value;
+						ReceivedData.push(value);
 						ReceivedLength += value.length;
 						
 						//update progress bar
@@ -3055,6 +3055,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
