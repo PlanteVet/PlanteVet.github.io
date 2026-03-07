@@ -374,7 +374,7 @@
 				//demande requête
 				fetch(UrlPath).then((ResponseObj) => {
 					const ReaderObj = ResponseObj.body.getReader();
-					const ContentLength = ResponseObj.headers.geet('Content-Length');
+					const ContentLength = ResponseObj.headers.get('Content-Length');
 					let ReceivedLength = 0;
 					let ReceivedData = new Uint8Array();
 					
@@ -3050,6 +3050,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
