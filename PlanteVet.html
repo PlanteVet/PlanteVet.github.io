@@ -368,69 +368,43 @@
 			});
 		}
 
-		async function DoFetchData(URLPath,ProgressBarObj)
-		{
-			let responseObj = await fetch(URLPath);
-			const readerObj = responseObj.body.getReader();
-
-			return new Promise((resolve,reject) => {
-				// setup callbacks
-				readerObj.onprogress = (EventObj) => {
-					ProgressBarObj.value = parseInt((100*EventObj.loaded)/EventObj.total);
-					console.log("Progrees " + ProgressBarObj.value + "%");
-				};
-				readerObj.onload = (EventObj) => {
-					ProgressBarObj.value = 100;
-					console.log("Success loading");
-					resolve(EventObj.target.result);
-				};
-				readerObj.onerror = () => {
-					console.log("Some Error occured during load");
-					reject(null);
-				};		
-			});
-			
-			reader.read().then(function processText({done, value}) {
-				if(done) {
-					console.log("Fetch done");
-				}
-			}			
-		}
-
 		function DoFecthDatafromUrl(UrlPath,ProgressBarObj)
 		{
-			//demande requête
-			fetch(UrlPath).then((ResponseObj) => {
-				const ReaderObj = ResponseObj.body.getReader();
-				const ContentLength = ResponseObj.headers.geet('Content-Length');
-				let ReceivedLength = 0;
-				let ReceivedData = new Uint8Array();
-				
-				//init lecture
-				ReaderObj.read().then(function pump({done, value}) {
-					if(done) {
-						ProgressBarObj.value = 100;
-						console.log("Success loading");
-						resolve(ReceivedData);
-						return;
-					}
-					//update progress bar
-					ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
-					console.log("Progress " + ProgressBarObj.value + "%");
+			return new Promise((resolve,reject) => {
+				//demande requête
+				fetch(UrlPath).then((ResponseObj) => {
+					const ReaderObj = ResponseObj.body.getReader();
+					const ContentLength = ResponseObj.headers.geet('Content-Length');
+					let ReceivedLength = 0;
+					let ReceivedData = new Uint8Array();
 					
-					//accumulation donées lues
-					ReceivedData += value;
-
-					//lecture donées suivantes
-					return ReaderObj.read().then(pump)
-					.catch((ErrorObj) => {
-						console.log("Some Error occured during load");
-						reject(null);
+					//init lecture
+					ReaderObj.read().then(function pump({done, value}) {
+						if(done) {
+							ProgressBarObj.value = 100;
+							console.log("Success loading");
+							//renvoie en arraybuffer
+							resolve(ReceivedData.buffer);
+							return;
+						}
+						//update progress bar
+						ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
+						console.log("Progress " + ProgressBarObj.value + "%");
+						
+						//accumulation donées lues
+						ReceivedData += value;
+	
+						//lecture donées suivantes
+						return ReaderObj.read().then(pump)
+						.catch((ErrorObj) => {
+							console.log("Some Error occured during load");
+							reject(null);
+						});
 					});
+				}) .catch((ErrorObj) => {
+					console.log("Error Url");
+					reject(null);
 				});
-			}) .catch((ErrorObj) => {
-				console.log("Error Url");
-				reject(null);
 			});
 		}
 	
@@ -3073,6 +3047,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
