@@ -889,7 +889,7 @@
 			document.getElementById("DatabaseImportBtnLoc").disabled = true;
 			document.getElementById("DatabaseImportBtnGlb").disabled = true;
 			ProgressBarObj.value = 0;
-			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Loading ...';
+			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Chargement ...';
 			document.getElementById("DatabaseImportProgress").style.display = 'inline';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
 			DoReadFileAsync(FileObj,ProgressBarObj).then((OpsResult) => {
@@ -973,7 +973,7 @@
 			document.getElementById("DatabaseImportBtnLoc").disabled = true;
 			document.getElementById("DatabaseImportBtnGlb").disabled = true;
 			ProgressBarObj.value = 0;
-			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Loading ...';
+			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Chargement ...';
 			document.getElementById("DatabaseImportProgress").style.display = 'inline';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
 			//fetch('https://plantevet.github.io/These.pdf').then((OpsResult) => {
@@ -3063,7 +3063,7 @@
 		<br/>
 		<br/>
 		<div id="DatabaseImportProgress" style="visibility: hidden; display: none;">
-			<label></label><progress max="100" value="0" title='Chargement...' id="DatabaseImportProgressBar"></progress>Chargement...</label>
+			<progress max="100" value="0" id="DatabaseImportProgressBar"></progress>
 			<span id="DatabaseImportProgressTxt">Progress State ...</span>
 			<br/>
 			<br/>
@@ -3198,6 +3198,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
