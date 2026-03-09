@@ -972,6 +972,16 @@
 		function DoImportDatabaseGlb(Url)
 		{
 			let ProgressBarObj = document.getElementById("DatabaseImportProgressBar");
+			let ListFilePathObj = document.getElementById("DatabasePathBtnLoc").files;
+			let NbFile = ListFilePathObj.length;
+
+			// check if a file was selected
+			if(NbFile != 1)
+			{
+				alert("Select a database");
+				return;
+			}
+			let FileObj = ListFilePathObj[0];
 			
 			// Load database
 			document.getElementById("DatabasePathBtnLoc").disabled = true;
@@ -981,11 +991,8 @@
 			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Chargement ...';
 			document.getElementById("DatabaseImportProgress").style.display = 'inline';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
-			//fetch('https://plantevet.github.io/These.pdf').then((OpsResult) => {
-			//DoReadFileAsync(FileObj,ProgressBarObj).then((OpsResult) => {
 			DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
 				// get result
-				//OpsResult.arrayBuffer().then((FileData) => {
 				let FileData = OpsResult;
 				// feed sqlite3 with just loaded database
 				document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Parsing ...';
@@ -1044,7 +1051,6 @@
 				document.getElementById("DatabasePath").style.visibility = 'hidden';
 				document.getElementById("ListePlanteForm").style.visibility = 'visible';
 				DoListPlantes();
-				//});
 			}).catch((OpsError) => {
 				alert("Echec reading database");
 				document.getElementById("DatabasePathBtnLoc").disabled = false;
@@ -3203,6 +3209,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
