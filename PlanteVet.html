@@ -821,13 +821,13 @@
 			ResultListObj.style.visibility = 'visible';
 			return;
 		}
-		
-		// Import database
+
+		// Import database local
 		// NOTA : this function does a fake upload
-		function DoImportDatabase()
+		function DoImportDatabaseLoc()
 		{
 			let ProgressBarObj = document.getElementById("DatabaseImportProgressBar");
-			let ListFilePathObj = document.getElementById("DatabasePathBtn").files;
+			let ListFilePathObj = document.getElementById("DatabasePathBtnLoc").files;
 			let NbFile = ListFilePathObj.length;
 
 			// check if a file was selected
@@ -839,15 +839,94 @@
 			let FileObj = ListFilePathObj[0];
 			
 			// Load database
-			document.getElementById("DatabasePathBtn").disabled = true;
-			document.getElementById("DatabaseImportBtn").disabled = true;
-			document.getElementById("DatabaseImportBtnGlobal").disabled = true;
+			document.getElementById("DatabasePathBtnLoc").disabled = true;
+			document.getElementById("DatabaseImportBtnLoc").disabled = true;
+			document.getElementById("DatabaseImportBtnGlb").disabled = true;
+			ProgressBarObj.value = 0;
+			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Loading ...';
+			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
+			DoReadFileAsync(FileObj,ProgressBarObj).then((OpsResult) => {
+				// get result
+				let FileData = OpsResult;
+				// feed sqlite3 with just loaded database
+				document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Parsing ...';
+				try {
+					let TmpData = globalThis.sqlite3.wasm.allocFromTypedArray(FileData);			
+					globalThis.WorkingDB = new globalThis.sqlite3.oo1.DB();
+					let RetCode = globalThis.sqlite3.capi.sqlite3_deserialize(globalThis.WorkingDB,
+																			'main',
+																			TmpData,
+																			FileData.byteLength,
+																			FileData.byteLength,
+																			globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
+					console.log("Deserialize status : " + RetCode);
+					globalThis.WorkingDB.checkRc(RetCode);
+					console.log("Deserialize OK");
+					// try get database schema to validate its format
+					console.log("Getting Database schema ...");
+					let SQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select * from sqlite_schema",
+						rowMode: 'array',
+					});
+					console.log("DB schema : " + SQLRequestResultObj);
+					if(!IsDatabaseSchemaValid(SQLRequestResultObj))
+					{
+						console.log("DB schema is invalid");
+						alert("Database schema is invalid");
+						if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
+						globalThis.WorkingDB = null;
+						document.getElementById("DatabasePathBtn").disabled = false;
+						document.getElementById("DatabaseImportBtn").disabled = false;
+						document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+						return;
+					}
+					console.log("DB schema is OK");
+				} catch(ErrorObj) {
+					console.log("Echec importing database");
+					alert("Echec importing database");
+					if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
+					globalThis.WorkingDB = null;
+					document.getElementById("DatabasePathBtn").disabled = false;
+					document.getElementById("DatabaseImportBtn").disabled = false;
+					document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+					return;
+				}
+				
+				// disable import
+				document.getElementById("DatabasePathForm").style.display = 'none';
+				// activate search
+				//document.getElementById("DatabasePath").innerHTML = "Working with database : " + document.URL;
+				document.getElementById("DatabasePath").innerHTML = "Working with database : " + ListFilePathObj[0].name;
+				document.getElementById("DatabasePath").style.display = 'None';
+				document.getElementById("DatabasePath").style.visibility = 'Hidden';
+				document.getElementById("ListePlanteForm").style.visibility = 'visible';
+				DoListPlantes();
+			}).catch((OpsError) => {
+				alert("Echec reading database");
+				document.getElementById("DatabasePathBtn").disabled = false;
+				document.getElementById("DatabaseImportBtn").disabled = false;
+				document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+			});
+			return;
+		}
+		
+		// Import database Global
+		// NOTA : this function does a fake upload
+		function DoImportDatabaseGlb(Url)
+		{
+			let ProgressBarObj = document.getElementById("DatabaseImportProgressBar");
+			let ListFilePathObj = document.getElementById("DatabasePathBtn").files;
+			
+			// Load database
+			document.getElementById("DatabasePathBtnLoc").disabled = true;
+			document.getElementById("DatabaseImportBtnLoc").disabled = true;
+			document.getElementById("DatabaseImportBtnGlb").disabled = true;
 			ProgressBarObj.value = 0;
 			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Loading ...';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
 			//fetch('https://plantevet.github.io/These.pdf').then((OpsResult) => {
 			//DoReadFileAsync(FileObj,ProgressBarObj).then((OpsResult) => {
-			DoFecthDatafromUrl('https://plantevet.github.io/PlanteVet.db',ProgressBarObj).then((OpsResult) => {
+			DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
 				// get result
 				//OpsResult.arrayBuffer().then((FileData) => {
 				let FileData = OpsResult;
@@ -2926,6 +3005,12 @@
 		<img height= "100" src="Images/Icone.png">
 		<br/>
 		<br/>
+		<div id="DatabaseImportProgress" style="visibility: hidden;">
+			<progress max="100" value="0" id="DatabaseImportProgressBar"></progress>
+			<span id="DatabaseImportProgressTxt">Progress State ...</span>
+			<br/>
+			<br/>
+		</div>
 		<table class="half">
 			<tr>
 				<td width=45% class="top"><h2>Base de données en ligne</h2></td>
@@ -2933,23 +3018,20 @@
 				<td width=45% class="top"><h2>Base de données locale</h2></td>
 			</tr>
 			<tr>
-				<td class="bottom"><input id="DatabasePathBtnGlb" type="file" value='https://drive.usercontent.google.com/uc?id=1NIn9TmYA7aEHxC7jzy_OmIa3GVeRyaCF' style="visibility: hidden;" />
+				<!--'https://plantevet.github.io/PlanteVet.db'-->
+				<td class="bottom"><input id="DatabasePathBtnGlb" type="file" value='https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw' style="visibility: hidden;" />
 					<br/>
-					<br/><input id="DatabaseImportBtnGlobal" type="button" value="Importer" onclick="DoImportDatabase();" class='Import' /><br/><br/></td>
+					<br/><input id="DatabaseImportBtnGlb" type="button" value="Importer" onclick="DoImportDatabaseGlb('https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw');" class='Import' /><br/><br/></td>
 				<td></td>
-				<td class="bottom"><input id="DatabasePathBtn" type="file" />
+				<td class="bottom"><input id="DatabasePathBtnLoc" type="file" />
 					<br/>
-					<br/><input id="DatabaseImportBtn" type="button" value="Importer" onclick="DoImportDatabase();" class='Import' /><br/><br/></td>
+					<br/><input id="DatabaseImportBtnLoc" type="button" value="Importer" onclick="DoImportDatabaseLoc();" class='Import' /><br/><br/></td>
 			</tr>
 		</table>
 		<br/>
 		<br/>Les informations sont amenées à évoluer avec le temps.
 		<br/>
 		<br/>Cette base de données a été créée dans le cadre d'une thèse vétérinaire.
-		<div id="DatabaseImportProgress" style="visibility: hidden;">
-			<progress max="100" value="0" id="DatabaseImportProgressBar"></progress>
-			<span id="DatabaseImportProgressTxt">Progress State ...</span><br/>
-		</div>
 	</div>
 	
 	<!-- Select product by name -->
@@ -3059,6 +3141,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
