@@ -293,7 +293,12 @@
 			-webkit-appearance: none;
 			-moz-appearance: none;
 		}
-		::-webkit-progress-bar, ::-moz-progress-bar {
+		/*pour mozilla*/
+		::-moz-progress-bar {
+			background-color: #3EB489;
+		 }
+		/*pour les autres navigateurs*/
+		::-webkit-progress-bar {
 			background-color: red;
 		}
 	</style>
@@ -3168,6 +3173,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
