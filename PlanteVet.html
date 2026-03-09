@@ -241,7 +241,7 @@
 			background-color: #006A4E;
 		}
 		
-		input::file-selector-button:enabled {
+		input:enabled::file-selector-button {
  			border: 0;
   			line-height: 2;
   			padding: 0 10px;
@@ -253,7 +253,7 @@
 				inset 2px 2px 3px rgb(255 255 255 / 60%),
 				inset -2px -2px 3px rgb(0 0 0 / 60%);
 		}
-		input::file-selector-button:disabled {
+		input:disabled::file-selector-button {
  			border: 0;
   			line-height: 2.5;
   			padding: 0 10px;
@@ -298,16 +298,20 @@
 		}
 
 		progress {
+			/*retirer apparence de base*/
 			-webkit-appearance: none;
 			-moz-appearance: none;
-			line-height: 2.5; /*pour tous*/
+			/*pour tous*/
+			line-height: 2.5;
 			margin-right: 10px;
-			background-color: #ADD8E6; /*pour mozilla*/
+			/*pour mozilla*/
+			background-color: #ADD8E6;
 		}
 		/*pour mozilla*/
 		::-moz-progress-bar {
 			background-color: #3EB489;
-			/*border-radius: 5px;*/
+			border: 1px solid black;
+			border-radius: 5px;
 		 }
 		/*pour les autres navigateurs*/
 		::-webkit-progress-bar {
@@ -3194,6 +3198,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
