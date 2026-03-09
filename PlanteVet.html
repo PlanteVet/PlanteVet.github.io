@@ -366,6 +366,8 @@
 		// Reset sqlite3 and database info
 		globalThis.WorkingDB = null;
 		globalThis.sqlite3 = null;
+		//'https://plantevet.github.io/PlanteVet.db', 'https://plantevet.github.io/These.pdf', 'https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw'
+		globalThis.UrlBdD = 'https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw';
 		
 		// Initialize sqlite3 interface
 		function DoInitSqlite3Module()
@@ -3076,10 +3078,9 @@
 				<td width=45% class="top"><h2>Base de données locale</h2></td>
 			</tr>
 			<tr>
-				<!--'https://plantevet.github.io/PlanteVet.db', 'https://plantevet.github.io/These.pdf', 'https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw' -->
 				<td class="bottom"><input id="DatabasePathBtnGlb" type="file" value='https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw' style="visibility: hidden;" />
 					<br/>
-					<br/><input id="DatabaseImportBtnGlb" type="button" value="Importer" onclick="DoImportDatabaseGlb('https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw');" class='Import' /><br/><br/></td>
+					<br/><input id="DatabaseImportBtnGlb" type="button" value="Importer" onclick="DoImportDatabaseGlb(globalThis.UrlBdD);" class='Import' /><br/><br/></td>
 				<td></td>
 				<td class="bottom"><input id="DatabasePathBtnLoc" type="file" />
 					<br/>
@@ -3199,6 +3200,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
