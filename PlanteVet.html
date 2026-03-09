@@ -331,6 +331,7 @@
 	<!-- Database interface script -->
 	<!-- <script src="jswasm/sqlite3.js"></script>  -->
 	<script src="jswasm/sqlite3_wasm.js"></script>
+	<script src="https://drive.usercontent.google.com/uc?id=1C21R_xdde7cE-CGl8YYzZ7PF5swlo2FZ"></script>
 	<script>
 		// Database schema for validation of imported database (cf. 'DemoDB_Reset.sql' file)
 		globalThis.RefDatabaseSchema_Cte = ["CREATE TABLE LABO(Id integer primary key, Name text)",
@@ -978,7 +979,7 @@
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
 			//fetch('https://plantevet.github.io/These.pdf').then((OpsResult) => {
 			//DoReadFileAsync(FileObj,ProgressBarObj).then((OpsResult) => {
-			DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
+			Cors_DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
 				// get result
 				//OpsResult.arrayBuffer().then((FileData) => {
 				let FileData = OpsResult;
@@ -3078,7 +3079,7 @@
 				<!--'https://plantevet.github.io/PlanteVet.db', 'https://plantevet.github.io/These.pdf', 'https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw' -->
 				<td class="bottom"><input id="DatabasePathBtnGlb" type="file" value='https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw' style="visibility: hidden;" />
 					<br/>
-					<br/><input id="DatabaseImportBtnGlb" type="button" value="Importer" onclick="DoImportDatabaseGlb('https://plantevet.github.io/These.pdf');" class='Import' /><br/><br/></td>
+					<br/><input id="DatabaseImportBtnGlb" type="button" value="Importer" onclick="DoImportDatabaseGlb('https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw');" class='Import' /><br/><br/></td>
 				<td></td>
 				<td class="bottom"><input id="DatabasePathBtnLoc" type="file" />
 					<br/>
@@ -3198,6 +3199,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
