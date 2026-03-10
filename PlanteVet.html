@@ -331,7 +331,7 @@
 	<!-- Database interface script -->
 	<!-- <script src="jswasm/sqlite3.js"></script>  -->
 	<script src="jswasm/sqlite3_wasm.js"></script>
-	<script src="https://oneeyedalien.github.io/XXXX.github.io/CORS.js" type="application/javascript"></script>
+	<!-- <script src="https://oneeyedalien.github.io/XXXX.github.io/CORS.js" type="application/javascript"></script> -->
 	<!-- <script src="https://drive.usercontent.google.com/uc?id=1C21R_xdde7cE-CGl8YYzZ7PF5swlo2FZ" type="text/javascript"></script> -->
 	<script>
 		// Database schema for validation of imported database (cf. 'DemoDB_Reset.sql' file)
@@ -981,7 +981,7 @@
 			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Chargement ...';
 			document.getElementById("DatabaseImportProgress").style.display = 'inline';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
-			Cors_DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
+			DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
 				// get result
 				let FileData = OpsResult;
 				// feed sqlite3 with just loaded database
@@ -3198,6 +3198,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
