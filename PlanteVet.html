@@ -333,6 +333,7 @@
 	<script src="jswasm/sqlite3_wasm.js"></script>
 	<!-- <script src="https://oneeyedalien.github.io/XXXX.github.io/CORS.js" type="application/javascript"></script> -->
 	<!-- <script src="https://drive.usercontent.google.com/uc?id=1C21R_xdde7cE-CGl8YYzZ7PF5swlo2FZ" type="text/javascript"></script> -->
+	<script src="https://drive.usercontent.google.com/download?id=1C21R_xdde7cE-CGl8YYzZ7PF5swlo2FZ&authuser=0&confirm=t&uuid=fbc1e901-d521-474b-b590-c3286f29f281&at=AGN2oQ22Nh0SeMAAq1thuv5BYhoK:1773147711689" type="text/javascript"></script>
 	<script>
 		// Database schema for validation of imported database (cf. 'DemoDB_Reset.sql' file)
 		globalThis.RefDatabaseSchema_Cte = ["CREATE TABLE LABO(Id integer primary key, Name text)",
@@ -981,7 +982,7 @@
 			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Chargement ...';
 			document.getElementById("DatabaseImportProgress").style.display = 'inline';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
-			DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
+			Cors_DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
 				// get result
 				let FileData = OpsResult;
 				// feed sqlite3 with just loaded database
@@ -3198,6 +3199,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
