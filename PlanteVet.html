@@ -331,9 +331,8 @@
 	<!-- Database interface script -->
 	<!-- <script src="jswasm/sqlite3.js"></script>  -->
 	<script src="jswasm/sqlite3_wasm.js"></script>
-	<!-- <script src="https://oneeyedalien.github.io/XXXX.github.io/CORS.js" type="application/javascript"></script> -->
+	<!-- <script src="https://oneeyedalien.github.io/XXXX.github.io/CORS.js" type="application/javascript"></script>-->
 	<!-- <script src="https://drive.usercontent.google.com/uc?id=1C21R_xdde7cE-CGl8YYzZ7PF5swlo2FZ" type="text/javascript"></script> -->
-	<script src="https://drive.usercontent.google.com/download?id=1C21R_xdde7cE-CGl8YYzZ7PF5swlo2FZ&authuser=0&confirm=t&uuid=fbc1e901-d521-474b-b590-c3286f29f281&at=AGN2oQ22Nh0SeMAAq1thuv5BYhoK:1773147711689" type="text/javascript"></script>
 	<script>
 		// Database schema for validation of imported database (cf. 'DemoDB_Reset.sql' file)
 		globalThis.RefDatabaseSchema_Cte = ["CREATE TABLE LABO(Id integer primary key, Name text)",
@@ -369,8 +368,8 @@
 		globalThis.WorkingDB = null;
 		globalThis.sqlite3 = null;
 		//'https://plantevet.github.io/PlanteVet.db', 'https://plantevet.github.io/These.pdf', 'https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw'
-		globalThis.UrlBdD = 'https://oneeyedalien.github.io/XXXX.github.io/PlanteVet.db';
-		//globalThis.UrlBdD = 'https://plantevet.github.io/PlanteVet.db';
+		//globalThis.UrlBdD = 'https://oneeyedalien.github.io/XXXX.github.io/PlanteVet.db';
+		globalThis.UrlBdD = 'https://plantevet.github.io/PlanteVet.db';
 		
 		// Initialize sqlite3 interface
 		function DoInitSqlite3Module()
@@ -3199,6 +3198,7 @@
 	</div>	
 </body>
 </html>
+
 
 
 
