@@ -927,14 +927,15 @@
 					return;
 				}
 				
+				// save DB name (for export)
+				globalThis.WorkingDBName = FileObj.name;
 				// disable import
 				document.getElementById("DatabasePathForm").style.display = 'none';
 				// activate search
 				//document.getElementById("DatabasePath").innerHTML = "Working with database : " + document.URL;
 				document.getElementById("DatabasePath").style.display = 'none';
 				document.getElementById("DatabasePath").style.visibility = 'hidden';
-				document.getElementById("ListePlanteForm").style.visibility = 'visible';
-				DoListPlantes();
+				document.getElementById("TableChoiceForm").style.visibility = 'visible';
 			}).catch((OpsError) => {
 				alert("Echec reading database");
 				document.getElementById("DatabasePathBtnLoc").disabled = false;
@@ -8610,6 +8611,7 @@
 	
 </body>
 </html>
+
 
 
 
