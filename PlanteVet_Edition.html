@@ -6669,7 +6669,7 @@
 				console.log("Doing update Espece SQL request ...");
 				try {
 					globalThis.WorkingDB.exec({
-						sql: "update ESPECE set Name = $a, IMG = $b where Id = $b",
+						sql: "update ESPECE set Name = $a, IMG = $b where Id = $c",
 						rowMode: 'array',
 						bind: {$a: EspeceNameTxt, $b: EspecePhotoBlob, $c: globalThis.PrivateWorkingEltId},
 					});
@@ -8578,6 +8578,7 @@
 	
 </body>
 </html>
+
 
 
 
