@@ -8516,19 +8516,33 @@
 	<div id="DatabasePathForm" style="visibility: hidden; text-align: center;">
 		<img height= "100" src="Images/Icone.png">
 		<br/>
-		<br/>Sélectionner la base de donnée "PlanteVet.db" :
 		<br/>
-		<br/><input id="DatabasePathBtn" type="file" />
+		<div id="DatabaseImportProgress" style="visibility: hidden; display: none;">
+			<progress max="100" value="0" id="DatabaseImportProgressBar"></progress>
+			<span id="DatabaseImportProgressTxt">Progress State ...</span>
+			<br/>
+			<br/>
+		</div>
+		<table class="half">
+			<tr>
+				<td width=45% class="top"><h2>Base de données en ligne</h2></td>
+				<td width=10%></td>
+				<td width=45% class="top"><h2>Base de données locale</h2></td>
+			</tr>
+			<tr>
+				<td class="bottom"><input id="DatabasePathBtnGlb" type="file" value='https://drive.usercontent.google.com/uc?id=17AeDQGjkBLq-QDaOSYNpOIcf25IRXCJw' style="visibility: hidden;" />
+					<br/>
+					<br/><input id="DatabaseImportBtnGlb" type="button" value="Importer" onclick="DoImportDatabaseGlb(globalThis.UrlBdD);" class='Import' /><br/><br/></td>
+				<td></td>
+				<td class="bottom"><input id="DatabasePathBtnLoc" type="file" />
+					<br/>
+					<br/><input id="DatabaseImportBtnLoc" type="button" value="Importer" onclick="DoImportDatabaseLoc();" class='Import' /><br/><br/></td>
+			</tr>
+		</table>
 		<br/>
-		<br/><input id="DatabaseImportBtn" type="button" value="Importer" onclick="DoImportDatabase();" class="Import" />
-		<br/>	
 		<br/>Les informations sont amenées à évoluer avec le temps.
 		<br/>
-		<br/>Cette base de données a été créée dans le cadre d'une thèse vétérinaire.	
-		<div id="DatabaseImportProgress" style="visibility: hidden;">
-			<progress max="100" value="0" id="DatabaseImportProgressBar"></progress>
-			<span id="DatabaseImportProgressTxt">Progress State ...</span><br/>
-		</div>
+		<br/>Cette base de données a été créée dans le cadre d'une thèse vétérinaire.
 	</div>
 
 	<!-- Select table to edit -->
@@ -8572,6 +8586,7 @@
 	
 </body>
 </html>
+
 
 
 
