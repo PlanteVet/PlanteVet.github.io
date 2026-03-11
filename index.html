@@ -67,7 +67,7 @@
 		.Start:hover {
 			background-color: #006A4E;
 		}
-		.Access {
+		.Access:enabled {
  			border: 0;
   			line-height: 2;
   			padding: 0 15px;
@@ -82,7 +82,15 @@
 		.Access:hover {
 			background-color: #D891EF;
 		}
-		.Link:enabled {
+		.Access:disabled {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #FEF250;
+			color: white;
+			border-radius: 5px;
+		}
+		.Link {
  			border: 0;
   			line-height: 2;
   			padding: 0 15px;
@@ -96,14 +104,6 @@
 		}
 		.Link:hover {
 			background-color: #F5E216;
-		}
-		.Link:disabled {
- 			border: 0;
-  			line-height: 2.5;
-  			padding: 0 20px;
-			background-color: #FEF250;
-			color: white;
-			border-radius: 5px;
 		}
 	</style>
 	<script>
@@ -167,6 +167,7 @@
 	</div>
 </body>
 </html>
+
 
 
 
