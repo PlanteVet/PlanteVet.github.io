@@ -876,7 +876,7 @@
 			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Chargement ...';
 			document.getElementById("DatabaseImportProgress").style.display = 'inline';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
-			Cors_DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
+			DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
 				// get result
 				let FileData = OpsResult;
 				// feed sqlite3 with just loaded database
@@ -8610,6 +8610,7 @@
 	
 </body>
 </html>
+
 
 
 
