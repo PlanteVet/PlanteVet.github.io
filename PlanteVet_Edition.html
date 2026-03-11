@@ -744,12 +744,12 @@
 			return true;
 		}
 
-		// Import database
+		// Import database local
 		// NOTA : this function does a fake upload
-		function DoImportDatabase()
+		function DoImportDatabaseLoc()
 		{
 			let ProgressBarObj = document.getElementById("DatabaseImportProgressBar");
-			let ListFilePathObj = document.getElementById("DatabasePathBtn").files;
+			let ListFilePathObj = document.getElementById("DatabasePathBtnLoc").files;
 			let NbFile = ListFilePathObj.length;
 
 			// check if a file was selected
@@ -761,10 +761,12 @@
 			let FileObj = ListFilePathObj[0];
 			
 			// Load database
-			document.getElementById("DatabasePathBtn").disabled = true;
-			document.getElementById("DatabaseImportBtn").disabled = true;
+			document.getElementById("DatabasePathBtnLoc").disabled = true;
+			document.getElementById("DatabaseImportBtnLoc").disabled = true;
+			document.getElementById("DatabaseImportBtnGlb").disabled = true;
 			ProgressBarObj.value = 0;
-			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Loading ...';
+			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Chargement ...';
+			document.getElementById("DatabaseImportProgress").style.display = 'inline';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
 			DoReadFileAsync(FileObj,ProgressBarObj).then((OpsResult) => {
 				// get result
@@ -779,8 +781,7 @@
 																			TmpData,
 																			FileData.byteLength,
 																			FileData.byteLength,
-																			globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE
-																			|globalThis.sqlite3.capi.SQLITE_DESERIALIZE_RESIZEABLE);
+																			globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
 					console.log("Deserialize status : " + RetCode);
 					globalThis.WorkingDB.checkRc(RetCode);
 					console.log("Deserialize OK");
@@ -797,9 +798,11 @@
 						alert("Database schema is invalid");
 						if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
 						globalThis.WorkingDB = null;
-						document.getElementById("DatabasePathBtn").disabled = false;
-						document.getElementById("DatabaseImportBtn").disabled = false;
+						document.getElementById("DatabasePathBtnLoc").disabled = false;
+						document.getElementById("DatabaseImportBtnLoc").disabled = false;
+						document.getElementById("DatabaseImportBtnGlb").disabled = false;
 						document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+						document.getElementById("DatabaseImportProgress").style.display = 'none';
 						return;
 					}
 					console.log("DB schema is OK");
@@ -808,28 +811,113 @@
 					alert("Echec importing database");
 					if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
 					globalThis.WorkingDB = null;
-					document.getElementById("DatabasePathBtn").disabled = false;
-					document.getElementById("DatabaseImportBtn").disabled = false;
+					document.getElementById("DatabasePathBtnLoc").disabled = false;
+					document.getElementById("DatabaseImportBtnLoc").disabled = false;
+					document.getElementById("DatabaseImportBtnGlb").disabled = false;
 					document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+					document.getElementById("DatabaseImportProgress").style.display = 'none';
 					return;
 				}
-				// save DB name (for export)
-				globalThis.WorkingDBName = FileObj.name;				
+				
 				// disable import
 				document.getElementById("DatabasePathForm").style.display = 'none';
-				// activate edit
+				// activate search
 				//document.getElementById("DatabasePath").innerHTML = "Working with database : " + document.URL;
 				document.getElementById("DatabasePath").innerHTML = "Working with database : " + ListFilePathObj[0].name;
-				document.getElementById("DatabasePath").style.display = 'None';
-				document.getElementById("DatabasePath").style.visibility = 'Hidden';
-				document.getElementById("TableChoiceForm").style.visibility = 'visible';
-				// enable/disable btn as needed
-				if(IsLaboTblEmpty()) document.getElementById("EditPdtBtn").disabled = true;
+				document.getElementById("DatabasePath").style.display = 'none';
+				document.getElementById("DatabasePath").style.visibility = 'hidden';
+				document.getElementById("ListePlanteForm").style.visibility = 'visible';
+				DoListPlantes();
 			}).catch((OpsError) => {
 				alert("Echec reading database");
 				document.getElementById("DatabasePathBtn").disabled = false;
 				document.getElementById("DatabaseImportBtn").disabled = false;
 				document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+				document.getElementById("DatabaseImportProgress").style.display = 'none';
+			});
+			return;
+		}
+		
+		// Import database Global
+		// NOTA : this function does a fake upload
+		function DoImportDatabaseGlb(Url)
+		{
+			let ProgressBarObj = document.getElementById("DatabaseImportProgressBar");
+			
+			// Load database
+			document.getElementById("DatabasePathBtnLoc").disabled = true;
+			document.getElementById("DatabaseImportBtnLoc").disabled = true;
+			document.getElementById("DatabaseImportBtnGlb").disabled = true;
+			ProgressBarObj.value = 0;
+			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Chargement ...';
+			document.getElementById("DatabaseImportProgress").style.display = 'inline';
+			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
+			Cors_DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
+				// get result
+				let FileData = OpsResult;
+				// feed sqlite3 with just loaded database
+				document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Parsing ...';
+				try {
+					let TmpData = globalThis.sqlite3.wasm.allocFromTypedArray(FileData);			
+					globalThis.WorkingDB = new globalThis.sqlite3.oo1.DB();
+					let RetCode = globalThis.sqlite3.capi.sqlite3_deserialize(globalThis.WorkingDB,
+																			'main',
+																			TmpData,
+																			FileData.byteLength,
+																			FileData.byteLength,
+																			globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
+					console.log("Deserialize status : " + RetCode);
+					globalThis.WorkingDB.checkRc(RetCode);
+					console.log("Deserialize OK");
+					// try get database schema to validate its format
+					console.log("Getting Database schema ...");
+					let SQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select * from sqlite_schema",
+						rowMode: 'array',
+					});
+					console.log("DB schema : " + SQLRequestResultObj);
+					if(!IsDatabaseSchemaValid(SQLRequestResultObj))
+					{
+						console.log("DB schema is invalid");
+						alert("Database schema is invalid");
+						if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
+						globalThis.WorkingDB = null;
+						document.getElementById("DatabasePathBtnLoc").disabled = false;
+						document.getElementById("DatabaseImportBtnLoc").disabled = false;
+						document.getElementById("DatabaseImportBtnGlb").disabled = false;
+						document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+						document.getElementById("DatabaseImportProgress").style.display = 'none';
+						return;
+					}
+					console.log("DB schema is OK");
+				} catch(ErrorObj) {
+					console.log("Echec importing database");
+					alert("Echec importing database");
+					if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
+					globalThis.WorkingDB = null;
+					document.getElementById("DatabasePathBtnLoc").disabled = false;
+					document.getElementById("DatabaseImportBtnLoc").disabled = false;
+					document.getElementById("DatabaseImportBtnGlb").disabled = false;
+					document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+					document.getElementById("DatabaseImportProgress").style.display = 'none';
+					return;
+				}
+				
+				// disable import
+				document.getElementById("DatabasePathForm").style.display = 'none';
+				// activate search
+				//document.getElementById("DatabasePath").innerHTML = "Working with database : " + document.URL;
+				document.getElementById("DatabasePath").style.display = 'none';
+				document.getElementById("DatabasePath").style.visibility = 'hidden';
+				document.getElementById("ListePlanteForm").style.visibility = 'visible';
+				DoListPlantes();
+			}).catch((OpsError) => {
+				alert("Echec reading database");
+				document.getElementById("DatabasePathBtnLoc").disabled = false;
+				document.getElementById("DatabaseImportBtnLoc").disabled = false;
+				document.getElementById("DatabaseImportBtnGlb").disabled = false;
+				document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+				document.getElementById("DatabaseImportProgress").style.display = 'none';
 			});
 			return;
 		}
@@ -8484,6 +8572,7 @@
 	
 </body>
 </html>
+
 
 
 
