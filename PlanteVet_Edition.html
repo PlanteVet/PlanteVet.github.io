@@ -849,6 +849,8 @@
 				document.getElementById("DatabasePathForm").style.display = 'none';
 				// activate edit
 				document.getElementById("DatabasePath").innerHTML = "Working with database : " + ListFilePathObj[0].name;
+				document.getElementById("DatabasePath").style.display = 'none';
+				document.getElementById("DatabasePath").style.visibility = 'hidden';
 				document.getElementById("TableChoiceForm").style.visibility = 'visible';
 				// enable/disable btn as needed
 				if(IsLaboTblEmpty()) document.getElementById("EditPdtBtn").disabled = true;
@@ -8576,6 +8578,7 @@
 	
 </body>
 </html>
+
 
 
 
