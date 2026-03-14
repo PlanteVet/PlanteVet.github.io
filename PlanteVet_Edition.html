@@ -805,7 +805,8 @@
 																			TmpData,
 																			FileData.byteLength,
 																			FileData.byteLength,
-																			globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
+																			globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE
+																			|globalThis.sqlite3.capi.SQLITE_DESERIALIZE_RESIZEABLE);
 					console.log("Deserialize status : " + RetCode);
 					globalThis.WorkingDB.checkRc(RetCode);
 					console.log("Deserialize OK");
@@ -891,7 +892,8 @@
 																			TmpData,
 																			FileData.byteLength,
 																			FileData.byteLength,
-																			globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
+																			globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE
+																			|globalThis.sqlite3.capi.SQLITE_DESERIALIZE_RESIZEABLE);
 					console.log("Deserialize status : " + RetCode);
 					globalThis.WorkingDB.checkRc(RetCode);
 					console.log("Deserialize OK");
