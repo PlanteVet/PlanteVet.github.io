@@ -870,6 +870,7 @@
 				document.getElementById("DatabasePath").innerHTML = "Working with database : " + ListFilePathObj[0].name;
 				document.getElementById("DatabasePath").style.display = 'none';
 				document.getElementById("DatabasePath").style.visibility = 'hidden';
+				document.getElementById("TableChoiceForm").style.display = 'inline';
 				document.getElementById("TableChoiceForm").style.visibility = 'visible';
 				// enable/disable btn as needed
 				if(IsLaboTblEmpty()) document.getElementById("EditPdtBtn").disabled = true;
@@ -958,6 +959,7 @@
 				// activate search
 				document.getElementById("DatabasePath").style.display = 'none';
 				document.getElementById("DatabasePath").style.visibility = 'hidden';
+				document.getElementById("TableChoiceForm").style.display = 'inline';
 				document.getElementById("TableChoiceForm").style.visibility = 'visible';
 				// enable/disable btn as needed
 				if(IsLaboTblEmpty()) document.getElementById("EditPdtBtn").disabled = true;
@@ -8452,7 +8454,7 @@
 	</div>
 
 	<!-- Select table to edit -->
-	<div id="TableChoiceForm" style="visibility: hidden;">
+	<div id="TableChoiceForm" style="visibility: hidden; display: none;">
 		<span id="DatabasePath">No DB</span>
 		<input type="button" value="Editer un PRODUIT" id="EditPdtBtn" onclick="DoEditProductTable();" class="Product" />
 		<br/><input type="button" value="Editer un LABORATOIRE" onclick="DoEditLaboTable();" class="Product" />
@@ -8481,12 +8483,12 @@
 	</div>
 
 	<!-- Select Product/labo/usecase row to edit -->
-	<div id="RowChoiceForm" style="visibility: hidden;">
+	<div id="RowChoiceForm" style="visibility: hidden; display: none;">
 		Empty form
 	</div>
 	
 	<!-- Edit selected table row -->
-	<div id="RowEditForm" style="visibility: hidden;">
+	<div id="RowEditForm" style="visibility: hidden; display: none;">
 		Empty form
 	</div>
 	
