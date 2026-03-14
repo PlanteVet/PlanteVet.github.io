@@ -855,10 +855,12 @@
 				document.getElementById("TableChoiceForm").style.visibility = 'visible';
 				// enable/disable btn as needed
 				if(IsLaboTblEmpty()) document.getElementById("EditPdtBtn").disabled = true;
+				if(IsFctsTblEmpty()) document.getElementById("EditUsecaseBtn").disabled = true;
 			}).catch((OpsError) => {
 				alert("Echec reading database");
-				document.getElementById("DatabasePathBtn").disabled = false;
-				document.getElementById("DatabaseImportBtn").disabled = false;
+				document.getElementById("DatabasePathBtnLoc").disabled = false;
+				document.getElementById("DatabaseImportBtnLoc").disabled = false;
+				document.getElementById("DatabaseImportBtnGlb").disabled = false;
 				document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
 				document.getElementById("DatabaseImportProgress").style.display = 'none';
 			});
@@ -941,6 +943,7 @@
 				document.getElementById("TableChoiceForm").style.visibility = 'visible';
 				// enable/disable btn as needed
 				if(IsLaboTblEmpty()) document.getElementById("EditPdtBtn").disabled = true;
+				if(IsFctsTblEmpty()) document.getElementById("EditUsecaseBtn").disabled = true;
 			}).catch((OpsError) => {
 				alert("Echec reading database");
 				document.getElementById("DatabasePathBtnLoc").disabled = false;
@@ -5150,6 +5153,9 @@
 				globalThis.PrivateWorkingEltId = 0;
 				// enable save db btn
 				document.getElementById("SaveDBBtn").disabled = false;
+				// enable/disable btn as needed
+				if(IsFctsTblEmpty()) document.getElementById("EditUsecaseBtn").disabled = true;
+				else document.getElementById("EditUsecaseBtn").disabled = false;
 			}
 			// back to select row
 			DoEditFctsTable();
@@ -5207,6 +5213,9 @@
 			}
 			// enable save db btn
 			document.getElementById("SaveDBBtn").disabled = false;
+			// enable/disable btn as needed
+			if(IsFctsTblEmpty()) document.getElementById("EditUsecaseBtn").disabled = true;
+			else document.getElementById("EditUsecaseBtn").disabled = false;
 			return;
 		}
 
@@ -8556,7 +8565,7 @@
 		<br/>
 		<br/>
 		<br/><input type="button" value="Editer une GRANDE FONCTION ORGANIQUE" onclick="DoEditFctsTable();" class="Fct" />
-		<br/><input type="button" value="Editer une UTILISATION" onclick="DoEditUsecaseTable();" class="Fct" />
+		<br/><input type="button" value="Editer une UTILISATION" id="EditUsecaseBtn" onclick="DoEditUsecaseTable();" class="Fct" />
 		<br/>
 		<br/>
 		<br/><input type="button" value="Editer un EFFET SECONDAIRE" onclick="DoEditEffet2Table();" class="Tox" />
