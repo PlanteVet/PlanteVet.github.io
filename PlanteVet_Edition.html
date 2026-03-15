@@ -4780,7 +4780,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from PRODUCT",
+					sql: "select Id,Name from PRODUCT order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list product SQL request.");
@@ -4998,7 +4998,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from LABO",
+					sql: "select Id,Name from LABO order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list labo SQL request.");
@@ -5217,7 +5217,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from Fcts",
+					sql: "select Id,Name from Fcts order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Fcts SQL request.");
@@ -5438,7 +5438,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from USECASE",
+					sql: "select Id,Name from USECASE order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list usecase SQL request.");
@@ -5651,7 +5651,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from TOXICITE",
+					sql: "select Id,Name from TOXICITE order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Toxicite SQL request.");
@@ -5864,7 +5864,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from EFFET2",
+					sql: "select Id,Name from EFFET2 order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Effet2 SQL request.");
@@ -6077,7 +6077,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from CTRINDIC",
+					sql: "select Id,Name from CTRINDIC order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list CtrIndic SQL request.");
@@ -6290,7 +6290,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from GALENIQUE",
+					sql: "select Id,Name from GALENIQUE order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Galenique SQL request.");
@@ -6503,7 +6503,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from CATEGORIE",
+					sql: "select Id,Name from CATEGORIE order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Categorie SQL request.");
@@ -6738,7 +6738,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from ESPECE",
+					sql: "select Id,Name from ESPECE order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Espece SQL request.");
@@ -8172,7 +8172,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name,Latin from Plante",
+					sql: "select Id,Name,Latin from Plante order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Plante SQL request.");
@@ -8384,7 +8384,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from UsePart",
+					sql: "select Id,Name from UsePart order by Name ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list UsePart SQL request.");
