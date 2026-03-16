@@ -7716,7 +7716,7 @@
 			let EspeceSQLRequestResultObj = [];
 			try {
 				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from ESPECE",
+					sql: "select Id,Name from ESPECE order by Name Asc",
 					rowMode: 'array',
 				});
 				console.log("End of list Espece SQL request.");
@@ -7789,7 +7789,7 @@
 			let EspeceSQLRequestResultObj = [];
 			try {
 				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from ESPECE",
+					sql: "select Id,Name from ESPECE order by Name Asc",
 					rowMode: 'array',
 				});
 				console.log("End of list Espece SQL request.");
