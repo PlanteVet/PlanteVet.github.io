@@ -1958,7 +1958,7 @@
 						ThatEspecesToxSQLRequestResultObj = globalThis.WorkingDB.exec({
 							sql: "select * from ESPECE where Id = $a",
 							rowMode: 'array',
-							bind: {$a: EspeceId},
+							bind: {$a: EspeceToxId},
 						});
 						console.log("End of espece info SQL request.");
 					} catch(ErrorObj) {
