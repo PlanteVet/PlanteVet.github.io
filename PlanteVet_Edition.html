@@ -7779,10 +7779,10 @@
 		function FillPlanteEspeceToxList(PlanteId)
 		{
 			//pre-build div
-			let PlanteEspeceListObj = document.getElementById("ListCheckedPlanteEspeceTox");
+			let PlanteEspeceToxListObj = document.getElementById("ListCheckedPlanteEspeceTox");
 			
 			// NOTA : PlanteEspeceToxStateListObj array row is : EspeceId, EspeceName, FlgCurrentlyUsedByPlante
-			let PlanteEspeceStateListObj = [];
+			let PlanteEspeceToxStateListObj = [];
 			
 			// fetch all Espece
 			console.log("Doing list Espece SQL request ...");
@@ -7809,43 +7809,43 @@
 				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
 				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
 				// add to Fct state array
-				let EspeceStateListObj = {EspeceId: EspeceId, EspeceName: EspeceNameTxt, FlgCurrentlyUsedByPlante: false};
-				PlanteEspeceStateListObj.push(EspeceStateListObj);
+				let EspeceToxStateListObj = {EspeceId: EspeceId, EspeceName: EspeceNameTxt, FlgCurrentlyUsedByPlante: false};
+				PlanteEspeceToxStateListObj.push(EspeceToxStateListObj);
 				// add to Fct pool combo
 				EspeceTxt += "<input type='checkbox' id='Esp_Tox_"+ EspeceId + PlanteId + "' value='" + EspeceNameTxt +"'>" + EspeceNameTxt + "</input>";
 			}
-			PlanteEspeceListObj.innerHTML = EspeceTxt;
+			PlanteEspeceToxListObj.innerHTML = EspeceTxt;
 			
-			//fetch plante espece
-			console.log("Doing plante espece SQL request ...");
-			let PlanteEspeceSQLRequestResultObj = [];
+			//fetch plante espece tox
+			console.log("Doing plante espece tox SQL request ...");
+			let PlanteEspeceToxSQLRequestResultObj = [];
 			try {
-				PlanteEspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+				PlanteEspeceToxSQLRequestResultObj = globalThis.WorkingDB.exec({
 					sql: "select EspeceId from PLANTE_ESPECE_TOX where Plante = $a",
 					rowMode: 'array',
 					bind: {$a: PlanteId},
 				});
-				console.log("End of plante Espece SQL request.");
+				console.log("End of plante Espece tox SQL request.");
 			} catch(ErrorObj) {
-				console.log("Echec plante Espece SQL request");
+				console.log("Echec plante Espece tox SQL request");
 			};
 			
 			//pour tous les especes cochees
-			let NbEspece = PlanteEspeceSQLRequestResultObj.length;
+			let NbEspece = PlanteEspeceToxSQLRequestResultObj.length;
 			for(let i = 0; i < NbEspece; i++)
 			{
 				// fetch espece id
-				let TmpResultRow = PlanteEspeceSQLRequestResultObj[i];
+				let TmpResultRow = PlanteEspeceToxSQLRequestResultObj[i];
 				let EspId = TmpResultRow[0];
 				
 				//Check the checkbox
 				document.getElementById("Esp_Tox_" + EspId + PlanteId).checked = true;
 				
 				//change Flg
-				PlanteEspeceStateListObj[EspId-1].FlgCurrentlyUsedByPlante = true;
+				PlanteEspeceToxStateListObj[EspId-1].FlgCurrentlyUsedByPlante = true;
 			}
 			// save usecase state array
-			globalThis.PrivatePlanteEspeceToxStateListObj = PlanteEspeceStateListObj;
+			globalThis.PrivatePlanteEspeceToxStateListObj = PlanteEspeceToxStateListObj;
 		}
 
 		// build list plante Usecase for addition
