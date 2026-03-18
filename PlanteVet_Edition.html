@@ -7713,10 +7713,21 @@
 			
 			// fetch all Espece
 			console.log("Doing list Espece SQL request ...");
+			let EspeceNameSQLRequestResultObj = [];
+			try {
+				EspeceNameSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from ESPECE order by Name Asc",
+					rowMode: 'array',
+				});
+				console.log("End of list Espece SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec list Espece SQL request");
+			};
+			console.log("Doing list Espece SQL request ...");
 			let EspeceSQLRequestResultObj = [];
 			try {
 				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from ESPECE order by Name Asc",
+					sql: "select Id,Name from ESPECE",
 					rowMode: 'array',
 				});
 				console.log("End of list Espece SQL request.");
@@ -7733,13 +7744,21 @@
 				let TmpResultRow = EspeceSQLRequestResultObj[i];
 				let EspeceId = TmpResultRow[0];
 				let EspeceNameTxt = TmpResultRow[1];
+				
+				let TmpResultRowName = EspeceSQLRequestResultObj[i];
+				let EspeceIdName = TmpResultRow[0];
+				let EspeceNameTxtName = TmpResultRow[1];
+				
 				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
 				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
-				// add to Fct state array
+				if(EspeceNameTxtName == null) EspeceNameTxtName = "UNKNOWN Espece ID " + EspeceIdName;
+				EspeceNameTxtName = DoSanitizeNameTxt(EspeceNameTxtName);
+				
+				// add to Espece state array
 				let EspeceStateListObj = {EspeceId: EspeceId, EspeceName: EspeceNameTxt, FlgCurrentlyUsedByPlante: false};
 				PlanteEspeceStateListObj.push(EspeceStateListObj);
-				// add to Fct pool combo
-				EspeceTxt += "<input type='checkbox' id='Esp_"+ EspeceId + PlanteId + "' value='" + EspeceNameTxt +"'>" + EspeceNameTxt + "</input>";
+				// add to Espece pool combo
+				EspeceTxt += "<input type='checkbox' id='Esp_"+ EspeceIdName + PlanteId + "' value='" + EspeceNameTxtName +"'>" + EspeceNameTxtName + "</input>";
 			}
 			PlanteEspeceListObj.innerHTML = EspeceTxt;
 			
