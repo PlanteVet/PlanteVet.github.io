@@ -1529,11 +1529,11 @@
 					let j = 0;
 					let Plante = CtrIndicSQLRequestResultObj[j];
 					let Found = 0;
-					while((Plante[0] != ResultObj[i]) && (j < NbCtrIndic))
+					while((Plante != ResultObj[i]) && (j < NbCtrIndic))
 					{
 						j++;
 						Plante = CtrIndicSQLRequestResultObj[j];
-						if(Plante[0] == ResultObj[i]) Found = 1;
+						if(Plante == ResultObj[i]) Found = 1;
 					}
 				}
 				
@@ -1542,11 +1542,11 @@
 					//exclusion si effet2
 					let k = 0;
 					let Plante2 = Effet2SQLRequestResultObj[k];
-					while((Plante2[0] != ResultObj[i]) && (k < NbEffet2))
+					while((Plante2 != ResultObj[i]) && (k < NbEffet2))
 					{
 						j++;
 						Plante2 = Effet2SQLRequestResultObj[j];
-						if(Plante2[0] == ResultObj[i]) Found = 1;
+						if(Plante2 == ResultObj[i]) Found = 1;
 					}
 				}
 				
