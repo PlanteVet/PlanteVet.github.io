@@ -611,13 +611,47 @@
 		{
 			let EspeceInputComboTxt = "Espèce : ";
 		
-			//build combo
+			//pre build combo
 			EspeceInputComboTxt += "<select id=\"EspeceInputCombo_" + PrOrPl + "\" style=\"width: 200px;\" class='Rchr'>";
-			EspeceInputComboTxt += "<option value=\"-1\">Tous</option>";
-			EspeceInputComboTxt += "<option value=\"Chien\">Chien</option>";
-			EspeceInputComboTxt += "<option value=\"Chat\">Chat</option>";
-			EspeceInputComboTxt += "<option value=\"Bovin\">Bovin</option>";
-			EspeceInputComboTxt += "<option value=\"Cheval\">Cheval</option>";
+			
+			// fetch list espece
+			console.log("Doing combo list espece SQL request ...");
+			let EspeceSQLRequestResultObj = [];
+			try {
+				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from ESPECE order by Name ASC",
+					rowMode: 'array',
+				});
+				console.log("End of combo list espece SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec combo list espece SQL request");
+			};
+			
+			let NbResultRow = EspeceSQLRequestResultObj.length;
+			console.log("Combo list espece : " + NbResultRow + " elts");
+			if(NbResultRow == 0)
+			{
+				EspeceInputComboTxt += "<option value=\"0\">*** NO ESPECE ***</option>";
+			}
+			else
+			{	
+				EspeceInputComboTxt += "<option value=\"-1\">Tous</option>";
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					// fetch info
+					let TmpResultRow = EspeceSQLRequestResultObj[i];
+					let EspeceId = TmpResultRow[0];
+					let EspeceNameTxt = TmpResultRow[1];
+					if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN LABO ID " + EspeceId;
+					EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
+					// add to combo
+					EspeceInputComboTxt += "<option value=\"" + EspeceId + "\"";
+					if(EspeceId == DfltLaboId) LaboInputComboTxt += " selected ";
+					EspeceInputComboTxt += ">" + EspeceNameTxt + "</option>";
+				}
+			}
+			
 			// finalize
 			EspeceInputComboTxt += "</select>";
 			document.getElementById("EspeceCombo_" + PrOrPl).innerHTML = EspeceInputComboTxt;
