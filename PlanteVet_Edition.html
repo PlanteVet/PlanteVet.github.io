@@ -2768,6 +2768,18 @@
 			} catch(ErrorObj) {
 				console.log("Echec list Espece SQL request");
 			};
+			// fetch all Espece by name
+			console.log("Doing list Espece name SQL request ...");
+			let EspeceNameSQLRequestResultObj = [];
+			try {
+				EspeceNameSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id,Name from ESPECE order by Name ASC",
+					rowMode: 'array',
+				});
+				console.log("End of list Espece name SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec list Espece name SQL request");
+			};
 			
 			// build list Espece state array and div
 			let EspeceTxt = "<table border=1 cellspacing=0 cellpadding=5 valign=center><tr align=center><th>Espèce</th><th>Posologie</th><th>Temps d'attente</th></tr><tr valign=center>";
@@ -2780,13 +2792,20 @@
 				let EspeceNameTxt = TmpResultRow[1];
 				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
 				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
+				
+				let TmpResultRow2 = EspeceNameSQLRequestResultObj[i];
+				let EspeceId2 = TmpResultRow2[0];
+				let EspeceNameTxt2 = TmpResultRow2[1];
+				if(EspeceNameTxt2 == null) EspeceNameTxt2 = "UNKNOWN Espece ID " + EspeceId2;
+				EspeceNameTxt2 = DoSanitizeNameTxt(EspeceNameTxt2);
+				
 				// add to Product poso state array
 				let EspeceStateListObj = {EspeceId: EspeceId, EspeceName: EspeceNameTxt, FlgCurrentlyUsedByProduct: false};
 				ProductPosoStateListObj.push(EspeceStateListObj);
 				// add to Fct pool combo
-				EspeceTxt += "<tr align=center><td class='species'><input type='checkbox' name='Espece' id='Poso" + EspeceId + "' value='" + EspeceNameTxt +"'><label for 'Poso" + EspeceId + "'>" + EspeceNameTxt +"</label></td>";
-				EspeceTxt += "<td><textarea id=\"ProductPoso" + EspeceId +"Input\">Initializing Rich text editor ...</textarea></td>";
-				EspeceTxt += "<td><textarea id=\"ProductTA" + EspeceId +"Input\">Initializing Rich text editor ...</textarea></td></tr>";
+				EspeceTxt += "<tr align=center><td class='species'><input type='checkbox' name='Espece' id='Poso" + EspeceId2 + "' value='" + EspeceNameTxt2 +"'><label for 'Poso" + EspeceId2 + "'>" + EspeceNameTxt2 +"</label></td>";
+				EspeceTxt += "<td><textarea id=\"ProductPoso" + EspeceId2 +"Input\">Initializing Rich text editor ...</textarea></td>";
+				EspeceTxt += "<td><textarea id=\"ProductTA" + EspeceId2 +"Input\">Initializing Rich text editor ...</textarea></td></tr>";
 			}
 			EspeceTxt += "</table>";
 			PlanteEspeceListObj.innerHTML = EspeceTxt;
