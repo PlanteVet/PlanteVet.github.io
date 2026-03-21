@@ -1486,14 +1486,14 @@
 				};
 			}
 			
-			//exclusion de toutes les ctrindic correspondances
+			//selection de toutes les ctrindic correspondances
 			if(CtrIndic != "Choisir" && CtrIndic != -1)
 			{
 				// exec SQL request on Working DB
 				console.log("Doing search plante CtrIndic SQL request ...");
 				try {
 					CtrIndicSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Plante from PLANTE_CTRINDIC where CtrIndic not like $a",
+						sql: "select Plante from PLANTE_CTRINDIC where CtrIndic like $a",
 						rowMode: 'array',
 						bind: {$a: CtrIndic},
 					});
@@ -1554,40 +1554,24 @@
 			}
 			let ResultObjFinal = [];
 			let NbPlante = ResultObj.length;
-			for(let i=0; i < NbPlante; i++)
+
+			//esxclusion ctrindic
+			for(let i = 0; i < NbPlante; i++)
 			{
+				let PlanteOk = ResultObj[i];
 				let Found = 0;
-				if(NbCtrIndic != 0)
+				
+				for(let j = 0; j < NbCtrIndic; j++);
 				{
-					//exclusion ctrindic
-					let j = 0;
-					let Plante = CtrIndicSQLRequestResultObj[j];
-					let Found = 0;
-					while((Plante != ResultObj[i]) && (j < NbCtrIndic))
+					let PlanteC = CtrIndicSQLRequestResultObj[j];
+					if(PlanteOk == PlanteC)
 					{
-						j++;
-						Plante = CtrIndicSQLRequestResultObj[j];
-						if(Plante == ResultObj[i]) Found = 1;
+						Found = 1;
+						break;
 					}
 				}
 				
-				if((Found != 1) && (NbEffet2 != 0))
-				{
-					//exclusion si effet2
-					let k = 0;
-					let Plante2 = Effet2SQLRequestResultObj[k];
-					while((Plante2 != ResultObj[i]) && (k < NbEffet2))
-					{
-						j++;
-						Plante2 = Effet2SQLRequestResultObj[j];
-						if(Plante2 == ResultObj[i]) Found = 1;
-					}
-				}
-				
-				if(Found != 1)
-				{
-					ResultObjFinal.push(ResultObj[i]);
-				}
+				if(Found == 0) ResultObjFinal.push(PlanteOk);
 			}
 			
 			// append sql result
