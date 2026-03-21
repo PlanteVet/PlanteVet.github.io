@@ -4728,10 +4728,12 @@
 			}
 			RowEditFormTxt += ProductInfoTxt;
 			// hide row choice form
+			document.getElementById("RowChoiceForm").style.visibility = 'hidden';
 			document.getElementById("RowChoiceForm").style.display = 'none';
 			// show edit form
 			RowEditFormObj.innerHTML = RowEditFormTxt;
 			RowEditFormObj.style.visibility = 'visible';
+			RowEditFormObj.style.display = 'inline';
 			// finalize 
 			if(FlgProductIsValid)
 			{
