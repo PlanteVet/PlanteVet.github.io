@@ -607,7 +607,7 @@
 		}
 		
 		// build Espece combo
-		function BuildEspeceInputCombo(PrOrPl)
+		function BuildEspeceInputCombo(PrOrPl,DfltEspeceId)
 		{
 			let EspeceInputComboTxt = "Espèce : ";
 		
@@ -647,7 +647,7 @@
 					EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
 					// add to combo
 					EspeceInputComboTxt += "<option value=\"" + EspeceId + "\"";
-					if(EspeceId == DfltLaboId) LaboInputComboTxt += " selected ";
+					if(EspeceId == DfltEspeceId) LaboInputComboTxt += " selected ";
 					EspeceInputComboTxt += ">" + EspeceNameTxt + "</option>";
 				}
 			}
@@ -3153,7 +3153,7 @@
 					<br/>
 					<div id="LaboCombo_Pr">Laboratoire : <input type="button" id="LaboInputCombo_Pr" value="Choisir" onclick="BuildLaboInputCombo('Pr', 0);" class="combo"></div>
 					<div id="FctCombo_Pr">Grande fonction : <input type="button" id="FctInputCombo_Pr" value="Choisir" onclick="BuildFctInputCombo('Pr', 0);" class="combo"></div>
-					<div id="EspeceCombo_Pr">Espèce : <input type="button" id="EspeceInputCombo_Pr" value="Choisir" onclick="BuildEspeceInputCombo('Pr');" class="combo"></div>
+					<div id="EspeceCombo_Pr">Espèce : <input type="button" id="EspeceInputCombo_Pr" value="Choisir" onclick="BuildEspeceInputCombo('Pr', 0);" class="combo"></div>
 					<br/>
 					<input type="button" value="Rechercher" onclick="DoSearchProductByInfos();" class="Import" /><br/></td>
 				<td></td>
