@@ -2784,9 +2784,9 @@
 				let EspeceStateListObj = {EspeceId: EspeceId, EspeceName: EspeceNameTxt, FlgCurrentlyUsedByProduct: false};
 				ProductPosoStateListObj.push(EspeceStateListObj);
 				// add to Fct pool combo
-				EspeceTxt += "<tr align=center><td class='species'><input type='checkbox' name='Espece' id='" + EspeceNameTxt + "' value='" + EspeceNameTxt +"'><label for '" + EspeceNameTxt + "'>" + EspeceNameTxt +"</label></td>";
-				EspeceTxt += "<td><textarea id=\"ProductPoso" + EspeceNameTxt +"Input\">Initializing Rich text editor ...</textarea></td>";
-				EspeceTxt += "<td><textarea id=\"ProductTA" + EspeceNameTxt +"Input\">Initializing Rich text editor ...</textarea></td></tr>";
+				EspeceTxt += "<tr align=center><td class='species'><input type='checkbox' name='Espece' id='Poso" + EspeceId + "' value='" + EspeceNameTxt +"'><label for 'Poso" + EspeceId + "'>" + EspeceNameTxt +"</label></td>";
+				EspeceTxt += "<td><textarea id=\"ProductPoso" + EspeceId +"Input\">Initializing Rich text editor ...</textarea></td>";
+				EspeceTxt += "<td><textarea id=\"ProductTA" + EspeceId +"Input\">Initializing Rich text editor ...</textarea></td></tr>";
 			}
 			EspeceTxt += "</table>";
 			PlanteEspeceListObj.innerHTML = EspeceTxt;
@@ -2824,11 +2824,11 @@
 				let ProductTABlob = CastRichTextToBuffer("");
 				ProductTABlob = TA;
 				
-				document.getElementById(EspeceNameTxt).checked = true;
+				document.getElementById('Poso' + EspeceId).checked = true;
 				ProductPosoStateListObj[EspeceId-1].FlgCurrentlyUsedByProduct = true;
 				
-				ActivateRichTextOnSmallTextArea("ProductPoso" + EspeceNameTxt + "Input",CastBufferToRichText(ProductPosoBlob));
-				ActivateRichTextOnSmallTextArea("ProductTA" + EspeceNameTxt + "Input",CastBufferToRichText(ProductTABlob));
+				ActivateRichTextOnSmallTextArea("ProductPoso" + EspeceId + "Input",CastBufferToRichText(ProductPosoBlob));
+				ActivateRichTextOnSmallTextArea("ProductTA" + EspeceId + "Input",CastBufferToRichText(ProductTABlob));
 			}
 			
 			//activate richtext for unchecked species
@@ -2846,8 +2846,8 @@
 				
 				if(!ProductPosoStateListObj[EspeceId-1].FlgCurrentlyUsedByProduct)
 				{
-					ActivateRichTextOnSmallTextArea("ProductPoso" + EspeceNameTxt + "Input",CastBufferToRichText(ProductPosoBlob));
-					ActivateRichTextOnSmallTextArea("ProductTA" + EspeceNameTxt + "Input",CastBufferToRichText(ProductTABlob));
+					ActivateRichTextOnSmallTextArea("ProductPoso" + EspeceId + "Input",CastBufferToRichText(ProductPosoBlob));
+					ActivateRichTextOnSmallTextArea("ProductTA" + EspeceId + "Input",CastBufferToRichText(ProductTABlob));
 				}
 			}
 			
