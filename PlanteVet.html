@@ -1369,10 +1369,20 @@
 			}
 			else
 			{			
+				ResultObj.sort((a,b) => {
+					const Name1 = a[1];
+					const Name2 = b[1];
+					
+					if(Name1.localeCompare(Name2) < 0) return -1;
+					if(Name1.localeCompare(Name2) > 0) return 1;
+					return 0;
+				});
 				for(let i = 0; i < NbResultRow; i++)
 				{
-					let TmpResultRow = ResultObj[i];	
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +", -1);\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span></li>";
+					let TmpResultRow = ResultObj[i];
+					let ProductId = TmpResultRow[0];
+					let ProductName = TmpResultRow[1];
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + ProductId +", -1);\"> : " + ProductName + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
