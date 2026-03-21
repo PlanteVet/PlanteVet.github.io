@@ -838,6 +838,7 @@
 			// Pre build result
 			let ResultListTxt = document.getElementById("ProductList");
 			let ResultList = "";
+			ResultList += "<ul class='RchrchUl'>";
 
 			// append sql result
 			let NbResultRow = SQLRequestResultObj.length;
@@ -851,9 +852,10 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + "</span><br/>";
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + "</span></li>";
 				}
 			}
+			ResultList += "</ul>";
 			
 			// show result
 			ResultListTxt.innerHTML = ResultList;
@@ -888,6 +890,7 @@
 			// Pre build result
 			let ResultListTxt = document.getElementById("PlanteList");
 			let ResultList = "";
+			ResultList += "<ul class='RchrchUl'>";
 
 			// append sql result
 			let NbResultRow = SQLRequestResultObj.length;
@@ -901,9 +904,10 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span><br/>";
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span></li>";
 				}
 			}
+			ResultList += "</ul>";
 			
 			// show result
 			ResultListTxt.innerHTML = ResultList;
@@ -1326,7 +1330,8 @@
 			
 			// Pre build result
 			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pr');\" class='Back' /><br/>";
-			ResultList += "Liste des produits correspondants :<br/>(Cliquer sur un produit pour en voir les détails)<br/>";
+			ResultList += "Liste des produits correspondants :<br/><i>(Cliquer sur un produit pour en voir les détails)</i><br/>";
+			ResultList += "<ul class='RchrchUl'>";
 			
 			//chercher les correspondances entre les différentes listes
 			let NbLabo = LaboSQLRequestResultObj.length;
@@ -1367,9 +1372,11 @@
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = ResultObj[i];	
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +", -1);\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span><br/>";
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +", -1);\">Elt " + TmpResultRow[0] + " : " + TmpResultRow[1] + "</span></li>";
 				}
 			}
+			ResultList += "</ul>";
+			
 			// hidding search form
 			document.getElementById("ProductSearchForm").style.display = 'none';
 			document.getElementById("ProductSearchForm").style.visibility = 'Hidden';
@@ -1527,7 +1534,7 @@
 			
 			// Pre build result
 			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pl');\" class='Back' /><br/>";
-			ResultList += "Liste des plantes correspondantes :<br/>(Cliquer sur une plante pour en voir la monographie)<br/><br/>";
+			ResultList += "Liste des plantes correspondantes :<br/>(Cliquer sur une plante pour en voir la monographie)<br/>";
 			ResultList += "<ul class='RchrchUl'>";
 			
 			//chercher les correspondances entre les différentes listes
