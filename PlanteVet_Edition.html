@@ -2844,7 +2844,7 @@
 				let ProductPosoBlob = CastRichTextToBuffer("");
 				let ProductTABlob = CastRichTextToBuffer("");
 				
-				if(!document.getElementById(EspeceNameTxt).checked)
+				if(!ProductPosoStateListObj[EspeceId-1].FlgCurrentlyUsedByProduct)
 				{
 					ActivateRichTextOnSmallTextArea("ProductPoso" + EspeceNameTxt + "Input",CastBufferToRichText(ProductPosoBlob));
 					ActivateRichTextOnSmallTextArea("ProductTA" + EspeceNameTxt + "Input",CastBufferToRichText(ProductTABlob));
