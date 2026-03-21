@@ -1630,6 +1630,15 @@
 					} catch(ErrorObj) {
 						console.log("Echec search plante name SQL request");
 					};
+
+					PlanteSQLRequestResultObj.sort((a,b) => {
+						const Name1 = a.Name;
+						const Name2 = b.Name;
+						
+						if(Name1.localeCompare(Name2) < 0) return -1;
+						if(Name1.localeCompare(Name2) > 0) return 1;
+						return 0;
+					});
 					
 					let TmpResultRow = PlanteSQLRequestResultObj[0];
 					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">" + TmpResultRow[0] + " (<i>" + TmpResultRow[1] + "</i>)</span></li>";
