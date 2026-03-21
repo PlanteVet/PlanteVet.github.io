@@ -2431,9 +2431,9 @@
 				// get check state
 				let EspeceName = ProductPosoStateObj.EspeceName;
 				let EspeceId = ProductPosoStateObj.EspeceId;
-				let Poso = CastRichTextToBuffer(GetRichTextContentAsHTML("ProductPoso" + EspeceName + "Input"));
-				let TA = CastRichTextToBuffer(GetRichTextContentAsHTML("ProductTA" + EspeceName + "Input"));
-				let FlgPosoChecked = document.getElementById(EspeceName).checked;
+				let Poso = CastRichTextToBuffer(GetRichTextContentAsHTML("ProductPoso" + EspeceId + "Input"));
+				let TA = CastRichTextToBuffer(GetRichTextContentAsHTML("ProductTA" + EspeceId + "Input"));
+				let FlgPosoChecked = document.getElementById('Poso' + EspeceId).checked;
 				// check if this Poso is removed from list of product Poso or added to
 				if(ProductPosoStateObj.FlgCurrentlyUsedByProduct && (!FlgPosoChecked))
 				{
