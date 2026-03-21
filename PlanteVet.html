@@ -1510,7 +1510,7 @@
 				console.log("Doing search plante Effet2 SQL request ...");
 				try {
 					Effet2SQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Plante from PLANTE_EFFET2 where Effet2 not like $a",
+						sql: "select Plante from PLANTE_EFFET2 where Effet2 like $a",
 						rowMode: 'array',
 						bind: {$a: Effet2},
 					});
@@ -1552,7 +1552,7 @@
 					}
 				}
 			}
-			let ResultObjFinal = [];
+			let ResultObjInter = [];
 			let NbPlante = ResultObj.length;
 
 			//esxclusion ctrindic
@@ -1565,6 +1565,27 @@
 				{
 					let PlanteC = CtrIndicSQLRequestResultObj[j];
 					if(PlanteOk[0] == PlanteC[0])
+					{
+						Found = 1;
+						break;
+					}
+				}
+				
+				if(Found == 0) ResultObjInter.push(PlanteOk);
+			}
+			
+			let ResultObjFinal = [];
+			let NbPlante2 = ResultObjInter.length;
+			//esxclusion Effet2
+			for(let i = 0; i < NbPlante2; i++)
+			{
+				let PlanteOk = ResultObjInter[i];
+				let Found = 0;
+				
+				for(let j = 0; j < NbEffet2; j++)
+				{
+					let PlanteE = Effet2SQLRequestResultObj[j];
+					if(PlanteOk[0] == PlanteE[0])
 					{
 						Found = 1;
 						break;
