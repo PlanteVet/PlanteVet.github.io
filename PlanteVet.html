@@ -1978,6 +1978,7 @@
 				};
 				let NbEspecesMax = EspecesSQLRequestResultObj.length;
 				let EspeceTxt = "";
+				let FullList = [];
 				for(j = 0; j < NbEspecesMax; j++)
 				{
 					let EspeceId = EspecesSQLRequestResultObj[j][0];
@@ -1994,8 +1995,22 @@
 					} catch(ErrorObj) {
 						console.log("Echec espece info SQL request");
 					};
+
+					FullList.push(ThatEspecesSQLRequestResultObj[0]);
+				}
+				
+				FullList.sort((a,b) => {
+					const Name1 = a[1];
+					const Name2 = b[1];
 					
-					let EspeceInfo = ThatEspecesSQLRequestResultObj[0];
+					if(Name1.localeCompare(Name2) < 0) return -1;
+					if(Name1.localeCompare(Name2) > 0) return 1;
+					return 0;
+				});
+				
+				for(j = 0; j < NbEspecesMax; j++)
+				{
+					let EspeceInfo = FullList[0];
 					let EspeceName = EspeceInfo[1];
 					if(EspeceName == null) EspeceName = "UNDEFINED";
 					let EspecePhoto = EspeceInfo[2];
