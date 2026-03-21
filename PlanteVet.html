@@ -1634,7 +1634,7 @@
 
 					let TmpResultRow = PlanteSQLRequestResultObj[0];
 					
-					ListOrd.push({Name : TmpResultRow[0], Latin : TmpResultRow[1]});
+					ListOrd.push({Id: PlanteId, Name : TmpResultRow[0], Latin : TmpResultRow[1]});
 				}
 				
 				ListOrd.sort((a,b) => {
@@ -1648,7 +1648,10 @@
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = ListOrd[i];
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">" + TmpResultRow[0] + " (<i>" + TmpResultRow[1] + "</i>)</span></li>";
+					let PlanteId = TmpResultRow.Id;
+					let PlanteName = TmpResultRow.Name;
+					let PlanteLatin = TmpResultRow.Latin;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">" + PlanteName + " (<i>" + PlanteLatin + "</i>)</span></li>";
 				}
 			}
 			ResultList += "</ul>";
