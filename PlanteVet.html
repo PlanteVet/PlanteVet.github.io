@@ -1632,7 +1632,9 @@
 						console.log("Echec search plante name SQL request");
 					};
 
-					ListOrd.push(PlanteSQLRequestResultObj[0]);
+					let TmpResultRow = PlanteSQLRequestResultObj[0];
+					
+					ListOrd.push({Name : TmpResultRow[0], Latin : TmpResultRow[1]});
 				}
 				
 				ListOrd.sort((a,b) => {
