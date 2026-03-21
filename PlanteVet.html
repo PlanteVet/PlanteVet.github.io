@@ -97,6 +97,10 @@
 			margin-top: 0;
 			margin-bottom: 0;
 		}
+		.Rchrch {
+			list-style-type: '✤ ';
+			margin-top: 10px;
+		}
 		
 		li {
 		}
@@ -1524,6 +1528,7 @@
 			// Pre build result
 			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pl');\" class='Back' /><br/>";
 			ResultList += "Liste des plantes correspondantes :<br/>(Cliquer sur une plante pour en voir la monographie)<br/><br/>";
+			ResultList += "<ul class='Rchrch'>";
 			
 			//chercher les correspondances entre les différentes listes
 			let NbFct = FctSQLRequestResultObj.length;
@@ -1620,9 +1625,10 @@
 					};
 					
 					let TmpResultRow = PlanteSQLRequestResultObj[0];
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">" + TmpResultRow[0] + " (<i>" + TmpResultRow[1] + "</i>)</span><br/>";
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">" + TmpResultRow[0] + " (<i>" + TmpResultRow[1] + "</i>)</span></li>";
 				}
 			}
+			ResultList += "</ul>";
 			// hidding search form
 			document.getElementById("ListePlanteForm").style.display = 'none';
 			document.getElementById("ListePlanteForm").style.visibility = 'Hidden';
