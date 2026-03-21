@@ -3009,6 +3009,7 @@
 				{
 					ProductPosoTxt += "<ul style=\"list-style-type: none;\"><li class=\"plante\"><table border=1 cellspacing=0 cellpadding=5 valign=center><tr align=center><th>Espèce</th><th>Posologie</th></tr><tr valign=center>";
 					ProductTATxt += "<ul style=\"list-style-type: none;\"><li class=\"plante\"><table border=1 cellspacing=0 cellpadding=5 valign=center><tr align=center><th>Espèce</th><th>Temps d'attente</th></tr><tr valign=center>"
+					let FullList = [];
 					for(let i = 0; i < NbPoso; i++)
 					{
 						let TmpResultRow = ProductPosoSQLRequestResultObj[i];
@@ -3028,11 +3029,29 @@
 						} catch(ErrorObj) {
 							console.log("Echec espece info SQL request");
 						};
-						let EspeceInfo = ThatEspecesSQLRequestResultObj[0];
-						let EspeceName = EspeceInfo[1];
+						
+						let TmpResultRow2 = ThatEspecesSQLRequestResultObj[0];
+						FullList.push({Id: EspeceId, Name: TmpResultRow2[1], Photo: TmpResultRow2[2], Poso: Poso, TA: TA});
+					}
+					
+					FullList.sort((a,b) => {
+						const Name1 = a.Name;
+						const Name2 = b.Name;
+						
+						if(Name1.localeCompare(Name2) < 0) return -1;
+						if(Name1.localeCompare(Name2) > 0) return 1;
+						return 0;
+					});
+					
+					for(j = 0; j < NbPoso; j++)
+					{
+						let EspeceInfo = FullList[0];
+						let EspeceName = EspeceInfo.Name;
 						if(EspeceName == null) EspeceName = "UNDEFINED";
-						let EspecePhoto = EspeceInfo[2];
+						let EspecePhoto = EspeceInfo.Photo;
 						if(EspecePhoto == null) EspecePhoto = new Uint8Array();
+						let Poso = EspeceInfo.Poso;
+						let TA = EspeceInfo.TA;
 						
 						ProductPosoTxt += "<tr align=center><td>" + EspeceName + "</td>";
 						ProductTATxt += "<tr align=center><td>" + EspeceName + "</td>";
