@@ -1616,7 +1616,7 @@
 		function DoSanitizeNameTxt(EltNameValue)
 		{
 			// filter out special chars
-			EltNameValue = EltNameValue.replace(/[&\\#,+$~%'":*?<>{}]/g, '');
+			EltNameValue = EltNameValue.replace(/[&\\#,+$~%":*?<>{}]/g, '');
 			// remove leading and trailing space
 			EltNameValue = EltNameValue.trim();
 			return EltNameValue;
