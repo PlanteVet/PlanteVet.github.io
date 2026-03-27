@@ -93,6 +93,40 @@
                 visibility: visible;  
             }
 		
+		.UsePart {
+			position: relative;
+			display: inline-block;
+			vertical-align: middle;
+		}
+			.UsePart .PopUpUsePart {
+				visibility: hidden;
+				width: 120px;
+                background-color: #E0D553;
+                color: black;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                left: 50%;
+				bottom: 130%;
+                margin-left: -65px;
+			}
+			.UsePart .PopUpUsePart::after {
+				  content: " ";
+				  position: absolute;
+				  left: 50%;
+				  top: 100%; /* To the bottom of the tooltip */
+				  margin-left: -5px;
+				  border-width: 5px;
+				  border-style: solid;
+				  border-color: #E0D553 transparent transparent transparent;
+			}
+			.UsePart:hover .PopUpUsePart {  
+                visibility: visible;  
+            }
+		
 		ul {
 			margin-top: 0;
 			margin-bottom: 0;
@@ -1140,8 +1174,6 @@
 			return;
 		}
 
-		
-
 		// Query database product by name 		
 		function DoSearchPlanteByName()
 		{
@@ -1894,6 +1926,7 @@
 					console.log("Echec plante UsePart SQL request");
 				};
 				let PlanteUsePartsTxt = "";
+				let UsePartsTxt = "";
 				let NbUsePart = PlanteUsePartsSQLRequestResultObj.length;
 				if(NbUsePart == 0) PlanteUsePartsTxt += "<br/>Aucune donnée<br/>";
 				else
@@ -1904,29 +1937,32 @@
 						// fetch UsePart id
 						let TmpResultRow = PlanteUsePartsSQLRequestResultObj[i];
 						let UsePartId = TmpResultRow[0];
-						// fecth UsePart name
-						console.log("Doing UsePart name " + UsePartId + " SQL request ...");
+						// fecth UsePart name, IMG
+						console.log("Doing UsePart name, IMG " + UsePartId + " SQL request ...");
 						let UsePartSQLRequestResultObj = [];
 						try {
 							UsePartSQLRequestResultObj = globalThis.WorkingDB.exec({
-								sql: "select Name from USEPART where Id = $a",
+								sql: "select Name, IMG from USEPART where Id = $a",
 								rowMode: 'array',
 								bind: {$a: UsePartId},
 							});
-							console.log("End of UsePart name SQL request.");
+							console.log("End of UsePart name, IMG SQL request.");
 						} catch(ErrorObj) {
-							console.log("Echec UsePart name SQL request");
+							console.log("Echec UsePart name, IMG SQL request");
 						};
 						let UsePartNameTxt = "";
+						let UsePartPhoto = new Uint8Array();
 						if(UsePartSQLRequestResultObj.length != 1) UsePartNameTxt += "UNKNOWN UsePart ID " + UsePartId;
 						else
 						{
 							let TmpResultRow = UsePartSQLRequestResultObj[0];
 							if(TmpResultRow[0] == null) UsePartNameTxt += "UNDEFINED";
 							else UsePartNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+							if(TmpResultRow[1] != null) UsePartPhoto = TmpResultRow[1];
 						}
 						// add UsePart
 						PlanteUsePartsTxt += "<li class=\"autre\">" + UsePartNameTxt + "</li>";
+						UsePartsTxt += "<div class=\"UsePart\"><img style=\"max-height: 30px; max-width: 30px;\" src=" + CastBufferToImgURLData(UsePartPhoto) + " /><span class=\"PopUpUsePart\">" + UsePartNameTxt + "</span></div>&emsp;";
 					}
 					PlanteUsePartsTxt += "</ul>";
 				}
@@ -2247,7 +2283,8 @@
 				PlanteInfoTxt += "<h2>Informations générales</h2>";
 				PlanteInfoTxt += "<img style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(PlantePhoto) + " />";
 				PlanteInfoTxt += "</td><td class=\"casedroite\" style=\"width: 30%; border: 5px; border-style: ridge; border-color: #E5CF45; border-radius: 10px; padding: 15px;\">";
-				PlanteInfoTxt += "<b>Date de dernière mise à jour : </b>" + CastBufferToRichText(Today) + "<br/><br/><br/>";
+				PlanteInfoTxt += "<b>Date de dernière mise à jour : </b>" + CastBufferToRichText(Today) + "<br/><br/>";
+				PlanteInfoTxt += "<b>Parties utilisées : </b>" + UsePartsTxt + "<br/><br/>";
 				PlanteInfoTxt += "<b>Proprietés principales : </b><br/>&emsp;" + PlanteP + "<br/><br/>";
 				PlanteInfoTxt += "<b>Espèces chez lesquelles l'utilisation est décrite : </b><br/>&emsp;" + EspeceTxt + "<br/><br/>";
 				PlanteInfoTxt += "<b>Espèces chez lesquelles la plante est toxique : </b><br/>&emsp;" + EspeceToxTxt + "<br/><br/>";
