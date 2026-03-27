@@ -449,7 +449,7 @@
 												"CREATE TABLE CATEGORIE(Id integer primary key, Name text)",
 												"CREATE TABLE ESPECE(Id integer primary key, Name text, IMG blob)",
 												"CREATE TABLE PLANTE(Id integer primary key, Name text, Photo blob, Latin text, Famille text, Botanique blob, Molecules blob, PDyn blob, P1 text, P2 text, P3 text, PCin blob, Gestation blob, Surdosage blob, Sources blob, Interac blob, MAJ blob, Rchr int, Clin int, Reg int, RegEQ int, Dop int, Poso blob)",
-												"CREATE TABLE USEPART(Id integer primary key, Name text)",
+												"CREATE TABLE USEPART(Id integer primary key, Name text, IMG blob)",
 												"CREATE TABLE FCTS(Id integer primary key, Name text)",
 												"CREATE TABLE USECASE(Id integer primary key, Name text, Fct integer not null, Syndrome bool, foreign key(Fct) references FCTS(Id))",
 												"CREATE TABLE EFFET2(Id integer primary key, Name text)",
@@ -8300,7 +8300,8 @@
 		function GoUpdateUsePart(UsePartId)
 		{
 			// fecth value to save
-			let UsePartNameTxt = document.getElementById("EltNameInput").value;			
+			let UsePartNameTxt = document.getElementById("EltNameInput").value;
+			let UsePartPhotoBlob = CastImgURLDataToBuffer(document.getElementById("UsePartPhotoView").src);
 			// local save entry
 			if(globalThis.PrivateWorkingEltId == 0)
 			{
@@ -8309,9 +8310,9 @@
 				let SQLRequestResultObj = [];
 				try {
 					SQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "insert into UsePart values(null, $a) returning Id",
+						sql: "insert into UsePart values(null, $a, $b) returning Id",
 						rowMode: 'array',
-						bind: {$a: UsePartNameTxt},
+						bind: {$a: UsePartNameTxt, $b: UsePartPhotoBlob},
 					});
 					console.log("End of insert UsePart SQL request.");
 				} catch(ErrorObj) {
@@ -8332,14 +8333,14 @@
 				console.log("Doing update UsePart SQL request ...");
 				try {
 					globalThis.WorkingDB.exec({
-						sql: "update UsePart set Name = $a where Id = $b",
+						sql: "update UsePart set Name = $a, IMG = $b where Id = $c",
 						rowMode: 'array',
-						bind: {$a: UsePartNameTxt, $b: globalThis.PrivateWorkingEltId},
+						bind: {$a: UsePartNameTxt, $b: UsePartPhotoBlob, $c: globalThis.PrivateWorkingEltId},
 					});
 					console.log("End of update UsePart SQL request.");
 				} catch(ErrorObj) {
 					console.log("Echec update UsePart SQL request");
-					alert("Update failled");
+					alert("Update failed");
 					return;
 				};
 				// notify done
@@ -8347,6 +8348,24 @@
 			}
 			// enable save db btn
 			document.getElementById("SaveDBBtn").disabled = false;
+			return;
+		}
+
+		// update UsePart photo
+		function DoUpdateUsePartPhoto()
+		{
+			let ListFilePathObj = document.getElementById("SelectedUsePartInput").files;
+			// get selected file
+			let FileObj = ListFilePathObj[0];
+			// Load file
+			DoReadImageFileAsURL(FileObj).then((OpsResult) => {
+				// get result
+				let FileDataURL = OpsResult;
+				// set data on image view
+				document.getElementById("UsePartPhotoView").src = FileDataURL;
+			}).catch((OpsError) => {
+				alert("Echec reading image");
+			});
 			return;
 		}
 
@@ -8373,7 +8392,7 @@
 			{
 				// fresh new elt
 				// Mimic SQL request result
-				let UsePartInfo = [0, "UsePart_0"];
+				let UsePartInfo = [0, "UsePart_0", new Uint8Array()];
 				UsePartSQLRequestResultObj.push(UsePartInfo);
 			}
 			else
@@ -8404,8 +8423,11 @@
 				let UsePartNameTxt = UsePartInfo[1];
 				if(UsePartNameTxt == null) UsePartNameTxt = "UNDEFINED";
 				UsePartNameTxt = DoSanitizeNameTxt(UsePartNameTxt);
+				let UsePartPhotoBlob = UsePartInfo[2];
+				if(UsePartPhotoBlob == null) UsePartPhotoBlob = new Uint8Array();
 				// build form
 				UsePartInfoTxt += "<b>Nom de la partie utilisée : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + UsePartNameTxt + "\" onchange=\"DoCheckNameValidity()\" placeholder=\"Entrez le nom d'une partie de plante.\" /><br/>";
+				UsePartInfoTxt += "<img id=\"UsePartPhotoView\" style=\"max-height: 200px; max-width: 200px\" src=" + CastBufferToImgURLData(UsePartPhotoBlob) + " /> <input id=\"SelectedUsePartInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdateUsePartPhoto()\" /><br/>";
 			}
 			RowEditFormTxt += UsePartInfoTxt;
 			// hide row choice form
