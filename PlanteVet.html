@@ -25,6 +25,11 @@
 			color: red;
 		}
 		
+		.center {
+			display: flex;
+			justify-content: center;
+		}
+		
 		.Recherche {
 			position: relative;
 			display: inline-block;
@@ -124,6 +129,40 @@
 				  border-color: #E0D553 transparent transparent transparent;
 			}
 			.UsePart:hover .PopUpUsePart {  
+                visibility: visible;  
+            }
+		
+		.RegImg {
+			position: relative;
+			display: inline-block;
+			vertical-align: middle;
+		}
+			.RegImg .PopUpReg {
+				visibility: hidden;
+				width: 300px;
+                background-color: #E0D553;
+                color: black;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                left: 50%;
+				top: 110%;
+                margin-left: -155px;
+			}
+			.RegImg .PopUpReg::after {
+				  content: " ";
+				  position: absolute;
+				  left: 50%;
+				  bottom: 100%; /* To the bottom of the tooltip */
+				  margin-left: -5px;
+				  border-width: 5px;
+				  border-style: solid;
+				  border-color: transparent transparent #E0D553 transparent;
+			}
+			.RegImg:hover .PopUpReg {  
                 visibility: visible;  
             }
 		
@@ -2131,18 +2170,45 @@
 				
 				//select txt Reg
 				let TxtReg = "";
-				if(PlanteReg == 1) TxtReg = "Inscrite au tableau 1";
-				else if(PlanteReg == 2) TxtReg = "Inscrite au tableau 2";
-				else if(PlanteReg == 3) TxtReg = "Inscrite sur la liste \"Out-of-scope\"";
+				let RegTxt = "";
+				if(PlanteReg == 1)
+				{
+					TxtReg = "Inscrite au tableau 1";
+					RegTxt += "<div class=\"RegImg\"><img style=\"max-height: 30px; max-width: 30px;\" src='Images/T1.png' /><span class=\"PopUpReg\">" + TxtReg + "</span></div>&emsp;";
+				}
+				else if(PlanteReg == 2)
+				{
+					TxtReg = "Inscrite au tableau 2";
+					RegTxt += "<div class=\"RegImg\"><img style=\"max-height: 30px; max-width: 30px;\" src='Images/T2.png' /><span class=\"PopUpReg\">" + TxtReg + "</span></div>&emsp;";
+				}
+				else if(PlanteReg == 3)
+				{
+					TxtReg = "Inscrite sur la liste \"Out-of-scope\"";
+					RegTxt += "<div class=\"RegImg\"><img style=\"max-height: 30px; max-width: 30px;\" src='Images/TOS.png' /><span class=\"PopUpReg\">" + TxtReg + "</span></div>&emsp;";
+				}
 				else TxtReg = "Non inscrite";
+				
 				//select txt RegEQ
 				let TxtRegEQ = "";
-				if(PlanteRegEQ == 1) TxtRegEQ = "Inscrite";
+				if(PlanteRegEQ == 1)
+				{
+					TxtRegEQ = "Inscrite";
+					RegTxt += "<div class=\"RegImg\"><img style=\"max-height: 30px; max-width: 30px;\" src='Images/SE.png' /><span class=\"PopUpReg\">" + TxtRegEQ + "</span></div>&emsp;";
+				}
 				else TxtRegEQ = "Non inscrite";
+				
 				//select txt Dop
 				let TxtDop = "";
-				if(PlanteDop == 1) TxtDop = "Réaction positive aux contrôles anti-dopages";
-				if(PlanteDop == 2) TxtDop = "Réaction négative aux contrôles anti-dopages";
+				if(PlanteDop == 1)
+				{
+					TxtDop = "Réaction positive aux contrôles anti-dopages";
+					RegTxt += "<div class=\"RegImg\"><img style=\"max-height: 30px; max-width: 30px;\" src='Images/Do.png' /><span class=\"PopUpReg\">" + TxtDop + "</span></div>&emsp;";
+				}
+				if(PlanteDop == 2)
+				{
+					TxtDop = "Réaction négative aux contrôles anti-dopages";
+					RegTxt += "<div class=\"RegImg\"><img style=\"max-height: 30px; max-width: 30px;\" src='Images/Dx.png' /><span class=\"PopUpReg\">" + TxtDop + "</span></div>&emsp;";
+				}
 				else TxtDop = "Aucune information disponible";
 				
 				//Applications medicales
@@ -2291,7 +2357,8 @@
 				PlanteInfoTxt += "<div class=\"Recherche\"><b>Données expérimentales : </b>" + RchrImg;
 				PlanteInfoTxt += "<span class=\"PopUpRecherches\"><table border = 0px margin-left=auto margin-right=auto valign=center><tr><td align=right></td><td align=center>=</td><td align=left>Aucune recherche expérimentale n'a été effectuée.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Des recherches ont été faites in vitro.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Quelques recherches ont été faites sur des rongeurs.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>De  nombreuses recherches ont été faites sur des rongeurs.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Quelques recherches ont été faites sur des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>De nombreuses recherches ont été faites sur des espèces cibles.</td></tr></table></span></div><br/>";
 				PlanteInfoTxt += "<div class=\"Clinique\"><br/><b>Données cliniques : </b>" + ClinImg;
-				PlanteInfoTxt += "<span class=\"PopUpClinique\"><table border = 0px margin-left=auto margin-right=auto valign=center><tr><td align=right></td><td align=center>=</td><td align=left>Aucune donnée clinique n'est disponible.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Un essai clinique a été réalisé sur l'une des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essais cliniques ont été réalisés sur l'une des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Un essai clinique a été réalisé sur au moins 2 espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essais cliniques ont été réalisés sur au moins 2 espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essai clinique ont été réalisé sur toutes les espèces cibles.</td></tr></table></span></div>";
+				PlanteInfoTxt += "<span class=\"PopUpClinique\"><table border = 0px margin-left=auto margin-right=auto valign=center><tr><td align=right></td><td align=center>=</td><td align=left>Aucune donnée clinique n'est disponible.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Un essai clinique a été réalisé sur l'une des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essais cliniques ont été réalisés sur l'une des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Un essai clinique a été réalisé sur au moins 2 espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essais cliniques ont été réalisés sur au moins 2 espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essai clinique ont été réalisé sur toutes les espèces cibles.</td></tr></table></span></div><br/><br/>";
+				PlanteInfoTxt += "<div class='center'>" + RegTxt + "</div>";
 				PlanteInfoTxt += "</td></tr>";
 				
 				PlanteInfoTxt += "<tr><td>";
