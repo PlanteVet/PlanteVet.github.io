@@ -657,6 +657,7 @@
 			});
 		}
 
+		//Read file online
 		function DoFecthDatafromUrl(UrlPath,ProgressBarObj)
 		{
 			return new Promise((resolve,reject) => {
@@ -1511,6 +1512,68 @@
 			return false;
 		}
 		
+		// cleanup edit product
+		function AfterEditProduct()
+		{
+			// Dectivate RichText 
+			DeactivateRichTextOnTextArea("ProductProprietesInput");
+			DeactivateRichTextOnTextArea("ProductPrecautionsInput");
+			
+			//deactivate all espece areas
+			// fetch all Espece
+			console.log("Doing list Espece SQL request ...");
+			let EspeceSQLRequestResultObj = [];
+			try {
+				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Id from ESPECE",
+					rowMode: 'array',
+				});
+				console.log("End of list Espece SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec list Espece SQL request");
+			};
+			let NbResultRow = EspeceSQLRequestResultObj.length;
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				// fetch info
+				let TmpResultRow = EspeceSQLRequestResultObj[i];
+				let EspeceId = TmpResultRow[0];
+				DeactivateRichTextOnTextArea("ProductPoso" + EspeceId + "Input");
+				DeactivateRichTextOnTextArea("ProductTA" + EspeceId + "Input");
+			}
+			
+			// go back to menu
+			DoEditProductTable();
+			return;
+		}
+		
+		// cleanup edit plante
+		function AfterEditPlante()
+		{
+			// Dectivate RichText 
+			DeactivateRichTextOnTextArea("PlanteBotaniqueInput");
+			DeactivateRichTextOnTextArea("PlanteMoleculesInput");
+			DeactivateRichTextOnTextArea("PlantePDynInput");
+			DeactivateRichTextOnTextArea("PlantePCinInput");
+			DeactivateRichTextOnTextArea("PlanteGestInput");
+			DeactivateRichTextOnTextArea("PlanteSurdosageInput");
+			DeactivateRichTextOnTextArea("PlanteInteracInput");
+			DeactivateRichTextOnTextArea("PlanteSourcesInput");
+			// go back to menu
+			DoEditPlanteTable();
+			return;
+		}
+		
+		// cleanup edit usecase
+		function AfterEditUsecase()
+		{
+			// Dectivate RichText 
+			DeactivateRichTextOnTextArea("UsecaseTTTInput");
+			// go back to menu
+			DoEditUsecaseTable();
+			return;
+		}
+		
 		// delete product
 		function GoDeleteProduct(ProductId)
 		{
@@ -1552,7 +1615,7 @@
 				document.getElementById("SaveDBBtn").disabled = false;
 			}		
 			// back to select row
-			DoEditProductTable();
+			AfterEditProduct();
 			return;
 		}
 
@@ -4575,58 +4638,6 @@
 			return;
 		}
 		
-		// cleanup edit product
-		function AfterEditProduct()
-		{
-			// Dectivate RichText 
-			DeactivateRichTextOnTextArea("ProductProprietesInput");
-			DeactivateRichTextOnTextArea("ProductPrecautionsInput");
-			
-			//deactivate all espece areas
-			// fetch all Espece
-			console.log("Doing list Espece SQL request ...");
-			let EspeceSQLRequestResultObj = [];
-			try {
-				EspeceSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id from ESPECE",
-					rowMode: 'array',
-				});
-				console.log("End of list Espece SQL request.");
-			} catch(ErrorObj) {
-				console.log("Echec list Espece SQL request");
-			};
-			let NbResultRow = EspeceSQLRequestResultObj.length;
-			for(let i = 0; i < NbResultRow; i++)
-			{
-				// fetch info
-				let TmpResultRow = EspeceSQLRequestResultObj[i];
-				let EspeceId = TmpResultRow[0];
-				DeactivateRichTextOnTextArea("ProductPoso" + EspeceId + "Input");
-				DeactivateRichTextOnTextArea("ProductTA" + EspeceId + "Input");
-			}
-			
-			// go back to menu
-			DoEditProductTable();
-			return;
-		}
-		
-		// cleanup edit plante
-		function AfterEditPlante()
-		{
-			// Dectivate RichText 
-			DeactivateRichTextOnTextArea("PlanteBotaniqueInput");
-			DeactivateRichTextOnTextArea("PlanteMoleculesInput");
-			DeactivateRichTextOnTextArea("PlantePDynInput");
-			DeactivateRichTextOnTextArea("PlantePCinInput");
-			DeactivateRichTextOnTextArea("PlanteGestInput");
-			DeactivateRichTextOnTextArea("PlanteSurdosageInput");
-			DeactivateRichTextOnTextArea("PlanteInteracInput");
-			DeactivateRichTextOnTextArea("PlanteSourcesInput");
-			// go back to menu
-			DoEditPlanteTable();
-			return;
-		}
-		
 		// edit product
 		function DoEditProduct(ProductId)
 		{
@@ -5272,6 +5283,23 @@
 			return;
 		}
 
+		//display TTT for syndrome
+		function DisplayUsecaseTTT()
+		{
+			let CheckedState = document.getElementById("SyndOui").checked;
+			let AreaToDisplay = document.getElementById("UsecaseTTT");
+			
+			if(CheckedState)
+			{
+				AreaToDisplay.style.display = 'inline';
+			}
+			else
+			{
+				AreaToDisplay.style.display = 'none';
+			}
+			return;
+		}
+		
 		// delete usecase
 		function GoDeleteUsecase(UsecaseId)
 		{
@@ -5300,7 +5328,7 @@
 				document.getElementById("SaveDBBtn").disabled = false;
 			}
 			// back to select row
-			DoEditUsecaseTable();
+			AfterEditUsecase();
 			return;
 		}
 
@@ -5311,6 +5339,11 @@
 			let UsecaseNameTxt = document.getElementById("EltNameInput").value;
 			let UsecaseFctTxt = document.getElementById("UsecaseFctInputCombo").value;
 			let UsecaseSynd = document.getElementById("SyndOui").checked;
+			let UsecaseTTT = '';
+			if(UsecaseSynd)
+			{
+				UsecaseTTT = CastRichTextToBuffer(GetRichTextContentAsHTML("UsecaseTTTInput"));
+			}
 			
 			// local save entry
 			if(globalThis.PrivateWorkingEltId == 0)
@@ -5320,9 +5353,9 @@
 				let SQLRequestResultObj = [];
 				try {
 					SQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "insert into USECASE values(null, $a, $b, $c) returning Id",
+						sql: "insert into USECASE values(null, $a, $b, $c, $d) returning Id",
 						rowMode: 'array',
-						bind: {$a: UsecaseNameTxt, $b: UsecaseFctTxt, $c: UsecaseSynd},
+						bind: {$a: UsecaseNameTxt, $b: UsecaseFctTxt, $c: UsecaseSynd, $d: UsecaseTTT},
 					});
 					console.log("End of insert usecase SQL request.");
 				} catch(ErrorObj) {
@@ -5343,14 +5376,14 @@
 				console.log("Doing update usecase SQL request ...");
 				try {
 					globalThis.WorkingDB.exec({
-						sql: "update USECASE set Name = $a, Fct = $b, Syndrome = $c where Id = $d",
+						sql: "update USECASE set Name = $a, Fct = $b, Syndrome = $c, TTT = $d where Id = $e",
 						rowMode: 'array',
-						bind: {$a: UsecaseNameTxt, $b: UsecaseFctTxt, $c: UsecaseSynd, $d: globalThis.PrivateWorkingEltId},
+						bind: {$a: UsecaseNameTxt, $b: UsecaseFctTxt, $c: UsecaseSynd, $d: UsecaseTTT, $e: globalThis.PrivateWorkingEltId},
 					});
 					console.log("End of update usecase SQL request.");
 				} catch(ErrorObj) {
 					console.log("Echec update usecase SQL request");
-					alert("Update failled");
+					alert("Update failed");
 					return;
 				};
 				// notify done
@@ -5365,13 +5398,14 @@
 		function DoEditUsecase(UsecaseId)
 		{
 			let RowEditFormObj = document.getElementById("RowEditForm");
+			let FlgUsecaseIsValid = false;
 
 			// save working elt id (used by update / delete operations)
 			globalThis.PrivateWorkingEltId = UsecaseId;
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateUsecase(" + UsecaseId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditUsecaseTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"AfterEditUsecase();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteUsecase(" + UsecaseId + ");\" class='Delete' ";
 			if(IsUsecaseUsedBySomeProduct(UsecaseId) || (UsecaseId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
@@ -5384,7 +5418,7 @@
 			{
 				// fresh new elt
 				// Mimic SQL request result
-				let UsecaseInfo = [0, "USECASE_0", 0, 0];
+				let UsecaseInfo = [0, "USECASE_0", 0, 0, new Uint8Array()];
 				UsecaseSQLRequestResultObj.push(UsecaseInfo);
 			}
 			else
@@ -5417,11 +5451,19 @@
 				UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
 				let UsecaseFctId = UsecaseInfo[2];
 				let UsecaseSynd = UsecaseInfo[3];
+				let UsecaseTTT = UsecaseInfo[4];
+				if(UsecaseTTT == null) UsecaseTTT = new Uint8Array();
 				// build form
 				UsecaseInfoTxt += "<b>Nom de l'utilisation : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + UsecaseNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder=\"Entrez le nom d'une utilisation clinique.\" /><br/>";
 				UsecaseInfoTxt += "<b>Liée à la : </b>" + BuildUsecaseFctInputCombo(UsecaseFctId) + "<br/>";
-				if(UsecaseSynd == 1) UsecaseInfoTxt += "<b>Est un grand syndrôme : </b><input type='radio' name='Syndrome' id='SyndOui' value='Oui' checked><label for 'Oui'>Oui</label><input type='radio' name='Syndrome' id='SyndNon' value='Non'><label for 'Non'>Non</label><br/>";
-				else UsecaseInfoTxt += "<b>Est un grand syndrôme : </b><input type='radio' name='Syndrome' id='SyndOui' value='Oui'><label for 'Oui'>Oui</label><input type='radio' name='Syndrome' id='SyndNon' value='Non' checked><label for 'Non'>Non</label><br/>";
+				if(UsecaseSynd == 1) UsecaseInfoTxt += "<b>Est un grand syndrôme : </b><input type='radio' name='Syndrome' id='SyndOui' value='Oui' onclick='DisplayUsecaseTTT()' checked><label for 'Oui'>Oui</label><input type='radio' name='Syndrome' id='SyndNon' value='Non' onclick='DisplayUsecaseTTT()'><label for 'Non'>Non</label><br/>";
+				else UsecaseInfoTxt += "<b>Est un grand syndrôme : </b><input type='radio' name='Syndrome' id='SyndOui' value='Oui' onclick='DisplayUsecaseTTT()'><label for 'Oui'>Oui</label><input type='radio' name='Syndrome' id='SyndNon' value='Non' onclick='DisplayUsecaseTTT()' checked><label for 'Non'>Non</label><br/>";
+				UsecaseInfoTxt += "<br/><div id=\"UsecaseTTT\"><b>Exemple de traitement</b><br/><br/>";
+				UsecaseInfoTxt += "<textarea id=\"UsecaseTTTInput\" >Initializing Rich text editor ...</textarea></div>";
+				RichTextDataUsecase = CastBufferToRichText(UsecaseTTT);
+				
+				// say everything is ok
+				FlgUsecaseIsValid = true;
 			}
 			RowEditFormTxt += UsecaseInfoTxt;
 			// hide row choice form
@@ -5431,6 +5473,14 @@
 			RowEditFormObj.innerHTML = RowEditFormTxt;
 			RowEditFormObj.style.display = 'inline';
 			RowEditFormObj.style.visibility = 'visible';
+			// finalize
+			if(FlgUsecaseIsValid)
+			{
+				// activate RichText and set init content
+				ActivateRichTextOnTextArea("UsecaseTTTInput",RichTextDataUsecase);
+				// Display if Syndrome
+				DisplayUsecaseTTT();
+			}
 			return;
 		}
 		
@@ -6821,7 +6871,7 @@
 				document.getElementById("SaveDBBtn").disabled = false;
 			}
 			// back to select row
-			DoEditPlanteTable();
+			AfterEditPlante();
 			return;
 		}
 
