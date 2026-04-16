@@ -174,6 +174,9 @@
 			list-style-type: '✤ ';
 			margin-top: 10px;
 		}
+		.void {
+			list-style-type: '';
+		}
 		
 		li {
 		}
@@ -203,6 +206,12 @@
 		.casedroite {
 			position: right;
 		}
+		.casedroitebis {
+			position: right;
+			border: 5px solid purple;
+			border-radius: 10px;
+			padding: 10px;
+		}
 		.high {
 			vertical-align: top
 		}
@@ -229,6 +238,9 @@
 			border-bottom: 5px solid green;
 			border-bottom-left-radius: 10px;
 			border-bottom-right-radius: 10px;
+		}
+		.toptext {
+			vertical-align: top;
 		}
 		
 		button {
@@ -1213,7 +1225,7 @@
 			return;
 		}
 
-		// Query database product by name 		
+		// Query database plante by name 		
 		function DoSearchPlanteByName()
 		{
 			let ResultListObj = document.getElementById("MatchingProductList");
@@ -1468,7 +1480,7 @@
 			return;
 		}
 		
-		// Query database product by infos 		
+		// Query database plante by infos 		
 		function DoSearchPlanteByInfos()
 		{
 			let ResultListObj = document.getElementById("MatchingProductList");
@@ -1615,6 +1627,7 @@
 			
 			// Pre build result
 			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pl');\" class='Back' /><br/>";
+			ResultList += "<table class='full'><tr><td class='toptext'>";
 			ResultList += "Liste des plantes correspondantes :<br/><i>(Cliquer sur une plante pour en voir la monographie)</i><br/>";
 			ResultList += "<ul class='RchrchUl'>";
 			
@@ -1735,7 +1748,36 @@
 					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">" + PlanteName + " (<i>" + PlanteLatin + "</i>)</span></li>";
 				}
 			}
-			ResultList += "</ul>";
+			ResultList += "</ul></td>";
+			
+			if(SyndromeId != "Choisir" && SyndromeId != -1)
+			{
+				let SyndromeTTTSQLRequestResultObj = [];
+				
+				// exec SQL request on Working DB
+				console.log("Doing search plante syndrome TTT SQL request ...");
+				try {
+					SyndromeTTTSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Name,TTT from USECASE where Id like $a",
+						rowMode: 'array',
+						bind: {$a: SyndromeId},
+					});
+					console.log("End of search plante syndrome TTT SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec search plante syndrome TTT SQL request");
+				};
+				
+				let SyndName = SyndromeTTTSQLRequestResultObj[0][0];
+				if(SyndName == null) SyndName = 'NO MATCHING SYNDROME';
+				let TTT = SyndromeTTTSQLRequestResultObj[0][1];
+				if(TTT == null) TTT = new Uint8Array();
+				
+				ResultList += "<td class='casedroitebis'>Proposition de traitement pour le syndrome <b>" + SyndName + "</b> :<br/><br/>";
+				ResultList += "<ul class='void'><li>" + CastBufferToRichText(TTT);
+				ResultList += "</li></ul></td>";
+			}
+			
+			ResultList += "</tr></table>";
 			// hidding search form
 			document.getElementById("ListePlanteForm").style.display = 'none';
 			document.getElementById("ListePlanteForm").style.visibility = 'Hidden';
