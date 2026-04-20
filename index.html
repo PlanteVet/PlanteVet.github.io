@@ -29,6 +29,14 @@
 			border-spacing: 0;
 			border-collapse: separate;
 		}
+		.CreditTable {
+			text-align: center;
+			margin-left: auto;
+			border: 10px solid #3BB9FF;
+			border-radius: 10px;
+			background-color: #3BB9FF;
+			padding: 10px;
+		}
 		td {
 		}
 		.top {
@@ -105,11 +113,62 @@
 		.Link:hover {
 			background-color: #F5E216;
 		}
+		.credit {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #3BB9FF;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+			margin-bottom: 10px;
+		}
+		.credit:hover {
+			background-color: #38ACEC;
+		}
+		.CreditClose {
+ 			border: 0;
+  			line-height: 2.5;
+  			padding: 0 20px;
+			background-color: #D462FF;
+			color: white;
+			border-radius: 5px;
+			text-shadow: 1px 1px 1px black;
+ 			box-shadow: 
+				inset 2px 2px 3px rgb(255 255 255 / 60%),
+				inset -2px -2px 3px rgb(0 0 0 / 60%);
+			margin-bottom: 10px;
+		}
+		.CreditClose:hover {
+			background-color: #C45AEC;
+		}
 	</style>
+	
 	<script>
 		function OpenInNewTab(Url)
 		{
 			window.open(Url, '_blank').focus();
+		}
+		
+		function OpenCredit()
+		{
+			let Credit = document.getElementById("CreditView");
+			Credit.style.visibility = 'visible';
+			Credit.style.display = 'inline';
+			
+			return;
+		}
+		
+		function CloseCredit()
+		{
+			let Credit = document.getElementById("CreditView");
+			Credit.style.visibility = 'hidden';
+			Credit.style.display = 'none';
+			
+			return;
 		}
 	</script>
 </head>
@@ -129,6 +188,7 @@
 	<!-- Select mode -->
 	<div id="DatabaseSelectMode" style="text-align: center;">
 		<img height= "100" src="Images/Icone.png">
+		<input id="Creditbutton" type="button" value="Credits" onclick="OpenCredit();" class='credit' style="position: fixed; top: 40px; right: 50px; z-index:2;" />
 		<br/>Sélectionner le mode de lecture pour la base de donnée "PlanteVet.db" :
 		<br/>
 		<br/>
@@ -163,6 +223,34 @@
 				<td colspan=3>
 					<br/>
 					<br/><button onclick="location.href='LiensExt.html'" type="button" class="Link">Liens externes</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<!-- Credit view -->
+	<div id="CreditView" style="visibility: hidden; display: none; position: fixed; top: 35px; right: 45px; width: 30%; z-index: 3;">
+		<table class='CreditTable'>
+			<tr>
+				<td>Base de données créée dans le cadre de la thèse de EYMERY Aline sous la supervision de MALLEM Yassine.
+					<br/>
+					<br/><b>Développement web</b>
+					<br/>EYMERY Aline
+					<br/>EYMERY Didier
+					<br/>
+					<br/><b>Favicone, Logo</b>
+					<br/>EYMERY Aline
+					<br/>avec l'aide de CLIP STUDIO PAINT PRO
+					<br/>
+					<br/><b>Hébergeur du site web</b>
+					<br/>Github
+					<br/>
+					<br/><b>Hébergeur du site local</b>
+					<br/>Google drive
+					<br/>
+					<br/>
+					<br/>
+					<input id="CloseCredit" type="button" value="Fermer" onclick="CloseCredit();" class='CreditClose' />
 				</td>
 			</tr>
 		</table>
