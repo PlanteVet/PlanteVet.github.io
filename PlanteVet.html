@@ -2743,6 +2743,7 @@
 				} catch(ErrorObj) {
 					console.log("Echec product fcts SQL request");
 				};
+				
 				//fecth usecases of product
 				console.log("Doing product usecases SQL request ...");
 				let ProductUsecasesSQLRequestResultObj = [];
@@ -2765,6 +2766,7 @@
 				else
 				{
 					ProductFctsTxt += "<ul style=\"list-style-type:'► ';\" >"
+					let FullFctList = [];
 					for(let i = 0; i < NbFcts; i++)
 					{
 						// fetch fct id
@@ -2791,6 +2793,24 @@
 							if(TmpResultRow[0] == null) FctNameTxt += "UNDEFINED";
 							else FctNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
 						}
+
+						let FctObj = [FctId, FctNameTxt];
+						FullFctList.push(FctObj);
+					}
+					
+					FullFctList.sort((a,b) => {
+						const Name1 = a[1];
+						const Name2 = b[1];
+						
+						if(Name1.localeCompare(Name2) < 0) return -1;
+						if(Name1.localeCompare(Name2) > 0) return 1;
+						return 0;
+					});
+
+					for(let i = 0; i < NbFcts; i++)
+					{
+						let FctId = FullFctList[i][0];
+						let FctNameTxt = FullFctList[i][1];
 						// add Fct
 						GrdFctsTxt += FctNameTxt + ", ";
 						ProductFctsTxt += "<li class=\"fct\">" + FctNameTxt + "<br/>";
@@ -2810,6 +2830,7 @@
 						};
 						
 						let UsecasesTxt = "";
+						let ListMatch = [];
 						let NbFctUsecases = FctUsecasesSQLRequestResultObj.length;
 						for(let j=0; j < NbFctUsecases; j++)
 						{
@@ -2819,84 +2840,125 @@
 								let UsecaseId = ProductUsecasesSQLRequestResultObj[k][1];
 								if(FctUsecaseId == UsecaseId)
 								{
-									//fetch usecase name
-									console.log("Doing usecase name " + UsecaseId + " SQL request ...");
-									let UsecaseSQLRequestResultObj = [];
-									try {
-										UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
-											sql: "select Name from USECASE where Id = $a",
-											rowMode: 'array',
-											bind: {$a: UsecaseId},
-										});
-										console.log("End of usecase name SQL request.");
-									} catch(ErrorObj) {
-										console.log("Echec usecase name SQL request");
-									};
-									let UsecaseNameTxt = "";
-									if(UsecaseSQLRequestResultObj.length != 1) UsecaseNameTxt += "UNKNOWN USECASE ID " + UsecaseId;
-									else
-									{
-										let TmpResultRow = UsecaseSQLRequestResultObj[0];
-										if(TmpResultRow[0] == null) UsecaseNameTxt += "UNDEFINED";
-										else UsecaseNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
-									}
-									
-									UsecasesTxt += "<tr align=center><td>" + UsecaseNameTxt + "</td>";
-									
 									let Product_UsecaseId = ProductUsecasesSQLRequestResultObj[k][0];
-									// fetch product usecase plantes
-									console.log("Doing product usecase plante SQL request ...");
-									let ProductUsecasePlanteSQLRequestResultObj = [];
-									try {
-										ProductUsecasePlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
-											sql: "select Plante from PRODUCT_USECASE_PLANTE where Product_Usecase = $a",
-											rowMode: 'array',
-											bind: {$a: Product_UsecaseId},
-										});
-										console.log("End of product usecase plante SQL request.");
-									} catch(ErrorObj) {
-										console.log("Echec product usecase plante SQL request");
-									};
-									
-									let ProductUsecasePlanteTxt = "<td>";
-									let NbPlante = ProductUsecasePlanteSQLRequestResultObj.length;
-									if(NbPlante == 0) ProductUsecasePlanteTxt += "<br/>";
-									else
-									{
-										for(let l = 0; l < NbPlante; l++)
-										{
-											// fetch usecase id
-											let TmpResultRow = ProductUsecasePlanteSQLRequestResultObj[l];
-											let PlanteId = TmpResultRow[0];
-											// fecth plante name
-											console.log("Doing plante name " + PlanteId + " SQL request ...");
-											let PlanteSQLRequestResultObj = [];
-											try {
-												PlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
-													sql: "select Name from PLANTE where Id = $a",
-													rowMode: 'array',
-													bind: {$a: PlanteId},
-												});
-												console.log("End of plante name SQL request.");
-											} catch(ErrorObj) {
-												console.log("Echec plante name SQL request");
-											};
-											let PlanteNameTxt = "";
-											if(PlanteSQLRequestResultObj.length != 1) PlanteNameTxt += "UNKNOWN PLANTE ID " + PlanteId;
-											else
-											{
-												let TmpResultRow = PlanteSQLRequestResultObj[0];
-												if(TmpResultRow[0] == null) PlanteNameTxt += "UNDEFINED";
-												else PlanteNameTxt += "<span class=\"PlanteView\" onclick=\"DoViewPlante(" + PlanteId+ "," + ProductId + ");\">" + DoSanitizeNameTxt(TmpResultRow[0]) + "</span>";
-											}
-											// add plante
-											ProductUsecasePlanteTxt += PlanteNameTxt + ", ";
-										}
-										ProductUsecasePlanteTxt = ProductUsecasePlanteTxt.slice(0, -2);
-									}
-									UsecasesTxt += "</td>" + ProductUsecasePlanteTxt +"</tr>";
+									let MatchObj = [UsecaseId, Product_UsecaseId];
+									ListMatch.push(MatchObj);
 								}
 							}
+						}
+
+						let NbMatch = ListMatch.length;
+						let FullUsecaseList = [];
+						for(let j=0; j < NbMatch; j++)
+						{
+							//fetch usecase name
+							console.log("Doing usecase name " + UsecaseId + " SQL request ...");
+							let UsecaseId = ListMatch[j][0];
+							let Product_UsecaseId = ListMatch[j][1];
+							let UsecaseSQLRequestResultObj = [];
+							try {
+								UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
+									sql: "select Name from USECASE where Id = $a",
+									rowMode: 'array',
+									bind: {$a: UsecaseId},
+								});
+								console.log("End of usecase name SQL request.");
+							} catch(ErrorObj) {
+								console.log("Echec usecase name SQL request");
+							};
+							let UsecaseNameTxt = "";
+							if(UsecaseSQLRequestResultObj.length != 1) UsecaseNameTxt += "UNKNOWN USECASE ID " + UsecaseId;
+							else
+							{
+								let TmpResultRow = UsecaseSQLRequestResultObj[0];
+								if(TmpResultRow[0] == null) UsecaseNameTxt += "UNDEFINED";
+								else UsecaseNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
+							}
+							let UsecaseObj = [UsecaseId, Product_UsecaseId, UsecaseNameTxt];
+							FullUsecaseList.push(UsecaseObj);
+						}
+						
+						FullUsecaseList.sort((a,b) => {
+							const Name1 = a[2];
+							const Name2 = b[2];
+							
+							if(Name1.localeCompare(Name2) < 0) return -1;
+							if(Name1.localeCompare(Name2) > 0) return 1;
+							return 0;
+						});
+	
+						for(let j = 0; j < NbFcts; j++)
+						{
+							let UsecaseId = FullUsecaseList[j][0];
+							let Product_UsecaseId = FullUsecaseList[j][1];
+							let UsecaseNameTxt = FullUsecaseList[j][2];
+							
+							UsecasesTxt += "<tr align=center><td>" + UsecaseNameTxt + "</td>";
+							
+							// fetch product usecase plantes
+							console.log("Doing product usecase plante SQL request ...");
+							let ProductUsecasePlanteSQLRequestResultObj = [];
+							try {
+								ProductUsecasePlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+									sql: "select Plante from PRODUCT_USECASE_PLANTE where Product_Usecase = $a",
+									rowMode: 'array',
+									bind: {$a: Product_UsecaseId},
+								});
+								console.log("End of product usecase plante SQL request.");
+							} catch(ErrorObj) {
+								console.log("Echec product usecase plante SQL request");
+							};
+							
+							let ProductUsecasePlanteTxt = "<td>";
+							let NbPlante = ProductUsecasePlanteSQLRequestResultObj.length;
+							if(NbPlante == 0) ProductUsecasePlanteTxt += "<br/>";
+							else
+							{
+								let FullList = [];
+								for(let l = 0; l < NbPlante; l++)
+								{
+									// fetch usecase id
+									let TmpResultRow = ProductUsecasePlanteSQLRequestResultObj[l];
+									let PlanteId = TmpResultRow[0];
+									// fecth plante name
+									console.log("Doing plante name " + PlanteId + " SQL request ...");
+									let PlanteSQLRequestResultObj = [];
+									try {
+										PlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+											sql: "select Name from PLANTE where Id = $a",
+											rowMode: 'array',
+											bind: {$a: PlanteId},
+										});
+										console.log("End of plante name SQL request.");
+									} catch(ErrorObj) {
+										console.log("Echec plante name SQL request");
+									};
+									let PlanteNameTxt = "";
+									if(PlanteSQLRequestResultObj.length != 1) PlanteNameTxt += "UNKNOWN PLANTE ID " + PlanteId;
+									else
+									{
+										let TmpResultRow = PlanteSQLRequestResultObj[0];
+										if(TmpResultRow[0] == null) PlanteNameTxt += "UNDEFINED";
+										else PlanteNameTxt += "<span class=\"PlanteView\" onclick=\"DoViewPlante(" + PlanteId+ "," + ProductId + ");\">" + DoSanitizeNameTxt(TmpResultRow[0]) + "</span>";
+									}
+									FullList.push(PlanteNameTxt);
+								}
+								
+								FullList.sort((a,b) => {
+									if(a.localeCompare(b) < 0) return -1;
+									if(a.localeCompare(b) > 0) return 1;
+									return 0;
+								});
+			
+								for(let k = 0; k < NbCtrIndic; k++)
+								{
+									let PlanteNameTxt = FullList[k];
+									// add plante
+									ProductUsecasePlanteTxt += PlanteNameTxt + ", ";
+								}
+								ProductUsecasePlanteTxt = ProductUsecasePlanteTxt.slice(0, -2);
+							}
+							UsecasesTxt += "</td>" + ProductUsecasePlanteTxt +"</tr>";
 						}
 						UsecasesTxt = "<table border=1 cellspacing=0 cellpadding=5 valign=center> <tr align=center><th>Utilisation</th><th>En association avec</th></tr>" + UsecasesTxt + "</tr></table>";
 						ProductFctsTxt += UsecasesTxt + "</li><br/>";
