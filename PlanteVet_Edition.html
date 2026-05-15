@@ -4652,7 +4652,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateProduct(" + ProductId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"AfterEditProduct();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"AfterEditProduct();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteProduct(" + ProductId + ");\" class='Delete' ";
 			if(ProductId == 0) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
@@ -4956,7 +4956,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateLabo(" + LaboId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditLaboTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditLaboTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteLabo(" + LaboId + ");\" class='Delete' ";
 			if(IsLaboUsedBySomeProduct(LaboId) || (LaboId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
@@ -5181,7 +5181,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateFcts(" + FctsId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditFctsTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditFctsTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteFcts(" + FctsId + ");\" class='Delete' ";
 			if(IsFctsUsedBySomeProduct(FctsId) || (FctsId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
@@ -5426,7 +5426,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateUsecase(" + UsecaseId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"AfterEditUsecase();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"AfterEditUsecase();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteUsecase(" + UsecaseId + ");\" class='Delete' ";
 			if(IsUsecaseUsedBySomeProduct(UsecaseId) || (UsecaseId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
@@ -5666,7 +5666,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateToxicite(" + ToxiciteId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditToxiciteTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditToxiciteTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteToxicite(" + ToxiciteId + ");\" class='Delete' ";
 			if(IsToxiciteUsedBySomeProduct(ToxiciteId) || (ToxiciteId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
@@ -5885,7 +5885,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateEffet2(" + Effet2Id + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditEffet2Table();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditEffet2Table();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteEffet2(" + Effet2Id + ");\" class='Delete' ";
 			if(IsEffet2UsedBySomeProduct(Effet2Id) || (Effet2Id == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
@@ -6104,7 +6104,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateCtrIndic(" + CtrIndicId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditCtrIndicTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditCtrIndicTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteCtrIndic(" + CtrIndicId + ");\" class='Delete' ";
 			if(IsCtrIndicUsedBySomeProduct(CtrIndicId) || (CtrIndicId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";
@@ -6323,7 +6323,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateGalenique(" + GaleniqueId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditGaleniqueTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditGaleniqueTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteGalenique(" + GaleniqueId + ");\" class='Delete' ";
 			if(IsGaleniqueUsedBySomeProduct(GaleniqueId) || (GaleniqueId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
@@ -6542,7 +6542,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateCategorie(" + CategorieId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditCategorieTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditCategorieTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteCategorie(" + CategorieId + ");\" class='Delete' ";
 			if(IsCategorieUsedBySomeProduct(CategorieId) || (CategorieId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
@@ -6780,7 +6780,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateEspece(" + EspeceId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditEspeceTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditEspeceTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteEspece(" + EspeceId + ");\" class='Delete' ";
 			if(IsEspeceUsedBySomeProduct(EspeceId) || (EspeceId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
@@ -8108,7 +8108,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdatePlante(" + PlanteId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"AfterEditPlante();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"AfterEditPlante();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeletePlante(" + PlanteId + ");\" class='Delete' ";
 			if(IsPlanteUsedBySomeProduct(PlanteId) || IsPlanteUsedBySomeUsecase(PlanteId) || (PlanteId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
@@ -8498,7 +8498,7 @@
 			// Pre build view
 			let RowEditFormTxt = "";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateUsePart(" + UsePartId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Annuler\" onclick=\"DoEditUsePartTable();\" class='Cancel' /> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditUsePartTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteUsePart(" + UsePartId + ");\" class='Delete' ";
 			if(IsUsePartUsedBySomeProduct(UsePartId) || (UsePartId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
