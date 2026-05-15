@@ -166,6 +166,15 @@
                 visibility: visible;  
             }
 		
+		header {
+			background-color: #6CD483;
+			position: fixed;
+			z-index: 3;
+			padding: 10px;
+			width: 94%;
+			border-radius: 5px;
+		}
+		
 		ul {
 			margin-top: 0;
 			margin-bottom: 0;
@@ -1814,10 +1823,10 @@
 			let PlanteViewObj = document.getElementById("ProductView");
 			
 			let PlanteInfoTxt = "";
-			if(ProductId == -1) PlanteInfoTxt += "<input type=\"button\" value=\"Retour à la recherche\" onclick=\"DoListPlantes();\" class='Back' /><br/>";
+			if(ProductId == -1) PlanteInfoTxt += "<header><input type=\"button\" value=\"Retour à la recherche\" onclick=\"DoListPlantes();\" class='Back' /></header><br/><br/>";
 			else
 			{
-				PlanteInfoTxt += "<input type=\"button\" value=\"Retour au produit\" onclick=\"DoViewProduct(" + ProductId + ", -1);\" class='Back' /><br/>";
+				PlanteInfoTxt += "<header><input type=\"button\" value=\"Retour au produit\" onclick=\"DoViewProduct(" + ProductId + ", -1);\" class='Back' /></header><br/><br/>";
 			}
 			
 			//fetch plante info
@@ -1971,6 +1980,7 @@
 				else
 				{
 					PlanteCtrIndicsTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					let FullList = [];
 					for(let i = 0; i < NbCtrIndic; i++)
 					{
 						// fetch CtrIndic id
@@ -1981,7 +1991,7 @@
 						let CtrIndicSQLRequestResultObj = [];
 						try {
 							CtrIndicSQLRequestResultObj = globalThis.WorkingDB.exec({
-								sql: "select Name from CTRINDIC where Id = $a order by Name ASC",
+								sql: "select Name from CTRINDIC where Id = $a",
 								rowMode: 'array',
 								bind: {$a: CtrIndicId},
 							});
@@ -1997,6 +2007,19 @@
 							if(TmpResultRow[0] == null) CtrIndicNameTxt += "UNDEFINED";
 							else CtrIndicNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
 						}
+
+						FullList.push(CtrIndicNameTxt);
+					}
+					
+					FullList.sort((a,b) => {
+						if(a.localeCompare(b) < 0) return -1;
+						if(a.localeCompare(b) > 0) return 1;
+						return 0;
+					});
+
+					for(let i = 0; i < NbCtrIndic; i++)
+					{
+						let CtrIndicNameTxt = FullList[i];
 						// add CtrIndic
 						PlanteCtrIndicsTxt += "<li class=\"autre\">" + CtrIndicNameTxt + "</li>";
 					}
