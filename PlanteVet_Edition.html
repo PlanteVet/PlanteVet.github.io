@@ -4714,7 +4714,7 @@
 				
 				// setup view
 				ProductInfoTxt += "<b>Produit (nom) : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + ProductNameTxt + "\" onchange=\"DoCheckNameValidity()\"  placeholder='Entrez le nom déposé du produit.'/><br/><br/>";
-				ProductInfoTxt += "<img id=\"ProductPhotoView\" style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(ProductPhotoBlob) + " /> <input id=\"SelectedPhotoInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdateProductPhoto()\" /><label for 'SelectedPhotoInput'>Sélectionner image</label>";
+				ProductInfoTxt += "<img id=\"ProductPhotoView\" style=\"max-height: 500px; max-width: 500px\" src=" + CastBufferToImgURLData(ProductPhotoBlob) + " /> <input id=\"SelectedPhotoInput\" type=\"file\" accept=\"image/*\" onchange=\"DoUpdateProductPhoto()\" />";
 				
 				ProductInfoTxt += "<h2>Composition</h2>";
 				ProductInfoTxt += "&emsp;<b>Plante(s) : </b> <select id=\"PlantePoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendProductPlante();\" class='append' /><br/><div id=\"ListCheckedProductPlante\">Empty list checked product plante</div>";
