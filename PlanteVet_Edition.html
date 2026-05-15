@@ -33,7 +33,7 @@
 			position: fixed;
 			z-index: 3;
 			padding: 10px;
-			width: 100%;
+			width: 90%;
 			border-radius: 5px;
 		}
 
@@ -4821,7 +4821,7 @@
 			RowChoiceFormTxt += "<header>";
 			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
 			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter un nouveau produit\" onclick=\"GoAddNewProduct();\" class='New' /> OU cliquer sur un produit pour l'éditer :";
-			RowChoiceFormTxt += "</header><br/><br/><br/>";
+			RowChoiceFormTxt += "</header><br/><br/><br/><br/><br/>";
 			// list all existing product : exec SQL request on Working DB
 			console.log("Doing list product SQL request ...");
 			let SQLRequestResultObj = [];
@@ -8134,7 +8134,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"AfterEditPlante();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeletePlante(" + PlanteId + ");\" class='Delete'";
 			if(IsPlanteUsedBySomeProduct(PlanteId) || IsPlanteUsedBySomeUsecase(PlanteId) || (PlanteId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";			
+			RowEditFormTxt += " /></header><br/><br/><br/>";			
 			// append Plante view
 			let PlanteInfoTxt = "";
 			PlanteInfoTxt += "<h1>Informations de la plante " + PlanteId + " :</h1>";
