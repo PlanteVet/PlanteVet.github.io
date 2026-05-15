@@ -1166,6 +1166,12 @@
 				document.getElementById("DatabasePath").style.display = 'none';
 				document.getElementById("DatabasePath").style.visibility = 'hidden';
 				document.getElementById("ListePlanteForm").style.visibility = 'visible';
+				//create combobox
+				BuildFctInputCombo('Pl', 0);
+				BuildEspeceInputCombo('Pl', 0);
+				BuildSyndromeInputCombo('Pl', 0);
+				BuildCtrIndicInputCombo('Pl', 0);
+				BuildEffet2InputCombo('Pl', 0);
 				DoListPlantes();
 			}).catch((OpsError) => {
 				alert("Echec reading database");
