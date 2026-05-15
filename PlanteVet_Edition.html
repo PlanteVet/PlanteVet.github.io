@@ -8107,9 +8107,11 @@
 			globalThis.PrivateWorkingEltId = PlanteId;
 			// Pre build view
 			let RowEditFormTxt = "";
-			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdatePlante(" + PlanteId + ");\" class='Update' /> ";
-			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"AfterEditPlante();\" class='Cancel' /> ";
-			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeletePlante(" + PlanteId + ");\" class='Delete' ";
+
+			RowEditFormTxt += "<svg width= 100% height= 5% style="position: fixed; top: 0; left: 0; z-index: 2;"><rect width="100%" height="100%" fill=#84FAA0 /></svg>";
+			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdatePlante(" + PlanteId + ");\" class='Update' style="position: fixed; z-index: 3;"/> ";
+			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"AfterEditPlante();\" class='Cancel' style="position: fixed; z-index: 3;"/> ";
+			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeletePlante(" + PlanteId + ");\" class='Delete' style="position: fixed; z-index: 3;"";
 			if(IsPlanteUsedBySomeProduct(PlanteId) || IsPlanteUsedBySomeUsecase(PlanteId) || (PlanteId == 0)) RowEditFormTxt += "disabled=\"true\"";
 			RowEditFormTxt += " /><br/>";			
 			// append Plante view
