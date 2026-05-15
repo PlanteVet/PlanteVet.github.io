@@ -1981,7 +1981,7 @@
 						let CtrIndicSQLRequestResultObj = [];
 						try {
 							CtrIndicSQLRequestResultObj = globalThis.WorkingDB.exec({
-								sql: "select Name from CTRINDIC where Id = $a",
+								sql: "select Name from CTRINDIC where Id = $a order by Name ASC",
 								rowMode: 'array',
 								bind: {$a: CtrIndicId},
 							});
