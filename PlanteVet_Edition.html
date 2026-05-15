@@ -4660,11 +4660,12 @@
 			globalThis.PrivateWorkingEltId = ProductId;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateProduct(" + ProductId + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"AfterEditProduct();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteProduct(" + ProductId + ");\" class='Delete' ";
 			if(ProductId == 0) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";			
+			RowEditFormTxt += " /></header><br/>";			
 			// append product view
 			let ProductInfoTxt = "";
 			ProductInfoTxt += "<h1>Informations du Produit " + ProductId + " :</h1>";
@@ -4817,8 +4818,10 @@
 			
 			// Pre build view
 			let RowChoiceFormTxt = "";
+			RowChoiceFormTxt += "<header>";
 			RowChoiceFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"GoBackToTableChoice();\" class='Back' /><br/><br/>";
 			RowChoiceFormTxt += "Cliquer <input type=\"button\" value=\"Ajouter un nouveau produit\" onclick=\"GoAddNewProduct();\" class='New' /> OU cliquer sur un produit pour l'éditer :<br/>";
+			RowChoiceFormTxt += "</header>";
 			// list all existing product : exec SQL request on Working DB
 			console.log("Doing list product SQL request ...");
 			let SQLRequestResultObj = [];
@@ -4964,11 +4967,12 @@
 			globalThis.PrivateWorkingEltId = LaboId;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateLabo(" + LaboId + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditLaboTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteLabo(" + LaboId + ");\" class='Delete' ";
 			if(IsLaboUsedBySomeProduct(LaboId) || (LaboId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";			
+			RowEditFormTxt += " /></header><br/>";			
 			// append Labo view
 			let LaboInfoTxt = "";
 			LaboInfoTxt += "<h1>Informations du Laboratoire " + LaboId + " :</h1><br/>";
@@ -5189,11 +5193,12 @@
 			globalThis.PrivateWorkingEltId = FctsId;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateFcts(" + FctsId + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditFctsTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteFcts(" + FctsId + ");\" class='Delete' ";
 			if(IsFctsUsedBySomeProduct(FctsId) || (FctsId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";			
+			RowEditFormTxt += " /></header><br/>";			
 			// append Fcts view
 			let FctsInfoTxt = "";
 			FctsInfoTxt += "<h1>Informations de la grande fonction organique " + FctsId + " :</h1><br/>";
@@ -5434,11 +5439,12 @@
 			globalThis.PrivateWorkingEltId = UsecaseId;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateUsecase(" + UsecaseId + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"AfterEditUsecase();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteUsecase(" + UsecaseId + ");\" class='Delete' ";
 			if(IsUsecaseUsedBySomeProduct(UsecaseId) || (UsecaseId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";
+			RowEditFormTxt += " /></header><br/>";
 			// append Usecase view
 			let UsecaseInfoTxt = "";
 			 UsecaseInfoTxt += "<h1>Informations de l'utilisation " + UsecaseId + " :</h1><br/>";
@@ -5674,11 +5680,12 @@
 			globalThis.PrivateWorkingEltId = ToxiciteId;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateToxicite(" + ToxiciteId + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditToxiciteTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteToxicite(" + ToxiciteId + ");\" class='Delete' ";
 			if(IsToxiciteUsedBySomeProduct(ToxiciteId) || (ToxiciteId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";
+			RowEditFormTxt += " /></header><br/>";
 			// append Toxicite view
 			let ToxiciteInfoTxt = "";
 			 ToxiciteInfoTxt += "<h1>Informations de la toxicité " + ToxiciteId + " :</h1><br/>";
@@ -5893,11 +5900,12 @@
 			globalThis.PrivateWorkingEltId = Effet2Id;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateEffet2(" + Effet2Id + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditEffet2Table();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteEffet2(" + Effet2Id + ");\" class='Delete' ";
 			if(IsEffet2UsedBySomeProduct(Effet2Id) || (Effet2Id == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";
+			RowEditFormTxt += " /></header><br/>";
 			// append Effet2 view
 			let Effet2InfoTxt = "";
 			 Effet2InfoTxt += "<h1>Informations de l'effet secondaire " + Effet2Id + " :</h1><br/>";
@@ -6112,11 +6120,12 @@
 			globalThis.PrivateWorkingEltId = CtrIndicId;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateCtrIndic(" + CtrIndicId + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditCtrIndicTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteCtrIndic(" + CtrIndicId + ");\" class='Delete' ";
 			if(IsCtrIndicUsedBySomeProduct(CtrIndicId) || (CtrIndicId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";
+			RowEditFormTxt += " /></header><br/>";
 			// append CtrIndic view
 			let CtrIndicInfoTxt = "";
 			 CtrIndicInfoTxt += "<h1>Informations de la contre-indication " + CtrIndicId + " :</h1><br/>";
@@ -6331,11 +6340,12 @@
 			globalThis.PrivateWorkingEltId = GaleniqueId;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateGalenique(" + GaleniqueId + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditGaleniqueTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteGalenique(" + GaleniqueId + ");\" class='Delete' ";
 			if(IsGaleniqueUsedBySomeProduct(GaleniqueId) || (GaleniqueId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";			
+			RowEditFormTxt += " /></header><br/>";			
 			// append Galenique view
 			let GaleniqueInfoTxt = "";
 			GaleniqueInfoTxt += "<h1>Informations sur la forme galénique " + GaleniqueId + " :</h1><br/>";
@@ -6550,11 +6560,12 @@
 			globalThis.PrivateWorkingEltId = CategorieId;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateCategorie(" + CategorieId + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditCategorieTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteCategorie(" + CategorieId + ");\" class='Delete' ";
 			if(IsCategorieUsedBySomeProduct(CategorieId) || (CategorieId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";			
+			RowEditFormTxt += " /></header><br/>";			
 			// append Categorie view
 			let CategorieInfoTxt = "";
 			CategorieInfoTxt += "<h1>Informations de la catégorie de médicament " + CategorieId + " :</h1><br/>";
@@ -6788,11 +6799,12 @@
 			globalThis.PrivateWorkingEltId = EspeceId;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateEspece(" + EspeceId + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditEspeceTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteEspece(" + EspeceId + ");\" class='Delete' ";
 			if(IsEspeceUsedBySomeProduct(EspeceId) || (EspeceId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";			
+			RowEditFormTxt += " /></header><br/>";			
 			// append Categorie view
 			let EspeceInfoTxt = "";
 			EspeceInfoTxt += "<h1>Informations de l'espèce " + EspeceId + " :</h1><br/>";
@@ -8508,11 +8520,12 @@
 			globalThis.PrivateWorkingEltId = UsePartId;
 			// Pre build view
 			let RowEditFormTxt = "";
+			RowEditFormTxt += "<header>";
 			RowEditFormTxt += "<input type=\"button\" id=\"SaveWorkingEltBtn\" value=\"Mettre à jour\" onclick=\"GoUpdateUsePart(" + UsePartId + ");\" class='Update' /> ";
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditUsePartTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteUsePart(" + UsePartId + ");\" class='Delete' ";
 			if(IsUsePartUsedBySomeProduct(UsePartId) || (UsePartId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /><br/>";			
+			RowEditFormTxt += " /></header><br/>";			
 			// append UsePart view
 			let UsePartInfoTxt = "";
 			UsePartInfoTxt += "<h1>Informations de la partie de plante utilisée " + UsePartId + " :</h1><br/>";
