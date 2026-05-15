@@ -2851,10 +2851,10 @@
 						let FullUsecaseList = [];
 						for(let j=0; j < NbMatch; j++)
 						{
-							//fetch usecase name
-							console.log("Doing usecase name " + UsecaseId + " SQL request ...");
 							let UsecaseId = ListMatch[j][0];
 							let Product_UsecaseId = ListMatch[j][1];
+							//fetch usecase name
+							console.log("Doing usecase name " + UsecaseId + " SQL request ...");
 							let UsecaseSQLRequestResultObj = [];
 							try {
 								UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
