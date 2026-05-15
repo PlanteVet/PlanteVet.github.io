@@ -1821,6 +1821,9 @@
 		function DoViewPlante(PlanteId, ProductId)
 		{
 			let PlanteViewObj = document.getElementById("ProductView");
+
+			//reset scroll to top left of document
+			window.scroll(0,0);
 			
 			let PlanteInfoTxt = "";
 			if(ProductId == -1) PlanteInfoTxt += "<header><input type=\"button\" value=\"Retour à la recherche\" onclick=\"DoListPlantes();\" class='Back' /></header><br/><br/><br/>";
@@ -2492,6 +2495,9 @@
 		function DoViewProduct(ProductId, PlanteId)
 		{
 			let ProductViewObj = document.getElementById("ProductView");
+
+			//reset scroll to top left of document
+			window.scroll(0,0);
 			
 			// Pre build result
 			let ProductInfoTxt = "";
@@ -3359,6 +3365,9 @@
 		// go back to search page
 		function GoBackToSearch(PlorPr)
 		{
+			//reset scroll to top left of document
+			window.scroll(0,0);
+			
 			// go back to dflt state
 			document.getElementById("MatchingProductList").style.display = 'inline';
 			document.getElementById("MatchingProductList").style.visibility = 'hidden';
