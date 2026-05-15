@@ -1823,10 +1823,10 @@
 			let PlanteViewObj = document.getElementById("ProductView");
 			
 			let PlanteInfoTxt = "";
-			if(ProductId == -1) PlanteInfoTxt += "<header><input type=\"button\" value=\"Retour à la recherche\" onclick=\"DoListPlantes();\" class='Back' /></header><br/><br/>";
+			if(ProductId == -1) PlanteInfoTxt += "<header><input type=\"button\" value=\"Retour à la recherche\" onclick=\"DoListPlantes();\" class='Back' /></header><br/><br/><br/>";
 			else
 			{
-				PlanteInfoTxt += "<header><input type=\"button\" value=\"Retour au produit\" onclick=\"DoViewProduct(" + ProductId + ", -1);\" class='Back' /></header><br/><br/>";
+				PlanteInfoTxt += "<header><input type=\"button\" value=\"Retour au produit\" onclick=\"DoViewProduct(" + ProductId + ", -1);\" class='Back' /></header><br/><br/><br/>";
 			}
 			
 			//fetch plante info
@@ -1929,6 +1929,7 @@
 				else
 				{
 					PlanteEffet2sTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					let FullList =[];
 					for(let i = 0; i < NbEffet2; i++)
 					{
 						// fetch Effet2 id
@@ -1955,6 +1956,19 @@
 							if(TmpResultRow[0] == null) Effet2NameTxt += "UNDEFINED";
 							else Effet2NameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
 						}
+
+						FullList.push(Effet2NameTxt);
+					}
+					
+					FullList.sort((a,b) => {
+						if(a.localeCompare(b) < 0) return -1;
+						if(a.localeCompare(b) > 0) return 1;
+						return 0;
+					});
+
+					for(let i = 0; i < NbCtrIndic; i++)
+					{
+						let Effet2NameTxt = FullList[i];
 						// add Effet2
 						PlanteEffet2sTxt += "<li class=\"autre\">" + Effet2NameTxt + "</li>";
 					}
@@ -2481,10 +2495,10 @@
 			
 			// Pre build result
 			let ProductInfoTxt = "";
-			if(PlanteId == -1) ProductInfoTxt += "<input type=\"button\" value=\"Retour à la recherche\" onclick=\"GoBackToSearch('Pr');\" class='Back' /><br/>";
+			if(PlanteId == -1) ProductInfoTxt += "<header><input type=\"button\" value=\"Retour à la recherche\" onclick=\"GoBackToSearch('Pr');\" class='Back' /></header><br/><br/><br/>";
 			else
 			{
-				ProductInfoTxt += "<input type=\"button\" value=\"Retour à la plante\" onclick=\"DoViewPlante(" + PlanteId + ", -1);\" class='Back' /><br/>";
+				ProductInfoTxt += "<header><input type=\"button\" value=\"Retour à la plante\" onclick=\"DoViewPlante(" + PlanteId + ", -1);\" class='Back' /></header><br/><br/><br/>";
 			}
 			// fetch product info
 			console.log("Doing product info SQL request ...");
@@ -3028,6 +3042,7 @@
 				else
 				{
 					ProductEffet2sTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					let FullList = [];
 					for(let i = 0; i < NbEffet2; i++)
 					{
 						// fetch Effet2 id
@@ -3054,6 +3069,18 @@
 							if(TmpResultRow[0] == null) Effet2NameTxt += "UNDEFINED";
 							else Effet2NameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
 						}
+						FullList.push(CtrIndicNameTxt);
+					}
+					
+					FullList.sort((a,b) => {
+						if(a.localeCompare(b) < 0) return -1;
+						if(a.localeCompare(b) > 0) return 1;
+						return 0;
+					});
+
+					for(let i = 0; i < NbCtrIndic; i++)
+					{
+						let Effet2NameTxt = FullList[i];
 						// add Effet2
 						ProductEffet2sTxt += "<li class=\"autre\">" + Effet2NameTxt + "</li>";
 					}
@@ -3079,6 +3106,7 @@
 				else
 				{
 					ProductToxicitesTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					let FullList = [];
 					for(let i = 0; i < NbToxicite; i++)
 					{
 						// fetch Toxicite id
@@ -3105,6 +3133,18 @@
 							if(TmpResultRow[0] == null) ToxiciteNameTxt += "UNDEFINED";
 							else ToxiciteNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
 						}
+						FullList.push(CtrIndicNameTxt);
+					}
+					
+					FullList.sort((a,b) => {
+						if(a.localeCompare(b) < 0) return -1;
+						if(a.localeCompare(b) > 0) return 1;
+						return 0;
+					});
+
+					for(let i = 0; i < NbCtrIndic; i++)
+					{
+						let ToxiciteNameTxt = FullList[i];
 						// add Toxicite
 						ProductToxicitesTxt += "<li class=\"autre\">" + ToxiciteNameTxt + "</li>";
 					}
@@ -3130,6 +3170,7 @@
 				else
 				{
 					ProductCtrIndicsTxt += "<ul style=\"list-style-type:'✘ ';\" >"
+					let FullList = [];
 					for(let i = 0; i < NbCtrIndic; i++)
 					{
 						// fetch CtrIndic id
@@ -3156,6 +3197,18 @@
 							if(TmpResultRow[0] == null) CtrIndicNameTxt += "UNDEFINED";
 							else CtrIndicNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
 						}
+						FullList.push(CtrIndicNameTxt);
+					}
+					
+					FullList.sort((a,b) => {
+						if(a.localeCompare(b) < 0) return -1;
+						if(a.localeCompare(b) > 0) return 1;
+						return 0;
+					});
+
+					for(let i = 0; i < NbCtrIndic; i++)
+					{
+						let CtrIndicNameTxt = FullList[i];
 						// add CtrIndic
 						ProductCtrIndicsTxt += "<li class=\"autre\">" + CtrIndicNameTxt + "</li>";
 					}
