@@ -33,7 +33,7 @@
 			position: fixed;
 			z-index: 3;
 			padding: 10px;
-			width: 95%;
+			width: 94%;
 			border-radius: 5px;
 		}
 
@@ -4665,7 +4665,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"AfterEditProduct();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteProduct(" + ProductId + ");\" class='Delete' ";
 			if(ProductId == 0) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";			
+			RowEditFormTxt += " /></header><br/><br/><br/>";			
 			// append product view
 			let ProductInfoTxt = "";
 			ProductInfoTxt += "<h1>Informations du Produit " + ProductId + " :</h1>";
@@ -4973,7 +4973,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditLaboTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteLabo(" + LaboId + ");\" class='Delete' ";
 			if(IsLaboUsedBySomeProduct(LaboId) || (LaboId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";			
+			RowEditFormTxt += " /></header><br/><br/><br/>";			
 			// append Labo view
 			let LaboInfoTxt = "";
 			LaboInfoTxt += "<h1>Informations du Laboratoire " + LaboId + " :</h1><br/>";
@@ -5201,7 +5201,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditFctsTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteFcts(" + FctsId + ");\" class='Delete' ";
 			if(IsFctsUsedBySomeProduct(FctsId) || (FctsId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";			
+			RowEditFormTxt += " /></header><br/><br/><br/>";			
 			// append Fcts view
 			let FctsInfoTxt = "";
 			FctsInfoTxt += "<h1>Informations de la grande fonction organique " + FctsId + " :</h1><br/>";
@@ -5449,7 +5449,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"AfterEditUsecase();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteUsecase(" + UsecaseId + ");\" class='Delete' ";
 			if(IsUsecaseUsedBySomeProduct(UsecaseId) || (UsecaseId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";
+			RowEditFormTxt += " /></header><br/><br/><br/>";
 			// append Usecase view
 			let UsecaseInfoTxt = "";
 			 UsecaseInfoTxt += "<h1>Informations de l'utilisation " + UsecaseId + " :</h1><br/>";
@@ -5692,7 +5692,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditToxiciteTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteToxicite(" + ToxiciteId + ");\" class='Delete' ";
 			if(IsToxiciteUsedBySomeProduct(ToxiciteId) || (ToxiciteId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";
+			RowEditFormTxt += " /></header><br/><br/><br/>";
 			// append Toxicite view
 			let ToxiciteInfoTxt = "";
 			 ToxiciteInfoTxt += "<h1>Informations de la toxicité " + ToxiciteId + " :</h1><br/>";
@@ -5914,7 +5914,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditEffet2Table();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteEffet2(" + Effet2Id + ");\" class='Delete' ";
 			if(IsEffet2UsedBySomeProduct(Effet2Id) || (Effet2Id == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";
+			RowEditFormTxt += " /></header><br/><br/><br/>";
 			// append Effet2 view
 			let Effet2InfoTxt = "";
 			 Effet2InfoTxt += "<h1>Informations de l'effet secondaire " + Effet2Id + " :</h1><br/>";
@@ -6136,7 +6136,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditCtrIndicTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteCtrIndic(" + CtrIndicId + ");\" class='Delete' ";
 			if(IsCtrIndicUsedBySomeProduct(CtrIndicId) || (CtrIndicId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";
+			RowEditFormTxt += " /></header><br/><br/><br/>";
 			// append CtrIndic view
 			let CtrIndicInfoTxt = "";
 			 CtrIndicInfoTxt += "<h1>Informations de la contre-indication " + CtrIndicId + " :</h1><br/>";
@@ -6358,7 +6358,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditGaleniqueTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteGalenique(" + GaleniqueId + ");\" class='Delete' ";
 			if(IsGaleniqueUsedBySomeProduct(GaleniqueId) || (GaleniqueId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";			
+			RowEditFormTxt += " /></header><br/><br/><br/>";			
 			// append Galenique view
 			let GaleniqueInfoTxt = "";
 			GaleniqueInfoTxt += "<h1>Informations sur la forme galénique " + GaleniqueId + " :</h1><br/>";
@@ -6580,7 +6580,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditCategorieTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteCategorie(" + CategorieId + ");\" class='Delete' ";
 			if(IsCategorieUsedBySomeProduct(CategorieId) || (CategorieId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";			
+			RowEditFormTxt += " /></header><br/><br/><br/>";			
 			// append Categorie view
 			let CategorieInfoTxt = "";
 			CategorieInfoTxt += "<h1>Informations de la catégorie de médicament " + CategorieId + " :</h1><br/>";
@@ -6821,7 +6821,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditEspeceTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteEspece(" + EspeceId + ");\" class='Delete' ";
 			if(IsEspeceUsedBySomeProduct(EspeceId) || (EspeceId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";			
+			RowEditFormTxt += " /></header><br/><br/><br/>";			
 			// append Categorie view
 			let EspeceInfoTxt = "";
 			EspeceInfoTxt += "<h1>Informations de l'espèce " + EspeceId + " :</h1><br/>";
@@ -8546,7 +8546,7 @@
 			RowEditFormTxt += "<input type=\"button\" value=\"Retour\" onclick=\"DoEditUsePartTable();\" class='Cancel' /> ";
 			RowEditFormTxt += "<input type=\"button\" id=\"DeleteWorkingEltBtn\" value=\"Supprimer\" onclick=\"GoDeleteUsePart(" + UsePartId + ");\" class='Delete' ";
 			if(IsUsePartUsedBySomeProduct(UsePartId) || (UsePartId == 0)) RowEditFormTxt += "disabled=\"true\"";
-			RowEditFormTxt += " /></header><br/>";			
+			RowEditFormTxt += " /></header><br/><br/><br/>";			
 			// append UsePart view
 			let UsePartInfoTxt = "";
 			UsePartInfoTxt += "<h1>Informations de la partie de plante utilisée " + UsePartId + " :</h1><br/>";
@@ -8671,6 +8671,9 @@
 		// go back to search page
 		function GoBackToTableChoice()
 		{
+			//reset scroll to top left of document
+			window.scroll(0,0);
+			
 			// go back to dflt state
 			document.getElementById("RowEditForm").style.display = 'inline';
 			document.getElementById("RowEditForm").style.visibility = 'hidden';
