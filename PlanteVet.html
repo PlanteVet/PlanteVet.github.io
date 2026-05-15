@@ -2338,6 +2338,7 @@
 				else
 				{
 					PlanteUseTxt += "<ul style=\"list-style-type:'► ';\" >"
+					let FullFctList = [];
 					for(let i = 0; i < NbFcts; i++)
 					{
 						// fetch fct id
@@ -2364,6 +2365,23 @@
 							if(TmpResultRow2[0] == null) FctNameTxt += "UNDEFINED";
 							else FctNameTxt += DoSanitizeNameTxt(TmpResultRow2[0]);
 						}
+						let FctObj = [FctId, FctNameTxt];
+						FullFctList.push(FctObj);
+					}
+					
+					FullFctList.sort((a,b) => {
+						const Name1 = a[1];
+						const Name2 = b[1];
+						
+						if(Name1.localeCompare(Name2) < 0) return -1;
+						if(Name1.localeCompare(Name2) > 0) return 1;
+						return 0;
+					});
+
+					for(let i = 0; i < NbFcts; i++)
+					{
+						let FctId = FullFctList[i][0];
+						let FctNameTxt = FullFctList[i][1];
 						// add Fct
 						PlanteUseTxt += "<li class=\"fct\">" + FctNameTxt + "<br/>";
 						
@@ -2402,6 +2420,7 @@
 						if(NbMatch != 0)
 						{
 							UsecasesTxt += "<ul style=\"list-style-type:'• ';\" >";
+							let FullList = [];
 							for(let j=0; j < NbMatch; j++)
 							{
 								let UsecaseId = IdMatch[j];
@@ -2426,6 +2445,18 @@
 								if(TmpResultRow[0] == null) UsecaseNameTxt += "UNDEFINED";
 								else UsecaseNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
 								}
+								FullList.push(UsecaseNameTxt);
+							}
+							
+							FullList.sort((a,b) => {
+								if(a.localeCompare(b) < 0) return -1;
+								if(a.localeCompare(b) > 0) return 1;
+								return 0;
+							});
+		
+							for(let i = 0; i < NbMatch; i++)
+							{
+								let UsecaseNameTxt = FullList[i];
 								UsecasesTxt += "<li class=\"usecase\">" + UsecaseNameTxt + "<br/>";
 							}
 							UsecasesTxt += "</ul>";
