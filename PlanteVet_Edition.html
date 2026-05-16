@@ -7857,6 +7857,7 @@
 			};
 			// update Fct state array AND Fct check list 
 			let FctCheckListTxt = "";
+			let FullList = [];
 			let NbFct = PlanteFctSQLRequestResultObj.length;
 			for(let i = 0; i < NbFct; i++)
 			{
@@ -7867,13 +7868,31 @@
 				let FctPoolObj = document.getElementById("PlFctPoolId_" + FctId);
 				let TmpFctIdx = FctPoolObj.value;
 				let PlanteFctStateObj = PlanteFctStateListObj[TmpFctIdx];
-				// update check list
-				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"PlFctCheckListId_" + FctId + "\" onclick=\"CollapseDivPlFct(" + FctId + ")\" checked>" + PlanteFctStateObj.FctName + "</input> (utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
+				let FctNameTxt = PlanteFctStateObj.FctName;
+				let FctObj = [FctId, FctNameTxt];
+				FullList.push(FctObj);
 				// update combo
 				FctPoolObj.disabled = true;
 				// update Plante state array
 				PlanteFctStateObj.FlgCurrentlyUsedByPlante = true;
 				PlanteFctStateObj.FlgInCheckList = true;
+			}
+			
+			FullList.sort((a,b) => {
+				const Name1 = a[1];
+				const Name2 = b[1];
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			for(let i = 0; i < NbFct; i++)
+			{
+				let FctId = FullList[i][0];
+				let FctNameTxt = FullList[i][1];
+				// update check list
+				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"PlFctCheckListId_" + FctId + "\" onclick=\"CollapseDivPlFct(" + FctId + ")\" checked>" + FctNameTxt + "</input> (utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
 			}
 			// fill Plante check list
 			PlanteFctListObj.innerHTML = FctCheckListTxt;
@@ -7898,13 +7917,27 @@
 			} catch(ErrorObj) {
 				console.log("Echec plante Fct SQL request");
 			};
+
+			// fetch plante usecases
+			console.log("Doing plante usecases SQL request ...");
+			let PlanteUsecasesSQLRequestResultObj = [];
+			try {
+				PlanteUsecasesSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Usecase from PLANTE_USECASE where Plante = $a",
+					rowMode: 'array',
+					bind: {$a: PlanteId},
+				});
+				console.log("End of plante usecases SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec plante usecases SQL request");
+			};
 			
 			// NOTA : PlanteUsecaseStateListObj array row is : UsecaseId, UsecaseName, FlgCurrentlyUsedByPlante, FlgInCheckList
 			let PlanteUsecaseStateListObj = [];
 
 			//pour tous les fcts affichées
-			let NbResultRow = PlanteFctSQLRequestResultObj.length;
-			for(let i = 0; i < NbResultRow; i++)
+			let NbFct = PlanteFctSQLRequestResultObj.length;
+			for(let i = 0; i < NbFct; i++)
 			{
 				// fetch fct id
 				let TmpResultRow = PlanteFctSQLRequestResultObj[i];
@@ -7930,14 +7963,12 @@
 				};
 			
 				// build list usecase state array
-				let CurrentUsecasesIds = [];
 				let NbUsecaseResultRow = UsecaseSQLRequestResultObj.length;
 				for(let j = 0; j < NbUsecaseResultRow; j++)
 				{
 					// fetch info
 					let TmpUsecaseResultRow = UsecaseSQLRequestResultObj[j];
 					let UsecaseId = TmpUsecaseResultRow[0];
-					CurrentUsecasesIds.push(UsecaseId);
 					let UsecaseNameTxt = TmpUsecaseResultRow[1];
 					if(UsecaseNameTxt == null) UsecaseNameTxt = "UNKNOWN USECASE ID " + UsecaseId;
 					UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
@@ -7945,49 +7976,24 @@
 					let PlanteUsecaseStateObj = {UsecaseId: UsecaseId, UsecaseName: UsecaseNameTxt, FlgCurrentlyUsedByPlante: false, FlgInCheckList: false};
 					PlanteUsecaseStateListObj.push(PlanteUsecaseStateObj);
 				}
-
-				// fetch plante usecases
-				console.log("Doing plante usecases SQL request ...");
-				let PlanteUsecasesSQLRequestResultObj = [];
-				try {
-					PlanteUsecasesSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Usecase from PLANTE_USECASE where Plante = $a",
-						rowMode: 'array',
-						bind: {$a: PlanteId},
-					});
-					console.log("End of plante usecases SQL request.");
-				} catch(ErrorObj) {
-					console.log("Echec plante usecases SQL request");
-				};
 				
 				// update usecase state array AND usecase check list 
-				let NbUsecase = PlanteUsecasesSQLRequestResultObj.length;
-				for(let j = 0; j < NbUsecase; j++)
+				for(let j = 0; j < NbUsecaseResultRow; j++)
 				{
 					// fetch usecase id
-					let TmpResultRow = PlanteUsecasesSQLRequestResultObj[j];
+					let TmpResultRow = NbUsecaseResultRow[j];
 					let UsecaseId = TmpResultRow[0];
-					let NbCurrentUsecase = CurrentUsecasesIds.length;
-					for(let k=0; k < NbCurrentUsecase; k++)
+					let UsecaseNameTxt = TmpResultRow[1];
+					let NbUsecase = PlanteUsecasesSQLRequestResultObj.length;
+					for(let k=0; k < NbUsecase; k++)
 					{
-						if (UsecaseId == CurrentUsecasesIds[k])
+						if (UsecaseId == PlanteUsecasesSQLRequestResultObj[k])
 						{
 							// get usecase state array IDX
 							let UsecasePoolObj = document.getElementById("PlUsecasePoolId" + UsecaseId);
 							
-							NbUsecases = PlanteUsecaseStateListObj.length;
-							let PlanteUsecaseStateObj = [];
-							let TmpUsecaseIdx = 0;
-							for(let l=0; l < NbUsecases; l++)
-							{
-								if(PlanteUsecaseStateListObj[l].UsecaseId == UsecaseId)
-								{
-									PlanteUsecaseStateObj = PlanteUsecaseStateListObj[l];
-									TmpUsecaseIdx = l;
-								}
-							}
 							// update check list
-							UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"PlUsecaseCheckListId_" + UsecaseId + "\" checked>" + PlanteUsecaseStateObj.UsecaseName + "</input><br/>";
+							UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"PlUsecaseCheckListId_" + UsecaseId + "\" checked>" + UsecaseNameTxt + "</input><br/>";
 							// update combo
 							UsecasePoolObj.disabled = true;
 							// update usecase state array
