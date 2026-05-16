@@ -4008,6 +4008,7 @@
 			};
 			// update Toxicite state array AND Toxicite check list 
 			let ToxiciteCheckListTxt = "";
+			let FullList = [];
 			let NbToxicite = ProductToxicitesSQLRequestResultObj.length;
 			for(let i = 0; i < NbToxicite; i++)
 			{
@@ -4018,13 +4019,31 @@
 				let ToxicitePoolObj = document.getElementById("ToxicitePoolId_" + ToxiciteId);
 				let TmpToxiciteIdx = ToxicitePoolObj.value;
 				let ProductToxiciteStateObj = ProductToxiciteStateListObj[TmpToxiciteIdx];
-				// update check list
-				ToxiciteCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"ToxiciteCheckListId_" + ToxiciteId + "\" checked>" + ProductToxiciteStateObj.ToxiciteName + "</input><br/>";
+				let ToxiciteNameTxt = ProductToxiciteStateObj.ToxiciteName;
+				let ToxiciteObj = [ToxiciteId, ToxiciteNameTxt];
+				FullList.push(ToxiciteObj);
 				// update combo
 				ToxicitePoolObj.disabled = true;
 				// update Toxicite state array
 				ProductToxiciteStateObj.FlgCurrentlyUsedByProduct = true;
 				ProductToxiciteStateObj.FlgInCheckList = true;
+			}
+			
+			FullList.sort((a,b) => {
+				const Name1 = a[1];
+				const Name2 = b[1];
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			for(let i = 0; i < NbToxicite; i++)
+			{
+				let ToxiciteId = FullList[i][0];
+				let ToxiciteNameTxt = FullList[i][1];
+				// update check list
+				ToxiciteCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"ToxiciteCheckListId_" + ToxiciteId + "\" checked>" + ToxiciteNameTxt + "</input><br/>";
 			}
 			// fill Toxicite check list
 			ProductToxiciteListObj.innerHTML = ToxiciteCheckListTxt;
