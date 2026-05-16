@@ -3449,6 +3449,20 @@
 			} catch(ErrorObj) {
 				console.log("Echec list Plante SQL request");
 			};
+				
+			// fetch product usecase plante
+			console.log("Doing product usecase plante SQL request ...");
+			let ProductUsecasePlanteSQLRequestResultObj = [];
+			try {
+				ProductUsecasePlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Plante from PRODUCT_USECASE_PLANTE where Product_Usecase = $a",
+					rowMode: 'array',
+					bind: {$a: Product_UsecaseId},
+				});
+				console.log("End of product usecase plante SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec product usecase plante SQL request");
+			};
 			
 			// NOTA : ProductUsecasePlanteStateListObj array row is : UseCaseId, PlanteId, PlanteName, FlgCurrentlyUsedByusecase, FlgInCheckList
 			let ProductUsecasePlanteStateListObj = [];
@@ -3467,20 +3481,6 @@
 				//init text
 				let PlanteCheckListTxt = "";
 				
-				// fetch product usecase plante
-				console.log("Doing product usecase plante SQL request ...");
-				let ProductUsecasePlanteSQLRequestResultObj = [];
-				try {
-					ProductUsecasePlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Plante from PRODUCT_USECASE_PLANTE where Product_Usecase = $a",
-						rowMode: 'array',
-						bind: {$a: Product_UsecaseId},
-					});
-					console.log("End of product usecase plante SQL request.");
-				} catch(ErrorObj) {
-					console.log("Echec product usecase plante SQL request");
-				};
-				
 				// build list Plante state array
 				let NbPlanteResultRow = PlanteSQLRequestResultObj.length;
 				for(let j = 0; j < NbPlanteResultRow; j++)
@@ -3497,6 +3497,7 @@
 				}
 				
 				//pour toutes les plantes
+				let FullList = [];
 				let NbResultPlanteRow = ProductUsecasePlanteSQLRequestResultObj.length;
 				for(let j = 0; j < NbResultPlanteRow; j++)
 				{
@@ -3506,13 +3507,31 @@
 					// get Plante state array IDX
 					let PlantePoolObj = document.getElementById("PlantePoolId" + UsecaseId + "_" + PlanteId);
 					let ProductUsecasePlanteStateObj = ProductUsecasePlanteStateListObj[NbPlanteResultRow*i + PlanteId-1];
-					// update check list
-					PlanteCheckListTxt += "&emsp;&emsp;&emsp;<input type=\"checkbox\" id=\"PlanteCheckListId_" + UsecaseId + "_" + PlanteId + "\" checked>" + ProductUsecasePlanteStateObj.PlanteName + "</input><br/>";
+					let PlanteNameTxt = ProductUsecasePlanteStateObj.PlanteName;
+					let PlanteObj = [PlanteId, PlanteNameTxt];
+					FullList.push(PlanteObj);
 					// update combo
 					PlantePoolObj.disabled = true;
 					// update Plante state array
 					ProductUsecasePlanteStateObj.FlgCurrentlyUsedByUsecase = true;
 					ProductUsecasePlanteStateObj.FlgInCheckList = true;
+				}
+				
+				FullList.sort((a,b) => {
+					const Name1 = a[1];
+					const Name2 = b[1];
+					
+					if(Name1.localeCompare(Name2) < 0) return -1;
+					if(Name1.localeCompare(Name2) > 0) return 1;
+					return 0;
+				});
+				
+				for(let i = 0; i < NbResultPlanteRow; i++)
+				{
+					let PlanteId = FullList[i][0];
+					let PlanteNameTxt = FullList[i][1];
+					// update check list
+					PlanteCheckListTxt += "&emsp;&emsp;&emsp;<input type=\"checkbox\" id=\"PlanteCheckListId_" + UsecaseId + "_" + PlanteId + "\" checked>" + PlanteNameTxt + "</input><br/>";
 				}
 				
 				// fill Plante check list
