@@ -4149,6 +4149,7 @@
 			};
 			// update Effet2 state array AND Effet2 check list 
 			let Effet2CheckListTxt = "";
+			let FullList = [];
 			let NbEffet2 = ProductEffet2SQLRequestResultObj.length;
 			for(let i = 0; i < NbEffet2; i++)
 			{
@@ -4159,13 +4160,31 @@
 				let Effet2PoolObj = document.getElementById("Effet2PoolId_" + Effet2Id);
 				let TmpEffet2Idx = Effet2PoolObj.value;
 				let ProductEffet2StateObj = ProductEffet2StateListObj[TmpEffet2Idx];
-				// update check list
-				Effet2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Effet2CheckListId_" + Effet2Id + "\" checked>" + ProductEffet2StateObj.Effet2Name + "</input><br/>";
+				let Effet2NameTxt = ProductEffet2StateObj.Effet2Name;
+				let Effet2Obj = [Effet2Id, Effet2NameTxt];
+				FullList.push(Effet2Obj);
 				// update combo
 				Effet2PoolObj.disabled = true;
 				// update Effet2 state array
 				ProductEffet2StateObj.FlgCurrentlyUsedByProduct = true;
 				ProductEffet2StateObj.FlgInCheckList = true;
+			}
+			
+			FullList.sort((a,b) => {
+				const Name1 = a[1];
+				const Name2 = b[1];
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			for(let i = 0; i < NbEffet2; i++)
+			{
+				let Effet2Id = FullList[i][0];
+				let Effet2NameTxt = FullList[i][1];
+				// update check list
+				Effet2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Effet2CheckListId_" + Effet2Id + "\" checked>" + Effet2NameTxt + "</input><br/>";
 			}
 			// fill Effet2 check list
 			ProductEffet2ListObj.innerHTML = Effet2CheckListTxt;
@@ -4271,6 +4290,7 @@
 			};
 			// update Effet2 state array AND Effet2 check list 
 			let Effet2CheckListTxt = "";
+			let FullList = [];
 			let NbEffet2 = PlanteEffet2SQLRequestResultObj.length;
 			//console.log("Nb = " + NbEffet2);
 			for(let i = 0; i < NbEffet2; i++)
@@ -4282,13 +4302,31 @@
 				let Effet2PoolObj = document.getElementById("Effet2PlPoolId_" + Effet2Id);
 				let TmpEffet2Idx = Effet2PoolObj.value;
 				let PlanteEffet2StateObj = PlanteEffet2StateListObj[TmpEffet2Idx];
-				// update check list
-				Effet2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Effet2PlCheckListId_" + Effet2Id + "\" checked>" + PlanteEffet2StateObj.Effet2Name + "</input><br/>";
+				let Effet2NameTxt = PlanteEffet2StateObj.Effet2Name;
+				let Effet2Obj = [Effet2Id, Effet2NameTxt];
+				FullList.push(Effet2Obj);
 				// update combo
 				Effet2PoolObj.disabled = true;
 				// update Effet2 state array
 				PlanteEffet2StateObj.FlgCurrentlyUsedByProduct = true;
 				PlanteEffet2StateObj.FlgInCheckList = true;
+			}
+			
+			FullList.sort((a,b) => {
+				const Name1 = a[1];
+				const Name2 = b[1];
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			for(let i = 0; i < NbEffet2; i++)
+			{
+				let Effet2Id = FullList[i][0];
+				let Effet2NameTxt = FullList[i][1];
+				// update check list
+				Effet2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Effet2PlCheckListId_" + Effet2Id + "\" checked>" + Effet2NameTxt + "</input><br/>";
 			}
 			// fill Effet2 check list
 			PlanteEffet2ListObj.innerHTML = Effet2CheckListTxt;
@@ -4395,6 +4433,7 @@
 			};
 			// update CtrIndic state array AND CtrIndic check list 
 			let CtrIndicCheckListTxt = "";
+			let FullList = [];
 			let NbCtrIndic = ProductCtrIndicSQLRequestResultObj.length;
 			for(let i = 0; i < NbCtrIndic; i++)
 			{
@@ -4405,13 +4444,31 @@
 				let CtrIndicPoolObj = document.getElementById("CtrIndicPoolId_" + CtrIndicId);
 				let TmpCtrIndicIdx = CtrIndicPoolObj.value;
 				let ProductCtrIndicStateObj = ProductCtrIndicStateListObj[TmpCtrIndicIdx];
-				// update check list
-				CtrIndicCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"CtrIndicCheckListId_" + CtrIndicId + "\" checked>" + ProductCtrIndicStateObj.CtrIndicName + "</input><br/>";
+				let CtrIndicNameTxt = ProductCtrIndicStateObj.CtrIndicName;
+				let CtrIndicObj = [CtrIndicId, CtrIndicNameTxt];
+				FullList.push(CtrIndicObj);
 				// update combo
 				CtrIndicPoolObj.disabled = true;
 				// update CtrIndic state array
 				ProductCtrIndicStateObj.FlgCurrentlyUsedByProduct = true;
 				ProductCtrIndicStateObj.FlgInCheckList = true;
+			}
+			
+			FullList.sort((a,b) => {
+				const Name1 = a[1];
+				const Name2 = b[1];
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			for(let i = 0; i < NbCtrIndic; i++)
+			{
+				let CtrIndicId = FullList[i][0];
+				let CtrIndicNameTxt = FullList[i][1];
+				// update check list
+				CtrIndicCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"CtrIndicCheckListId_" + CtrIndicId + "\" checked>" + CtrIndicNameTxt + "</input><br/>";
 			}
 			// fill CtrIndic check list
 			ProductCtrIndicListObj.innerHTML = CtrIndicCheckListTxt;
@@ -4518,6 +4575,7 @@
 			};
 			// update CtrIndic state array AND CtrIndic check list 
 			let CtrIndicCheckListTxt = "";
+			let FullList = [];
 			let NbCtrIndic = PlanteCtrIndicSQLRequestResultObj.length;
 			for(let i = 0; i < NbCtrIndic; i++)
 			{
@@ -4528,13 +4586,31 @@
 				let CtrIndicPoolObj = document.getElementById("CtrIndicPlPoolId_" + CtrIndicId);
 				let TmpCtrIndicIdx = CtrIndicPoolObj.value;
 				let PlanteCtrIndicStateObj = PlanteCtrIndicStateListObj[TmpCtrIndicIdx];
-				// update check list
-				CtrIndicCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"CtrIndicPlCheckListId_" + CtrIndicId + "\" checked>" + PlanteCtrIndicStateObj.CtrIndicName + "</input><br/>";
+				let CtrIndicNameTxt = PlanteCtrIndicStateObj.CtrIndicName;
+				let CtrIndicObj = [CtrIndicId, CtrIndicNameTxt];
+				FullList.push(ToxiciteObj);
 				// update combo
 				CtrIndicPoolObj.disabled = true;
 				// update CtrIndic state array
 				PlanteCtrIndicStateObj.FlgCurrentlyUsedByProduct = true;
 				PlanteCtrIndicStateObj.FlgInCheckList = true;
+			}
+			
+			FullList.sort((a,b) => {
+				const Name1 = a[1];
+				const Name2 = b[1];
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			for(let i = 0; i < NbCtrIndic; i++)
+			{
+				let CtrIndicId = FullList[i][0];
+				let CtrIndicNameTxt = FullList[i][1];
+				// update check list
+				CtrIndicCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"CtrIndicPlCheckListId_" + CtrIndicId + "\" checked>" + CtrIndicNameTxt + "</input><br/>";
 			}
 			// fill CtrIndic check list
 			PlanteCtrIndicListObj.innerHTML = CtrIndicCheckListTxt;
