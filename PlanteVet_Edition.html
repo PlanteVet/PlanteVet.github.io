@@ -7978,23 +7978,35 @@
 				}
 				
 				// update usecase state array AND usecase check list 
-				for(let j = 0; j < NbUsecaseResultRow; j++)
+				let NbUsecase = PlanteUsecasesSQLRequestResultObj.length;
+				let FullList = [];
+				for(let j = 0; j < NbUsecase; j++)
 				{
 					// fetch usecase id
-					let TmpResultRow = UsecaseSQLRequestResultObj[j];
+					let TmpResultRow = PlanteUsecasesSQLRequestResultObj[j];
 					let UsecaseId = TmpResultRow[0];
-					let UsecaseNameTxt = TmpResultRow[1];
-					let NbUsecase = PlanteUsecasesSQLRequestResultObj.length;
-					for(let k=0; k < NbUsecase; k++)
+					let NbCurrentUsecase = CurrentUsecasesIds.length;
+					for(let k=0; k < NbCurrentUsecase; k++)
 					{
-						if (UsecaseId == PlanteUsecasesSQLRequestResultObj[k])
+						if (UsecaseId == CurrentUsecasesIds[k])
 						{
 							// get usecase state array IDX
 							let UsecasePoolObj = document.getElementById("PlUsecasePoolId" + UsecaseId);
-							let PlanteUsecaseStateObj = PlanteUsecaseStateListObj[j];
 							
-							// update check list
-							UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"PlUsecaseCheckListId_" + UsecaseId + "\" checked>" + UsecaseNameTxt + "</input><br/>";
+							let NbUsecases = PlanteUsecaseStateListObj.length;
+							let PlanteUsecaseStateObj = [];
+							let TmpUsecaseIdx = 0;
+							for(let l=0; l < NbUsecases; l++)
+							{
+								if(PlanteUsecaseStateListObj[l].UsecaseId == UsecaseId)
+								{
+									PlanteUsecaseStateObj = PlanteUsecaseStateListObj[l];
+									TmpUsecaseIdx = l;
+								}
+							}
+							let UsecaseNameTxt = PlanteUsecaseStateObj.UsecaseName;
+							let UsecaseObj = [UsecaseId, UsecaseNameTxt];
+							FullList.push(UsecaseObj);
 							// update combo
 							UsecasePoolObj.disabled = true;
 							// update usecase state array
@@ -8002,6 +8014,23 @@
 							PlanteUsecaseStateObj.FlgInCheckList = true;
 						}
 					}
+				}
+			
+				FullList.sort((a,b) => {
+					const Name1 = a[1];
+					const Name2 = b[1];
+					
+					if(Name1.localeCompare(Name2) < 0) return -1;
+					if(Name1.localeCompare(Name2) > 0) return 1;
+					return 0;
+				});
+				
+				for(let i = 0; i < NbToxicite; i++)
+				{
+					let UsecaseId = FullList[i][0];
+					let UsecaseNameTxt = FullList[i][1];
+					// update check list
+					UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"PlUsecaseCheckListId_" + UsecaseId + "\" checked>" + UsecaseNameTxt + "</input><br/>";
 				}
 				// fill usecase check list
 				PlanteFctListObj.innerHTML = UsecaseCheckListTxt;
