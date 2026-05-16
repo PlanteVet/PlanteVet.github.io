@@ -7963,12 +7963,14 @@
 				};
 			
 				// build list usecase state array
+				let CurrentUsecasesIds = [];
 				let NbUsecaseResultRow = UsecaseSQLRequestResultObj.length;
 				for(let j = 0; j < NbUsecaseResultRow; j++)
 				{
 					// fetch info
 					let TmpUsecaseResultRow = UsecaseSQLRequestResultObj[j];
 					let UsecaseId = TmpUsecaseResultRow[0];
+					CurrentUsecasesIds.push(UsecaseId);
 					let UsecaseNameTxt = TmpUsecaseResultRow[1];
 					if(UsecaseNameTxt == null) UsecaseNameTxt = "UNKNOWN USECASE ID " + UsecaseId;
 					UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
