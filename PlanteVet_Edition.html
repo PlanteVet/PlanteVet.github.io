@@ -2692,7 +2692,7 @@
 			let LaboSQLRequestResultObj = [];
 			try {
 				LaboSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from LABO order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from LABO order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of combo list labo SQL request.");
@@ -2738,7 +2738,7 @@
 			let GaleniqueSQLRequestResultObj = [];
 			try {
 				GaleniqueSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from Galenique order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from Galenique order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of combo list Galenique SQL request.");
@@ -2784,7 +2784,7 @@
 			let CategorieSQLRequestResultObj = [];
 			try {
 				CategorieSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from Categorie order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from Categorie order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of combo list Categorie SQL request.");
@@ -2845,7 +2845,7 @@
 			let EspeceNameSQLRequestResultObj = [];
 			try {
 				EspeceNameSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from ESPECE order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from ESPECE order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Espece name SQL request.");
@@ -3005,7 +3005,7 @@
 			let PlanteSQLRequestResultObj = [];
 			try {
 				PlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from PLANTE order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from PLANTE order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Plante SQL request.");
@@ -3085,7 +3085,7 @@
 			let UsePartSQLRequestResultObj = [];
 			try {
 				UsePartSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from UsePart order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from UsePart order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of combo list UsePart SQL request.");
@@ -3131,7 +3131,7 @@
 			let FctSQLRequestResultObj = [];
 			try {
 				FctSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from FCTS order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from FCTS order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of combo list Fct SQL request.");
@@ -3177,7 +3177,7 @@
 			let PlanteSQLRequestResultObj = [];
 			try {
 				PlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from Plante order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from Plante order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of combo list Plante SQL request.");
@@ -3217,7 +3217,7 @@
 			let PlanteSQLRequestResultObj = [];
 			try {
 				PlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from PLANTE order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from PLANTE order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Plante SQL request.");
@@ -3314,7 +3314,7 @@
 			let UsecaseSQLRequestResultObj = [];
 			try {
 				UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from USECASE where Fct = $a order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from USECASE where Fct = $a order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 					bind: {$a: FctId},
 				});
@@ -3517,7 +3517,7 @@
 			let UsecaseSQLRequestResultObj = [];
 			try {
 				UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from USECASE where Fct = $a order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from USECASE where Fct = $a order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 					bind: {$a: FctId},
 				});
@@ -3565,7 +3565,7 @@
 			let FctSQLRequestResultObj = [];
 			try {
 				FctSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from FCTS order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from FCTS order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Fct SQL request.");
@@ -3824,7 +3824,7 @@
 				let UsecaseSQLRequestResultObj = [];
 				try {
 					UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Id,Name from USECASE where Fct = $a order by Name  COLLATE NOCASE ASC",
+						sql: "select Id,Name from USECASE where Fct = $a order by Name COLLATE NOCASE ASC",
 						rowMode: 'array',
 						bind: {$a: FctId},
 					});
@@ -3966,7 +3966,7 @@
 			let ToxiciteSQLRequestResultObj = [];
 			try {
 				ToxiciteSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from TOXICITE order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from TOXICITE order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Toxicite SQL request.");
@@ -4088,7 +4088,7 @@
 			let Effet2SQLRequestResultObj = [];
 			try {
 				Effet2SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from EFFET2 order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from EFFET2 order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Effet2 SQL request.");
@@ -4210,7 +4210,7 @@
 			let Effet2SQLRequestResultObj = [];
 			try {
 				Effet2SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from EFFET2 order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from EFFET2 order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Effet2 SQL request.");
@@ -4333,7 +4333,7 @@
 			let CtrIndicSQLRequestResultObj = [];
 			try {
 				CtrIndicSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from CTRINDIC order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from CTRINDIC order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list CtrIndic SQL request.");
@@ -4456,7 +4456,7 @@
 			let CtrIndicSQLRequestResultObj = [];
 			try {
 				CtrIndicSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from CTRINDIC order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from CTRINDIC order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list CtrIndic SQL request.");
@@ -4579,7 +4579,7 @@
 			let UsePartSQLRequestResultObj = [];
 			try {
 				UsePartSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from USEPART order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from USEPART order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list UsePart SQL request.");
@@ -4827,7 +4827,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from PRODUCT order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from PRODUCT order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list product SQL request.");
@@ -5055,7 +5055,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from LABO order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from LABO order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list labo SQL request.");
@@ -5283,7 +5283,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from Fcts order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from Fcts order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Fcts SQL request.");
@@ -5552,7 +5552,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from USECASE order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from USECASE order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list usecase SQL request.");
@@ -5996,7 +5996,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from EFFET2 order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from EFFET2 order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Effet2 SQL request.");
@@ -6218,7 +6218,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from CTRINDIC order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from CTRINDIC order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list CtrIndic SQL request.");
@@ -6440,7 +6440,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from GALENIQUE order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from GALENIQUE order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Galenique SQL request.");
@@ -6662,7 +6662,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from CATEGORIE order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from CATEGORIE order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Categorie SQL request.");
@@ -6906,7 +6906,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from ESPECE order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from ESPECE order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Espece SQL request.");
@@ -7635,7 +7635,7 @@
 			let UsecaseSQLRequestResultObj = [];
 			try {
 				UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from USECASE where Fct = $a order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from USECASE where Fct = $a order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 					bind: {$a: FctId},
 				});
@@ -7680,7 +7680,7 @@
 			let FctSQLRequestResultObj = [];
 			try {
 				FctSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from FCTS order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from FCTS order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Fct SQL request.");
@@ -7786,7 +7786,7 @@
 				let UsecaseSQLRequestResultObj = [];
 				try {
 					UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Id,Name from USECASE where Fct = $a order by Name  COLLATE NOCASE ASC",
+						sql: "select Id,Name from USECASE where Fct = $a order by Name COLLATE NOCASE ASC",
 						rowMode: 'array',
 						bind: {$a: FctId},
 					});
@@ -7884,7 +7884,7 @@
 			let EspeceNameSQLRequestResultObj = [];
 			try {
 				EspeceNameSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from ESPECE order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from ESPECE order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Espece SQL request.");
@@ -7976,7 +7976,7 @@
 			let EspeceNameSQLRequestResultObj = [];
 			try {
 				EspeceNameSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from ESPECE order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from ESPECE order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Espece SQL request.");
@@ -8062,7 +8062,7 @@
 			let UsecaseSQLRequestResultObj = [];
 			try {
 				UsecaseSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from USECASE where Fct = $a order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from USECASE where Fct = $a order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 					bind: {$a: FctId},
 				});
@@ -8388,7 +8388,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name,Latin from Plante order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name,Latin from Plante order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list Plante SQL request.");
@@ -8631,7 +8631,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from UsePart order by Name  COLLATE NOCASE ASC",
+					sql: "select Id,Name from UsePart order by Name COLLATE NOCASE ASC",
 					rowMode: 'array',
 				});
 				console.log("End of list UsePart SQL request.");
