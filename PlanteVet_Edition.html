@@ -3853,6 +3853,20 @@
 			} catch(ErrorObj) {
 				console.log("Echec product Fct2 SQL request");
 			};
+
+			// fetch product use cases
+			console.log("Doing product usecases SQL request ...");
+			let ProductUsecasesSQLRequestResultObj = [];
+			try {
+				ProductUsecasesSQLRequestResultObj = globalThis.WorkingDB.exec({
+					sql: "select Usecase from PRODUCT_USECASE where Product = $a",
+					rowMode: 'array',
+					bind: {$a: ProductId},
+				});
+				console.log("End of product usecases SQL request.");
+			} catch(ErrorObj) {
+				console.log("Echec product usecases SQL request");
+			};
 			
 			// NOTA : ProductUsecaseStateListObj array row is : UsecaseId, UsecaseName, FlgCurrentlyUsedByProduct, FlgInCheckList
 			let ProductUsecaseStateListObj = [];
@@ -3909,22 +3923,9 @@
 					let ProductUsecaseStateObj = {UsecaseId: UsecaseId, UsecaseName: UsecaseNameTxt, FlgCurrentlyUsedByProduct: false, FlgInCheckList: false};
 					ProductUsecaseStateListObj.push(ProductUsecaseStateObj);
 				}
-
-				// fetch product use cases
-				console.log("Doing product usecases SQL request ...");
-				let ProductUsecasesSQLRequestResultObj = [];
-				try {
-					ProductUsecasesSQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "select Usecase from PRODUCT_USECASE where Product = $a",
-						rowMode: 'array',
-						bind: {$a: ProductId},
-					});
-					console.log("End of product usecases SQL request.");
-				} catch(ErrorObj) {
-					console.log("Echec product usecases SQL request");
-				};
 				
-				// update usecase state array AND usecase check list 
+				// update usecase state array AND usecase check list
+				let FullList = [];
 				let NbUsecase = ProductUsecasesSQLRequestResultObj.length;
 				for(let j = 0; j < NbUsecase; j++)
 				{
@@ -3950,8 +3951,10 @@
 									TmpUsecaseIdx = l;
 								}
 							}
-							// update check list
-							UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"UsecaseCheckListId_" + UsecaseId + "\" onclick=\"CollapseDivPrdUsecase(" + ProductId + "," + UsecaseId + ")\" checked>" + ProductUsecaseStateObj.UsecaseName + "</input> (en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" class='append' />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;&emsp;&emsp;Empty list checked usecase plante</div>";
+
+							let UsecaseNameTxt = ProductUsecaseStateObj.UsecaseName;
+							let UsecaseObj = [UsecaseId, UsecaseNameTxt];
+							FullList.push(UsecaseObj);
 							// update combo
 							UsecasePoolObj.disabled = true;
 							// update usecase state array
@@ -3959,6 +3962,24 @@
 							ProductUsecaseStateObj.FlgInCheckList = true;
 						}
 					}
+				}
+			
+				FullList.sort((a,b) => {
+					const Name1 = a[1];
+					const Name2 = b[1];
+					
+					if(Name1.localeCompare(Name2) < 0) return -1;
+					if(Name1.localeCompare(Name2) > 0) return 1;
+					return 0;
+				});
+	
+				let NbUsecaseTot = FullList.length;
+				for(let i = 0; i < NbUsecaseTot; i++)
+				{
+					let UsecaseId = FullList[i][0];
+					let UsecaseNameTxt = FullList[i][1];
+					// update check list
+					UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"UsecaseCheckListId_" + UsecaseId + "\" onclick=\"CollapseDivPrdUsecase(" + ProductId + "," + UsecaseId + ")\" checked>" + UsecaseNameTxt + "</input> (en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" class='append' />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;&emsp;&emsp;Empty list checked usecase plante</div>";
 				}
 				// fill usecase check list
 				ProductFctListObj.innerHTML = UsecaseCheckListTxt;
