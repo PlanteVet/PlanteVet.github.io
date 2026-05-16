@@ -8024,8 +8024,9 @@
 					if(Name1.localeCompare(Name2) > 0) return 1;
 					return 0;
 				});
-				
-				for(let i = 0; i < NbToxicite; i++)
+
+				let NbUsecaseTot = FullList.length;
+				for(let i = 0; i < NbUsecaseTot; i++)
 				{
 					let UsecaseId = FullList[i][0];
 					let UsecaseNameTxt = FullList[i][1];
