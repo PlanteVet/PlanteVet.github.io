@@ -3449,20 +3449,6 @@
 			} catch(ErrorObj) {
 				console.log("Echec list Plante SQL request");
 			};
-				
-			// fetch product usecase plante
-			console.log("Doing product usecase plante SQL request ...");
-			let ProductUsecasePlanteSQLRequestResultObj = [];
-			try {
-				ProductUsecasePlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Plante from PRODUCT_USECASE_PLANTE where Product_Usecase = $a",
-					rowMode: 'array',
-					bind: {$a: Product_UsecaseId},
-				});
-				console.log("End of product usecase plante SQL request.");
-			} catch(ErrorObj) {
-				console.log("Echec product usecase plante SQL request");
-			};
 			
 			// NOTA : ProductUsecasePlanteStateListObj array row is : UseCaseId, PlanteId, PlanteName, FlgCurrentlyUsedByusecase, FlgInCheckList
 			let ProductUsecasePlanteStateListObj = [];
@@ -3475,6 +3461,20 @@
 				let TmpResultRow = ProductUsecasesSQLRequestResultObj[i];
 				let Product_UsecaseId = TmpResultRow[0];
 				let UsecaseId = TmpResultRow[1];
+				
+				// fetch product usecase plante
+				console.log("Doing product usecase plante SQL request ...");
+				let ProductUsecasePlanteSQLRequestResultObj = [];
+				try {
+					ProductUsecasePlanteSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Plante from PRODUCT_USECASE_PLANTE where Product_Usecase = $a",
+						rowMode: 'array',
+						bind: {$a: Product_UsecaseId},
+					});
+					console.log("End of product usecase plante SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec product usecase plante SQL request");
+				};
 				
 				//Get Div Id
 				let ProductUsecasePlanteListObj = document.getElementById("ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId);
