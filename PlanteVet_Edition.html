@@ -5774,7 +5774,7 @@
 			let SQLRequestResultObj = [];
 			try {
 				SQLRequestResultObj = globalThis.WorkingDB.exec({
-					sql: "select Id,Name from TOXICITE order by Name ASC",
+					sql: "select Id,Name from TOXICITE order by Name DSC",
 					rowMode: 'array',
 				});
 				console.log("End of list Toxicite SQL request.");
