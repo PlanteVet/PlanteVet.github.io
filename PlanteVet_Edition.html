@@ -3693,6 +3693,7 @@
 			};
 			// update Fct2 state array AND Fct2 check list 
 			let Fct2CheckListTxt = "";
+			let FullFct2List = [];
 			let NbFct2 = ProductFct2SQLRequestResultObj.length;
 			for(let i = 0; i < NbFct2; i++)
 			{
@@ -3703,8 +3704,9 @@
 				let Fct2PoolObj = document.getElementById("Fct2PoolId_" + Fct2Id);
 				let TmpFct2Idx = Fct2PoolObj.value;
 				let ProductFct2StateObj = ProductFct2StateListObj[TmpFct2Idx];
-				// update check list
-				Fct2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Fct2CheckListId_" + Fct2Id + "\" onclick=\"CollapseDivPrdFct2(" + Fct2Id + ")\" checked>" + ProductFct2StateObj.FctName + "</input> (utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;&emsp;Empty list checked usecase</div>";
+				let Fct2NameTxt = ProductFct2StateObj.FctName;
+				let Fct2Obj = [Fct2Id, Fct2NameTxt];
+				FullFct2List.push(Fct2Obj);
 				// update combo
 				Fct2PoolObj.disabled = true;
 				let FctPoolObj = document.getElementById("FctPoolId_" + Fct2Id);
@@ -3713,6 +3715,24 @@
 				ProductFct2StateObj.FlgCurrentlyUsedByProduct = true;
 				ProductFct2StateObj.FlgInCheckList = true;
 			}
+			
+			FullFct2List.sort((a,b) => {
+				const Name1 = a[1];
+				const Name2 = b[1];
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			for(let i = 0; i < NbFct2; i++)
+			{
+				let Fct2Id = FullFct2List[i][0];
+				let Fct2NameTxt = FullFct2List[i][1];
+				// update check list
+				Fct2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Fct2CheckListId_" + Fct2Id + "\" onclick=\"CollapseDivPrdFct2(" + Fct2Id + ")\" checked>" + Fct2NameTxt + "</input> (utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;&emsp;Empty list checked usecase</div>";
+			}
+			
 			// fill Plante check list
 			ProductFct2ListObj.innerHTML = Fct2CheckListTxt;
 			// save Plante state array
