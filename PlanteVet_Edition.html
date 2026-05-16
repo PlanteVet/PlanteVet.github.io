@@ -3647,8 +3647,6 @@
 				let FctNameTxt = ProductFctStateObj.FctName;
 				let FctObj = [FctId, FctNameTxt];
 				FullFctList.push(FctObj);
-				// update check list
-				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"FctCheckListId_" + FctId + "\" onclick=\"CollapseDivPrdFct(" + FctId + ")\" checked>" + FctNameTxt + "</input> (utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
 				// update combo
 				FctPoolObj.disabled = true;
 				let Fct2PoolObj = document.getElementById("Fct2PoolId_" + FctId);
@@ -3657,6 +3655,24 @@
 				ProductFctStateObj.FlgCurrentlyUsedByProduct = true;
 				ProductFctStateObj.FlgInCheckList = true;
 			}
+			
+			FullFctList.sort((a,b) => {
+				const Name1 = a[1];
+				const Name2 = b[1];
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			for(let i = 0; i < NbFct; i++)
+			{
+				let FctId = FullFctList[i][0];
+				let FctNameTxt = FullFctList[i][1];
+				// update check list
+				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"FctCheckListId_" + FctId + "\" onclick=\"CollapseDivPrdFct(" + FctId + ")\" checked>" + FctNameTxt + "</input> (utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
+			}
+			
 			// fill Plante check list
 			ProductFctListObj.innerHTML = FctCheckListTxt;
 			// save Plante state array
