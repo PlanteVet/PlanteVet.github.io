@@ -2668,6 +2668,7 @@
 				if(NbPlante == 0) ProductPlanteTxt += "NON RENSEIGNE<br/>";
 				else{
 					ProductPlanteTxt += "<table border=1 cellspacing=0 cellpadding=5 valign=center> <tr align=center><th>Plante</th><th>Nom scientifique</th><th>Partie utilisée</th></tr>";
+					let FullPlanteList = [];
 					for(let i = 0; i < NbPlante; i++)
 					{
 						ProductPlanteTxt += "<tr align=center>";
@@ -2694,11 +2695,30 @@
 						else
 						{
 							let TmpResultRow = PlanteSQLRequestResultObj[0];
-							if(TmpResultRow[0] == null) UsecaseNameTxt += "UNDEFINED";
+							if(TmpResultRow[0] == null) PlanteNameTxt += "UNDEFINED";
 							else PlanteNameTxt += DoSanitizeNameTxt(TmpResultRow[0]);
-							if(TmpResultRow[1] == null) UsecaseNameTxt += "UNDEFINED";
+							if(TmpResultRow[1] == null) LatinNameTxt += "UNDEFINED";
 							else LatinNameTxt += DoSanitizeNameTxt(TmpResultRow[1]);
 						}
+						let PlanteObj = [PlanteId, PlanteNameTxt, LatinNameTxt, UsePartId];
+						FullPlanteList.push(PlanteObj);
+					}
+					
+					FullPlanteList.sort((a,b) => {
+						const Name1 = a[1];
+						const Name2 = b[1];
+						
+						if(Name1.localeCompare(Name2) < 0) return -1;
+						if(Name1.localeCompare(Name2) > 0) return 1;
+						return 0;
+					});
+
+					for(let i = 0; i < NbPlante; i++)
+					{
+						let PlanteId = FullPlanteList[i][0];
+						let PlanteNameTxt = FullPlanteList[i][1];
+						let LatinNameTxt = FullPlanteList[i][2];
+						let UsePartId = FullPlanteList[i][3];
 						// add plante
 						ProductPlanteTxt += "<td><span class=\"PlanteView\" onclick=\"DoViewPlante(" + PlanteId + "," + ProductId + ");\">" + PlanteNameTxt + "</span></td>";
 						ProductPlanteTxt += "<td><i>" + LatinNameTxt + "</i></td>";
