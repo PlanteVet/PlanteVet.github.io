@@ -3047,6 +3047,7 @@
 			};
 			// update Plante state array AND Plante check list 
 			let PlanteCheckListTxt = "";
+			let FullList = [];
 			let NbPlante = ProductPlanteSQLRequestResultObj.length;
 			for(let i = 0; i < NbPlante; i++)
 			{
@@ -3058,13 +3059,32 @@
 				let PlantePoolObj = document.getElementById("PlantePoolId_" + PlanteId);
 				let TmpPlanteIdx = PlantePoolObj.value;
 				let ProductPlanteStateObj = ProductPlanteStateListObj[TmpPlanteIdx];
-				// update check list
-				PlanteCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"PlanteCheckListId_" + PlanteId + "\" checked>" + ProductPlanteStateObj.PlanteName + "</input> (partie utilisée : " + BuildUsePartInputCombo(UsePartId,PlanteId) + ")<br/>";
+				let PlanteNameTxt = ProductPlanteStateObj.PlanteName;
+				let PlanteObj = [PlanteId, PlanteNameTxt, UsePartId];
+				FullList.push(PlanteObj);
 				// update combo
 				PlantePoolObj.disabled = true;
 				// update Plante state array
 				ProductPlanteStateObj.FlgCurrentlyUsedByProduct = true;
 				ProductPlanteStateObj.FlgInCheckList = true;
+			}
+			
+			FullList.sort((a,b) => {
+				const Name1 = a[1];
+				const Name2 = b[1];
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			for(let i = 0; i < NbPlante; i++)
+			{
+				let PlanteId = FullList[i][0];
+				let PlanteNameTxt = FullList[i][1];
+				let UsePartId = FullList[i][2];
+				// update check list
+				PlanteCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"PlanteCheckListId_" + PlanteId + "\" checked>" + PlanteNameTxt + "</input> (partie utilisée : " + BuildUsePartInputCombo(UsePartId,PlanteId) + ")<br/>";
 			}
 			// fill Plante check list
 			ProductPlanteListObj.innerHTML = PlanteCheckListTxt;
@@ -4717,8 +4737,9 @@
 			};
 			// update UsePart state array AND UsePart check list 
 			let UsePartCheckListTxt = "";
-			let NbCtrIndic = PlanteUsePartSQLRequestResultObj.length;
-			for(let i = 0; i < NbCtrIndic; i++)
+			let FullList = [];
+			let NbUsePart = PlanteUsePartSQLRequestResultObj.length;
+			for(let i = 0; i < NbUsePart; i++)
 			{
 				// fetch UsePart Id
 				let TmpResultRow = PlanteUsePartSQLRequestResultObj[i];
@@ -4727,13 +4748,31 @@
 				let UsePartPoolObj = document.getElementById("UsePartPlPoolId_" + UsePartId);
 				let TmpUsePartIdx = UsePartPoolObj.value;
 				let PlanteUsePartStateObj = PlanteUsePartStateListObj[TmpUsePartIdx];
-				// update check list
-				UsePartCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"UsePartPlCheckListId_" + UsePartId + "\" checked>" + PlanteUsePartStateObj.UsePartName + "</input><br/>";
+				let UsePartNameTxt = PlanteUsePartStateObj.UsePartName;
+				let UsePartObj = [UsePartId, UsePartNameTxt];
+				FullList.push(UsePartObj);
 				// update combo
 				UsePartPoolObj.disabled = true;
 				// update UsePart state array
 				PlanteUsePartStateObj.FlgCurrentlyUsedByProduct = true;
 				PlanteUsePartStateObj.FlgInCheckList = true;
+			}
+			
+			FullList.sort((a,b) => {
+				const Name1 = a[1];
+				const Name2 = b[1];
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			for(let i = 0; i < NbUsePart; i++)
+			{
+				let UsePartId = FullList[i][0];
+				let UsePartNameTxt = FullList[i][1];
+				// update check list
+				UsePartCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"UsePartPlCheckListId_" + UsePartId + "\" checked>" + UsePartNameTxt + "</input><br/>";
 			}
 			// fill UsePart check list
 			PlanteUsePartListObj.innerHTML = UsePartCheckListTxt;
