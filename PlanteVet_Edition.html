@@ -3770,8 +3770,11 @@
 			if(TmpFctIdx == null) return;
 			// NOTA : ProductFctStateListObj array row is : FctId, FctName, FlgCurrentlyUsedByProduct, FlgInCheckList
 			let ProductFctStateObj = globalThis.PrivateProductFctStateListObj[TmpFctIdx];
+			// NOTA : ProductFct2StateListObj array row is : FctId, FctName, FlgCurrentlyUsedByProduct, FlgInCheckList
+			let ProductFct2StateObj = globalThis.PrivateProductFct2StateListObj[TmpFctIdx];
 			// check if already in check list (should never happen)
 			if(ProductFctStateObj.FlgInCheckList) return;
+			if(ProductFct2StateObj.FlgInCheckList) return;
 			// update check list
 			FctId = ProductFctStateObj.FctId;
 			
@@ -3810,9 +3813,12 @@
 			// get combo selection
 			let TmpFct2Idx = Fcts2ComboObj.value;
 			if(TmpFct2Idx == null) return;
+			// NOTA : ProductFctStateListObj array row is : FctId, FctName, FlgCurrentlyUsedByProduct, FlgInCheckList
+			let ProductFctStateObj = globalThis.PrivateProductFctStateListObj[TmpFct2Idx];
 			// NOTA : ProductFct2StateListObj array row is : FctId, FctName, FlgCurrentlyUsedByProduct, FlgInCheckList
 			let ProductFct2StateObj = globalThis.PrivateProductFct2StateListObj[TmpFct2Idx];
 			// check if already in check list (should never happen)
+			if(ProductFctStateObj.FlgInCheckList) return;
 			if(ProductFct2StateObj.FlgInCheckList) return;
 			// update check list
 			Fct2Id = ProductFct2StateObj.FctId;
