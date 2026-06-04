@@ -1235,7 +1235,8 @@
 			// Pre build result
 			let ResultList = "";
 			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pr');\" class='Back' /><br/>";
-			ResultList += "Liste des produits compatibles avec \"" + SearchTxt + "\" :<br/>(Cliquer sur un produit pour en voir les informations)<br/>";		
+			ResultList += "Liste des produits compatibles avec \"" + SearchTxt + "\" :<br/>(Cliquer sur un produit pour en voir les informations)<br/>";
+			ResultList += "<ul class='RchrchUl'>";
 			// append sql result
 			let NbResultRow = SQLRequestResultObj.length;
 			if(NbResultRow == 0)
@@ -1248,9 +1249,10 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +",-1);\">" + TmpResultRow[1] + "</span><br/>";
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewProduct(" + TmpResultRow[0] +",-1);\">" + TmpResultRow[1] + "</span></li>";
 				}
 			}
+			ResultList += "</ul>";
 			// hidding search form
 			document.getElementById("ProductSearchForm").style.display = 'none';
 			// show result
@@ -1282,7 +1284,8 @@
 			// Pre build result
 			let ResultList = "";
 			ResultList += "<input type=\"button\" value=\"Back to search\" onclick=\"GoBackToSearch('Pl');\" class='Back' /><br/>";
-			ResultList += "Liste des plantes compatibles avec \"" + SearchTxt + "\" :<br/>(Cliquer sur une plante pour en voir la monographie)<br/>";		
+			ResultList += "Liste des plantes compatibles avec \"" + SearchTxt + "\" :<br/>(Cliquer sur une plante pour en voir la monographie)<br/>";
+			ResultList += "<ul class='RchrchUl'>";
 			// append sql result
 			let NbResultRow = SQLRequestResultObj.length;
 			if(NbResultRow == 0)
@@ -1295,9 +1298,10 @@
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
 					
-					ResultList += "<span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span><br/>";
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span></li>";
 				}
 			}
+			ResultList += "</ul>";
 			// hidding search form
 			document.getElementById("ListePlanteForm").style.display = 'none';
 			document.getElementById("ListePlanteForm").style.visibility = 'Hidden'
