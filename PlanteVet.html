@@ -2206,6 +2206,7 @@
 				};
 				let NbEspecesMax = EspecesSQLRequestResultObj.length;
 				let EspeceTxt = "";
+				let EspeceList = "<ul style=\"list-style-type:'✔ ';\" >";
 				let FullList = [];
 				for(j = 0; j < NbEspecesMax; j++)
 				{
@@ -2245,8 +2246,10 @@
 					if(EspecePhoto == null) EspecePhoto = new Uint8Array();
 					
 					EspeceTxt += "<img style=\"max-height: 20px; max-width: 20px\" src=" + CastBufferToImgURLData(EspecePhoto) + " /> " + EspeceName + ", ";
+					EspeceList += "<li class=\"autre\">" + EspeceName + "</li>";
 				}
 				EspeceTxt = EspeceTxt.slice(0, -2);
+				EspeceList += "</ul>";
 				
 				//fetch all especes tox
 				let EspecesToxSQLRequestResultObj = [];
@@ -2551,6 +2554,7 @@
 				PlanteInfoTxt += "<h3>Botanique : </h3>" + CastBufferToRichText(PlanteBotanique);
 				PlanteInfoTxt += "<h3>Partie(s) utilisée(s) : </h3>" + PlanteUsePartsTxt + "<br/>";
 				PlanteInfoTxt += "<h2>Informations médicales</h2>";
+				PlanteInfoTxt += "<h3>Espèces concernées : </h3>" + EspeceList + "<br/>";
 				PlanteInfoTxt += "<h3>Molécules constitutives : </h3>" + CastBufferToRichText(PlanteMolecules) + "<br/>";
 				PlanteInfoTxt += "<h3>Pharmacodynamie : </h3>" + CastBufferToRichText(PlantePDyn) + "<br/>";
 				PlanteInfoTxt += "<h3>Pharmacocinétique : </h3>" + CastBufferToRichText(PlantePCin) + "<br/>";
