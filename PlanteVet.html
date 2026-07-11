@@ -394,6 +394,10 @@
 		.Rchr:hover, .Rchr:focus {
 			border: 2px solid black;
 		}
+		.Rchr:disabled {
+ 			border: 0.5px solid black;
+			background-color: #F5C698;
+		}
 
 		progress {
 			/*retirer apparence de base*/
@@ -619,6 +623,41 @@
 			return true;
 		}
 
+		//(de)activate fct or syndrome combo
+		function ActivateFctorSynd(mode)
+		{
+			//mode : 0 = fct, 1 = synd
+			let FctId = document.getElementById("FctInputCombo_Pl").value;
+			let SyndId = document.getElementById("SyndromeInputCombo_Pl").value;
+			
+			if(mode == 0)
+			{
+				if(FctId != -1)
+				{
+					document.getElementById("SyndromeInputCombo_Pl").disabled = true;
+					document.getElementById('SyndromeInputCombo_Pl').value = -1;
+				}
+				else
+				{
+					document.getElementById("SyndromeInputCombo_Pl").disabled = false;
+				}
+			}
+			
+			if(mode == 1)
+			{
+				if(SyndId != -1)
+				{
+					document.getElementById("FctInputCombo_Pl").disabled = true;
+				}
+				else
+				{
+					document.getElementById("FctInputCombo_Pl").disabled = false;
+					document.getElementById('FctInputCombo_Pl').value = -1;
+				}
+			}
+			return;
+		}
+
 		// build Labo combo
 		function BuildLaboInputCombo(PlOrPr, DfltLaboId)
 		{
@@ -674,7 +713,9 @@
 			let FctInputComboTxt = "Grande fonction : ";
 		
 			// pre build combo
-			FctInputComboTxt += "<select id=\"FctInputCombo_" + PrOrPl + "\" style=\"width: 200px;\" class='Rchr'>";
+			FctInputComboTxt += "<select id=\"FctInputCombo_" + PrOrPl + "\" style=\"width: 200px;\" class='Rchr'";
+			if(PrOrPl == 'Pl') FctInputComboTxt += " onchange=\"ActivateFctorSynd(0)\"";
+			FctInputComboTxt += ">";
 			// fetch list fct
 			console.log("Doing combo list fct SQL request ...");
 			let FctSQLRequestResultObj = [];
@@ -867,13 +908,13 @@
 			return;
 		}
 		
-		// build Effet2 combo
+		// build Syndrome combo
 		function BuildSyndromeInputCombo(PrOrPl,DfltSydnromeId)
 		{
 			let SyndromeInputComboTxt = "Syndrome : ";
 		
 			// pre build combo
-			SyndromeInputComboTxt += "<select id=\"SyndromeInputCombo_" + PrOrPl + "\" style=\"width: 200px;\" class='Rchr'>";
+			SyndromeInputComboTxt += "<select id=\"SyndromeInputCombo_" + PrOrPl + "\" style=\"width: 200px;\" class='Rchr' onchange=\"ActivateFctorSynd(1)\">";
 			let SyndTrue = true;
 			// fetch list fct
 			console.log("Doing combo list Syndrome SQL request ...");
