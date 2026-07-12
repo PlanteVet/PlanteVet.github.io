@@ -985,6 +985,7 @@
 			
 			// Pre build result
 			let ResultListTxt = document.getElementById("ProductList");
+			let ResultListNum = document.getElementById("ProductNum");
 			let ResultList = "";
 			ResultList += "<ul class='RchrchUl'>";
 
@@ -1007,6 +1008,7 @@
 			
 			// show result
 			ResultListTxt.innerHTML = ResultList;
+			ResultListNum.innerHTML = "<b>Liste des " + NbResultRow + " produits renseignés :</b>";
 			ResultListObj.style.visibility = 'visible';
 			//create combobox
 			BuildFctInputCombo('Pr', 0);
@@ -1044,6 +1046,7 @@
 			
 			// Pre build result
 			let ResultListTxt = document.getElementById("PlanteList");
+			let ResultListNum = document.getElementById("PlanteNum");
 			let ResultList = "";
 			ResultList += "<ul class='RchrchUl'>";
 
@@ -1066,6 +1069,7 @@
 			
 			// show result
 			ResultListTxt.innerHTML = ResultList;
+			ResultListNum.innerHTML = "<b>Liste des " + NbResultRow + " plantes renseignées :</b>";
 			ResultListObj.style.visibility = 'visible';
 			//create combobox
 			BuildFctInputCombo('Pl', 0);
@@ -3697,8 +3701,8 @@
 		<table class="full">
 			<tr class="high">
 				<td rowspan=4>
-					<b>Liste des produits renseignés :</b>
-					<br/><i>(Cliquer pour en voir les détails)</i>
+					<div id="ProductNum"><b>Liste des produits renseignés :</b></div>
+					<i>(Cliquer pour en voir les détails)</i>
 					<br/><div id="ProductList">Empty List</div>
 				</td>
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
@@ -3741,8 +3745,8 @@
 		<table class="full">
 			<tr class="high">
 				<td rowspan=4>
-					<b>Liste des plantes renseignées :</b>
-					<br/><i>(Cliquer pour en voir la monographie)</i>
+					<div id="PlanteNum"><b>Liste des plantes renseignées :</b></div>
+					<i>(Cliquer pour en voir la monographie)</i>
 					<br/><div id="PlanteList">Empty List</div>
 				</td>
 				<td rowspan=2 style="border-left: 3px ridge #B119AA; padding-left: 15px;">
