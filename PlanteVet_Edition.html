@@ -7289,18 +7289,116 @@
 			{
 				// ask confirmation
 				if(!window.confirm("Voulez-vous vraiment supprimer cette plante ?")) return;
-				// delete entry
+				// delete entry Plante
 				console.log("Doing delete Plante SQL request ...");
 				try {
 					globalThis.WorkingDB.exec({
-						sql: "delete from Plante where Id = $a",
+						sql: "delete from PLANTE where Id = $a",
 						rowMode: 'array',
 						bind: {$a: globalThis.PrivateWorkingEltId},
 					});
 					console.log("End of delete Plante SQL request.");
 				} catch(ErrorObj) {
 					console.log("Echec delete Plante SQL request");
-					alert("Delete failled");
+					alert("Delete Plante failed");
+					return;
+				};
+				// delete entry Plante fct
+				console.log("Doing delete Plante fct SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PLANTE_FCTS where Id = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete Plante fct SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete Plante fct SQL request");
+					alert("Delete Plante fct failed");
+					return;
+				};
+				// delete entry Plante usecase
+				console.log("Doing delete Plante usecase SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PLANTE_USECASE where Id = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete Plante usecase SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete Plante usecase SQL request");
+					alert("Delete Plante usecase failed");
+					return;
+				};
+				// delete entry Plante espece
+				console.log("Doing delete Plante espece SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PLANTE_ESPECE where Id = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete Plante espece SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete Plante espece SQL request");
+					alert("Delete Plante espece failed");
+					return;
+				};
+				// delete entry Plante espece tox
+				console.log("Doing delete Plante espece tox SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PLANTE_ESPECE_TOX where Id = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete Plante espece tox SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete Plante espece tox SQL request");
+					alert("Delete Plante espece tox failed");
+					return;
+				};
+				// delete entry Plante effet2
+				console.log("Doing delete Plante effet2 SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PLANTE_EFFET2 where Id = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete Plante effet2 SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete Plante effet2 SQL request");
+					alert("Delete Plante effet2 failed");
+					return;
+				};
+				// delete entry Plante CtrIndic
+				console.log("Doing delete Plante CtrIndic SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PLANTE_CTRINDIC where Id = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete Plante CtrIndic SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete Plante CtrIndic SQL request");
+					alert("Delete Plante CtrIndic failed");
+					return;
+				};
+				// delete entry Plante UsePart
+				console.log("Doing delete Plante UsePart SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PLANTE_USEPART where Id = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete Plante UsePart SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete Plante UsePart SQL request");
+					alert("Delete Plante UsePart failed");
 					return;
 				};
 				// update working elt id
