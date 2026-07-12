@@ -1638,20 +1638,6 @@
 					alert("Delete product fct failed");
 					return;
 				};
-				// delete product usecase list
-				console.log("Doing delete product usecase SQL request ...");
-				try {
-					globalThis.WorkingDB.exec({
-						sql: "delete from PRODUCT_USECASE where Product = $a",
-						rowMode: 'array',
-						bind: {$a: globalThis.PrivateWorkingEltId},
-					});
-					console.log("End of delete usecase product SQL request.");
-				} catch(ErrorObj) {
-					console.log("Echec delete usecase product SQL request");
-					alert("Delete product usecase failed");
-					return;
-				};
 				// delete product plante list
 				console.log("Doing delete product plante SQL request ...");
 				try {
@@ -1664,20 +1650,6 @@
 				} catch(ErrorObj) {
 					console.log("Echec delete product plante SQL request");
 					alert("Delete product plante failed");
-					return;
-				};
-				// delete product usecase plante list
-				console.log("Doing delete product usecase plante SQL request ...");
-				try {
-					globalThis.WorkingDB.exec({
-						sql: "delete from PRODUCT_USECASE_PLANTE where Product = $a",
-						rowMode: 'array',
-						bind: {$a: globalThis.PrivateWorkingEltId},
-					});
-					console.log("End of delete usecase plante product SQL request.");
-				} catch(ErrorObj) {
-					console.log("Echec delete product usecase plante SQL request");
-					alert("Delete product usecase plante failed");
 					return;
 				};
 				// delete product effet2 list
@@ -1736,6 +1708,57 @@
 					alert("Delete product poso failed");
 					return;
 				};
+				
+				//get all product_usecase ids
+				let ProductUsecasesSQLRequestResultObj = [];
+				console.log("Start of product usecases SQL request.");
+				try {
+					ProductUsecasesSQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select Id from PRODUCT_USECASE where Product = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of product usecases SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec product usecases SQL request");
+				};
+				
+				let NbUsecases = ProductUsecasesSQLRequestResultObj.length;
+				for(i=0 ; i < NbUsecases ; i++)
+				{
+					let ProductUsecase_Id = ProductUsecasesSQLRequestResultObj [i][0];
+					console.log(ProductUsecase_Id);
+					// delete product usecase plante list
+					console.log("Doing delete product usecase plante SQL request ...");
+					try {
+						globalThis.WorkingDB.exec({
+							sql: "delete from PRODUCT_USECASE_PLANTE where Product_Usecase = $a",
+							rowMode: 'array',
+							bind: {$a: ProductUsecase_Id},
+						});
+						console.log("End of delete usecase plante product SQL request.");
+					} catch(ErrorObj) {
+						console.log("Echec delete product usecase plante SQL request");
+						alert("Delete product usecase plante failed");
+						return;
+					};
+				}
+				
+				// delete product usecase list
+				console.log("Doing delete product usecase SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PRODUCT_USECASE where Product = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete usecase product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete usecase product SQL request");
+					alert("Delete product usecase failed");
+					return;
+				};
+				
 				// update working elt id
 				globalThis.PrivateWorkingEltId = 0;
 				// enable save db btn
