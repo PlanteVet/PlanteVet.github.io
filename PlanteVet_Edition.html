@@ -1607,7 +1607,35 @@
 					console.log("End of delete product SQL request.");
 				} catch(ErrorObj) {
 					console.log("Echec delete product SQL request");
-					alert("Delete product failled");
+					alert("Delete product failed");
+					return;
+				};
+				// delete product fct list
+				console.log("Doing delete product fct SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PRODUCT_FCTS where Product = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete fct product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete fct product SQL request");
+					alert("Delete product fct failed");
+					return;
+				};
+				// delete product fct2 list
+				console.log("Doing delete product fct2 SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PRODUCT_FCTS2 where Product = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete fct2 product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete fct2 product SQL request");
+					alert("Delete product fct failed");
 					return;
 				};
 				// delete product usecase list
@@ -1621,7 +1649,91 @@
 					console.log("End of delete usecase product SQL request.");
 				} catch(ErrorObj) {
 					console.log("Echec delete usecase product SQL request");
-					alert("Delete product usecase failled");
+					alert("Delete product usecase failed");
+					return;
+				};
+				// delete product plante list
+				console.log("Doing delete product plante SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PRODUCT_PLANTE where Product = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete plante product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete product plante SQL request");
+					alert("Delete product plante failed");
+					return;
+				};
+				// delete product usecase plante list
+				console.log("Doing delete product usecase plante SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PRODUCT_USECASE_PLANTE where Product = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete usecase plante product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete product usecase plante SQL request");
+					alert("Delete product usecase plante failed");
+					return;
+				};
+				// delete product effet2 list
+				console.log("Doing delete product effet2 SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PRODUCT_EFFET2 where Product = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete effet2 product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete product effet2 SQL request");
+					alert("Delete product effet2 failed");
+					return;
+				};
+				// delete product tox list
+				console.log("Doing delete product tox SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PRODUCT_TOXICITE where Product = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete tox product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete product tox SQL request");
+					alert("Delete product tox failed");
+					return;
+				};
+				// delete product ctrindic list
+				console.log("Doing delete product ctrindic SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PRODUCT_CTRINDIC where Product = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete ctrindic product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete product ctrindic SQL request");
+					alert("Delete product ctrindic failed");
+					return;
+				};
+				// delete product poso list
+				console.log("Doing delete product poso SQL request ...");
+				try {
+					globalThis.WorkingDB.exec({
+						sql: "delete from PRODUCT_POSO where Product = $a",
+						rowMode: 'array',
+						bind: {$a: globalThis.PrivateWorkingEltId},
+					});
+					console.log("End of delete poso product SQL request.");
+				} catch(ErrorObj) {
+					console.log("Echec delete product poso SQL request");
+					alert("Delete product poso failed");
 					return;
 				};
 				// update working elt id
