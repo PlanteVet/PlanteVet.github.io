@@ -19,6 +19,40 @@
 			margin-right: 35px;
 		}
 		
+		.Preambule {
+			position: relative;
+			display: inline-block;
+		}
+			.Preambule .PopUpPreambule {
+				visibility: hidden;
+                height: 240px;
+				width: 475px;
+                background-color: #40E0D0;
+                color: black;
+                text-align: justify;
+                border-radius: 6px;
+                padding: 10px;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                left: 105%;
+				top: 50%;
+                margin-top: -140px;
+			}
+			.Preambule .PopUpPreambule::after {
+				  content: " ";
+				  position: absolute;
+				  top: 53%;
+				  right: 100%; /* To the left of the tooltip */
+				  margin-top: -5px;
+				  border-width: 5px;
+				  border-style: solid;
+				  border-color: transparent #40E0D0 transparent transparent;
+			}
+			.Preambule:hover .PopUpPreambule {  
+                visibility: visible;  
+            }
+		
 		table {
 		}
 		.half {
@@ -211,19 +245,34 @@
 		</table>
 		<br/>
 		<br/>Les informations sont amenées à évoluer avec le temps.
-		<br/><br/>Cette base de données a été créée dans le cadre d'une thèse vétérinaire.
+		<br/><br/>Cette base de données a été créée dans le cadre d'une thèse vétérinaire. <div class="Preambule"><svg width='26' height='26' style="vertical-align: middle;"><circle cx='13' cy='13' r='10' fill='#84FAA0' stroke='black' stroke-width='2' /><text x='50%' y='50%' text-anchor='middle' fill='black' font-size='12px' font-weight='regular' font-family='Verdana' dominant-baseline='middle'>?</text></svg>
+		<span class="PopUpPreambule"><b><u>Informations complémentaires :</u></b>
 		<br/>
-		<br/><table align=center width=50%>
+		<br/>Cette base de données est destinées aux praticiens vétérinaires pour les aider dans leur pratique en rassemblant des informations sur les plantes les plus couramment utiliser en France.
+		<br/>
+		<br/>De nombreuses plantes médicinales n'ont pas été incluses dans ce travail mais pourront être ajoutées par la suite si nécessaire.
+		<br/>
+		<br/>Enfin, des propositions de traitements pourront être trouvées pour certains grands syndromes. Ces propositions ne sont que ça et n'ont pas vocation à forcer le praticien à les utiliser : elles sont à modifier en prenant en compte le patient.
+		</span></div>
+	</div>
+	
+	<div id="ButtonView" style="position: absolute; top: 50%; left: 10%; transform: translate(-50%, -50%); z-index: 2;">
+		<table align=center style="text-align: center; border-collapse: collapse;">
 			<tr>
-				<td width=33%><button onclick="OpenInNewTab('https://drive.google.com/drive/folders/1cEjrPO3Fqio0Vqe9bDSBnmaV66o9UAdq?usp=drive_link')" type="button" class="Access">Accès mode local</button></td>
-				<td width=33%><button onclick="OpenInNewTab('https://drive.google.com/file/d/1MN-jsTDgolW7-eT1xfY0xK5pEPJdxpF_/view?usp=drive_link')" type="button" class="Access" disabled>Accès thèse</button></td>
-				<td width=33%><button onclick="OpenInNewTab('https://drive.google.com/file/d/1_kR_VQKkWicveAqjKm3wjyXor9eNAtEP/view?usp=drive_link')" type="button" class="Access">Accès Mode d'emploi</button></td>
+				<td><button onclick="OpenInNewTab('https://drive.google.com/file/d/1_kR_VQKkWicveAqjKm3wjyXor9eNAtEP/view?usp=drive_link')" type="button" class="Access">Accès Mode d'emploi</button></td>
 			</tr>
+			<tr><td><br/><br/></td></tr>
 			<tr>
-				<td colspan=3>
-					<br/>
-					<br/><button onclick="location.href='LiensExt.html'" type="button" class="Link">Liens externes</button>
-				</td>
+				<td class='right'><button onclick="OpenInNewTab('https://drive.google.com/file/d/1MN-jsTDgolW7-eT1xfY0xK5pEPJdxpF_/view?usp=drive_link')" type="button" class="Access" disabled>Accès thèse</button></td>
+			</tr>
+			<tr><td><br/><br/></td></tr>
+			<tr>
+				<td><button onclick="OpenInNewTab('https://drive.google.com/drive/folders/1cEjrPO3Fqio0Vqe9bDSBnmaV66o9UAdq?usp=drive_link')" type="button" class="Access">Accès mode local</button></td>
+			</tr>
+			<tr><td><br/><br/></td></tr>
+			<tr><td><br/><br/></td></tr>
+			<tr>
+				<td><button onclick="location.href='LiensExt.html'" type="button" class="Link">Liens externes</button></td>
 			</tr>
 		</table>
 	</div>
