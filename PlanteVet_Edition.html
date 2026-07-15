@@ -8777,11 +8777,11 @@
 				PlanteInfoTxt += "<h3>Propriétés pharmacocinétiques :</h3><textarea id=\"PlantePCinInput\" >Initializing Rich text editor ...</textarea><br/>";
 				RichTextDataPCin = CastBufferToRichText(PlantePCin);
 				PlanteInfoTxt += "<h3>Applications médicales</h3>";
-				PlanteInfoTxt += "<h4>Généralités</h4>";
+				PlanteInfoTxt += "<b>Généralités</b><br/>";
 				PlanteInfoTxt += "&emsp;<b>Utilisation(s) pour la : </b> <select id=\"PlFctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlanteFcts();\" class='append' /><br/><div id=\"ListCheckedPlanteFcts\">Empty list checked product fcts</div>";
 				PlanteInfoTxt += "<h4>Données utiles vétérinaires</h4><textarea id=\"PlanteDataInput\" >Initializing Rich text editor ...</textarea><br/>";
 				RichTextDataImp = CastBufferToRichText(PlanteData);
-				PlanteInfoTxt += "&emsp; <b>À retenir :</b> <input id=\"EltDataInput\" size=\"300\" type=\"text\" value=\"" + DataImp + "\" onchange=\"DoCheckNameValidity()\" placeholder='Données utiles à retenir' />";
+				PlanteInfoTxt += "&emsp; <b>À retenir :</b> <input id=\"EltDataInput\" size=\"200\" type=\"text\" value=\"" + DataImp + "\" onchange=\"DoCheckNameValidity()\" placeholder='Données utiles à retenir' />";
 				PlanteInfoTxt += "<h3>Contre-indications</h3>";
 				PlanteInfoTxt += "&emsp;<select id=\"CtrIndicPlPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlCtrIndic();\" class='append' /><br/><div id=\"ListCheckedPlanteCtrIndic\">Empty list checked plante CtrIndic</div>";
 				PlanteInfoTxt += "<h3>Effets secondaires</h3>";
