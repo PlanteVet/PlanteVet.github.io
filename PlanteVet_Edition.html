@@ -8718,11 +8718,11 @@
 					PlantePDyn = CastRichTextToBuffer("Aucune donnée");
 				}
 				let PlanteP1 = PlanteInfo[8];
-				if(PlanteP1 == null) PlanteP1 = "UNDEFINED";
+				if(PlanteP1 == null) PlanteP1 = "";
 				let PlanteP2 = PlanteInfo[9];
-				if(PlanteP2 == null) PlanteP2 = "UNDEFINED";
+				if(PlanteP2 == null) PlanteP2 = "";
 				let PlanteP3 = PlanteInfo[10];
-				if(PlanteP3 == null) PlanteP3 = "UNDEFINED";
+				if(PlanteP3 == null) PlanteP3 = "";
 				let PlantePCin = PlanteInfo[11];
 				if(PlantePCin == null)
 				{
@@ -8761,6 +8761,7 @@
 					PlanteData = CastRichTextToBuffer("Aucune donnée.");
 				}
 				let DataImp = PlanteInfo[24];
+				if(DataImp == null) DataImp = "";
 				
 				// build form
 				PlanteInfoTxt += "<h2>Informations générales</h2><b>Nom vernaculaire : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + PlanteNameTxt + "\" onchange=\"DoCheckNameValidity()\" placeholder='Entrez le nom commun de la plante.' /><br/><br/>";
