@@ -487,7 +487,7 @@
 												"CREATE TABLE GALENIQUE(Id integer primary key, Name text)",
 												"CREATE TABLE CATEGORIE(Id integer primary key, Name text)",
 												"CREATE TABLE ESPECE(Id integer primary key, Name text, IMG blob)",
-												"CREATE TABLE PLANTE(Id integer primary key, Name text, Photo blob, Latin text, Famille text, Botanique blob, Molecules blob, PDyn blob, P1 text, P2 text, P3 text, PCin blob, Gestation blob, Surdosage blob, Sources blob, Interac blob, MAJ blob, Rchr int, Clin int, Reg int, RegEQ int, Dop int, Poso blob)",
+												"CREATE TABLE PLANTE(Id integer primary key, Name text, Photo blob, Latin text, Famille text, Botanique blob, Molecules blob, PDyn blob, P1 text, P2 text, P3 text, PCin blob, Gestation blob, Surdosage blob, Sources blob, Interac blob, MAJ blob, Rchr int, Clin int, Reg int, RegEQ int, Dop int, Poso blob, DataVet blob, DataImp text)",
 												"CREATE TABLE USEPART(Id integer primary key, Name text, IMG blob)",
 												"CREATE TABLE FCTS(Id integer primary key, Name text)",
 												"CREATE TABLE USECASE(Id integer primary key, Name text, Fct integer not null, Syndrome bool, TTT blob, foreign key(Fct) references FCTS(Id))",
@@ -1976,13 +1976,13 @@
 				if(PlantePDyn == null) PlantePDyn = "Aucune donnée.";
 				
 				let PlanteP1 = PlanteInfo[8];
-				if(PlanteP1 == null) PlanteP1 = "UNDEFINED";
+				if(PlanteP1 == null) PlanteP1 = "";
 				PlanteP1 = DoSanitizeNameTxt(PlanteP1);
 				let PlanteP2 = PlanteInfo[9];
-				if(PlanteP2 == null) PlanteP2 = "UNDEFINED";
+				if(PlanteP2 == null) PlanteP2 = "";
 				PlanteP2 = DoSanitizeNameTxt(PlanteP2);
 				let PlanteP3 = PlanteInfo[10];
-				if(PlanteP3 == null) PlanteP3 = "UNDEFINED";
+				if(PlanteP3 == null) PlanteP3 = "";
 				PlanteP3 = DoSanitizeNameTxt(PlanteP3);
 				let PlanteP = '';
 				if(PlanteP1 != '') PlanteP += PlanteP1;
@@ -2014,7 +2014,12 @@
 				let PlanteDop = PlanteInfo[21];
 				if(Today == null) PlanteDop = 0;
 				let PlantePoso = PlanteInfo[22];
-				if(PlantePoso == null) PlanteInterac = "Aucune posologie renseignée.";
+				if(PlantePoso == null) PlantePoso = "Aucune posologie renseignée.";
+				let PlanteData = PlanteInfo[23];
+				if(PlanteData == null) PlanteData = "Aucune donnée renseignée.";
+				let PlanteDataImp = PlanteInfo[24];
+				if(PlanteDataImp == null) PlanteDataImp = "";
+				PlanteDataImp = DoSanitizeNameTxt(PlanteDataImp);
 				
 				// fetch plante Effet2
 				console.log("Doing plante Effet2 SQL request ...");
@@ -2580,13 +2585,14 @@
 				PlanteInfoTxt += "</td><td class=\"casedroite\" style=\"width: 30%; border: 5px; border-style: ridge; border-color: #E5CF45; border-radius: 10px; padding: 15px;\">";
 				PlanteInfoTxt += "<b>Date de dernière mise à jour : </b>" + CastBufferToRichText(Today) + "<br/><br/>";
 				PlanteInfoTxt += "<b>Parties utilisées : </b>" + UsePartsTxt + "<br/><br/>";
-				PlanteInfoTxt += "<b>Usages : </b><br/>&emsp;" + PlanteP + "<br/><br/>";
 				PlanteInfoTxt += "<b>Espèces chez lesquelles l'utilisation est décrite : </b><br/>&emsp;" + EspeceTxt + "<br/><br/>";
 				PlanteInfoTxt += "<b>Espèces chez lesquelles la plante est toxique : </b><br/>&emsp;" + EspeceToxTxt + "<br/><br/>";
 				PlanteInfoTxt += "<b>Données expérimentales <div class=\"Recherche\"><svg width='16' height='16' class='QuestionMark'><circle cx='8' cy='8' r='6' fill='#84FAA0' stroke='black' stroke-width='1' /><text x='50%' y='50%' text-anchor='middle' fill='black' font-size='8px' font-weight='bold' font-family='Verdana' dominant-baseline='central'>?</text></svg> : </b>";
 				PlanteInfoTxt += "<span class=\"PopUpRecherches\"><table border = 0px margin-left=auto margin-right=auto valign=center><tr><td align=right></td><td align=center>=</td><td align=left>Aucune recherche expérimentale n'a été effectuée.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Des recherches ont été faites in vitro.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Quelques recherches ont été faites sur des rongeurs.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>De  nombreuses recherches ont été faites sur des rongeurs.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>Quelques recherches ont été faites sur des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Edelweiss.png\"/></td><td align=center>=</td><td align=left>De nombreuses recherches ont été faites sur des espèces cibles.</td></tr></table></span></div>" + RchrImg + "<br/><br/>";
 				PlanteInfoTxt += "<b>Données cliniques <div class=\"Clinique\"><svg width='16' height='16' class='QuestionMark'><circle cx='8' cy='8' r='6' fill='#84FAA0' stroke='black' stroke-width='1' /><text x='50%' y='50%' text-anchor='middle' fill='black' font-size='8px' font-weight='bold' font-family='Verdana' dominant-baseline='central'>?</text></svg> : </b>";
 				PlanteInfoTxt += "<span class=\"PopUpClinique\"><table border = 0px margin-left=auto margin-right=auto valign=center><tr><td align=right></td><td align=center>=</td><td align=left>Aucune donnée clinique n'est disponible.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Un essai clinique a été réalisé sur l'une des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essais cliniques ont été réalisés sur l'une des espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Un essai clinique a été réalisé sur au moins 2 espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essais cliniques ont été réalisés sur au moins 2 espèces cibles.</td></tr><tr><td align=right><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/><img style=\"height: 20px; vertical-align: sub;\" src=\"Images/Starflower.png\"/></td><td align=center>=</td><td align=left>Plusieurs essais cliniques ont été réalisés sur toutes les espèces cibles.</td></tr></table></span></div>" + ClinImg + "<br/><br/>";
+				PlanteInfoTxt += "<b>Usages : </b><br/>&emsp;" + PlanteP + "<br/><br/>";
+				PlanteInfoTxt += "<b>À retenir : </b><br/>&emsp;" + PlanteDataImp + "<br/><br/>";
 				PlanteInfoTxt += "<div class='center'>" + RegTxt + "</div>";
 				PlanteInfoTxt += "</td></tr>";
 				
@@ -2602,7 +2608,9 @@
 				PlanteInfoTxt += "<h3>Pharmacocinétique : </h3>" + CastBufferToRichText(PlantePCin) + "<br/>";
 				PlanteInfoTxt += "<h3>Données expérimentales : </h3>" + RchrTxt + "<br/>";
 				PlanteInfoTxt += "<h3>Données cliniques : </h3>" + ClinTxt + "<br/><br/>";
-				PlanteInfoTxt += "<h3>Applications médicales</h3>" + PlanteUseTxt;
+				PlanteInfoTxt += "<h3>Applications médicales</h3>";
+				PlanteInfoTxt += "<h4>Généralités</h4>" + PlanteUseTxt;
+				PlanteInfoTxt += "<h4>Données utiles vétérinaires</h4>" + CastBufferToRichText(PlanteData) + "<br/>";
 				PlanteInfoTxt += "<h3>Contre-indications : </h3>" + PlanteCtrIndicsTxt + "<br/>";
 				PlanteInfoTxt += "<h3>Effets secondaires : </h3>" + PlanteEffet2sTxt + "<br/>";
 				PlanteInfoTxt += "<h3>Posologie : </h3>" + CastBufferToRichText(PlantePoso) + "<br/>";
