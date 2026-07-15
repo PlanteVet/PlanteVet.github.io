@@ -1574,6 +1574,7 @@
 			DeactivateRichTextOnTextArea("PlanteSurdosageInput");
 			DeactivateRichTextOnTextArea("PlanteInteracInput");
 			DeactivateRichTextOnTextArea("PlanteSourcesInput");
+			DeactivateRichTextOnTextArea("PlanteDataInput");
 			// go back to menu
 			DoEditPlanteTable();
 			return;
@@ -8748,6 +8749,7 @@
 				PlanteRegEQ = PlanteInfo[20];
 				PlanteDop = PlanteInfo[21];
 				let PlantePoso = PlanteInfo[22];
+				let PlanteData = CastRichTextToBuffer("Aucune donnée");
 				let DataImp = '';
 				if(PlantePoso == null)
 				{
@@ -8773,16 +8775,17 @@
 				RichTextDataPDyn = CastBufferToRichText(PlantePDyn);
 				PlanteInfoTxt += "&emsp; <b>Propriétés principales :</b> 1 - <input id=\"EltP1Input\" size=\"32\" type=\"text\" value=\"" + PlanteP1 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 1' />&nbsp; 2 - <input id=\"EltP2Input\" size=\"32\" type=\"text\" value=\"" + PlanteP2 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 2' />&nbsp; 3 - <input id=\"EltP3Input\" size=\"32\" type=\"text\" value=\"" + PlanteP3 + "\" onchange=\"DoCheckNameValidity()\" placeholder='Propriété 3' /><br/><br/>";
 				PlanteInfoTxt += "<h3>Propriétés pharmacocinétiques :</h3><textarea id=\"PlantePCinInput\" >Initializing Rich text editor ...</textarea><br/>";
+				RichTextDataPCin = CastBufferToRichText(PlantePCin);
 				PlanteInfoTxt += "<h3>Applications médicales</h3>";
 				PlanteInfoTxt += "<h4>Généralités</h4>";
 				PlanteInfoTxt += "&emsp;<b>Utilisation(s) pour la : </b> <select id=\"PlFctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlanteFcts();\" class='append' /><br/><div id=\"ListCheckedPlanteFcts\">Empty list checked product fcts</div>";
 				PlanteInfoTxt += "<h4>Données utiles vétérinaires</h4><textarea id=\"PlanteDataInput\" >Initializing Rich text editor ...</textarea><br/>";
+				RichTextDataImp = CastBufferToRichText(PlanteData);
 				PlanteInfoTxt += "&emsp; <b>À retenir :</b> <input id=\"EltDataInput\" size=\"300\" type=\"text\" value=\"" + DataImp + "\" onchange=\"DoCheckNameValidity()\" placeholder='Données utiles à retenir' />";
 				PlanteInfoTxt += "<h3>Contre-indications</h3>";
 				PlanteInfoTxt += "&emsp;<select id=\"CtrIndicPlPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlCtrIndic();\" class='append' /><br/><div id=\"ListCheckedPlanteCtrIndic\">Empty list checked plante CtrIndic</div>";
 				PlanteInfoTxt += "<h3>Effets secondaires</h3>";
 				PlanteInfoTxt += "&emsp;<select id=\"Effet2PlPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlEffet2();\" class='append' /><br/><div id=\"ListCheckedPlanteEffet2\">Empty list checked plante Effet2</div>";
-				RichTextDataPCin = CastBufferToRichText(PlantePCin);
 				
 				PlanteInfoTxt += "<h3>Posologie</h3>";
 				PlanteInfoTxt += "&emsp;<i>Ecrivez sous le format : \"Forme galénique : Posologie (espèce)\"</i><br/><br/>";
@@ -8859,6 +8862,7 @@
 				ActivateRichTextOnTextArea("PlanteSurdosageInput",RichTextDataSurdosage);
 				ActivateRichTextOnTextArea("PlanteInteracInput",RichTextDataInterac);
 				ActivateRichTextOnTextArea("PlanteSourcesInput",RichTextDataSources);
+				ActivateRichTextOnTextArea("PlanteDataInput",RichTextDataImp);
 			}
 			return;
 		}
