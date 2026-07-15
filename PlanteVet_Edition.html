@@ -463,7 +463,7 @@
 												"CREATE TABLE GALENIQUE(Id integer primary key, Name text)",
 												"CREATE TABLE CATEGORIE(Id integer primary key, Name text)",
 												"CREATE TABLE ESPECE(Id integer primary key, Name text, IMG blob)",
-												"CREATE TABLE PLANTE(Id integer primary key, Name text, Photo blob, Latin text, Famille text, Botanique blob, Molecules blob, PDyn blob, P1 text, P2 text, P3 text, PCin blob, Gestation blob, Surdosage blob, Sources blob, Interac blob, MAJ blob, Rchr int, Clin int, Reg int, RegEQ int, Dop int, Poso blob)",
+												"CREATE TABLE PLANTE(Id integer primary key, Name text, Photo blob, Latin text, Famille text, Botanique blob, Molecules blob, PDyn blob, P1 text, P2 text, P3 text, PCin blob, Gestation blob, Surdosage blob, Sources blob, Interac blob, MAJ blob, Rchr int, Clin int, Reg int, RegEQ int, Dop int, Poso blob, DataVet blob, DataImp text)",
 												"CREATE TABLE USEPART(Id integer primary key, Name text, IMG blob)",
 												"CREATE TABLE FCTS(Id integer primary key, Name text)",
 												"CREATE TABLE USECASE(Id integer primary key, Name text, Fct integer not null, Syndrome bool, TTT blob, foreign key(Fct) references FCTS(Id))",
@@ -7455,6 +7455,8 @@
 			let PlanteSources = CastRichTextToBuffer(GetRichTextContentAsHTML("PlanteSourcesInput"));
 			let PlanteInterac = CastRichTextToBuffer(GetRichTextContentAsHTML("PlanteInteracInput"));
 			let PlantePoso = CastRichTextToBuffer(GetRichTextContentAsHTML("PlantePosoInput"));
+			let PlanteData = CastRichTextToBuffer(GetRichTextContentAsHTML("PlanteDataInput"));
+			let PlanteDataImp = document.getElementById("EltDataInput").value;
 			let Today = CastRichTextToBuffer(TodayDate());
 			
 			let PlanteRchr = 0;
@@ -7487,9 +7489,9 @@
 				let SQLRequestResultObj = [];
 				try {
 					SQLRequestResultObj = globalThis.WorkingDB.exec({
-						sql: "insert into Plante values(null, $a, $b, $c, $d, $e, $f, $g, $h, $i, $j, $k, $l, $m, $n, $o, $p, $q, $r, $s, $t, $u, $v) returning Id",
+						sql: "insert into Plante values(null, $a, $b, $c, $d, $e, $f, $g, $h, $i, $j, $k, $l, $m, $n, $o, $p, $q, $r, $s, $t, $u, $v, $w, $x) returning Id",
 						rowMode: 'array',
-						bind: {$a: PlanteNameTxt, $b: PlantePhotoBlob, $c: PlanteLatinTxt, $d: PlanteFamilleTxt, $e: PlanteBotanique, $f: PlanteMolecules, $g: PlantePDyn, $h: PlanteP1, $i: PlanteP2, $j: PlanteP3, $k: PlantePCin, $l: PlanteGestation, $m: PlanteSurdosage, $n: PlanteSources, $o: PlanteInterac, $p: Today, $q: PlanteRchr, $r: PlanteClin, $s: Reg, $t: RegEQ, $u: Dop, $v: PlantePoso},
+						bind: {$a: PlanteNameTxt, $b: PlantePhotoBlob, $c: PlanteLatinTxt, $d: PlanteFamilleTxt, $e: PlanteBotanique, $f: PlanteMolecules, $g: PlantePDyn, $h: PlanteP1, $i: PlanteP2, $j: PlanteP3, $k: PlantePCin, $l: PlanteGestation, $m: PlanteSurdosage, $n: PlanteSources, $o: PlanteInterac, $p: Today, $q: PlanteRchr, $r: PlanteClin, $s: Reg, $t: RegEQ, $u: Dop, $v: PlantePoso, $w: PlanteData, $x: PlanteDataImp},
 					});
 					console.log("End of insert Plante SQL request.");
 				} catch(ErrorObj) {
@@ -7510,9 +7512,9 @@
 				console.log("Doing update Plante SQL request ...");
 				try {
 					globalThis.WorkingDB.exec({
-						sql: "update Plante set Name = $a, Photo = $b, Latin = $c, Famille = $d, Botanique = $e, Molecules = $f, PDyn = $g, P1 = $h, P2 = $i, P3 = $j, PCin = $k, Gestation = $l, Surdosage = $m, Sources = $n, Interac = $o, MAJ = $p, Rchr = $q, Clin = $r, Reg = $s, RegEQ = $t, Dop = $u, Poso = $v where Id = $w",
+						sql: "update Plante set Name = $a, Photo = $b, Latin = $c, Famille = $d, Botanique = $e, Molecules = $f, PDyn = $g, P1 = $h, P2 = $i, P3 = $j, PCin = $k, Gestation = $l, Surdosage = $m, Sources = $n, Interac = $o, MAJ = $p, Rchr = $q, Clin = $r, Reg = $s, RegEQ = $t, Dop = $u, Poso = $v, DataVet = $w, DataImp = $x where Id = $y",
 						rowMode: 'array',
-						bind: {$a: PlanteNameTxt, $b: PlantePhotoBlob, $c: PlanteLatinTxt, $d: PlanteFamilleTxt, $e: PlanteBotanique, $f: PlanteMolecules, $g: PlantePDyn, $h: PlanteP1, $i: PlanteP2, $j: PlanteP3, $k: PlantePCin, $l: PlanteGestation, $m: PlanteSurdosage, $n: PlanteSources, $o: PlanteInterac, $p: Today, $q: PlanteRchr, $r: PlanteClin, $s: Reg, $t: RegEQ, $u: Dop, $v: PlantePoso, $w: globalThis.PrivateWorkingEltId},
+						bind: {$a: PlanteNameTxt, $b: PlantePhotoBlob, $c: PlanteLatinTxt, $d: PlanteFamilleTxt, $e: PlanteBotanique, $f: PlanteMolecules, $g: PlantePDyn, $h: PlanteP1, $i: PlanteP2, $j: PlanteP3, $k: PlantePCin, $l: PlanteGestation, $m: PlanteSurdosage, $n: PlanteSources, $o: PlanteInterac, $p: Today, $q: PlanteRchr, $r: PlanteClin, $s: Reg, $t: RegEQ, $u: Dop, $v: PlantePoso, $w: PlanteData, $x: PlanteDataImp, $y: globalThis.PrivateWorkingEltId},
 					});
 					console.log("End of update Plante SQL request.");
 				} catch(ErrorObj) {
@@ -8662,7 +8664,7 @@
 			{
 				// fresh new elt
 				// Mimic SQL request result
-				let PlanteInfo = [0, "Plante_0", new Uint8Array(), "", "", new Uint8Array(), new Uint8Array(), new Uint8Array(), "", "", "", new Uint8Array(), new Uint8Array(), new Uint8Array(), new Uint8Array(), new Uint8Array(), new Uint8Array(), 0, 0, 0, 0, 0, new Uint8Array()];
+				let PlanteInfo = [0, "Plante_0", new Uint8Array(), "", "", new Uint8Array(), new Uint8Array(), new Uint8Array(), "", "", "", new Uint8Array(), new Uint8Array(), new Uint8Array(), new Uint8Array(), new Uint8Array(), new Uint8Array(), 0, 0, 0, 0, 0, new Uint8Array(), new Uint8Array(), ""];
 				PlanteSQLRequestResultObj.push(PlanteInfo);
 			}
 			else
@@ -8749,12 +8751,16 @@
 				PlanteRegEQ = PlanteInfo[20];
 				PlanteDop = PlanteInfo[21];
 				let PlantePoso = PlanteInfo[22];
-				let PlanteData = CastRichTextToBuffer("Aucune donnée");
-				let DataImp = '';
 				if(PlantePoso == null)
 				{
 					PlantePoso = CastRichTextToBuffer("Aucune posologie renseignée.");
 				}
+				let PlanteData = PlanteInfo[23];
+				if(PlanteData == null)
+				{
+					PlanteData = CastRichTextToBuffer("Aucune donnée.");
+				}
+				let DataImp = PlanteInfo[24];
 				
 				// build form
 				PlanteInfoTxt += "<h2>Informations générales</h2><b>Nom vernaculaire : </b><input id=\"EltNameInput\" size=\"64\" type=\"text\" value=\"" + PlanteNameTxt + "\" onchange=\"DoCheckNameValidity()\" placeholder='Entrez le nom commun de la plante.' /><br/><br/>";
@@ -8781,7 +8787,7 @@
 				PlanteInfoTxt += "&emsp;<b>Utilisation(s) pour la : </b> <select id=\"PlFctsPoolCombo\" style=\"width: 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlanteFcts();\" class='append' /><br/><div id=\"ListCheckedPlanteFcts\">Empty list checked product fcts</div>";
 				PlanteInfoTxt += "<h4>Données utiles vétérinaires</h4><textarea id=\"PlanteDataInput\" >Initializing Rich text editor ...</textarea><br/>";
 				RichTextDataImp = CastBufferToRichText(PlanteData);
-				PlanteInfoTxt += "&emsp; <b>À retenir :</b> <input id=\"EltDataInput\" size=\"200\" type=\"text\" value=\"" + DataImp + "\" onchange=\"DoCheckNameValidity()\" placeholder='Données utiles à retenir' />";
+				PlanteInfoTxt += "&emsp; <b>À retenir :</b> <input id=\"EltDataInput\" size=\"150\" type=\"text\" value=\"" + DataImp + "\" onchange=\"DoCheckNameValidity()\" placeholder='Données utiles à retenir' />";
 				PlanteInfoTxt += "<h3>Contre-indications</h3>";
 				PlanteInfoTxt += "&emsp;<select id=\"CtrIndicPlPoolCombo\" style=\"width:CtrIndic 200px;\"></select> <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlCtrIndic();\" class='append' /><br/><div id=\"ListCheckedPlanteCtrIndic\">Empty list checked plante CtrIndic</div>";
 				PlanteInfoTxt += "<h3>Effets secondaires</h3>";
