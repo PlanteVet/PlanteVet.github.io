@@ -200,6 +200,40 @@
                 visibility: visible;  
             }
 		
+		.Preambule {
+			position: relative;
+			display: inline-block;
+		}
+			.Preambule .PopUpPreambule {
+				visibility: hidden;
+                height: 240px;
+				width: 475px;
+                background-color: #40E0D0;
+                color: black;
+                text-align: justify;
+                border-radius: 6px;
+                padding: 10px;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                left: 105%;
+				top: 50%;
+                margin-top: -140px;
+			}
+			.Preambule .PopUpPreambule::after {
+				  content: " ";
+				  position: absolute;
+				  top: 53%;
+				  right: 100%; /* To the left of the tooltip */
+				  margin-top: -5px;
+				  border-width: 5px;
+				  border-style: solid;
+				  border-color: transparent #40E0D0 transparent transparent;
+			}
+			.Preambule:hover .PopUpPreambule {  
+                visibility: visible;  
+            }
+		
 		header {
 			background-color: #6CD483;
 			position: fixed;
@@ -3738,7 +3772,15 @@
 		<br/>
 		<br/>Les informations sont amenées à évoluer avec le temps.
 		<br/>
-		<br/>Cette base de données a été créée dans le cadre d'une thèse vétérinaire.
+		<br/>Cette base de données a été créée dans le cadre d'une thèse vétérinaire. <div class="Preambule"><svg width='26' height='26' style="vertical-align: middle;"><circle cx='13' cy='13' r='10' fill='#84FAA0' stroke='black' stroke-width='2' /><text x='50%' y='50%' text-anchor='middle' fill='black' font-size='12px' font-weight='bold' font-family='Verdana' dominant-baseline='central'>?</text></svg>
+		<span class="PopUpPreambule"><b><u>Informations complémentaires :</u></b>
+		<br/>
+		<br/>Cette base de données est destinées aux praticiens vétérinaires pour les aider dans leur pratique en rassemblant des informations sur les plantes les plus couramment utiliser en France.
+		<br/>
+		<br/>De nombreuses plantes médicinales n'ont pas été incluses dans ce travail mais pourront être ajoutées par la suite si nécessaire.
+		<br/>
+		<br/>Enfin, des propositions de traitements pourront être trouvées pour certains grands syndromes. Ces propositions ne sont que ça et n'ont pas vocation à forcer le praticien à les utiliser : elles sont à modifier en prenant en compte le patient.
+		</span></div>
 	</div>
 	
 	<!-- Select product by name -->
