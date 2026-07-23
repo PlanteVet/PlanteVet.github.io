@@ -2897,13 +2897,22 @@
 				LaboInputComboTxt += "<option value=\"0\">*** NO LABO ***</option>";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = LaboSQLRequestResultObj[i];
-					let LaboId = TmpResultRow[0];
-					let LaboNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+
+				ListOrd = AlphOrder(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let LaboId = TmpResultRow.Id;
+					let LaboNameTxt = TmpResultRow.Name;
 					if(LaboNameTxt == null) LaboNameTxt = "UNKNOWN LABO ID " + LaboId;
 					LaboNameTxt = DoSanitizeNameTxt(LaboNameTxt);
 					// add to combo
