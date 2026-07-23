@@ -1436,7 +1436,7 @@
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
-					ListOrd.push({Id: PlanteId, Name : TmpResultRow[0], Latin : TmpResultRow[1]});
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1], Latin : TmpResultRow[2]});
 				}
 
 				ListOrd = AlphOrder(ListOrd);
