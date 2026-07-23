@@ -1431,12 +1431,23 @@
 				ResultList += "NO MATCHING ROW";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
-					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span></li>";
+					ListOrd.push({Id: PlanteId, Name : TmpResultRow[0], Latin : TmpResultRow[1]});
+				}
+
+				ListOrd = AlphOrd(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let PlanteId = TmpResultRow.Id;
+					let PlanteName = TmpResultRow.Name;
+					let PlanteLatin = TmpResultRow.Latin;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">" + PlanteName + " (<i>" + PlanteLatin + "</i>)</span></li>";
 				}
 			}
 			ResultList += "</ul>";
