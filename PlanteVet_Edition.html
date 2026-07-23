@@ -680,6 +680,21 @@
 			});			
 			return;
 		}
+
+		//organize by alphabetic order
+		function AlphOrder(List)
+		{
+			List.sort((a,b) => {
+				const Name1 = a.Name;
+				const Name2 = b.Name;
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			return List;
+		}
 		
 		// Read file
 		function DoReadFileAsync(FileObj,ProgressBarObj)
