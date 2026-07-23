@@ -3074,6 +3074,15 @@
 			// build list Espece state array and div
 			let EspeceTxt = "<table border=1 cellspacing=0 cellpadding=5 valign=center><tr align=center><th>Espèce</th><th>Posologie</th><th>Temps d'attente</th></tr><tr valign=center>";
 			let NbResultRow = EspeceSQLRequestResultObj.length;
+			let ListOrd = [];
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow2 = EspeceNameSQLRequestResultObj[i];
+				ListOrd.push({Id: TmpResultRow2[0], Name : TmpResultRow2[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
@@ -3083,9 +3092,9 @@
 				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
 				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
 				
-				let TmpResultRow2 = EspeceNameSQLRequestResultObj[i];
-				let EspeceId2 = TmpResultRow2[0];
-				let EspeceNameTxt2 = TmpResultRow2[1];
+				let TmpResultRow2 = ListOrd[i];
+				let EspeceId2 = TmpResultRow.Id;
+				let EspeceNameTxt2 = TmpResultRow.Name;
 				if(EspeceNameTxt2 == null) EspeceNameTxt2 = "UNKNOWN Espece ID " + EspeceId2;
 				EspeceNameTxt2 = DoSanitizeNameTxt(EspeceNameTxt2);
 				
