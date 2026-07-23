@@ -2952,13 +2952,22 @@
 				GaleniqueInputComboTxt += "<option value=\"0\">*** NO Galenique ***</option>";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = GaleniqueSQLRequestResultObj[i];
-					let GaleniqueId = TmpResultRow[0];
-					let GaleniqueNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+
+				ListOrd = AlphOrder(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let GaleniqueId = TmpResultRow.Id;
+					let GaleniqueNameTxt = TmpResultRow.Name;
 					if(GaleniqueNameTxt == null) GaleniqueNameTxt = "UNKNOWN Galenique ID " + GaleniqueId;
 					GaleniqueNameTxt = DoSanitizeNameTxt(GaleniqueNameTxt);
 					// add to combo
@@ -2998,13 +3007,22 @@
 				CategorieInputComboTxt += "<option value=\"0\">*** NO Categorie ***</option>";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = CategorieSQLRequestResultObj[i];
-					let CategorieId = TmpResultRow[0];
-					let CategorieNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+
+				ListOrd = AlphOrder(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let CategorieId = TmpResultRow.Id;
+					let CategorieNameTxt = TmpResultRow.Name;
 					if(CategorieNameTxt == null) CategorieNameTxt = "UNKNOWN Categorie ID " + CategorieId;
 					CategorieNameTxt = DoSanitizeNameTxt(CategorieNameTxt);
 					// add to combo
