@@ -8659,27 +8659,19 @@
 			// build list Espece state array and div
 			let EspeceTxt = "<b>Espèces concernées : </b>";
 			let NbResultRow = EspeceSQLRequestResultObj.length;
-			let ListOrd = [];
-			for(let i = 0; i < NbResultRow; i++)
-			{
-				let TmpResultRowName = EspeceNameSQLRequestResultObj[i];
-				ListOrd.push({Id: TmpResultRowName[0], Name : TmpResultRowName[1]});
-			}
-
-			ListOrd = AlphOrder(ListOrd);
-
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = EspeceSQLRequestResultObj[i];
 				let EspeceId = TmpResultRow[0];
 				let EspeceNameTxt = TmpResultRow[1];
-				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
-				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
 				
-				let TmpResultRowName = ListOrd[i];
+				let TmpResultRowName = EspeceNameSQLRequestResultObj[i];
 				let EspeceIdName = TmpResultRowName[0];
 				let EspeceNameTxtName = TmpResultRowName[1];
+				
+				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
+				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
 				if(EspeceNameTxtName == null) EspeceNameTxtName = "UNKNOWN Espece ID " + EspeceIdName;
 				EspeceNameTxtName = DoSanitizeNameTxt(EspeceNameTxtName);
 				
