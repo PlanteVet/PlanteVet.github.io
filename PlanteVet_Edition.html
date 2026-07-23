@@ -4643,12 +4643,21 @@
 			// build list Effet2 state array AND Effet2 pool combo
 			let Effet2PoolComboTxt = "";
 			let NbResultRow = Effet2SQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = Effet2SQLRequestResultObj[i];
-				let Effet2Id = TmpResultRow[0];
-				let Effet2NameTxt = TmpResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let Effet2Id = TmpResultRow.Id;
+				let Effet2NameTxt = TmpResultRow.Name;
 				if(Effet2NameTxt == null) Effet2NameTxt = "UNKNOWN Effet2 ID " + Effet2Id;
 				Effet2NameTxt = DoSanitizeNameTxt(Effet2NameTxt);
 				// add to Effet2 state array
@@ -4688,8 +4697,7 @@
 				let TmpEffet2Idx = Effet2PoolObj.value;
 				let PlanteEffet2StateObj = PlanteEffet2StateListObj[TmpEffet2Idx];
 				let Effet2NameTxt = PlanteEffet2StateObj.Effet2Name;
-				let Effet2Obj = [Effet2Id, Effet2NameTxt];
-				FullList.push(Effet2Obj);
+				FullList.push({Id: Effet2Id, Name : Effet2NameTxt});
 				// update combo
 				Effet2PoolObj.disabled = true;
 				// update Effet2 state array
@@ -4697,19 +4705,12 @@
 				PlanteEffet2StateObj.FlgInCheckList = true;
 			}
 			
-			FullList.sort((a,b) => {
-				const Name1 = a[1];
-				const Name2 = b[1];
-				
-				if(Name1.localeCompare(Name2) < 0) return -1;
-				if(Name1.localeCompare(Name2) > 0) return 1;
-				return 0;
-			});
+			FullList = AlphOrder(FullList);
 			
 			for(let i = 0; i < NbEffet2; i++)
 			{
-				let Effet2Id = FullList[i][0];
-				let Effet2NameTxt = FullList[i][1];
+				let Effet2Id = FullList[i].Id;
+				let Effet2NameTxt = FullList[i].Name;
 				// update check list
 				Effet2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Effet2PlCheckListId_" + Effet2Id + "\" checked>" + Effet2NameTxt + "</input><br/>";
 			}
@@ -4786,12 +4787,21 @@
 			// build list CtrIndic state array AND CtrIndic pool combo
 			let CtrIndicPoolComboTxt = "";
 			let NbResultRow = CtrIndicSQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = CtrIndicSQLRequestResultObj[i];
-				let CtrIndicId = TmpResultRow[0];
-				let CtrIndicNameTxt = TmpResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let CtrIndicId = TmpResultRow.Id;
+				let CtrIndicNameTxt = TmpResultRow.Name;
 				if(CtrIndicNameTxt == null) CtrIndicNameTxt = "UNKNOWN CtrIndic ID " + CtrIndicId;
 				CtrIndicNameTxt = DoSanitizeNameTxt(CtrIndicNameTxt);
 				// add to CtrIndic state array
@@ -4830,8 +4840,7 @@
 				let TmpCtrIndicIdx = CtrIndicPoolObj.value;
 				let ProductCtrIndicStateObj = ProductCtrIndicStateListObj[TmpCtrIndicIdx];
 				let CtrIndicNameTxt = ProductCtrIndicStateObj.CtrIndicName;
-				let CtrIndicObj = [CtrIndicId, CtrIndicNameTxt];
-				FullList.push(CtrIndicObj);
+				FullList.push({Id: CtrIndicId, Name : CtrIndicNameTxt});
 				// update combo
 				CtrIndicPoolObj.disabled = true;
 				// update CtrIndic state array
@@ -4839,19 +4848,12 @@
 				ProductCtrIndicStateObj.FlgInCheckList = true;
 			}
 			
-			FullList.sort((a,b) => {
-				const Name1 = a[1];
-				const Name2 = b[1];
-				
-				if(Name1.localeCompare(Name2) < 0) return -1;
-				if(Name1.localeCompare(Name2) > 0) return 1;
-				return 0;
-			});
+			FullList = AlphOrder(FullList);
 			
 			for(let i = 0; i < NbCtrIndic; i++)
 			{
-				let CtrIndicId = FullList[i][0];
-				let CtrIndicNameTxt = FullList[i][1];
+				let CtrIndicId = FullList[i].Id;
+				let CtrIndicNameTxt = FullList[i].Name;
 				// update check list
 				CtrIndicCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"CtrIndicCheckListId_" + CtrIndicId + "\" checked>" + CtrIndicNameTxt + "</input><br/>";
 			}
@@ -4928,12 +4930,21 @@
 			// build list CtrIndic state array AND CtrIndic pool combo
 			let CtrIndicPoolComboTxt = "";
 			let NbResultRow = CtrIndicSQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = CtrIndicSQLRequestResultObj[i];
-				let CtrIndicId = TmpResultRow[0];
-				let CtrIndicNameTxt = TmpResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let CtrIndicId = TmpResultRow.Id;
+				let CtrIndicNameTxt = TmpResultRow.Name;
 				if(CtrIndicNameTxt == null) CtrIndicNameTxt = "UNKNOWN CtrIndic ID " + CtrIndicId;
 				CtrIndicNameTxt = DoSanitizeNameTxt(CtrIndicNameTxt);
 				// add to CtrIndic state array
@@ -4972,8 +4983,7 @@
 				let TmpCtrIndicIdx = CtrIndicPoolObj.value;
 				let PlanteCtrIndicStateObj = PlanteCtrIndicStateListObj[TmpCtrIndicIdx];
 				let CtrIndicNameTxt = PlanteCtrIndicStateObj.CtrIndicName;
-				let CtrIndicObj = [CtrIndicId, CtrIndicNameTxt];
-				FullList.push(CtrIndicObj);
+				FullList.push({Id: CtrIndicId, Name : CtrIndicNameTxt});
 				// update combo
 				CtrIndicPoolObj.disabled = true;
 				// update CtrIndic state array
@@ -4981,19 +4991,12 @@
 				PlanteCtrIndicStateObj.FlgInCheckList = true;
 			}
 			
-			FullList.sort((a,b) => {
-				const Name1 = a[1];
-				const Name2 = b[1];
-				
-				if(Name1.localeCompare(Name2) < 0) return -1;
-				if(Name1.localeCompare(Name2) > 0) return 1;
-				return 0;
-			});
+			FullList = AlphOrder(FullList);
 			
 			for(let i = 0; i < NbCtrIndic; i++)
 			{
-				let CtrIndicId = FullList[i][0];
-				let CtrIndicNameTxt = FullList[i][1];
+				let CtrIndicId = FullList[i].Id;
+				let CtrIndicNameTxt = FullList[i].Name;
 				// update check list
 				CtrIndicCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"CtrIndicPlCheckListId_" + CtrIndicId + "\" checked>" + CtrIndicNameTxt + "</input><br/>";
 			}
@@ -5070,12 +5073,21 @@
 			// build list UsePart state array AND UsePart pool combo
 			let UsePartPoolComboTxt = "";
 			let NbResultRow = UsePartSQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = UsePartSQLRequestResultObj[i];
-				let UsePartId = TmpResultRow[0];
-				let UsePartNameTxt = TmpResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let UsePartId = TmpResultRow.Id;
+				let UsePartNameTxt = TmpResultRow.Name;
 				if(UsePartNameTxt == null) UsePartNameTxt = "UNKNOWN UsePart ID " + UsePartId;
 				UsePartNameTxt = DoSanitizeNameTxt(UsePartNameTxt);
 				// add to UsePart state array
@@ -5114,8 +5126,7 @@
 				let TmpUsePartIdx = UsePartPoolObj.value;
 				let PlanteUsePartStateObj = PlanteUsePartStateListObj[TmpUsePartIdx];
 				let UsePartNameTxt = PlanteUsePartStateObj.UsePartName;
-				let UsePartObj = [UsePartId, UsePartNameTxt];
-				FullList.push(UsePartObj);
+				FullList.push({Id: UsePartId, Name : UsePartNameTxt});
 				// update combo
 				UsePartPoolObj.disabled = true;
 				// update UsePart state array
@@ -5123,19 +5134,12 @@
 				PlanteUsePartStateObj.FlgInCheckList = true;
 			}
 			
-			FullList.sort((a,b) => {
-				const Name1 = a[1];
-				const Name2 = b[1];
-				
-				if(Name1.localeCompare(Name2) < 0) return -1;
-				if(Name1.localeCompare(Name2) > 0) return 1;
-				return 0;
-			});
+			FullList = AlphOrder(FullList);
 			
 			for(let i = 0; i < NbUsePart; i++)
 			{
-				let UsePartId = FullList[i][0];
-				let UsePartNameTxt = FullList[i][1];
+				let UsePartId = FullList[i].Id;
+				let UsePartNameTxt = FullList[i].Name;
 				// update check list
 				UsePartCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"UsePartPlCheckListId_" + UsePartId + "\" checked>" + UsePartNameTxt + "</input><br/>";
 			}
@@ -5342,12 +5346,22 @@
 				ResultList += "NO PRODUCT";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditProduct(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let ProductId = TmpResultRow.Id;
+					let ProductNameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditProduct(" + ProductId +");\">" + ProductNameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -5570,12 +5584,22 @@
 				ResultList += "NO LABO";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditLabo(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let LaboId = TmpResultRow.Id;
+					let LaboNameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditLabo(" + LaboId +");\">" + LaboNameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -5798,12 +5822,22 @@
 				ResultList += "NO Fcts";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditFcts(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let FctId = TmpResultRow.Id;
+					let FctNameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditFcts(" + FctId +");\">" + FctNameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -6067,12 +6101,22 @@
 				ResultList += "NO USECASE";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditUsecase(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let UsecaseId = TmpResultRow.Id;
+					let UsecaseNameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditUsecase(" + UsecaseId +");\">" + UsecaseNameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -6289,12 +6333,22 @@
 				ResultList += "NO Toxicite";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditToxicite(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let ToxId = TmpResultRow.Id;
+					let ToxNameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditToxicite(" + ToxId +");\">" + ToxNameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -6511,12 +6565,22 @@
 				ResultList += "NO Effet2";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditEffet2(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let Effet2Id = TmpResultRow.Id;
+					let Effet2NameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditEffet2(" + Effet2Id +");\">" + Effet2NameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -6733,12 +6797,22 @@
 				ResultList += "NO CtrIndic";
 			}
 			else
-			{			
+			{
+				let ListPrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditCtrIndic(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let CtrIndicId = TmpResultRow.Id;
+					let CtrIndicNameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditCtrIndic(" + CtrIndicId +");\">" + CtrIndicNameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -6955,12 +7029,22 @@
 				ResultList += "NO GALENIQUE";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditGalenique(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let GaleniqueId = TmpResultRow.Id;
+					let GaleniqueNameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditGalenique(" + GaleniqueId +");\">" + GaleniqueNameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -7177,12 +7261,22 @@
 				ResultList += "NO CATEGORIE";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditCategorie(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let CategorieId = TmpResultRow.Id;
+					let CategorieNameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditCategorie(" + CategorieId +");\">" + CategorieNameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -7421,12 +7515,22 @@
 				ResultList += "NO ESPECE";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditEspece(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let EspId = TmpResultRow.Id;
+					let EspNameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditEspece(" + EspId +");\">" + EspNameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -8248,13 +8352,22 @@
 				UsecaseInputComboTxt += "<option value=\"0\">*** NO USECASE ***</option>";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = UsecaseSQLRequestResultObj[i];
-					let UsecaseId = TmpResultRow[0];
-					let UsecaseNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
+					
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let UsecaseId = TmpResultRow.Id;
+					let UsecaseNameTxt = TmpResultRow.Name;
 					if(UsecaseNameTxt == null) UsecaseNameTxt = "UNKNOWN USECASE ID " + UsecaseId;
 					UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
 					// add to combo
@@ -8290,12 +8403,21 @@
 			// build list Fct state array AND Fct pool combo
 			let FctPoolComboTxt = "";
 			let NbResultRow = FctSQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = FctSQLRequestResultObj[i];
-				let FctId = TmpResultRow[0];
-				let FctNameTxt = TmpResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+	
+			ListOrd = AlphOrder(ListOrd);
+					
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let FctId = TmpResultRow.Id;
+				let FctNameTxt = TmpResultRow.Name;
 				if(FctNameTxt == null) FctNameTxt = "UNKNOWN Fct ID " + FctId;
 				FctNameTxt = DoSanitizeNameTxt(FctNameTxt);
 				// add to Fct state array
@@ -8334,8 +8456,7 @@
 				let TmpFctIdx = FctPoolObj.value;
 				let PlanteFctStateObj = PlanteFctStateListObj[TmpFctIdx];
 				let FctNameTxt = PlanteFctStateObj.FctName;
-				let FctObj = [FctId, FctNameTxt];
-				FullList.push(FctObj);
+				FullList.push({Id: FctId, Name : FctNameTxt});
 				// update combo
 				FctPoolObj.disabled = true;
 				// update Plante state array
@@ -8343,19 +8464,12 @@
 				PlanteFctStateObj.FlgInCheckList = true;
 			}
 			
-			FullList.sort((a,b) => {
-				const Name1 = a[1];
-				const Name2 = b[1];
-				
-				if(Name1.localeCompare(Name2) < 0) return -1;
-				if(Name1.localeCompare(Name2) > 0) return 1;
-				return 0;
-			});
+			FullList = AlphOrder(FullList);
 			
 			for(let i = 0; i < NbFct; i++)
 			{
-				let FctId = FullList[i][0];
-				let FctNameTxt = FullList[i][1];
+				let FctId = FullList[i].Id;
+				let FctNameTxt = FullList[i].Name;
 				// update check list
 				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"PlFctCheckListId_" + FctId + "\" onclick=\"CollapseDivPlFct(" + FctId + ")\" checked>" + FctNameTxt + "</input> (utilisations : " + BuildPlUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedPlanteFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
 			}
@@ -8430,13 +8544,22 @@
 				// build list usecase state array
 				let CurrentUsecasesIds = [];
 				let NbUsecaseResultRow = UsecaseSQLRequestResultObj.length;
+				let ListOrd = [];
 				for(let j = 0; j < NbUsecaseResultRow; j++)
 				{
 					// fetch info
 					let TmpUsecaseResultRow = UsecaseSQLRequestResultObj[j];
-					let UsecaseId = TmpUsecaseResultRow[0];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
+					
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let UsecaseId = TmpResultRow.Id;
 					CurrentUsecasesIds.push(UsecaseId);
-					let UsecaseNameTxt = TmpUsecaseResultRow[1];
+					let UsecaseNameTxt = TmpResultRow.Name;
 					if(UsecaseNameTxt == null) UsecaseNameTxt = "UNKNOWN USECASE ID " + UsecaseId;
 					UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
 					// add to usecase state array
@@ -8472,8 +8595,7 @@
 								}
 							}
 							let UsecaseNameTxt = PlanteUsecaseStateObj.UsecaseName;
-							let UsecaseObj = [UsecaseId, UsecaseNameTxt];
-							FullList.push(UsecaseObj);
+							FullList.push({Id: UsecaseId, Name : UsecaseNameTxt});
 							// update combo
 							UsecasePoolObj.disabled = true;
 							// update usecase state array
@@ -8483,20 +8605,13 @@
 					}
 				}
 			
-				FullList.sort((a,b) => {
-					const Name1 = a[1];
-					const Name2 = b[1];
-					
-					if(Name1.localeCompare(Name2) < 0) return -1;
-					if(Name1.localeCompare(Name2) > 0) return 1;
-					return 0;
-				});
+				FullList = AlphOrder(FullList);
 
 				let NbUsecaseTot = FullList.length;
 				for(let i = 0; i < NbUsecaseTot; i++)
 				{
-					let UsecaseId = FullList[i][0];
-					let UsecaseNameTxt = FullList[i][1];
+					let UsecaseId = FullList[i].Id;
+					let UsecaseNameTxt = FullList[i].Name;
 					// update check list
 					UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"PlUsecaseCheckListId_" + UsecaseId + "\" checked>" + UsecaseNameTxt + "</input><br/>";
 				}
@@ -8544,19 +8659,27 @@
 			// build list Espece state array and div
 			let EspeceTxt = "<b>Espèces concernées : </b>";
 			let NbResultRow = EspeceSQLRequestResultObj.length;
+			let ListOrd = [];
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRowName = EspeceNameSQLRequestResultObj[i];
+				ListOrd.push({Id: TmpResultRowName[0], Name : TmpResultRowName[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = EspeceSQLRequestResultObj[i];
 				let EspeceId = TmpResultRow[0];
 				let EspeceNameTxt = TmpResultRow[1];
-				
-				let TmpResultRowName = EspeceNameSQLRequestResultObj[i];
-				let EspeceIdName = TmpResultRowName[0];
-				let EspeceNameTxtName = TmpResultRowName[1];
-				
 				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
 				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
+				
+				let TmpResultRowName = ListOrd[i];
+				let EspeceIdName = TmpResultRowName[0];
+				let EspeceNameTxtName = TmpResultRowName[1];
 				if(EspeceNameTxtName == null) EspeceNameTxtName = "UNKNOWN Espece ID " + EspeceIdName;
 				EspeceNameTxtName = DoSanitizeNameTxt(EspeceNameTxtName);
 				
@@ -8636,14 +8759,25 @@
 			// build list Espece state array and div
 			let EspeceTxt = "<b>Toxique pous l'espèce : </b>";
 			let NbResultRow = EspeceSQLRequestResultObj.length;
+			let ListOrd = [];
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRowName = EspeceNameSQLRequestResultObj[i];
+				ListOrd.push({Id: TmpResultRowName[0], Name : TmpResultRowName[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = EspeceSQLRequestResultObj[i];
 				let EspeceId = TmpResultRow[0];
 				let EspeceNameTxt = TmpResultRow[1];
+				if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN Espece ID " + EspeceId;
+				EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
 				
-				let TmpResultRowName = EspeceNameSQLRequestResultObj[i];
+				let TmpResultRowName = ListOrd[i];
 				let EspeceIdName = TmpResultRowName[0];
 				let EspeceNameTxtName = TmpResultRowName[1];
 				
@@ -8718,12 +8852,21 @@
 			
 			// build list Usecase state array
 			let NbUsecaseResultRow = UsecaseSQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbUsecaseResultRow; i++)
 			{
 				// fetch info
 				let TmpUsecaseResultRow = UsecaseSQLRequestResultObj[i];
-				let UsecaseId = TmpUsecaseResultRow[0];
-				let UsecaseNameTxt = TmpUsecaseResultRow[1];
+				ListOrd.push({Id: TmpUsecaseResultRow[0], Name : TmpUsecaseResultRow[1]});
+			}
+			
+			ListOrd = AlphOrder(ListOrd);
+					
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let UsecaseId = TmpResultRow.Id;
+				let UsecaseNameTxt = TmpResultRow.Name;
 				if(UsecaseNameTxt == null) UsecaseNameTxt = "UNKNOWN Usecase ID " + UsecaseId;
 				UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
 				// add to global Usecase state array
@@ -9054,11 +9197,23 @@
 				ResultList += "NO Plante";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditPlante(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span></li>";
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1], Latin : TmpResultRow[2]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
+					
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let PlanteId = TmpResultRow.Id;
+					let PlanteNameTxt = TmpResultRow.Name;
+					let PlanteLatinTxt = TmpResultRow.Latin;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditPlante(" + PlanteId +");\">" + PlanteNameTxt + " (<i>" + PlanteLatinTxt + "</i>)</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -9297,12 +9452,22 @@
 				ResultList += "NO UsePart";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
 					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditUsePart(" + TmpResultRow[0] +");\">" + TmpResultRow[1] + "</span></li>";
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let UsePartId = TmpResultRow.Id;
+					let UsePartNameTxt = TmpResultRow.Name;
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoEditUsePart(" + UsePartId +");\">" + UsePartNameTxt + "</span></li>";
 				}
 			}
 			ResultList += "</ul>";
