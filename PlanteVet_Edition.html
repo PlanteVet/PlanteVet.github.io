@@ -4254,8 +4254,7 @@
 							}
 
 							let UsecaseNameTxt = ProductUsecaseStateObj.UsecaseName;
-							let UsecaseObj = [UsecaseId, UsecaseNameTxt];
-							FullList.push(UsecaseObj);
+							FullList.push({Id: UsecaseId, Name : UsecaseNameTxt});
 							// update combo
 							UsecasePoolObj.disabled = true;
 							// update usecase state array
@@ -4265,20 +4264,13 @@
 					}
 				}
 			
-				FullList.sort((a,b) => {
-					const Name1 = a[1];
-					const Name2 = b[1];
-					
-					if(Name1.localeCompare(Name2) < 0) return -1;
-					if(Name1.localeCompare(Name2) > 0) return 1;
-					return 0;
-				});
+				FullList = AlphOrder(FullList);
 	
 				let NbUsecaseTot = FullList.length;
 				for(let i = 0; i < NbUsecaseTot; i++)
 				{
-					let UsecaseId = FullList[i][0];
-					let UsecaseNameTxt = FullList[i][1];
+					let UsecaseId = FullList[i].Id;
+					let UsecaseNameTxt = FullList[i].Name;
 					// update check list
 					UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"UsecaseCheckListId_" + UsecaseId + "\" onclick=\"CollapseDivPrdUsecase(" + ProductId + "," + UsecaseId + ")\" checked>" + UsecaseNameTxt + "</input> (en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" class='append' />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;&emsp;&emsp;Empty list checked usecase plante</div>";
 				}
