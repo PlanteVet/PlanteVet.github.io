@@ -8659,6 +8659,15 @@
 			// build list Espece state array and div
 			let EspeceTxt = "<b>Espèces concernées : </b>";
 			let NbResultRow = EspeceSQLRequestResultObj.length;
+			let ListOrd = [];
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRowName = EspeceNameSQLRequestResultObj[i];
+				ListOrd.push({Id: TmpResultRowName[0], Name : TmpResultRowName[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+			
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
