@@ -4211,13 +4211,22 @@
 				// build list usecase state array
 				let CurrentUsecasesIds = [];
 				let NbUsecaseResultRow = UsecaseSQLRequestResultObj.length;
+				let ListOrd = [];
 				for(let j = 0; j < NbUsecaseResultRow; j++)
 				{
 					// fetch info
 					let TmpUsecaseResultRow = UsecaseSQLRequestResultObj[j];
-					let UsecaseId = TmpUsecaseResultRow[0];
+					ListOrd.push({Id: TmpUsecaseResultRow[0], Name : TmpUsecaseResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
+					
+				for(let j = 0; j < NbResultRow; j++)
+				{
+					let TmpResultRow = ListOrd[j];
+					let UsecaseId = TmpResultRow.Id;
 					CurrentUsecasesIds.push(UsecaseId);
-					let UsecaseNameTxt = TmpUsecaseResultRow[1];
+					let UsecaseNameTxt = TmpResultRow.Name;
 					if(UsecaseNameTxt == null) UsecaseNameTxt = "UNKNOWN USECASE ID " + UsecaseId;
 					UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
 					// add to usecase state array
