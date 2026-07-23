@@ -3347,13 +3347,22 @@
 				UsePartInputComboTxt += "<option value=\"0\">*** NO UsePart ***</option>";
 			}
 			else
-			{			
+			{	
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = UsePartSQLRequestResultObj[i];
-					let UsePartId = TmpResultRow[0];
-					let UsePartNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
+					
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let UsePartId = TmpResultRow.Id;
+					let UsePartNameTxt = TmpResultRow.Name;
 					if(UsePartNameTxt == null) UsePartNameTxt = "UNKNOWN UsePart ID " + UsePartId;
 					UsePartNameTxt = DoSanitizeNameTxt(UsePartNameTxt);
 					// add to combo
@@ -3393,13 +3402,22 @@
 				UsecaseFctInputComboTxt += "<option value=\"0\">*** NO FCT ***</option>";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = FctSQLRequestResultObj[i];
-					let FctId = TmpResultRow[0];
-					let FctNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
+					
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let FctId = TmpResultRow.Id;
+					let FctNameTxt = TmpResultRow.Name;
 					if(FctNameTxt == null) FctNameTxt = "UNKNOWN FCT ID " + FctId;
 					FctNameTxt = DoSanitizeNameTxt(FctNameTxt);
 					// add to combo
@@ -3439,13 +3457,22 @@
 				PlanteInputComboTxt += "<option value=\"0\">*** NO Plante ***</option>";
 			}
 			else
-			{				
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = PlanteSQLRequestResultObj[i];
-					let PlanteId = TmpResultRow[0];
-					let PlanteNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
+					
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let PlanteId = TmpResultRow.Id;
+					let PlanteNameTxt = TmpResultRow.Name;
 					if(PlanteNameTxt == null) PlanteNameTxt = "UNKNOWN Plante ID " + PlanteId;
 					PlanteNameTxt = DoSanitizeNameTxt(PlanteNameTxt);
 					// add to combo
@@ -3482,12 +3509,21 @@
 			
 			// build list Plante state array
 			let NbPlanteResultRow = PlanteSQLRequestResultObj.length;
+			let Listord = [];
 			for(let i = 0; i < NbPlanteResultRow; i++)
 			{
 				// fetch info
 				let TmpPlanteResultRow = PlanteSQLRequestResultObj[i];
-				let PlanteId = TmpPlanteResultRow[0];
-				let PlanteNameTxt = TmpPlanteResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let PlanteId = TmpResultRow.Id;
+				let PlanteNameTxt = TmpResultRow.Name;
 				if(PlanteNameTxt == null) PlanteNameTxt = "UNKNOWN Plante ID " + PlanteId;
 				PlanteNameTxt = DoSanitizeNameTxt(PlanteNameTxt);
 				// add to global Usecase Plante state array
@@ -3580,12 +3616,21 @@
 			
 			// build list Usecase state array
 			let NbUsecaseResultRow = UsecaseSQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbUsecaseResultRow; i++)
 			{
 				// fetch info
 				let TmpUsecaseResultRow = UsecaseSQLRequestResultObj[i];
-				let UsecaseId = TmpUsecaseResultRow[0];
-				let UsecaseNameTxt = TmpUsecaseResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let UsecaseId = TmpResultRow.Id;
+				let UsecaseNameTxt = TmpResultRow.Name;
 				if(UsecaseNameTxt == null) UsecaseNameTxt = "UNKNOWN Usecase ID " + UsecaseId;
 				UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
 				// add to global Usecase state array
@@ -3711,12 +3756,21 @@
 				
 				// build list Plante state array
 				let NbPlanteResultRow = PlanteSQLRequestResultObj.length;
+				let ListOrd = [];
 				for(let j = 0; j < NbPlanteResultRow; j++)
 				{
 					// fetch info
 					let TmpPlanteResultRow = PlanteSQLRequestResultObj[j];
-					let PlanteId = TmpPlanteResultRow[0];
-					let PlanteNameTxt = TmpPlanteResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
+					
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let PlanteId = TmpResultRow.Id;
+					let PlanteNameTxt = TmpResultRow.Name;
 					if(PlanteNameTxt == null) PlanteNameTxt = "UNKNOWN Plante ID " + PlanteId;
 					PlanteNameTxt = DoSanitizeNameTxt(PlanteNameTxt);
 					// add to Usecase Plante state array
@@ -3736,8 +3790,7 @@
 					let PlantePoolObj = document.getElementById("PlantePoolId" + UsecaseId + "_" + PlanteId);
 					let ProductUsecasePlanteStateObj = ProductUsecasePlanteStateListObj[NbPlanteResultRow*i + PlanteId-1];
 					let PlanteNameTxt = ProductUsecasePlanteStateObj.PlanteName;
-					let PlanteObj = [PlanteId, PlanteNameTxt];
-					FullList.push(PlanteObj);
+					FullList.push({Id: PlanteId, Name : PlanteNameTxt});
 					// update combo
 					PlantePoolObj.disabled = true;
 					// update Plante state array
@@ -3745,19 +3798,12 @@
 					ProductUsecasePlanteStateObj.FlgInCheckList = true;
 				}
 				
-				FullList.sort((a,b) => {
-					const Name1 = a[1];
-					const Name2 = b[1];
-					
-					if(Name1.localeCompare(Name2) < 0) return -1;
-					if(Name1.localeCompare(Name2) > 0) return 1;
-					return 0;
-				});
+				FullList = AlphOrder(FullList);
 				
 				for(let i = 0; i < NbResultPlanteRow; i++)
 				{
-					let PlanteId = FullList[i][0];
-					let PlanteNameTxt = FullList[i][1];
+					let PlanteId = FullList[i].Id;
+					let PlanteNameTxt = FullList[i].Name;
 					// update check list
 					PlanteCheckListTxt += "&emsp;&emsp;&emsp;<input type=\"checkbox\" id=\"PlanteCheckListId_" + UsecaseId + "_" + PlanteId + "\" checked>" + PlanteNameTxt + "</input><br/>";
 				}
@@ -3798,13 +3844,22 @@
 				UsecaseInputComboTxt += "<option value=\"0\">*** NO USECASE ***</option>";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = UsecaseSQLRequestResultObj[i];
-					let UsecaseId = TmpResultRow[0];
-					let UsecaseNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
+					
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let UsecaseId = TmpResultRow.Id;
+					let UsecaseNameTxt = TmpResultRow.Name;
 					if(UsecaseNameTxt == null) UsecaseNameTxt = "UNKNOWN USECASE ID " + UsecaseId;
 					UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
 					// add to combo
@@ -3844,12 +3899,21 @@
 			let FctPoolComboTxt = "";
 			let Fct2PoolComboTxt = "";
 			let NbResultRow = FctSQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = FctSQLRequestResultObj[i];
-				let FctId = TmpResultRow[0];
-				let FctNameTxt = TmpResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let FctId = TmpResultRow.Id;
+				let FctNameTxt = TmpResultRow.Name;
 				if(FctNameTxt == null) FctNameTxt = "UNKNOWN Fct ID " + FctId;
 				FctNameTxt = DoSanitizeNameTxt(FctNameTxt);
 				// add to Fct state array
@@ -3892,8 +3956,7 @@
 				let TmpFctIdx = FctPoolObj.value;
 				let ProductFctStateObj = ProductFctStateListObj[TmpFctIdx];
 				let FctNameTxt = ProductFctStateObj.FctName;
-				let FctObj = [FctId, FctNameTxt];
-				FullFctList.push(FctObj);
+				FullFctList.push({Id: FctId, Name : FctNameTxt});
 				// update combo
 				FctPoolObj.disabled = true;
 				let Fct2PoolObj = document.getElementById("Fct2PoolId_" + FctId);
@@ -3903,19 +3966,12 @@
 				ProductFctStateObj.FlgInCheckList = true;
 			}
 			
-			FullFctList.sort((a,b) => {
-				const Name1 = a[1];
-				const Name2 = b[1];
-				
-				if(Name1.localeCompare(Name2) < 0) return -1;
-				if(Name1.localeCompare(Name2) > 0) return 1;
-				return 0;
-			});
+			FullFctList = AlphOrder(FullFctList);
 			
 			for(let i = 0; i < NbFct; i++)
 			{
-				let FctId = FullFctList[i][0];
-				let FctNameTxt = FullFctList[i][1];
+				let FctId = FullFctList[i].Id;
+				let FctNameTxt = FullFctList[i].Name;
 				// update check list
 				FctCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"FctCheckListId_" + FctId + "\" onclick=\"CollapseDivPrdFct(" + FctId + ")\" checked>" + FctNameTxt + "</input> (utilisations : " + BuildUsecasePoolCombo(FctId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendUsecase(" + FctId + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + FctId + "\">&emsp;&emsp;Empty list checked usecase</div>";
 			}
@@ -3952,8 +4008,7 @@
 				let TmpFct2Idx = Fct2PoolObj.value;
 				let ProductFct2StateObj = ProductFct2StateListObj[TmpFct2Idx];
 				let Fct2NameTxt = ProductFct2StateObj.FctName;
-				let Fct2Obj = [Fct2Id, Fct2NameTxt];
-				FullFct2List.push(Fct2Obj);
+				FullFct2List.push({Id: Fct2Id, Name : Fct2NameTxt});
 				// update combo
 				Fct2PoolObj.disabled = true;
 				let FctPoolObj = document.getElementById("FctPoolId_" + Fct2Id);
@@ -3963,19 +4018,12 @@
 				ProductFct2StateObj.FlgInCheckList = true;
 			}
 			
-			FullFct2List.sort((a,b) => {
-				const Name1 = a[1];
-				const Name2 = b[1];
-				
-				if(Name1.localeCompare(Name2) < 0) return -1;
-				if(Name1.localeCompare(Name2) > 0) return 1;
-				return 0;
-			});
+			FullFct2List = AlphOrder(FullFct2List);
 			
 			for(let i = 0; i < NbFct2; i++)
 			{
-				let Fct2Id = FullFct2List[i][0];
-				let Fct2NameTxt = FullFct2List[i][1];
+				let Fct2Id = FullFct2List[i].Id;
+				let Fct2NameTxt = FullFct2List[i].Name;
 				// update check list
 				Fct2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Fct2CheckListId_" + Fct2Id + "\" onclick=\"CollapseDivPrdFct2(" + Fct2Id + ")\" checked>" + Fct2NameTxt + "</input> (utilisations : " + BuildUsecasePoolCombo(Fct2Id) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendUsecase(" + Fct2Id + ");\" class='append' />)<br/><div id=\"ListCheckedProductFctUsecase_" + Fct2Id + "\">&emsp;&emsp;Empty list checked usecase</div>";
 			}
@@ -4163,13 +4211,22 @@
 				// build list usecase state array
 				let CurrentUsecasesIds = [];
 				let NbUsecaseResultRow = UsecaseSQLRequestResultObj.length;
+				let ListOrd = [];
 				for(let j = 0; j < NbUsecaseResultRow; j++)
 				{
 					// fetch info
 					let TmpUsecaseResultRow = UsecaseSQLRequestResultObj[j];
-					let UsecaseId = TmpUsecaseResultRow[0];
+					ListOrd.push({Id: TmpUsecaseResultRow[0], Name : TmpUsecaseResultRow[1]});
+				}
+	
+				ListOrd = AlphOrder(ListOrd);
+					
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let UsecaseId = TmpResultRow.Id;
 					CurrentUsecasesIds.push(UsecaseId);
-					let UsecaseNameTxt = TmpUsecaseResultRow[1];
+					let UsecaseNameTxt = TmpResultRow.Name;
 					if(UsecaseNameTxt == null) UsecaseNameTxt = "UNKNOWN USECASE ID " + UsecaseId;
 					UsecaseNameTxt = DoSanitizeNameTxt(UsecaseNameTxt);
 					// add to usecase state array
@@ -4206,8 +4263,7 @@
 							}
 
 							let UsecaseNameTxt = ProductUsecaseStateObj.UsecaseName;
-							let UsecaseObj = [UsecaseId, UsecaseNameTxt];
-							FullList.push(UsecaseObj);
+							FullList.push({Id: UsecaseId, Name : UsecaseNameTxt});
 							// update combo
 							UsecasePoolObj.disabled = true;
 							// update usecase state array
@@ -4217,20 +4273,13 @@
 					}
 				}
 			
-				FullList.sort((a,b) => {
-					const Name1 = a[1];
-					const Name2 = b[1];
-					
-					if(Name1.localeCompare(Name2) < 0) return -1;
-					if(Name1.localeCompare(Name2) > 0) return 1;
-					return 0;
-				});
+				ListOrd = AlphOrder(ListOrd);
 	
 				let NbUsecaseTot = FullList.length;
 				for(let i = 0; i < NbUsecaseTot; i++)
 				{
-					let UsecaseId = FullList[i][0];
-					let UsecaseNameTxt = FullList[i][1];
+					let UsecaseId = FullList[i].Id;
+					let UsecaseNameTxt = FullList[i].Name;
 					// update check list
 					UsecaseCheckListTxt += "&emsp;&emsp;<input type=\"checkbox\" id=\"UsecaseCheckListId_" + UsecaseId + "\" onclick=\"CollapseDivPrdUsecase(" + ProductId + "," + UsecaseId + ")\" checked>" + UsecaseNameTxt + "</input> (en association avec : " + BuildPlantePoolCombo(UsecaseId) + " <input type=\"button\" value=\"Ajouter\" onclick=\"DoAppendPlante(" + UsecaseId + ");\" class='append' />)<br/><div id=\"ListCheckedProductUsecasePlante" + ProductId + "_" + UsecaseId + "\">&emsp;&emsp;&emsp;Empty list checked usecase plante</div>";
 				}
@@ -4310,12 +4359,21 @@
 			// build list Toxicite state array AND Toxicite pool combo
 			let ToxicitePoolComboTxt = "";
 			let NbResultRow = ToxiciteSQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = ToxiciteSQLRequestResultObj[i];
-				let ToxiciteId = TmpResultRow[0];
-				let ToxiciteNameTxt = TmpResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let ToxiciteId = TmpResultRow.Id;
+				let ToxiciteNameTxt = TmpResultRow.Name;
 				if(ToxiciteNameTxt == null) ToxiciteNameTxt = "UNKNOWN Toxicite ID " + ToxiciteId;
 				ToxiciteNameTxt = DoSanitizeNameTxt(ToxiciteNameTxt);
 				// add to Toxicite state array
@@ -4354,8 +4412,7 @@
 				let TmpToxiciteIdx = ToxicitePoolObj.value;
 				let ProductToxiciteStateObj = ProductToxiciteStateListObj[TmpToxiciteIdx];
 				let ToxiciteNameTxt = ProductToxiciteStateObj.ToxiciteName;
-				let ToxiciteObj = [ToxiciteId, ToxiciteNameTxt];
-				FullList.push(ToxiciteObj);
+				FullList.push({Id: ToxiciteId, Name : ToxiciteNameTxt});
 				// update combo
 				ToxicitePoolObj.disabled = true;
 				// update Toxicite state array
@@ -4363,19 +4420,12 @@
 				ProductToxiciteStateObj.FlgInCheckList = true;
 			}
 			
-			FullList.sort((a,b) => {
-				const Name1 = a[1];
-				const Name2 = b[1];
-				
-				if(Name1.localeCompare(Name2) < 0) return -1;
-				if(Name1.localeCompare(Name2) > 0) return 1;
-				return 0;
-			});
+			FullList = AlphOrder(FullList);
 			
 			for(let i = 0; i < NbToxicite; i++)
 			{
-				let ToxiciteId = FullList[i][0];
-				let ToxiciteNameTxt = FullList[i][1];
+				let ToxiciteId = FullList[i].Id;
+				let ToxiciteNameTxt = FullList[i].Name;
 				// update check list
 				ToxiciteCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"ToxiciteCheckListId_" + ToxiciteId + "\" checked>" + ToxiciteNameTxt + "</input><br/>";
 			}
@@ -4451,12 +4501,21 @@
 			// build list Effet2 state array AND Effet2 pool combo
 			let Effet2PoolComboTxt = "";
 			let NbResultRow = Effet2SQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = Effet2SQLRequestResultObj[i];
-				let Effet2Id = TmpResultRow[0];
-				let Effet2NameTxt = TmpResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let Effet2Id = TmpResultRow.Id;
+				let Effet2NameTxt = TmpResultRow.Name;
 				if(Effet2NameTxt == null) Effet2NameTxt = "UNKNOWN Effet2 ID " + Effet2Id;
 				Effet2NameTxt = DoSanitizeNameTxt(Effet2NameTxt);
 				// add to Effet2 state array
@@ -4495,8 +4554,7 @@
 				let TmpEffet2Idx = Effet2PoolObj.value;
 				let ProductEffet2StateObj = ProductEffet2StateListObj[TmpEffet2Idx];
 				let Effet2NameTxt = ProductEffet2StateObj.Effet2Name;
-				let Effet2Obj = [Effet2Id, Effet2NameTxt];
-				FullList.push(Effet2Obj);
+				FullList.push({Id: Effet2Id, Name : Effet2NameTxt});
 				// update combo
 				Effet2PoolObj.disabled = true;
 				// update Effet2 state array
@@ -4504,19 +4562,12 @@
 				ProductEffet2StateObj.FlgInCheckList = true;
 			}
 			
-			FullList.sort((a,b) => {
-				const Name1 = a[1];
-				const Name2 = b[1];
-				
-				if(Name1.localeCompare(Name2) < 0) return -1;
-				if(Name1.localeCompare(Name2) > 0) return 1;
-				return 0;
-			});
+			FullList = AlphOrder(LisFullListtOrd);
 			
 			for(let i = 0; i < NbEffet2; i++)
 			{
-				let Effet2Id = FullList[i][0];
-				let Effet2NameTxt = FullList[i][1];
+				let Effet2Id = FullList[i].Id;
+				let Effet2NameTxt = FullList[i].Name;
 				// update check list
 				Effet2CheckListTxt += "&emsp;<input type=\"checkbox\" id=\"Effet2CheckListId_" + Effet2Id + "\" checked>" + Effet2NameTxt + "</input><br/>";
 			}
