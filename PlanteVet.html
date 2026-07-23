@@ -575,6 +575,21 @@
 		{
 			window.open(Url, '_blank').focus();
 		}
+
+		//organize by alphabetic order
+		function AlphOrder(List)
+		{
+			List.sort((a,b) => {
+				const Name1 = a.Name;
+				const Name2 = b.Name;
+				
+				if(Name1.localeCompare(Name2) < 0) return -1;
+				if(Name1.localeCompare(Name2) > 0) return 1;
+				return 0;
+			});
+			
+			return List;
+		}
 		
 		// Read file
 		function DoReadFileAsync(FileObj,ProgressBarObj)
@@ -1125,12 +1140,22 @@
 				ResultList += "NO EXISTING PLANTE";
 			}
 			else
-			{			
+			{
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = SQLRequestResultObj[i];
-					
-					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + TmpResultRow[0] +", -1);\">" + TmpResultRow[1] + " (<i>" + TmpResultRow[2] + "</i>)</span></li>";
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1], Latin : TmpResultRow[2]});
+				}
+				
+				ListOrd = AlphOrder(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let PlanteId = ListOrd[i][0];
+					let PlanteName = ListOrd[i][1];
+					let PlanteLatin = ListOrd[i][2];
+					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">" + PlanteName + " (<i>" + PlanteLatin + "</i>)</span></li>";
 				}
 			}
 			ResultList += "</ul>";
@@ -1883,14 +1908,8 @@
 					ListOrd.push({Id: PlanteId, Name : TmpResultRow[0], Latin : TmpResultRow[1]});
 				}
 				
-				ListOrd.sort((a,b) => {
-					const Name1 = a.Name;
-					const Name2 = b.Name;
-					
-					if(Name1.localeCompare(Name2) < 0) return -1;
-					if(Name1.localeCompare(Name2) > 0) return 1;
-					return 0;
-				});
+				ListOrd = AlphOrder(ListOrd);
+				
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					let TmpResultRow = ListOrd[i];
