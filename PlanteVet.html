@@ -1152,10 +1152,9 @@
 				
 				for(let i = 0; i < NbResultRow; i++)
 				{
-					console.log(ListOrd[i]);
-					let PlanteId = ListOrd[i][0];
-					let PlanteName = ListOrd[i][1];
-					let PlanteLatin = ListOrd[i][2];
+					let PlanteId = ListOrd[i].Id;
+					let PlanteName = ListOrd[i].Name;
+					let PlanteLatin = ListOrd[i].Latin;
 					ResultList += "<li><span class=\"MatchResultClass\" onclick=\"DoViewPlante(" + PlanteId +", -1);\">" + PlanteName + " (<i>" + PlanteLatin + "</i>)</span></li>";
 				}
 			}
