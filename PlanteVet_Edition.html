@@ -3242,12 +3242,21 @@
 			// build list Plante state array AND Plante pool combo
 			let PlantePoolComboTxt = "";
 			let NbResultRow = PlanteSQLRequestResultObj.length;
+			let ListOrd = [];
 			for(let i = 0; i < NbResultRow; i++)
 			{
 				// fetch info
 				let TmpResultRow = PlanteSQLRequestResultObj[i];
-				let PlanteId = TmpResultRow[0];
-				let PlanteNameTxt = TmpResultRow[1];
+				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+			}
+
+			ListOrd = AlphOrder(ListOrd);
+				
+			for(let i = 0; i < NbResultRow; i++)
+			{
+				let TmpResultRow = ListOrd[i];
+				let PlanteId = TmpResultRow.Id;
+				let PlanteNameTxt = TmpResultRow.Name;
 				if(PlanteNameTxt == null) PlanteNameTxt = "UNKNOWN Plante ID " + PlanteId;
 				PlanteNameTxt = DoSanitizeNameTxt(PlanteNameTxt);
 				// add to Plante state array
@@ -3287,8 +3296,7 @@
 				let TmpPlanteIdx = PlantePoolObj.value;
 				let ProductPlanteStateObj = ProductPlanteStateListObj[TmpPlanteIdx];
 				let PlanteNameTxt = ProductPlanteStateObj.PlanteName;
-				let PlanteObj = [PlanteId, PlanteNameTxt, UsePartId];
-				FullList.push(PlanteObj);
+				FullList.push({Id: PlanteId, Name : PlanteNameTxt, Usepart: UsePartId});
 				// update combo
 				PlantePoolObj.disabled = true;
 				// update Plante state array
@@ -3296,20 +3304,13 @@
 				ProductPlanteStateObj.FlgInCheckList = true;
 			}
 			
-			FullList.sort((a,b) => {
-				const Name1 = a[1];
-				const Name2 = b[1];
-				
-				if(Name1.localeCompare(Name2) < 0) return -1;
-				if(Name1.localeCompare(Name2) > 0) return 1;
-				return 0;
-			});
+			FullList = AlphOrder(FullList);
 			
 			for(let i = 0; i < NbPlante; i++)
 			{
-				let PlanteId = FullList[i][0];
-				let PlanteNameTxt = FullList[i][1];
-				let UsePartId = FullList[i][2];
+				let PlanteId = FullList[i].Id;
+				let PlanteNameTxt = FullList[i].Name;
+				let UsePartId = FullList[i].Usepart;
 				// update check list
 				PlanteCheckListTxt += "&emsp;<input type=\"checkbox\" id=\"PlanteCheckListId_" + PlanteId + "\" checked>" + PlanteNameTxt + "</input> (partie utilisée : " + BuildUsePartInputCombo(UsePartId,PlanteId) + ")<br/>";
 			}
