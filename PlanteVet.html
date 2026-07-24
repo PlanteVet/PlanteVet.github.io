@@ -769,13 +769,22 @@
 			else
 			{	
 				LaboInputComboTxt += "<option value=\"-1\">Tous</option>";
-				
+
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = LaboSQLRequestResultObj[i];
-					let LaboId = TmpResultRow[0];
-					let LaboNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+
+				ListOrd = AlphOrder(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let LaboId = TmpResultRow.Id;
+					let LaboNameTxt = TmpResultRow.Name;
 					if(LaboNameTxt == null) LaboNameTxt = "UNKNOWN LABO ID " + LaboId;
 					LaboNameTxt = DoSanitizeNameTxt(LaboNameTxt);
 					// add to combo
@@ -820,13 +829,22 @@
 			else
 			{	
 				FctInputComboTxt += "<option value=\"-1\">Tous</option>";
-				
+
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = FctSQLRequestResultObj[i];
-					let FctId = TmpResultRow[0];
-					let FctNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+
+				ListOrd = AlphOrder(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let FctId = TmpResultRow.Id;
+					let FctNameTxt = TmpResultRow.Name;
 					if(FctNameTxt == null) FctNameTxt = "UNKNOWN FCT ID " + FctId;
 					FctNameTxt = DoSanitizeNameTxt(FctNameTxt);
 					// add to combo
@@ -871,13 +889,22 @@
 			else
 			{	
 				EspeceInputComboTxt += "<option value=\"-1\">Tous</option>";
-				
+
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = EspeceSQLRequestResultObj[i];
-					let EspeceId = TmpResultRow[0];
-					let EspeceNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+
+				ListOrd = AlphOrder(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let EspeceId = TmpResultRow.Id;
+					let EspeceNameTxt = TmpResultRow.Name;
 					if(EspeceNameTxt == null) EspeceNameTxt = "UNKNOWN LABO ID " + EspeceId;
 					EspeceNameTxt = DoSanitizeNameTxt(EspeceNameTxt);
 					// add to combo
@@ -921,13 +948,22 @@
 			else
 			{	
 				CtrIndicInputComboTxt += "<option value=\"-1\">Aucun</option>";
-				
+
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = CtrIndicSQLRequestResultObj[i];
-					let CtrIndicId = TmpResultRow[0];
-					let CtrIndicNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+
+				ListOrd = AlphOrder(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let CtrIndicId = TmpResultRow.Id;
+					let CtrIndicNameTxt = TmpResultRow.Name;
 					if(CtrIndicNameTxt == null) CtrIndicNameTxt = "UNKNOWN FCT ID " + CtrIndicId;
 					CtrIndicNameTxt = DoSanitizeNameTxt(CtrIndicNameTxt);
 					// add to combo
@@ -970,13 +1006,22 @@
 			else
 			{	
 				Effet2InputComboTxt += "<option value=\"-1\">Aucun</option>";
-				
+
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = Effet2SQLRequestResultObj[i];
-					let Effet2Id = TmpResultRow[0];
-					let Effet2NameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+
+				ListOrd = AlphOrder(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let Effet2Id = TmpResultRow.Id;
+					let Effet2NameTxt = TmpResultRow.Name;
 					if(Effet2NameTxt == null) Effet2NameTxt = "UNKNOWN FCT ID " + Effet2Id;
 					Effet2NameTxt = DoSanitizeNameTxt(Effet2NameTxt);
 					// add to combo
@@ -1021,13 +1066,22 @@
 			else
 			{	
 				SyndromeInputComboTxt += "<option value=\"-1\">Tous</option>";
-				
+
+				let ListOrd = [];
 				for(let i = 0; i < NbResultRow; i++)
 				{
 					// fetch info
 					let TmpResultRow = SyndromeSQLRequestResultObj[i];
-					let SyndromeId = TmpResultRow[0];
-					let SyndromeNameTxt = TmpResultRow[1];
+					ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				}
+
+				ListOrd = AlphOrder(ListOrd);
+				
+				for(let i = 0; i < NbResultRow; i++)
+				{
+					let TmpResultRow = ListOrd[i];
+					let SyndromeId = TmpResultRow.Id;
+					let SyndromeNameTxt = TmpResultRow.Name;
 					if(SyndromeNameTxt == null) SyndromeNameTxt = "UNKNOWN FCT ID " + SyndromeId;
 					SyndromeNameTxt = DoSanitizeNameTxt(SyndromeNameTxt);
 					// add to combo
