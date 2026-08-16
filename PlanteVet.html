@@ -637,34 +637,29 @@
 							return;
 						}
 						
+						//accumulation donées lues
+						let TmpSize = ReceivedLength;
+						ReceivedLength += value.length;
+						let TmpBuffer = new Uint8Array(ReceivedLength);
+						TmpBuffer.set(ReceivedData,0);
+						TmpBuffer.set(value,TmpSize);
+						ReceivedData = TmpBuffer;
+						
 						try {
-							//accumulation donées lues
-							let TmpSize = ReceivedLength;
-							ReceivedLength += value.length;
-							let TmpBuffer = new Uint8Array(ReceivedLength);
-							TmpBuffer.set(ReceivedData,0);
-							TmpBuffer.set(value,TmpSize);
-							ReceivedData = TmpBuffer;
-							
-							try {
-							//update progress bar
-							ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
-							console.log("Progress " + ProgressBarObj.value + "%");
-							} catch(Err) {
-								console.log("Error progress bar");
-								console.log(Err);
-							}
-		
-							//lecture donées suivantes
-							return ReaderObj.read().then(pump)
-							.catch((ErrorObj) => {
-								console.log("Some Error occured during load");
-								reject(null);
-							});
-						} catch(Error) {
-							console.log("Error next data");
-							console.log(Error);
+						//update progress bar
+						ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
+						console.log("Progress " + ProgressBarObj.value + "%");
+						} catch(Err) {
+							console.log("Error progress bar");
+							console.log(Err);
 						}
+		
+						//lecture donées suivantes
+						return ReaderObj.read().then(pump)
+						.catch((ErrorObj) => {
+							console.log("Some Error occured during load");
+							reject(null);
+						});
 					}) .catch((ErrorObj) => {
 						console.log("Error Read");
 						console.log(ErrorObj);
@@ -1358,7 +1353,6 @@
 			document.getElementById("DatabaseImportProgressTxt").innerHTML = 'Chargement ...';
 			document.getElementById("DatabaseImportProgress").style.display = 'inline';
 			document.getElementById("DatabaseImportProgress").style.visibility = 'visible';
-			
 			DoFecthDatafromUrl(Url,ProgressBarObj).then((OpsResult) => {
 				// get result
 				let FileData = OpsResult;
@@ -1367,51 +1361,38 @@
 				try {
 					let TmpData = globalThis.sqlite3.wasm.allocFromTypedArray(FileData);			
 					globalThis.WorkingDB = new globalThis.sqlite3.oo1.DB();
-					try {
-						let RetCode = globalThis.sqlite3.capi.sqlite3_deserialize(globalThis.WorkingDB,
-																				'main',
-																				TmpData,
-																				FileData.byteLength,
-																				FileData.byteLength,
-																				globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
-						console.log("Deserialize status : " + RetCode);
-						globalThis.WorkingDB.checkRc(RetCode);
-						console.log("Deserialize OK");
-						try {
-							// try get database schema to validate its format
-							console.log("Getting Database schema ...");
-							let SQLRequestResultObj = globalThis.WorkingDB.exec({
-								sql: "select * from sqlite_schema",
-								rowMode: 'array',
-							});
-							console.log("DB schema : " + SQLRequestResultObj);
-							if(!IsDatabaseSchemaValid(SQLRequestResultObj))
-							{
-								console.log("DB schema is invalid");
-								alert("Database schema is invalid");
-								if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
-								globalThis.WorkingDB = null;
-								document.getElementById("DatabasePathBtnLoc").disabled = false;
-								document.getElementById("DatabaseImportBtnLoc").disabled = false;
-								document.getElementById("DatabaseImportBtnGlb").disabled = false;
-								document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
-								document.getElementById("DatabaseImportProgress").style.display = 'none';
-								return;
-							}
-							console.log("DB schema is OK");
-						} catch(Err) {
-							console.log("Echec importing database 1");
-							console.log(Err);
-							alert("Echec importing database");
-						}
-					} catch(Error) {
-						console.log("Echec importing database 2");
-						console.log(Error);
-						alert("Echec importing database");
+					let RetCode = globalThis.sqlite3.capi.sqlite3_deserialize(globalThis.WorkingDB,
+																			'main',
+																			TmpData,
+																			FileData.byteLength,
+																			FileData.byteLength,
+																			globalThis.sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE);
+					console.log("Deserialize status : " + RetCode);
+					globalThis.WorkingDB.checkRc(RetCode);
+					console.log("Deserialize OK");
+					// try get database schema to validate its format
+					console.log("Getting Database schema ...");
+					let SQLRequestResultObj = globalThis.WorkingDB.exec({
+						sql: "select * from sqlite_schema",
+						rowMode: 'array',
+					});
+					console.log("DB schema : " + SQLRequestResultObj);
+					if(!IsDatabaseSchemaValid(SQLRequestResultObj))
+					{
+						console.log("DB schema is invalid");
+						alert("Database schema is invalid");
+						if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
+						globalThis.WorkingDB = null;
+						document.getElementById("DatabasePathBtnLoc").disabled = false;
+						document.getElementById("DatabaseImportBtnLoc").disabled = false;
+						document.getElementById("DatabaseImportBtnGlb").disabled = false;
+						document.getElementById("DatabaseImportProgress").style.visibility = 'hidden';
+						document.getElementById("DatabaseImportProgress").style.display = 'none';
+						return;
 					}
+					console.log("DB schema is OK");
 				} catch(ErrorObj) {
-					console.log("Echec importing database 3");
-					console.log(ErrorObj);
+					console.log("Echec importing database");
 					alert("Echec importing database");
 					if(globalThis.WorkingDB != null) globalThis.WorkingDB.close();
 					globalThis.WorkingDB = null;
@@ -1433,7 +1414,6 @@
 				DoListPlantes();
 			}).catch((OpsError) => {
 				alert("Echec reading database");
-				console.log(OpsError);
 				document.getElementById("DatabasePathBtnLoc").disabled = false;
 				document.getElementById("DatabaseImportBtnLoc").disabled = false;
 				document.getElementById("DatabaseImportBtnGlb").disabled = false;
