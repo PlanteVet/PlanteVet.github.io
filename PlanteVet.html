@@ -619,11 +619,20 @@
 		//Read file online
 		function DoFecthDatafromUrl(UrlPath,ProgressBarObj)
 		{
+			let ContentLength = 0;
+			
+			fetch(UrlPath,{method:'HEAD'}).then((ResponseObj) => {
+				ContentLength = ResponseObj.headers.get('Content-Length');
+				console.log(ContentLength);
+			}) .catch((ErrorObj) => {
+				console.log("Error Head");
+				//ContentLength = 9096875;
+			});
+			
 			return new Promise((resolve,reject) => {
 				//demande requête
 				fetch(UrlPath).then((ResponseObj) => {
 					const ReaderObj = ResponseObj.body.getReader();
-					const ContentLength = ResponseObj.headers.get('content-length');
 					let ReceivedLength = 0;
 					let ReceivedData = new Uint8Array();
 					
