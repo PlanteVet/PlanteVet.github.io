@@ -630,11 +630,13 @@
 						if(ResponseObj2 == 206)
 						{
 							const ContentRange = ResponseObj2.headers.get('content-range');
+							console.log(ContentRange);
 							let TotalSize = ContentRange.split('/').pop();
 							if(TotalSize != '0')
 							{
 								let Size = parseint(TotalSize,10);
 								ContentLength = Size;
+								console.log(ContentLength);
 							}
 						}
 					}) .catch((ErrorObj) => {
