@@ -624,6 +624,24 @@
 			fetch(UrlPath,{method:'HEAD'}).then((ResponseObj) => {
 				ContentLength = ResponseObj.headers.get('Content-Length');
 				console.log(ContentLength);
+				if(ContentLength == 0)
+				{
+					fetch(UrlPath,{method:'GET',headers:{'range': 'bytes=0-0'}}).then((ResponseObj2) => {
+						if(ResponseObj2 == 206)
+						{
+							const ContentRange = ResponseObj2.headers.get('content-range');
+							let TotalSize = ContentRange.split('/').pop();
+							if(TotalSize != '0')
+							{
+								let Size = parseint(TotalSize,10);
+								ContentLength = Size;
+							}
+						}
+					}) .catch((ErrorObj) => {
+					console.log("Error Get");
+					//ContentLength = 9096875;
+				});
+				}
 			}) .catch((ErrorObj) => {
 				console.log("Error Head");
 				//ContentLength = 9096875;
