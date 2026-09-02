@@ -724,20 +724,27 @@
 		//Read file online
 		function DoFecthDatafromUrl(UrlPath,ProgressBarObj)
 		{
-			let ContentLength = 0;
-			
-			fetch(UrlPath,{method:'HEAD'}).then((ResponseObj) => {
-				ContentLength = ResponseObj.headers.get('Content-Length');
-				console.log(ContentLength);
-			}) .catch((ErrorObj) => {
-				console.log("Error Head");
-				//ContentLength = 9096875;
-			});
-			
 			return new Promise((resolve,reject) => {
 				//demande requête
-				fetch(UrlPath).then((ResponseObj) => {
+				fetch(UrlPath,{method:'GET',headers:{'range': 'bytes=0-0'}}).then((ResponseObj) => {
+					let ContentLength = 0;
+					
+					if(ResponseObj.status == 206)
+					{
+						console.log(ResponseObj.status);
+						const ContentRange = ResponseObj.headers.get('content-range');
+						console.log(ContentRange);
+						let TotalSize = ContentRange.split('/').pop();
+						console.log(TotalSize);
+						if(TotalSize != '0')
+						{
+							let Size = parseint(TotalSize,10);
+							ContentLength = Size;
+						}
+					}
+					
 					const ReaderObj = ResponseObj.body.getReader();
+					//const ContentLength = ResponseObj.headers.get('Content-Length');
 					let ReceivedLength = 0;
 					let ReceivedData = new Uint8Array();
 					
@@ -762,7 +769,7 @@
 						//update progress bar
 						ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
 						console.log("Progress " + ProgressBarObj.value + "%");
-		
+	
 						//lecture donées suivantes
 						return ReaderObj.read().then(pump)
 						.catch((ErrorObj) => {
@@ -771,12 +778,10 @@
 						});
 					}) .catch((ErrorObj) => {
 						console.log("Error Read");
-						console.log(ErrorObj);
 						reject(null);
 					});
 				}) .catch((ErrorObj) => {
 					console.log("Error Url");
-					console.log(ErrorObj);
 					reject(null);
 				});
 			});
