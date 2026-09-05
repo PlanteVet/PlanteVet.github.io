@@ -725,24 +725,33 @@
 		function DoFecthDatafromUrl(UrlPath,ProgressBarObj)
 		{
 			return new Promise((resolve,reject) => {
-				//demande requête
-				fetch(UrlPath,{method:'GET',headers:{'range': 'bytes=0-0'}}).then((ResponseObj) => {
+				//demande headers
+				fetch(UrlPath,{method:'HEAD'}).then((ResponseHead) => {
 					let ContentLength = 0;
 					
-					if(ResponseObj.status == 206)
+					ContentLength = ResponseHead.headers.get('Content-Length');
+					
+					if(ContentLength == 0)
 					{
-						console.log(ResponseObj.status);
-						const ContentRange = ResponseObj.headers.get('content-range');
-						console.log(ContentRange);
-						let TotalSize = ContentRange.split('/').pop();
-						console.log(TotalSize);
-						if(TotalSize != '0')
-						{
-							let Size = parseInt(TotalSize,10);
-							ContentLength = Size;
-						}
+						fetch(UrlPath,{method:'GET',headers:{'range': 'bytes=0-0'}}).then((ResponseObj) => {					
+							if(ResponseObj.status == 206)
+							{
+								console.log(ResponseObj.status);
+								const ContentRange = ResponseObj.headers.get('content-range');
+								let TotalSize = ContentRange.split('/').pop();
+								if(TotalSize != '0')
+								{
+									let Size = parseInt(TotalSize,10);
+									ContentLength = Size;
+								}
+							}
+						}) .catch((ErrorObj) => {
+							console.log("Error Get Headers");
+						});
 					}
-
+					
+					console.log(ContentLength);
+	
 					fetch(UrlPath).then((ResponseObj2) => {
 						const ReaderObj = ResponseObj2.body.getReader();
 						//const ContentLength = ResponseObj.headers.get('Content-Length');
@@ -770,23 +779,23 @@
 							//update progress bar
 							ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
 							console.log("Progress " + ProgressBarObj.value + "%");
-		
+			
 							//lecture donées suivantes
 							return ReaderObj.read().then(pump)
 							.catch((ErrorObj) => {
 								console.log("Some Error occured during load");
 								reject(null);
 							});
-							}) .catch((ErrorObj) => {
+						}) .catch((ErrorObj) => {
 							console.log("Error Read");
 							reject(null);
 						});
 					}) .catch((ErrorObj) => {
-						console.log("Error Header");
+						console.log("Error Body");
 						reject(null);
 					});
 				}) .catch((ErrorObj) => {
-					console.log("Error Url");
+					console.log("Error Headers");
 					reject(null);
 				});
 			});
