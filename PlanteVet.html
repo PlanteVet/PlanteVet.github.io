@@ -619,84 +619,78 @@
 		//Read file online
 		function DoFecthDatafromUrl(UrlPath,ProgressBarObj)
 		{
-			let ContentLength = 0;
-			
-			fetch(UrlPath,{method:'HEAD'}).then((ResponseObj) => {
-				ContentLength = ResponseObj.headers.get('Content-Length');
-				console.log(ContentLength);
-				if(ContentLength == 0)
-				{
-					fetch(UrlPath,{method:'GET',headers:{'range': 'bytes=0-0'}}).then((ResponseObj2) => {
-						if(ResponseObj2 == 206)
-						{
-							const ContentRange = ResponseObj2.headers.get('content-range');
-							console.log(ContentRange);
-							let TotalSize = ContentRange.split('/').pop();
-							if(TotalSize != '0')
-							{
-								let Size = parseint(TotalSize,10);
-								ContentLength = Size;
-								console.log(ContentLength);
-							}
-						}
-					}) .catch((ErrorObj) => {
-					console.log("Error Get");
-					//ContentLength = 9096875;
-				});
-				}
-			}) .catch((ErrorObj) => {
-				console.log("Error Head");
-				//ContentLength = 9096875;
-			});
-			
 			return new Promise((resolve,reject) => {
-				//demande requête
-				fetch(UrlPath).then((ResponseObj) => {
-					const ReaderObj = ResponseObj.body.getReader();
-					let ReceivedLength = 0;
-					let ReceivedData = new Uint8Array();
+				//demande headers
+				fetch(UrlPath,{method:'HEAD'}).then((ResponseHead) => {
+					let ContentLength = 0;
 					
-					//init lecture
-					ReaderObj.read().then(function pump({done, value}) {
-						if(done) {
-							ProgressBarObj.value = 100;
-							console.log("Success loading");
-							//renvoie en arraybuffer
-							resolve(ReceivedData.buffer);
-							return;
-						}
+					ContentLength = ResponseHead.headers.get('Content-Length');
+					
+					if(ContentLength == 0)
+					{
+						fetch(UrlPath,{method:'GET',headers:{'range': 'bytes=0-0'}}).then((ResponseObj) => {					
+							if(ResponseObj.status == 206)
+							{
+								console.log(ResponseObj.status);
+								const ContentRange = ResponseObj.headers.get('content-range');
+								let TotalSize = ContentRange.split('/').pop();
+								if(TotalSize != '0')
+								{
+									let Size = parseInt(TotalSize,10);
+									ContentLength = Size;
+								}
+							}
+						}) .catch((ErrorObj) => {
+							console.log("Error Get Headers");
+						});
+					}
+					
+					console.log(ContentLength);
+	
+					fetch(UrlPath).then((ResponseObj2) => {
+						const ReaderObj = ResponseObj2.body.getReader();
+						//const ContentLength = ResponseObj.headers.get('Content-Length');
+						let ReceivedLength = 0;
+						let ReceivedData = new Uint8Array();
 						
-						//accumulation donées lues
-						let TmpSize = ReceivedLength;
-						ReceivedLength += value.length;
-						let TmpBuffer = new Uint8Array(ReceivedLength);
-						TmpBuffer.set(ReceivedData,0);
-						TmpBuffer.set(value,TmpSize);
-						ReceivedData = TmpBuffer;
-						
-						try {
-						//update progress bar
-						ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
-						console.log("Progress " + ProgressBarObj.value + "%");
-						} catch(Err) {
-							console.log("Error progress bar");
-							console.log(Err);
-						}
-		
-						//lecture donées suivantes
-						return ReaderObj.read().then(pump)
-						.catch((ErrorObj) => {
-							console.log("Some Error occured during load");
+						//init lecture
+						ReaderObj.read().then(function pump({done, value}) {
+							if(done) {
+								ProgressBarObj.value = 100;
+								console.log("Success loading");
+								//renvoie en arraybuffer
+								resolve(ReceivedData.buffer);
+								return;
+							}
+							
+							//accumulation donées lues
+							let TmpSize = ReceivedLength;
+							ReceivedLength += value.length;
+							let TmpBuffer = new Uint8Array(ReceivedLength);
+							TmpBuffer.set(ReceivedData,0);
+							TmpBuffer.set(value,TmpSize);
+							ReceivedData = TmpBuffer;
+							
+							//update progress bar
+							ProgressBarObj.value = parseInt((100*ReceivedLength)/ContentLength);
+							console.log("Progress " + ProgressBarObj.value + "%");
+			
+							//lecture donées suivantes
+							return ReaderObj.read().then(pump)
+							.catch((ErrorObj) => {
+								console.log("Some Error occured during load");
+								reject(null);
+							});
+						}) .catch((ErrorObj) => {
+							console.log("Error Read");
 							reject(null);
 						});
 					}) .catch((ErrorObj) => {
-						console.log("Error Read");
-						console.log(ErrorObj);
+						console.log("Error Body");
 						reject(null);
 					});
 				}) .catch((ErrorObj) => {
-					console.log("Error Url");
-					console.log(ErrorObj);
+					console.log("Error Headers");
 					reject(null);
 				});
 			});
