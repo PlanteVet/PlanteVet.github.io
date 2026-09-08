@@ -731,7 +731,7 @@
 					
 					ContentLength = ResponseHead.headers.get('Content-Length');
 					
-					if(ContentLength == 0)
+					if((ContentLength == 0) || (ContentLength == null))
 					{
 						fetch(UrlPath,{method:'GET',headers:{'range': 'bytes=0-0'}}).then((ResponseObj) => {					
 							if(ResponseObj.status == 206)
