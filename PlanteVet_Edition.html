@@ -3594,12 +3594,12 @@
 			{
 				// fetch info
 				let TmpPlanteResultRow = PlanteSQLRequestResultObj[i];
-				ListOrd.push({Id: TmpResultRow[0], Name : TmpResultRow[1]});
+				ListOrd.push({Id: TmpPlanteResultRow[0], Name : TmpPlanteResultRow[1]});
 			}
 
 			ListOrd = AlphOrder(ListOrd);
 				
-			for(let i = 0; i < NbResultRow; i++)
+			for(let i = 0; i < NbPlanteResultRow; i++)
 			{
 				let TmpResultRow = ListOrd[i];
 				let PlanteId = TmpResultRow.Id;
